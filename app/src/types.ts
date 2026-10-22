@@ -3,13 +3,71 @@
 
 export type Sesso = "F" | "M";
 
+export type TipoVisita = "Prima visita" | "Controllo";
+
+/** Valori di un referto BIA (BioTekna BIA-ACC). Tutti facoltativi: si salva solo ciò che c'è. */
+export interface Bia {
+  dataMisura: string; // ISO yyyy-mm-dd
+  ora?: string; // HH:MM
+  fonte?: string; // nome del PDF importato
+  peso?: number; // kg
+  altezza?: number; // cm
+  bmi?: number;
+  fmPerc?: number; // FM, massa grassa, % del peso
+  fmKg?: number;
+  tbwPerc?: number; // TBW, acqua totale, % del peso
+  tbwLitri?: number;
+  aat?: number; // AAT, cm² — forse il "GV" della scheda: da confermare con Valentina
+  pha?: number; // angolo di fase, °
+  smmPerc?: number; // SMM, massa muscolare scheletrica, % della massa magra
+  smmKg?: number;
+  ffmPerc?: number; // FFM, massa magra, % del peso
+  ffmKg?: number;
+  bmr?: number; // metabolismo basale, kcal/giorno
+  ee24?: number; // 24EE, dispendio nelle 24 ore, kcal/giorno — forse il "fabbisogno": da confermare
+  pesoIdeale?: number; // kg
+}
+
+/** Voci del modulo cartaceo "NUOVO CLIENTE" di Valentina, nello stesso ordine.
+ *  Farmaci e attività fisica stanno in Cliente.anamnesi (già usati altrove). Tutto testo libero. */
+export interface SchedaPrimaVisita {
+  data: string; // ISO, data del colloquio
+  motivazione: string; // "Motivazione alimentazione"
+  andamentoPeso: string; // "Andamento del peso negli anni"
+  intestino: string;
+  stomaco: string;
+  fegato: string;
+  cervicali: string; // "Cervicali / mal di testa"
+  tiroide: string;
+  doloriArticolari: string;
+  stressUmore: string;
+  fameNervosa: string;
+  fameNervosaQuando: string;
+  vogliaDi: "" | "Dolce" | "Salato" | "Entrambi" | "Nessuna";
+  vogliaNote: string;
+  sonno: string;
+  energia: string;
+  urine: string;
+  lavoro: string;
+  possibilitaAttivita: string; // "Possibilità di inserirla"
+  quanteVolte: string;
+  ciclo: string;
+  analisi: string;
+  // Retro del foglio: come mangia oggi (solo alla prima visita)
+  giornataTipo: { momento: string; ora: string; testo: string }[];
+  frequenze: Record<string, number>; // gruppo alimentare -> volte a settimana
+  noteAlimentazione: string;
+}
+
 export interface Visita {
   id: string;
   data: string; // ISO yyyy-mm-dd
+  tipo: TipoVisita;
   peso: number; // kg
   vita?: number; // circonferenza vita, cm
   fianchi?: number; // cm
-  massaGrassa?: number; // %
+  massaGrassa?: number; // % (inserita a mano; se c'è la BIA vale bia.fmPerc)
+  bia?: Bia;
   note?: string;
 }
 
@@ -38,6 +96,9 @@ export interface Cliente {
   email: string;
   altezza: number; // cm
   obiettivo: string;
+  pesoTeorico?: number; // kg
+  fabbisogno?: number; // kcal/giorno
+  primaVisita?: SchedaPrimaVisita;
   anamnesi: {
     patologie: string;
     farmaci: string;
@@ -86,6 +147,47 @@ export interface Dieta {
   kcalObiettivo: number;
   settimana: Settimana;
   noteGenerali: string;
+}
+
+// --- Piano alimentare stampabile (sul modello dei piani Word di Valentina, es. "1450 - Piatto completo") ---
+// Nel testo, **parola** si stampa in grassetto.
+
+/** Una delle alternative di un pasto ("Scegliere tra"), con frequenza settimanale facoltativa. */
+export interface OpzionePiano {
+  frequenza?: string; // es. "3 volte"
+  titolo?: string; // es. "Pancake"
+  testo: string;
+  nota?: string; // es. preparazione, esempi
+}
+
+export type ElementoPiano =
+  | { k: "testo"; testo: string }
+  | { k: "avviso"; testo: string } // riquadro evidenziato
+  | { k: "opzioni"; titolo?: string; voci: OpzionePiano[] } // alternative numerate
+  | { k: "elenco"; titolo?: string; voci: string[] } // elenco puntato
+  | { k: "tabella"; righe: [string, string][] }
+  | { k: "voci"; voci: { titolo: string; testo: string }[] } // titolo + spiegazione (gruppi, cotture, consigli)
+  | { k: "immagini"; chiavi: string[]; altezzaMm?: number }; // immagini da src/assets/piano (vedi immaginiPiano.ts)
+
+export interface SezionePiano {
+  id: string;
+  titolo: string;
+  icona?: string; // simbolo del font IconeCibo
+  inclusa: boolean; // si stampa?
+  informativa?: boolean; // pagine di consigli uguali per tutti (ma modificabili)
+  nuovaPagina?: boolean; // in stampa inizia su una pagina nuova
+  elementi: ElementoPiano[];
+}
+
+export interface PianoAlimentare {
+  id: string;
+  clienteId: string;
+  titolo: string;
+  modello: string; // modello di partenza, es. "1450 – Piatto completo"
+  creato: string; // ISO
+  kcal?: number;
+  messaggio?: string; // frase personale in copertina
+  sezioni: SezionePiano[];
 }
 
 export interface Appuntamento {

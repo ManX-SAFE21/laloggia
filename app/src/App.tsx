@@ -9,6 +9,7 @@ import { DietaEditor } from "./screens/DietaEditor";
 import { Agenda } from "./screens/Agenda";
 import { Alimenti } from "./screens/Alimenti";
 import { Impostazioni } from "./screens/Impostazioni";
+import { PianoEditor } from "./screens/PianoEditor";
 
 const INATTIVITA_MS = 10 * 60 * 1000; // 10 minuti
 
@@ -58,7 +59,7 @@ const NAV: { key: Vista["nome"]; label: string; icon: keyof typeof Icon }[] = [
 
 function Shell() {
   const { vista, vai, backup, bloccaOra } = useStore();
-  const sezione = vista.nome === "cliente" || vista.nome === "dieta" ? "clienti" : vista.nome;
+  const sezione = vista.nome === "cliente" || vista.nome === "dieta" || vista.nome === "piano" ? "clienti" : vista.nome;
   return (
     <div className="app">
       <aside className="sidebar">
@@ -86,6 +87,7 @@ function Shell() {
         {vista.nome === "clienti" && <Clienti />}
         {vista.nome === "cliente" && <ClienteScheda key={vista.id + (vista.tab ?? "")} id={vista.id} tab={vista.tab} />}
         {vista.nome === "dieta" && <DietaEditor id={vista.id} />}
+        {vista.nome === "piano" && <PianoEditor key={vista.id} id={vista.id} />}
         {vista.nome === "agenda" && <Agenda />}
         {vista.nome === "alimenti" && <Alimenti />}
         {vista.nome === "impostazioni" && <Impostazioni />}

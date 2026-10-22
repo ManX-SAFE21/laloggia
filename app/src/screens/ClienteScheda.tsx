@@ -1,12 +1,15 @@
-import { useState } from "react";
-import { OGGI, VERSIONE_INFORMATIVA, bmi, eta, fmtData, nuovoId, settimanaVuota } from "../data";
+import { Fragment, useState } from "react";
+import { MODELLI_PIANO, OGGI, VERSIONE_INFORMATIVA, bmi, eta, fmtData, nuovoId, nuovoPianoDaModello, settimanaVuota } from "../data";
 import { useStore } from "../store";
 import { Icon, LineChart, Modal, iniziali } from "../components/ui";
-import { Cliente, Visita } from "../types";
+import { Bia, Cliente, TipoVisita, Visita } from "../types";
+import { INTERVALLO_CONTROLLO_MESI, MISURE, Misura, differenza, fmt, misura, piuMesi } from "../misure";
+import { ImportaBia } from "./ImportaBia";
+import { PrimaVisita } from "./PrimaVisita";
 
 const TABS = [
   ["panoramica", "Panoramica"],
-  ["anamnesi", "Anamnesi"],
+  ["anamnesi", "Prima visita"],
   ["visite", "Visite e misure"],
   ["diete", "Diete"],
   ["allegati", "Allegati"],
@@ -14,12 +17,18 @@ const TABS = [
 ] as const;
 
 export function ClienteScheda({ id, tab: tabIniziale }: { id: string; tab?: string }) {
-  const { clienti, setClienti, vai } = useStore();
+  const { clienti, setClienti, vai, appuntamenti, setAppuntamenti, toast } = useStore();
   const c = clienti.find((x) => x.id === id);
   const [tab, setTab] = useState(tabIniziale ?? "panoramica");
+  const [importa, setImporta] = useState(false);
   if (!c) return <div className="page">Cliente non trovato</div>;
   const aggiorna = (f: (c: Cliente) => Cliente) => setClienti((l) => l.map((x) => (x.id === id ? f(x) : x)));
   const ult = c.visite[c.visite.length - 1];
+  const prossimo = appuntamenti.filter((a) => a.clienteId === c.id && a.data >= OGGI).sort((a, b) => (a.data + a.ora).localeCompare(b.data + b.ora))[0];
+  const pianifica = (data: string, ora: string) => {
+    setAppuntamenti((l) => [...l, { id: nuovoId("ap"), clienteId: c.id, data, ora, durata: 45, tipo: "Controllo" }]);
+    toast(`Controllo aggiunto in agenda il ${fmtData(data)} alle ${ora}`);
+  };
 
   return (
     <div className="page">
@@ -35,7 +44,9 @@ export function ClienteScheda({ id, tab: tabIniziale }: { id: string; tab?: stri
         </div>
         <div className="row">
           {!c.consenso.firmato && <span className="badge warn">Privacy da firmare</span>}
-          <NuovaVisitaBtn onSave={(v) => { aggiorna((x) => ({ ...x, visite: [...x.visite, v] })); setTab("visite"); }} ultima={ult} />
+          <button className="btn" onClick={() => setImporta(true)}><Icon.file /> Importa BIA (PDF)</button>
+          <NuovaVisitaBtn prima={c.visite.length === 0} ultima={ult} onPianifica={pianifica}
+            onSave={(v) => { aggiorna((x) => ({ ...x, visite: [...x.visite, v].sort((a, b) => a.data.localeCompare(b.data)) })); setTab("visite"); }} />
         </div>
       </div>
 
@@ -43,35 +54,46 @@ export function ClienteScheda({ id, tab: tabIniziale }: { id: string; tab?: stri
         {TABS.map(([k, l]) => <button key={k} className={"tab" + (tab === k ? " active" : "")} onClick={() => setTab(k)}>{l}</button>)}
       </div>
 
-      {tab === "panoramica" && <Panoramica c={c} />}
-      {tab === "anamnesi" && <Anamnesi c={c} aggiorna={aggiorna} />}
+      {tab === "panoramica" && <Panoramica c={c} prossimo={prossimo ? `${fmtData(prossimo.data)} alle ${prossimo.ora}` : undefined} />}
+      {tab === "anamnesi" && <PrimaVisita c={c} aggiorna={aggiorna} />}
       {tab === "visite" && <Visite c={c} />}
       {tab === "diete" && <Diete c={c} aggiorna={aggiorna} />}
       {tab === "allegati" && <Allegati c={c} aggiorna={aggiorna} />}
       {tab === "privacy" && <Privacy c={c} aggiorna={aggiorna} />}
       </div>
       <ModuloPrivacy c={c} />
+      {importa && <ImportaBia c={c} onClose={() => setImporta(false)}
+        onConferma={(f, msg) => { aggiorna(f); setImporta(false); setTab("visite"); toast(msg); }} />}
     </div>
   );
 }
 
-function Panoramica({ c }: { c: Cliente }) {
-  const prima = c.visite[0], ult = c.visite[c.visite.length - 1];
-  const delta = (a?: number, b?: number) => (a != null && b != null ? b - a : undefined);
-  const Stat = ({ label, val, unit, d }: { label: string; val?: number; unit: string; d?: number }) => (
-    <div className="card stat">
-      <div className="stat-label">{label}</div>
-      <div className="stat-value num">{val != null ? `${val.toFixed(1)} ${unit}` : "—"}</div>
-      {d != null && <div className={"stat-delta " + (d <= 0 ? "delta-down" : "delta-up")}>{d > 0 ? "+" : ""}{d.toFixed(1)} {unit} dalla prima visita</div>}
-    </div>
-  );
+function Panoramica({ c, prossimo }: { c: Cliente; prossimo?: string }) {
+  const ult = c.visite[c.visite.length - 1];
+  // Con la BIA si mostrano acqua e angolo di fase; senza, vita e BMI come prima.
+  const chiavi = c.visite.some((v) => v.bia) ? ["peso", "mg", "acqua", "pha"] : ["peso", "mg", "vita"];
+  const Stat = ({ m }: { m: Misura }) => {
+    const valori = c.visite.map(m.get).filter((x): x is number => x != null);
+    const d = differenza(m, c.visite);
+    const bene = d == null || d === 0 || m.scendereBene == null ? undefined : m.scendereBene ? d < 0 : d > 0;
+    return (
+      <div className="card stat">
+        <div className="stat-label">{m.label}</div>
+        <div className="stat-value num">{fmt(m, valori[valori.length - 1])}</div>
+        {d != null && <div className={"stat-delta " + (bene === undefined ? "delta-neutro" : bene ? "delta-down" : "delta-up")}>{d > 0 ? "+" : ""}{fmt(m, d)} dalla prima visita</div>}
+      </div>
+    );
+  };
   return (
     <div className="grid">
       <div className="grid g4">
-        <Stat label="Peso" val={ult?.peso} unit="kg" d={delta(prima?.peso, ult?.peso)} />
-        <Stat label="BMI" val={ult ? bmi(ult.peso, c.altezza) : undefined} unit="" />
-        <Stat label="Circonferenza vita" val={ult?.vita} unit="cm" d={delta(prima?.vita, ult?.vita)} />
-        <Stat label="Massa grassa" val={ult?.massaGrassa} unit="%" d={delta(prima?.massaGrassa, ult?.massaGrassa)} />
+        {chiavi.map((k) => <Stat key={k} m={misura(k)} />)}
+        {chiavi.length < 4 && (
+          <div className="card stat">
+            <div className="stat-label">BMI</div>
+            <div className="stat-value num">{ult ? bmi(ult.peso, c.altezza).toLocaleString("it-IT", { maximumFractionDigits: 1, minimumFractionDigits: 1 }) : "—"}</div>
+          </div>
+        )}
       </div>
       <div className="grid" style={{ gridTemplateColumns: "1.5fr 1fr" }}>
         <div className="card">
@@ -82,9 +104,12 @@ function Panoramica({ c }: { c: Cliente }) {
           <h2 style={{ marginBottom: 12 }}>In breve</h2>
           <dl className="kv">
             <dt>Obiettivo</dt><dd>{c.obiettivo}</dd>
+            <dt>Peso teorico</dt><dd>{c.pesoTeorico != null ? `${c.pesoTeorico.toLocaleString("it-IT")} kg` : "—"}</dd>
+            <dt>Fabbisogno</dt><dd>{c.fabbisogno != null ? `${c.fabbisogno} kcal/giorno` : "—"}</dd>
             <dt>Allergie / intolleranze</dt><dd>{c.anamnesi.allergieIntolleranze || "—"}</dd>
             <dt>Attività fisica</dt><dd>{c.anamnesi.attivitaFisica || "—"}</dd>
             <dt>Visite</dt><dd>{c.visite.length}{ult ? `, ultima il ${fmtData(ult.data)}` : ""}</dd>
+            <dt>Prossimo controllo</dt><dd>{prossimo ?? <span className="muted">non fissato</span>}</dd>
           </dl>
           {ult?.note && <p className="small muted" style={{ marginTop: 12 }}>Ultima nota: {ult.note}</p>}
         </div>
@@ -93,94 +118,156 @@ function Panoramica({ c }: { c: Cliente }) {
   );
 }
 
-function Anamnesi({ c, aggiorna }: { c: Cliente; aggiorna: (f: (c: Cliente) => Cliente) => void }) {
-  const campi: [keyof Cliente["anamnesi"], string][] = [
-    ["patologie", "Patologie e condizioni"],
-    ["farmaci", "Farmaci e integratori"],
-    ["allergieIntolleranze", "Allergie e intolleranze"],
-    ["attivitaFisica", "Attività fisica"],
-    ["abitudini", "Abitudini, lavoro, orari"],
-  ];
+/** Un grafico per misura, con valore attuale e differenza dalla prima visita. */
+function GraficoMisura({ m, visite }: { m: Misura; visite: Visita[] }) {
+  const punti = visite.filter((v) => m.get(v) != null).map((v) => ({ label: fmtData(v.data).slice(0, 5), value: m.get(v)! }));
+  const d = differenza(m, visite);
+  const bene = d == null || d === 0 || m.scendereBene == null ? undefined : m.scendereBene ? d < 0 : d > 0;
   return (
-    <div className="card card-pad">
-      <p className="small muted" style={{ marginTop: 0 }}>I campi definitivi verranno ricavati dalle schede Word della nutrizionista. Le modifiche si salvano da sole.</p>
-      <div className="grid g2">
-        <div className="field"><label>Obiettivo</label>
-          <input className="input" value={c.obiettivo} onChange={(e) => aggiorna((x) => ({ ...x, obiettivo: e.target.value }))} />
+    <div className="card">
+      <div className="card-head" style={{ padding: "12px 16px" }}>
+        <h2 style={{ fontSize: 15 }}>{m.label}</h2>
+        <span className="num" style={{ fontWeight: 600 }}>{fmt(m, punti[punti.length - 1]?.value)}</span>
+      </div>
+      <div style={{ padding: "6px 12px 10px" }}>
+        <div className={"stat-delta " + (bene === undefined ? "delta-neutro" : bene ? "delta-down" : "delta-up")} style={{ minHeight: 16, paddingLeft: 4 }}>
+          {d != null ? `${d > 0 ? "+" : ""}${fmt(m, d)} dalla prima visita` : "Serve almeno un'altra misura"}
         </div>
-        <div />
-        {campi.map(([k, l]) => (
-          <div className="field" key={k}><label>{l}</label>
-            <textarea className="textarea" value={c.anamnesi[k]} onChange={(e) => aggiorna((x) => ({ ...x, anamnesi: { ...x.anamnesi, [k]: e.target.value } }))} />
-          </div>
-        ))}
+        <LineChart unit={m.unit} points={punti} height={150} decimali={m.decimali} />
+        {m.nota && <div className="small muted" style={{ paddingLeft: 4 }}>{m.nota}</div>}
       </div>
     </div>
   );
 }
 
+// Voci del referto BIA mostrate nel dettaglio della visita.
+const VOCI_BIA: [keyof Bia, string, string][] = [
+  ["peso", "Peso", "kg"], ["altezza", "Altezza", "cm"], ["bmi", "BMI", ""],
+  ["fmPerc", "Massa grassa (MG)", "%"], ["fmKg", "Massa grassa", "kg"],
+  ["tbwPerc", "Acqua totale (H₂O)", "%"], ["tbwLitri", "Acqua totale", "litri"],
+  ["aat", "GV (AAT) — da confermare", "cm²"], ["pha", "Angolo di fase", "°"],
+  ["smmPerc", "Massa muscolare", "% FFM"], ["smmKg", "Massa muscolare", "kg"],
+  ["ffmPerc", "Massa magra", "%"], ["ffmKg", "Massa magra", "kg"],
+  ["bmr", "Metabolismo basale (BMR)", "kcal/giorno"], ["ee24", "Dispendio 24 ore (24EE)", "kcal/giorno"],
+  ["pesoIdeale", "Peso ideale", "kg"],
+];
+
 function Visite({ c }: { c: Cliente }) {
-  const [misura, setMisura] = useState<"peso" | "vita" | "massaGrassa">("peso");
-  const unit = { peso: "kg", vita: "cm", massaGrassa: "%" }[misura];
-  const visite = [...c.visite].reverse();
+  const [dettaglio, setDettaglio] = useState<Visita | null>(null);
+  const visite = [...c.visite].sort((a, b) => a.data.localeCompare(b.data));
+  // Grafici solo per le misure che il cliente ha davvero (niente grafici vuoti).
+  const grafici = MISURE.filter((m) => !["mgKg", "fianchi"].includes(m.key) && visite.some((v) => m.get(v) != null));
+  const colonne = ["peso", "mg", "acqua", "gv", "pha", "muscolo", "vita"].map(misura).filter((m) => visite.some((v) => m.get(v) != null));
   return (
     <div className="grid">
+      {visite.length > 0 && <div className="grid g3">{grafici.map((m) => <GraficoMisura key={m.key} m={m} visite={visite} />)}</div>}
       <div className="card">
-        <div className="card-head">
-          <h2>Grafico</h2>
-          <div className="row">
-            {(["peso", "vita", "massaGrassa"] as const).map((m) => (
-              <button key={m} className={"day-chip" + (misura === m ? " active" : "")} onClick={() => setMisura(m)}>
-                {{ peso: "Peso", vita: "Vita", massaGrassa: "Massa grassa" }[m]}
-              </button>
-            ))}
-          </div>
-        </div>
-        <div className="card-pad"><LineChart unit={unit} points={c.visite.filter((v) => v[misura] != null).map((v) => ({ label: fmtData(v.data).slice(0, 5), value: v[misura]! }))} /></div>
-      </div>
-      <div className="card">
+        <div className="card-head"><h2>Visite</h2><span className="small muted">Clic su una visita per vedere tutti i valori</span></div>
         <table className="table">
-          <thead><tr><th>Data</th><th>Peso</th><th>BMI</th><th>Vita</th><th>Fianchi</th><th>Massa grassa</th><th>Note</th></tr></thead>
+          <thead><tr><th>Data</th><th>Tipo</th>{colonne.map((m) => <th key={m.key}>{m.label.replace(/ \(.*\)/, "")}</th>)}<th>BMI</th><th></th></tr></thead>
           <tbody>
-            {visite.map((v) => (
-              <tr key={v.id}>
+            {[...visite].reverse().map((v) => (
+              <tr key={v.id} className="click" onClick={() => setDettaglio(v)}>
                 <td className="num">{fmtData(v.data)}</td>
-                <td className="num">{v.peso.toFixed(1)} kg</td>
-                <td className="num">{bmi(v.peso, c.altezza).toFixed(1)}</td>
-                <td className="num">{v.vita ?? "—"} cm</td>
-                <td className="num">{v.fianchi ?? "—"} cm</td>
-                <td className="num">{v.massaGrassa?.toFixed(1) ?? "—"} %</td>
-                <td className="small muted">{v.note ?? ""}</td>
+                <td>{v.tipo}</td>
+                {colonne.map((m) => <td key={m.key} className="num">{fmt(m, m.get(v))}</td>)}
+                <td className="num">{bmi(v.peso, c.altezza).toLocaleString("it-IT", { maximumFractionDigits: 1, minimumFractionDigits: 1 })}</td>
+                <td style={{ textAlign: "right" }}>{v.bia && <span className="badge accent">BIA</span>}</td>
               </tr>
             ))}
           </tbody>
         </table>
         {visite.length === 0 && <div className="empty">Nessuna visita registrata</div>}
       </div>
+      {dettaglio && <DettaglioVisita v={dettaglio} onClose={() => setDettaglio(null)} />}
     </div>
   );
 }
 
-function NuovaVisitaBtn({ onSave, ultima }: { onSave: (v: Visita) => void; ultima?: Visita }) {
-  const [open, setOpen] = useState(false);
-  const [f, setF] = useState({ peso: "", vita: "", fianchi: "", massaGrassa: "", note: "" });
-  const apri = () => { setF({ peso: ultima?.peso.toString() ?? "", vita: ultima?.vita?.toString() ?? "", fianchi: ultima?.fianchi?.toString() ?? "", massaGrassa: ultima?.massaGrassa?.toString() ?? "", note: "" }); setOpen(true); };
+function DettaglioVisita({ v, onClose }: { v: Visita; onClose: () => void }) {
+  const voci = v.bia ? VOCI_BIA.filter(([k]) => v.bia![k] != null) : [];
+  return (
+    <Modal title={`${v.tipo} del ${fmtData(v.data)}`} onClose={onClose}>
+      <dl className="kv">
+        <dt>Peso</dt><dd className="num">{v.peso.toLocaleString("it-IT")} kg</dd>
+        {v.vita != null && <><dt>Circonferenza vita</dt><dd className="num">{v.vita} cm</dd></>}
+        {v.fianchi != null && <><dt>Fianchi</dt><dd className="num">{v.fianchi} cm</dd></>}
+        {!v.bia && v.massaGrassa != null && <><dt>Massa grassa</dt><dd className="num">{v.massaGrassa} %</dd></>}
+      </dl>
+      {v.bia && (
+        <>
+          <h3 style={{ margin: "16px 0 8px" }}>Analisi BIA {v.bia.dataMisura !== v.data ? `del ${fmtData(v.bia.dataMisura)}` : ""}</h3>
+          {v.bia.fonte && <p className="small muted" style={{ marginTop: 0 }}>Referto: {v.bia.fonte}{v.bia.ora ? `, ore ${v.bia.ora}` : ""}</p>}
+          <dl className="kv">
+            {voci.map(([k, l, u]) => <Fragment key={k}><dt>{l}</dt><dd className="num">{(v.bia![k] as number).toLocaleString("it-IT")} {u}</dd></Fragment>)}
+          </dl>
+        </>
+      )}
+      {v.note && <p className="small" style={{ marginTop: 16 }}><b>Note:</b> {v.note}</p>}
+    </Modal>
+  );
+}
+
+function NuovaVisitaBtn({ onSave, onPianifica, ultima, prima }: {
+  onSave: (v: Visita) => void; onPianifica: (data: string, ora: string) => void; ultima?: Visita; prima: boolean;
+}) {
+  const [passo, setPasso] = useState<"chiuso" | "visita" | "prossimo">("chiuso");
+  const vuoto = { data: OGGI, tipo: (prima ? "Prima visita" : "Controllo") as TipoVisita, peso: "", vita: "", fianchi: "", massaGrassa: "", acqua: "", gv: "", pha: "", muscolo: "", note: "" };
+  const [f, setF] = useState(vuoto);
+  const [prox, setProx] = useState({ data: piuMesi(OGGI, INTERVALLO_CONTROLLO_MESI), ora: "10:00" });
+  const apri = () => {
+    setF({ ...vuoto, peso: ultima?.peso.toString() ?? "", vita: ultima?.vita?.toString() ?? "", fianchi: ultima?.fianchi?.toString() ?? "" });
+    setPasso("visita");
+  };
   const n = (s: string) => (s.trim() ? Number(s.replace(",", ".")) : undefined);
-  const salva = () => { onSave({ id: nuovoId("vis"), data: OGGI, peso: n(f.peso) ?? 0, vita: n(f.vita), fianchi: n(f.fianchi), massaGrassa: n(f.massaGrassa), note: f.note || undefined }); setOpen(false); };
-  const set = (k: keyof typeof f) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => setF({ ...f, [k]: e.target.value });
+  const salva = () => {
+    const bia = [f.acqua, f.gv, f.pha, f.muscolo].some((x) => x.trim())
+      ? { dataMisura: f.data, fmPerc: n(f.massaGrassa), tbwPerc: n(f.acqua), aat: n(f.gv), pha: n(f.pha), smmKg: n(f.muscolo) }
+      : undefined;
+    onSave({ id: nuovoId("vis"), data: f.data, tipo: f.tipo, peso: n(f.peso) ?? 0, vita: n(f.vita), fianchi: n(f.fianchi), massaGrassa: n(f.massaGrassa), bia, note: f.note || undefined });
+    setProx({ data: piuMesi(f.data, INTERVALLO_CONTROLLO_MESI), ora: "10:00" });
+    setPasso("prossimo");
+  };
+  const set = (k: keyof typeof f) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => setF({ ...f, [k]: e.target.value });
+  const campo = (k: keyof typeof f, l: string, autoFocus = false) => (
+    <div className="field"><label>{l}</label><input className="input" autoFocus={autoFocus} value={f[k]} onChange={set(k)} /></div>
+  );
   return (
     <>
       <button className="btn primary" onClick={apri}><Icon.plus /> Nuova visita</button>
-      {open && (
-        <Modal title={`Visita del ${fmtData(OGGI)}`} onClose={() => setOpen(false)} footer={<><button className="btn" onClick={() => setOpen(false)}>Annulla</button><button className="btn primary" disabled={!n(f.peso)} onClick={salva}>Salva visita</button></>}>
-          <p className="small muted" style={{ marginTop: 0 }}>Precompilato con i valori dell'ultima visita.</p>
+      {passo === "visita" && (
+        <Modal title="Nuova visita" onClose={() => setPasso("chiuso")}
+          footer={<><button className="btn" onClick={() => setPasso("chiuso")}>Annulla</button><button className="btn primary" disabled={!n(f.peso)} onClick={salva}>Salva visita</button></>}>
           <div className="grid g2">
-            <div className="field"><label>Peso (kg)</label><input className="input" autoFocus value={f.peso} onChange={set("peso")} /></div>
-            <div className="field"><label>Massa grassa (%)</label><input className="input" value={f.massaGrassa} onChange={set("massaGrassa")} /></div>
-            <div className="field"><label>Vita (cm)</label><input className="input" value={f.vita} onChange={set("vita")} /></div>
-            <div className="field"><label>Fianchi (cm)</label><input className="input" value={f.fianchi} onChange={set("fianchi")} /></div>
+            <div className="field"><label>Data</label><input className="input" type="date" value={f.data} onChange={set("data")} /></div>
+            <div className="field"><label>Tipo</label>
+              <select className="select" value={f.tipo} onChange={set("tipo")}><option>Prima visita</option><option>Controllo</option></select>
+            </div>
+            {campo("peso", "Peso (kg)", true)}
+            {campo("massaGrassa", "Massa grassa MG (%)")}
+            {campo("vita", "Vita (cm)")}
+            {campo("fianchi", "Fianchi (cm)")}
           </div>
+          <details style={{ marginTop: 12 }}>
+            <summary className="small" style={{ cursor: "pointer" }}>Altri valori BIA (se non importi il referto PDF)</summary>
+            <div className="grid g2" style={{ marginTop: 8 }}>
+              {campo("acqua", "Acqua totale H₂O (%)")}
+              {campo("gv", "GV / AAT (cm²)")}
+              {campo("pha", "Angolo di fase (°)")}
+              {campo("muscolo", "Massa muscolare (kg)")}
+            </div>
+          </details>
           <div className="field" style={{ marginTop: 12 }}><label>Note della visita</label><textarea className="textarea" value={f.note} onChange={set("note")} /></div>
+        </Modal>
+      )}
+      {passo === "prossimo" && (
+        <Modal title="Prossimo controllo" onClose={() => setPasso("chiuso")}
+          footer={<><button className="btn" onClick={() => setPasso("chiuso")}>Non ora</button><button className="btn primary" onClick={() => { onPianifica(prox.data, prox.ora); setPasso("chiuso"); }}>Aggiungi in agenda</button></>}>
+          <p className="small muted" style={{ marginTop: 0 }}>Visita salvata. Proposta: controllo tra {INTERVALLO_CONTROLLO_MESI} mesi. Puoi cambiare data e ora.</p>
+          <div className="grid g2">
+            <div className="field"><label>Data</label><input className="input" type="date" value={prox.data} onChange={(e) => setProx({ ...prox, data: e.target.value })} /></div>
+            <div className="field"><label>Ora</label><input className="input" type="time" value={prox.ora} onChange={(e) => setProx({ ...prox, ora: e.target.value })} /></div>
+          </div>
         </Modal>
       )}
     </>
@@ -188,31 +275,67 @@ function NuovaVisitaBtn({ onSave, ultima }: { onSave: (v: Visita) => void; ultim
 }
 
 function Diete({ c, aggiorna }: { c: Cliente; aggiorna: (f: (c: Cliente) => Cliente) => void }) {
-  const { diete, setDiete, vai, toast } = useStore();
+  const { diete, setDiete, piani, setPiani, vai, toast } = useStore();
   const sue = diete.filter((d) => d.clienteId === c.id);
+  const suoiPiani = piani.filter((p) => p.clienteId === c.id).sort((x, y) => y.creato.localeCompare(x.creato));
+  const [modello, setModello] = useState(MODELLI_PIANO[0].nome);
   const crea = () => {
     const id = nuovoId("d");
-    setDiete((l) => [...l, { id, clienteId: c.id, titolo: `Piano alimentare ${fmtData(OGGI)}`, creata: OGGI, kcalObiettivo: 1800, settimana: settimanaVuota(), noteGenerali: "" }]);
+    setDiete((l) => [...l, { id, clienteId: c.id, titolo: `Piano alimentare ${fmtData(OGGI)}`, creata: OGGI, kcalObiettivo: c.fabbisogno ?? 1800, settimana: settimanaVuota(), noteGenerali: "" }]);
     aggiorna((x) => ({ ...x, dietaId: id }));
     toast("Nuova dieta creata");
     vai({ nome: "dieta", id });
   };
+  const creaPiano = () => {
+    const m = MODELLI_PIANO.find((x) => x.nome === modello)!;
+    const p = nuovoPianoDaModello(m, c.id, OGGI);
+    setPiani((l) => [...l, p]);
+    toast(`Piano creato dal modello «${m.nome}»`);
+    vai({ nome: "piano", id: p.id });
+  };
   return (
-    <div className="card">
-      <div className="card-head"><h2>Diete</h2><button className="btn primary sm" onClick={crea}><Icon.plus /> Nuova dieta</button></div>
-      <table className="table">
-        <tbody>
-          {sue.map((d) => (
-            <tr key={d.id} className="click" onClick={() => vai({ nome: "dieta", id: d.id })}>
-              <td style={{ fontWeight: 600 }}>{d.titolo}</td>
-              <td className="muted num">Creata il {fmtData(d.creata)}</td>
-              <td className="num">{d.kcalObiettivo} kcal</td>
-              <td style={{ textAlign: "right" }}>{c.dietaId === d.id && <span className="badge ok">In corso</span>}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      {sue.length === 0 && <div className="empty">Nessuna dieta. Creane una nuova.</div>}
+    <div className="grid">
+      <div className="card">
+        <div className="card-head">
+          <h2>Piani alimentari da stampare</h2>
+          <div className="row">
+            <select className="select" style={{ width: "auto" }} value={modello} onChange={(e) => setModello(e.target.value)}>
+              {MODELLI_PIANO.map((m) => <option key={m.nome}>{m.nome}</option>)}
+            </select>
+            <button className="btn primary sm" onClick={creaPiano}><Icon.plus /> Nuovo piano dal modello</button>
+          </div>
+        </div>
+        <table className="table">
+          <tbody>
+            {suoiPiani.map((p) => (
+              <tr key={p.id} className="click" onClick={() => vai({ nome: "piano", id: p.id })}>
+                <td style={{ fontWeight: 600 }}>{p.titolo}</td>
+                <td className="muted">Modello {p.modello}</td>
+                <td className="muted num">Consegnato il {fmtData(p.creato)}</td>
+                <td style={{ textAlign: "right" }}><span className="badge accent"><Icon.print /> stampabile</span></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        {suoiPiani.length === 0 && <div className="empty">Nessun piano. Scegli un modello e crea il primo.</div>}
+      </div>
+
+      <div className="card">
+        <div className="card-head"><h2>Diete a griglia (giorni × pasti)</h2><button className="btn sm" onClick={crea}><Icon.plus /> Nuova dieta</button></div>
+        <table className="table">
+          <tbody>
+            {sue.map((d) => (
+              <tr key={d.id} className="click" onClick={() => vai({ nome: "dieta", id: d.id })}>
+                <td style={{ fontWeight: 600 }}>{d.titolo}</td>
+                <td className="muted num">Creata il {fmtData(d.creata)}</td>
+                <td className="num">{d.kcalObiettivo} kcal</td>
+                <td style={{ textAlign: "right" }}>{c.dietaId === d.id && <span className="badge ok">In corso</span>}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        {sue.length === 0 && <div className="empty">Nessuna dieta a griglia.</div>}
+      </div>
     </div>
   );
 }

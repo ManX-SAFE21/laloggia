@@ -17,10 +17,10 @@ export const Icon = {
   print: () => (<svg viewBox="0 0 24 24" {...P} width="16" height="16"><path d="M6 9V3h12v6" /><rect x="3" y="9" width="18" height="8" rx="2" /><path d="M7 14h10v7H7z" /></svg>),
 };
 
-export function Modal({ title, children, onClose, footer }: { title: string; children: ReactNode; onClose: () => void; footer?: ReactNode }) {
+export function Modal({ title, children, onClose, footer, largo }: { title: string; children: ReactNode; onClose: () => void; footer?: ReactNode; largo?: boolean }) {
   return (
     <div className="modal-back" onMouseDown={onClose}>
-      <div className="card modal" onMouseDown={(e) => e.stopPropagation()}>
+      <div className={"card modal" + (largo ? " largo" : "")} onMouseDown={(e) => e.stopPropagation()}>
         <h2>{title}</h2>
         {children}
         <div className="modal-foot">{footer ?? <button className="btn" onClick={onClose}>Chiudi</button>}</div>
@@ -32,7 +32,7 @@ export function Modal({ title, children, onClose, footer }: { title: string; chi
 export const iniziali = (nome: string, cognome: string) => (nome[0] + cognome[0]).toUpperCase();
 
 /** Grafico a linee semplice in SVG, senza librerie. */
-export function LineChart({ points, unit, height = 180 }: { points: { label: string; value: number }[]; unit: string; height?: number }) {
+export function LineChart({ points, unit, height = 180, decimali = 1 }: { points: { label: string; value: number }[]; unit: string; height?: number; decimali?: number }) {
   const W = 560, H = height, padL = 40, padR = 24, padT = 26, padB = 28;
   if (points.length === 0) return <div className="empty">Nessun dato</div>;
   const vals = points.map((p) => p.value);
@@ -40,16 +40,18 @@ export function LineChart({ points, unit, height = 180 }: { points: { label: str
   if (max - min < 1) { min -= 1; max += 1; }
   const span = max - min;
   min -= span * 0.15; max += span * 0.15;
-  const x = (i: number) => padL + (points.length === 1 ? (W - padL - padR) / 2 : (i * (W - padL - padR)) / (points.length - 1));
+  const margine = 18; // spazio tra l'asse e il primo/ultimo punto, così le etichette non si sovrappongono
+  const x = (i: number) => padL + margine + (points.length === 1 ? (W - padL - padR - 2 * margine) / 2 : (i * (W - padL - padR - 2 * margine)) / (points.length - 1));
   const y = (vv: number) => padT + ((max - vv) * (H - padT - padB)) / (max - min);
   const ticks = [0, 1, 2, 3].map((i) => min + ((max - min) * i) / 3);
+  const decTick = max - min < 6 ? 1 : 0; // valori piccoli (es. angolo di fase): un decimale anche sull'asse
   const d = points.map((p, i) => `${i ? "L" : "M"}${x(i)},${y(p.value)}`).join(" ");
   return (
     <svg viewBox={`0 0 ${W} ${H}`} width="100%" role="img" aria-label={`Andamento ${unit}`}>
       {ticks.map((t, i) => (
         <g key={i}>
           <line x1={padL} x2={W - padR} y1={y(t)} y2={y(t)} stroke="var(--line)" />
-          <text x={padL - 6} y={y(t) + 4} fontSize="10" textAnchor="end" fill="var(--ink-3)">{t.toFixed(0)}</text>
+          <text x={padL - 6} y={y(t) + 4} fontSize="10" textAnchor="end" fill="var(--ink-3)">{t.toFixed(decTick)}</text>
         </g>
       ))}
       <path d={d} fill="none" stroke="var(--accent)" strokeWidth="2.2" strokeLinejoin="round" />
@@ -57,7 +59,7 @@ export function LineChart({ points, unit, height = 180 }: { points: { label: str
         <g key={i}>
           <circle cx={x(i)} cy={y(p.value)} r="3.5" fill="var(--surface)" stroke="var(--accent)" strokeWidth="2" />
           <text x={x(i)} y={H - 8} fontSize="10" textAnchor="middle" fill="var(--ink-3)">{p.label}</text>
-          <text x={x(i)} y={y(p.value) - 9} fontSize="10" textAnchor="middle" fill="var(--ink-2)">{p.value.toFixed(1)}</text>
+          <text x={x(i)} y={y(p.value) - 9} fontSize="10" textAnchor="middle" fill="var(--ink-2)">{p.value.toFixed(decimali)}</text>
         </g>
       ))}
     </svg>

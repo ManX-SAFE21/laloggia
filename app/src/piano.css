@@ -1,0 +1,112 @@
+/* Piano alimentare stampabile (A4). Font con licenza OFL, inclusi nel programma: funzionano offline. */
+@import "@fontsource/playfair-display/latin-600.css";
+@import "@fontsource/playfair-display/latin-700.css";
+@import "@fontsource/source-sans-3/latin-400.css";
+@import "@fontsource/source-sans-3/latin-400-italic.css";
+@import "@fontsource/source-sans-3/latin-600.css";
+@import "@fontsource/source-sans-3/latin-700.css";
+
+.piano-doc {
+  --pd-oliva: #6c7559;
+  --pd-oliva-scuro: #4f5641;
+  --pd-crema: #ece3d6;
+  --pd-crema-chiaro: #f7f2ea;
+  --pd-salvia: #a9ba98;
+  --pd-testo: #2f3327;
+  --pd-tenue: #6f7462;
+  font-family: "Source Sans 3", "Segoe UI", sans-serif;
+  font-size: 10.5pt;
+  line-height: 1.45;
+  color: var(--pd-testo);
+  background: #fff;
+  page: piano;
+}
+.piano-doc strong { font-weight: 700; color: #22261c; }
+.piano-doc h1, .piano-doc h2 { font-family: "Playfair Display", Georgia, serif; letter-spacing: 0; }
+.pd-ico, .pd-sez-ico { font-family: "IconeCibo", sans-serif; font-weight: 500; font-style: normal; }
+
+/* Copertina */
+.pd-copertina { min-height: 255mm; display: flex; flex-direction: column; break-after: page; }
+.pd-marchio { display: flex; align-items: center; gap: 12px; padding-bottom: 10mm; border-bottom: 1.5px solid var(--pd-salvia); }
+.pd-foglia { width: 46px; height: 46px; border-radius: 50%; background: var(--pd-oliva); color: var(--pd-crema); display: grid; place-items: center; }
+.pd-foglia svg { width: 26px; height: 26px; }
+.pd-studio { font-family: "Playfair Display", Georgia, serif; font-size: 22pt; font-weight: 700; color: var(--pd-oliva-scuro); line-height: 1; }
+.pd-studio-sub { font-family: "Playfair Display", Georgia, serif; font-size: 11pt; color: var(--pd-oliva); margin-top: 2px; }
+.pd-titolo-blocco { margin-top: 26mm; }
+.pd-occhiello { text-transform: uppercase; letter-spacing: 0.22em; font-size: 10pt; font-weight: 600; color: var(--pd-oliva); }
+.pd-cliente { font-size: 34pt; font-weight: 700; color: var(--pd-oliva-scuro); margin: 4px 0 10px; line-height: 1.1; }
+.pd-meta { display: flex; gap: 12px; align-items: center; color: var(--pd-tenue); }
+.pd-pill { background: var(--pd-crema); color: var(--pd-oliva-scuro); border-radius: 999px; padding: 2px 10px; font-weight: 600; font-size: 9.5pt; }
+.pd-obiettivo { margin: 14px 0 0; font-size: 12pt; }
+.pd-obiettivo span { display: block; font-size: 8.5pt; text-transform: uppercase; letter-spacing: 0.15em; color: var(--pd-oliva); font-weight: 600; }
+.pd-messaggio { margin: 14mm 0 0; padding: 12px 16px; background: var(--pd-crema-chiaro); border-left: 4px solid var(--pd-salvia); border-radius: 0 10px 10px 0; font-family: "Playfair Display", Georgia, serif; font-size: 12.5pt; font-style: italic; color: var(--pd-oliva-scuro); }
+.pd-messaggio footer { margin-top: 6px; font-family: "Source Sans 3", sans-serif; font-style: normal; font-size: 9.5pt; color: var(--pd-tenue); }
+.pd-indice { margin-top: 12mm; }
+.pd-indice-titolo { font-size: 9pt; text-transform: uppercase; letter-spacing: 0.15em; color: var(--pd-oliva); font-weight: 600; margin-bottom: 6px; }
+.pd-indice ol { list-style: none; margin: 0; padding: 0; columns: 2; column-gap: 10mm; }
+.pd-indice li { padding: 3px 0; border-bottom: 1px dotted #d8d2c4; break-inside: avoid; }
+.pd-indice li em { color: var(--pd-tenue); font-size: 9pt; }
+.pd-indice .pd-ico { display: inline-block; width: 1.6em; color: var(--pd-oliva); }
+.pd-firma { margin-top: auto; padding-top: 8mm; border-top: 1.5px solid var(--pd-salvia); font-size: 9.5pt; color: var(--pd-tenue); }
+.pd-firma-nome { font-family: "Playfair Display", Georgia, serif; font-size: 13pt; color: var(--pd-oliva-scuro); font-weight: 600; }
+.pd-social { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 6px; }
+.pd-social span { display: inline-flex; align-items: center; gap: 5px; }
+.pd-social img { width: 12px; height: 12px; }
+
+/* Sezioni */
+.pd-sezione { margin-top: 9mm; }
+.pd-nuova-pagina { break-before: page; margin-top: 0; }
+.pd-sez-titolo { display: flex; align-items: center; gap: 10px; font-size: 18pt; font-weight: 700; color: var(--pd-oliva-scuro); padding-bottom: 5px; border-bottom: 1.5px solid var(--pd-salvia); margin: 0 0 5mm; break-after: avoid; }
+.pd-sez-ico { width: 32px; height: 32px; border-radius: 50%; background: var(--pd-crema); color: var(--pd-oliva-scuro); display: grid; place-items: center; font-size: 15pt; flex: none; }
+.pd-informativa .pd-sez-titolo { font-size: 15pt; }
+.pd-testo { margin: 0 0 3mm; }
+.pd-sottotitolo { font-weight: 700; color: var(--pd-oliva); text-transform: uppercase; letter-spacing: 0.08em; font-size: 9pt; margin: 4mm 0 2mm; break-after: avoid; }
+.pd-avviso { background: var(--pd-crema-chiaro); border-left: 4px solid var(--pd-oliva); border-radius: 0 8px 8px 0; padding: 8px 12px; margin: 0 0 4mm; break-inside: avoid; }
+
+.pd-opzioni { margin-bottom: 3mm; }
+.pd-opzione { display: flex; gap: 10px; padding: 8px 10px; border: 1px solid #e3dccd; border-radius: 10px; margin-bottom: 2.5mm; break-inside: avoid; background: #fff; }
+.pd-num { flex: none; width: 22px; height: 22px; border-radius: 50%; background: var(--pd-oliva); color: #fff; font-weight: 700; font-size: 9.5pt; display: grid; place-items: center; margin-top: 1px; }
+.pd-opz-corpo { flex: 1; }
+.pd-opz-testa { display: flex; align-items: center; gap: 8px; margin-bottom: 2px; }
+.pd-opz-titolo { font-family: "Playfair Display", Georgia, serif; font-weight: 700; font-size: 11.5pt; color: var(--pd-oliva-scuro); }
+.pd-freq { background: var(--pd-salvia); color: #fff; border-radius: 999px; padding: 1px 9px; font-size: 8.5pt; font-weight: 700; white-space: nowrap; }
+.pd-nota { margin-top: 4px; font-size: 9.5pt; font-style: italic; color: var(--pd-tenue); }
+
+.pd-elenco ul { margin: 0 0 3mm; padding-left: 0; list-style: none; }
+.pd-elenco li { position: relative; padding: 2px 0 2px 16px; break-inside: avoid; }
+.pd-elenco li::before { content: ""; position: absolute; left: 3px; top: 0.62em; width: 6px; height: 6px; border-radius: 50%; background: var(--pd-salvia); }
+
+.pd-tabella { width: 100%; border-collapse: collapse; margin: 1mm 0 4mm; font-size: 10pt; }
+.pd-tabella td { padding: 6px 10px; vertical-align: top; border-bottom: 1px solid #ebe5d8; break-inside: avoid; }
+.pd-tabella tr:nth-child(odd) td { background: var(--pd-crema-chiaro); }
+.pd-tabella td:first-child { width: 55%; font-weight: 600; }
+
+.pd-voci { margin: 0 0 3mm; }
+.pd-voce { margin-bottom: 3mm; break-inside: avoid; }
+.pd-voce dt { font-weight: 700; color: var(--pd-oliva-scuro); font-size: 11pt; }
+.pd-voce dd { margin: 1px 0 0; }
+.pd-immagini { display: flex; justify-content: center; align-items: center; gap: 6mm; margin: 2mm 0 4mm; break-inside: avoid; }
+.pd-immagini img { max-width: 100%; object-fit: contain; }
+
+.pd-chiusura { margin-top: 10mm; break-inside: avoid; display: flex; flex-direction: column; }
+.pd-chiusura p { font-family: "Playfair Display", Georgia, serif; font-style: italic; color: var(--pd-oliva-scuro); font-size: 12pt; margin: 0 0 4mm; }
+
+/* Stampa: A4, numero di pagina e studio in basso (margini di pagina di Chromium/WebView2). */
+@page piano {
+  size: A4;
+  margin: 14mm 15mm 16mm;
+  @bottom-left { content: "La Loggia · Benessere Naturale · Malo (VI)"; font: 8pt "Source Sans 3", sans-serif; color: #8a8f7c; }
+  @bottom-right { content: "pagina " counter(page) " di " counter(pages); font: 8pt "Source Sans 3", sans-serif; color: #8a8f7c; }
+}
+
+/* A schermo: foglio bianco largo come un A4, con un segno dove inizia una nuova pagina. */
+@media screen {
+  .piano-doc { width: 210mm; padding: 14mm 15mm; box-shadow: 0 2px 12px rgba(30, 35, 25, 0.15); border-radius: 4px; }
+  .pd-copertina { min-height: 267mm; border-bottom: 2px dashed #d6cfbf; margin-bottom: 14mm; padding-bottom: 6mm; }
+  .pd-nuova-pagina { border-top: 2px dashed #d6cfbf; padding-top: 14mm; margin-top: 14mm; }
+}
+
+@media print {
+  .piano-doc { width: auto; padding: 0; box-shadow: none; }
+  .piano-doc * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}

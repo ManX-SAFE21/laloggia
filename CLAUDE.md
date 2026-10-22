@@ -189,6 +189,30 @@ salvia (`#a9ba98`), titoli con grazie. Vedi le variabili in `mockup/src/styles.c
   - Installer in `src-tauri/target/release/bundle/`: `nsis/…-setup.exe` e `msi/…_it-IT.msi`
     (entrambi in italiano). Eseguibile: `src-tauri/target/release/gestionale-laloggia.exe`.
   - Prima compilazione ~6 min, ricompilazione ~4 min (PC di Manuxxx, Windows 11).
+  - `npm test`: test automatici (vitest) di `src/bia.test.ts` e `src/misure.test.ts`. Solo dati inventati.
+- `materiale/`: file di Valentina con nomi fittizi: `0NUOVO CLIENTE.docx` (modulo di prima visita) e
+  `1450 - PIATTO COMPLETO.docx` (modello di piano). **Il PDF della BIA non va mai nel repository.**
+
+## Esempio "completo" in `app/` (2026-10-22, 4 blocchi, ancora senza database)
+Cliente di esempio **Laura Fontana** (dati inventati): prima visita + 3 controlli ogni 2 mesi, ognuno con BIA.
+1. **Visite, controlli, BIA, grafici** — `src/misure.ts` (elenco misure, differenze, +2 mesi), scheda
+   "Visite e misure": un grafico per misura, tabella, dettaglio visita con tutti i valori BIA. Le differenze
+   partono sempre dalla visita "Prima visita". Dopo una visita si propone il controllo a +2 mesi in agenda.
+2. **Importazione PDF BIA** (BioTekna BIA-ACC) — `src/bia.ts` (lettura del testo, regole per etichetta;
+   attenzione: "FM" è contenuto in "FFM"), `src/bia-pdf.ts` (pdf.js, offline), `screens/ImportaBia.tsx`
+   (anteprima con avviso se nome/data di nascita non coincidono, spunte, storico facoltativo, dati del cliente).
+3. **Piano alimentare stampabile** sul modello 1450 — `src/modelli/piano1450.ts` (testo di Valentina, alimenti
+   in **grassetto** al posto del MAIUSCOLO), `components/PianoStampa.tsx` + `src/piano.css` (A4, font OFL
+   Playfair Display + Source Sans 3 inclusi, immagini del suo Word in `src/assets/piano/`), `screens/PianoEditor.tsx`
+   (modifica per cliente, sezioni incluse/escluse/spostate). Stampa/PDF con la stampa di Windows.
+4. **Scheda "Prima visita"** (al posto di "Anamnesi") — `screens/PrimaVisita.tsx`: tutte le voci del modulo
+   "Nuovo cliente" nello stesso ordine, misure legate alla prima visita/BIA, obiettivo, peso teorico,
+   fabbisogno, retro del foglio (giornata tipo, frequenze settimanali, note).
+
+**Da confermare con Valentina:** GV = AAT? Fabbisogno = 24EE o BMR? Lista esatta dei ~10 valori BIA.
+Soglie e file degli altri 2 modelli di piano (basso/alto). Gruppi delle frequenze settimanali (proposti).
+Allergie/intolleranze e patologie non sono nel suo modulo: servono? Provenienza/diritti delle immagini del Word
+(Manuxxx ha detto di usarle). Stampa PDF reale del piano non ancora provata.
 
 ## Prossimi passi proposti (da confermare)
 1. La nutrizionista prova il mockup e manda i suoi materiali.

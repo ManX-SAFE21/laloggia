@@ -1,7 +1,8 @@
 // DATI INVENTATI per il mockup. Nessun cliente reale.
 // I valori nutrizionali sono indicativi: nel programma vero si userà
 // una banca dati ufficiale (es. tabelle CREA), da concordare.
-import { Alimento, Appuntamento, Cliente, Dieta, PASTI, Pasto, Settimana, VoceDieta } from "./types";
+import { Alimento, Appuntamento, Bia, Cliente, Dieta, PASTI, Pasto, PianoAlimentare, SchedaPrimaVisita, Settimana, Visita, VoceDieta } from "./types";
+import { MODELLO_1450 } from "./modelli/piano1450";
 
 export const OGGI = "2026-10-20";
 
@@ -81,11 +82,80 @@ const consensoOk = (data: string) => ({
   modalita: "cartaceo" as const,
 });
 
-function visiteDa(dati: [string, number, number, number][]) {
-  return dati.map(([data, peso, vita, mg]) => ({ id: nuovoId("vis"), data, peso, vita, fianchi: Math.round(vita + 16), massaGrassa: mg }));
+function visiteDa(dati: [string, number, number, number][]): Visita[] {
+  return dati.map(([data, peso, vita, mg], i) => ({
+    id: nuovoId("vis"), data, tipo: i === 0 ? "Prima visita" : "Controllo", peso, vita, fianchi: Math.round(vita + 16), massaGrassa: mg,
+  }));
 }
 
+// Cliente di esempio con BIA a ogni visita (valori inventati ma realistici, stesso formato del referto BioTekna).
+const ALTEZZA_ESEMPIO = 163;
+const r1 = (x: number) => Math.round(x * 10) / 10;
+function biaEsempio(data: string, peso: number, fm: number, tbw: number, aat: number, pha: number, smm: number, bmr: number, ee24: number): Bia {
+  const fmKg = r1((peso * fm) / 100);
+  const ffmKg = r1(peso - fmKg);
+  return {
+    dataMisura: data, ora: "10:30", fonte: `BIA ${data}.pdf`, peso, altezza: ALTEZZA_ESEMPIO,
+    bmi: r1(peso / (ALTEZZA_ESEMPIO / 100) ** 2), fmPerc: fm, fmKg, tbwPerc: tbw, tbwLitri: r1((peso * tbw) / 100),
+    aat, pha, smmPerc: smm, smmKg: r1((ffmKg * smm) / 100), ffmPerc: r1(100 - fm), ffmKg, bmr, ee24, pesoIdeale: 61.5,
+  };
+}
+const VISITE_ESEMPIO: Visita[] = [
+  { data: "2026-02-24", tipo: "Prima visita" as const, vita: 88, b: biaEsempio("2026-02-24", 71.2, 36.0, 40.0, 395, 5.4, 28.0, 1330, 1680), note: "Prima visita: gonfiore serale, fame nervosa nel pomeriggio." },
+  { data: "2026-04-21", tipo: "Controllo" as const, vita: 85, b: biaEsempio("2026-04-21", 69.6, 34.5, 41.0, 372, 5.6, 28.6, 1325, 1660), note: "Meno gonfiore. Inserita camminata 3 volte a settimana." },
+  { data: "2026-06-23", tipo: "Controllo" as const, vita: 83, b: biaEsempio("2026-06-23", 68.1, 33.0, 42.0, 351, 5.8, 29.1, 1322, 1645), note: "Buona aderenza al piano, aumentata l'acqua." },
+  { data: "2026-08-25", tipo: "Controllo" as const, vita: 81, b: biaEsempio("2026-08-25", 66.9, 31.8, 43.0, 333, 6.0, 29.6, 1320, 1630), note: "Estate gestita bene. Prossimo obiettivo: -2 kg di massa grassa." },
+].map(({ b, ...v }) => ({ ...v, id: nuovoId("vis"), peso: b.peso!, fianchi: v.vita + 15, massaGrassa: b.fmPerc, bia: b }));
+
+// --- Scheda Prima visita (modulo "NUOVO CLIENTE") ---
+export const MOMENTI_GIORNATA = ["Sveglia", "Colazione", "Spuntino mattina", "Pranzo", "Merenda", "Cena", "Dopo cena"];
+// Gruppi per le frequenze settimanali: elenco PROPOSTO, da confermare con Valentina.
+export const GRUPPI_FREQUENZA = [
+  "Carne bianca", "Carne rossa", "Salumi", "Pesce", "Uova", "Legumi", "Latticini e formaggi",
+  "Pasta, riso, cereali", "Pane e sostituti", "Verdura", "Frutta", "Dolci", "Bibite zuccherate", "Alcol", "Pasti fuori casa",
+];
+
+export function schedaVuota(data: string): SchedaPrimaVisita {
+  return {
+    data, motivazione: "", andamentoPeso: "", intestino: "", stomaco: "", fegato: "", cervicali: "", tiroide: "",
+    doloriArticolari: "", stressUmore: "", fameNervosa: "", fameNervosaQuando: "", vogliaDi: "", vogliaNote: "",
+    sonno: "", energia: "", urine: "", lavoro: "", possibilitaAttivita: "", quanteVolte: "", ciclo: "", analisi: "",
+    giornataTipo: MOMENTI_GIORNATA.map((momento) => ({ momento, ora: "", testo: "" })), frequenze: {}, noteAlimentazione: "",
+  };
+}
+
+const SCHEDA_ESEMPIO: SchedaPrimaVisita = {
+  ...schedaVuota("2026-02-24"),
+  motivazione: "Vuole sentirsi più leggera e sgonfia; si è vista ingrassare negli ultimi anni.",
+  andamentoPeso: "60 kg a 30 anni; +8 kg dopo la seconda gravidanza; ulteriori +3 kg negli ultimi 2 anni. Diete fai-da-te con recupero del peso.",
+  intestino: "Tendenza alla stitichezza, gonfiore serale.", stomaco: "Qualche episodio di reflusso dopo cena.", fegato: "Nella norma.",
+  cervicali: "Mal di testa 2-3 volte al mese.", tiroide: "Tiroidite di Hashimoto, in terapia.", doloriArticolari: "Ginocchia, a volte.",
+  stressUmore: "Stress lavorativo alto, umore altalenante.", fameNervosa: "Sì", fameNervosaQuando: "Pomeriggio in ufficio (16-17) e la sera davanti alla TV.",
+  vogliaDi: "Dolce", vogliaNote: "Cioccolato e biscotti.", sonno: "Si sveglia spesso verso le 3, fatica a riaddormentarsi.",
+  energia: "Bassa al mattino, calo dopo pranzo.", urine: "Poche, beve poco (circa 0,8 litri).", lavoro: "Impiegata, seduta 8 ore; pranza in ufficio.",
+  possibilitaAttivita: "Sì, camminata vicino a casa", quanteVolte: "3 volte a settimana", ciclo: "Regolare.", analisi: "Febbraio 2026: TSH nella norma in terapia, vitamina D bassa (da integrare su indicazione del medico).",
+  giornataTipo: [
+    { momento: "Sveglia", ora: "06:45", testo: "Caffè" },
+    { momento: "Colazione", ora: "07:15", testo: "Caffè e latte, 3 biscotti" },
+    { momento: "Spuntino mattina", ora: "10:30", testo: "Spesso salta; a volte cracker dalla macchinetta" },
+    { momento: "Pranzo", ora: "13:00", testo: "Panino o piadina al bar, oppure pasta portata da casa" },
+    { momento: "Merenda", ora: "16:30", testo: "Barretta o cioccolato (fame nervosa)" },
+    { momento: "Cena", ora: "20:00", testo: "Secondo con verdura, pane; spesso formaggio" },
+    { momento: "Dopo cena", ora: "21:30", testo: "Qualcosa di dolce sul divano" },
+  ],
+  frequenze: { "Carne bianca": 2, "Carne rossa": 1, Salumi: 3, Pesce: 1, Uova: 1, Legumi: 0, "Latticini e formaggi": 5, "Pasta, riso, cereali": 6, "Pane e sostituti": 7, Verdura: 5, Frutta: 3, Dolci: 7, "Bibite zuccherate": 1, Alcol: 2, "Pasti fuori casa": 5 },
+  noteAlimentazione: "Mangia velocemente. Pochi legumi e pesce. Acqua insufficiente.",
+};
+
 export const CLIENTI: Cliente[] = [
+  {
+    id: "c9", primaVisita: SCHEDA_ESEMPIO, nome: "Laura", cognome: "Fontana", sesso: "F", dataNascita: "1979-04-02", telefono: "333 900 1009", email: "laura.fontana@esempio.it",
+    altezza: ALTEZZA_ESEMPIO, obiettivo: "Ridurre la massa grassa e migliorare l'idratazione", pesoTeorico: 61.5, fabbisogno: 1630,
+    anamnesi: { patologie: "Tiroidite di Hashimoto (in cura)", farmaci: "Levotiroxina", allergieIntolleranze: "Nessuna", attivitaFisica: "Camminata 3 volte a settimana (da aprile)", abitudini: "Impiegata, pranza in ufficio; fame nervosa nel pomeriggio" },
+    visite: VISITE_ESEMPIO,
+    allegati: [{ id: "al9", nome: "Analisi del sangue febbraio 2026.pdf", tipo: "pdf", data: "2026-02-24", dimensioneKb: 380 }],
+    consenso: consensoOk("2026-02-24"), attivo: true,
+  },
   {
     id: "c1", nome: "Giulia", cognome: "Martini", sesso: "F", dataNascita: "1988-03-14", telefono: "333 100 2001", email: "giulia.martini@esempio.it",
     altezza: 165, obiettivo: "Dimagrimento graduale, -6 kg",
@@ -158,6 +228,36 @@ export const DIETE: Dieta[] = [
   },
 ];
 
+// Intestazione e contatti stampati sui piani alimentari (dal modello Word di Valentina).
+export const STUDIO = {
+  nome: "La Loggia",
+  sottotitolo: "Benessere Naturale",
+  professionista: "Dott.ssa Valentina Pellizzari",
+  qualifica: "Biologa nutrizionista",
+  sede: "Malo (VI)",
+  email: "d.ssavalentinapellizzari@gmail.com",
+  instagram: "d.ssavalentinapellizzari",
+  facebook: "laloggia.malo",
+};
+
+// Modelli disponibili per un nuovo piano. Gli altri livelli (basso/alto) arriveranno dai file di Valentina.
+export const MODELLI_PIANO = [MODELLO_1450];
+
+export function nuovoPianoDaModello(modello: typeof MODELLO_1450, clienteId: string, data: string): PianoAlimentare {
+  return {
+    id: nuovoId("pa"), clienteId, titolo: "Piano alimentare", modello: modello.nome, creato: data, kcal: modello.kcal,
+    sezioni: modello.sezioni().map((s) => ({ ...s, id: nuovoId("sez") })),
+  };
+}
+
+export const PIANI: PianoAlimentare[] = [
+  {
+    ...nuovoPianoDaModello(MODELLO_1450, "c9", "2026-08-25"),
+    id: "pa1",
+    messaggio: "Laura, ottimo lavoro in questi mesi! Continuiamo così: più acqua e la camminata 3 volte a settimana.",
+  },
+];
+
 export const APPUNTAMENTI: Appuntamento[] = [
   { id: "ap1", clienteId: "c6", data: "2026-10-19", ora: "09:00", durata: 45, tipo: "Controllo" },
   { id: "ap2", clienteId: "c3", data: "2026-10-19", ora: "15:30", durata: 45, tipo: "Controllo" },
@@ -168,6 +268,7 @@ export const APPUNTAMENTI: Appuntamento[] = [
   { id: "ap7", clienteId: "c7", data: "2026-10-22", ora: "14:00", durata: 60, tipo: "Prima visita" },
   { id: "ap8", clienteId: "c6", data: "2026-10-23", ora: "18:00", durata: 30, tipo: "Online" },
   { id: "ap9", clienteId: "c3", data: "2026-10-24", ora: "10:00", durata: 45, tipo: "Controllo" },
+  { id: "ap10", clienteId: "c9", data: "2026-10-27", ora: "10:30", durata: 45, tipo: "Controllo" },
 ];
 
 // --- utilità ---
