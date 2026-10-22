@@ -1,0 +1,22 @@
+# Dipendenze e compilazioni
+node_modules/
+dist/
+target/
+src-tauri/gen/
+
+# Dati e backup: mai nel repository
+*.db
+*.sqlite
+*.sqlite3
+*.7z
+*.key
+.env
+.env.*
+dati/
+backup/
+
+# Sistema e editor
+Thumbs.db
+.DS_Store
+.vscode/
+.idea/
