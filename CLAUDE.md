@@ -170,6 +170,27 @@ salvia (`#a9ba98`), titoli con grazie. Vedi le variabili in `mockup/src/styles.c
 6. Impronta o volto (Windows Hello) come alternativa al PIN?
 7. Il PC di lei ha la password di accesso? La cifratura del disco (BitLocker) è attiva?
    È un'ulteriore protezione facoltativa.
+8. **Calcolo delle calorie (da approfondire, schema a mano di Valentina del 2026-10-22; niente codice per ora):**
+   - **Metabolismo basale (BMR), due metodi a scelta:** opzione 1 **formula di Mifflin** (peso, altezza,
+     età, sesso; nell'esempio 1303 kcal) oppure opzione 2 **BMR della scheda BIA** (nell'esempio 1252 kcal;
+     il programma lo legge già dal PDF, voce "BMR (kcal/day)"). Valentina sceglie quale usare.
+   - **Metabolismo totale (dispendio energetico)** a partire dal BMR (nell'esempio 2000 kcal).
+   - **Tre tipi di dieta:** **ipocalorica** (es. 1600), **isocalorica** (= totale, es. 2000),
+     **ipercalorica** (es. 2200). Probabilmente sono i 3 modelli di piano "basso / medio / alto".
+   - L'obiettivo (es. 2000) si **ripartisce nei pasti** ("Col: …" sul foglio).
+   - Idea: riquadro "Calcolo calorie" nella scheda cliente con BMR Mifflin e BIA affiancati, scelta del metodo,
+     totale e 3 tipi di dieta; il valore scelto diventa il "fabbisogno" (che già precompila il piano).
+   - **Domande aperte:** dal BMR al totale si usa un fattore di attività (quali valori?) o il 24EE della BIA?
+     Ipo/iper con kcal fisse (es. −400/+200) o in percentuale? Percentuali di ripartizione nei pasti?
+     Versione della formula di Mifflin e se salvare il metodo usato. I numeri del foglio (1303/1252) non sono
+     quelli del referto BIA usato nelle prove (BMR 1309): serve un caso vero con dati di partenza e
+     risultati attesi per verificare il calcolo.
+9. **Analisi del sangue (da approfondire):** poterle allegare (PDF negli Allegati, già possibile) e annotare
+   i valori metabolici principali: **glucosio, emoglobina glicata, insulina, colesterolo…**
+   - Idea: tabella dei valori per data con grafici nel tempo, come per la BIA.
+   - **Domande aperte:** elenco completo dei valori (HDL, LDL, trigliceridi, TSH, vitamina D…?);
+     inserimento a mano oppure lettura dal PDF del laboratorio (più difficile: ogni laboratorio impagina
+     in modo diverso).
 
 ## Contenuto della cartella
 - `APRI_MOCKUP.html`: mockup cliccabile compilato in un unico file. Si apre con doppio clic.
