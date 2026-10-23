@@ -19,11 +19,14 @@ export function Modelli() {
     setModelli((l) => [...l, m]);
     vai({ nome: "modello", id: m.id });
   };
+  const [nuovo, setNuovo] = useState<string | null>(null); // riga appena creata, evidenziata per qualche secondo
   const duplica = (m: ModelloPiano) => {
     const copia = duplicaModello(m, OGGI);
     setModelli((l) => [...l, copia]);
-    toast(`Creato «${copia.nome}»`);
-    vai({ nome: "modello", id: copia.id });
+    if (filtro !== "Tutti" && filtro !== copia.tipo) setFiltro("Tutti");
+    setNuovo(copia.id);
+    window.setTimeout(() => setNuovo((x) => (x === copia.id ? null : x)), 4000);
+    toast(`Copia creata: «${copia.nome}». La trovi evidenziata nell'elenco`);
   };
 
   return (
@@ -46,7 +49,7 @@ export function Modelli() {
           <thead><tr><th>Modello</th><th>Tipo</th><th>Kcal</th><th>Clienti</th><th>Modificato</th><th></th></tr></thead>
           <tbody>
             {lista.map((m) => (
-              <tr key={m.id} className="click" onClick={() => vai({ nome: "modello", id: m.id })}>
+              <tr key={m.id} className={"click" + (nuovo === m.id ? " riga-nuova" : "")} onClick={() => vai({ nome: "modello", id: m.id })}>
                 <td style={{ fontWeight: 600 }}>{m.nome}{m.nota && <div className="small muted" style={{ fontWeight: 400 }}>{m.nota}</div>}</td>
                 <td><span className={"badge tipo-" + m.tipo.toLowerCase()}>{m.tipo}</span></td>
                 <td className="num">{m.kcal ? `${m.kcal} kcal` : "—"}</td>
@@ -54,7 +57,7 @@ export function Modelli() {
                 <td className="num muted">{fmtData(m.modificato)}</td>
                 <td style={{ textAlign: "right", whiteSpace: "nowrap" }} onClick={(e) => e.stopPropagation()}>
                   <button className="btn sm" onClick={() => vai({ nome: "modello", id: m.id })}>Modifica</button>{" "}
-                  <button className="btn sm" onClick={() => duplica(m)}>Duplica</button>{" "}
+                  <button className="btn sm" title="Crea una copia del modello in questo elenco" onClick={() => duplica(m)}>Duplica</button>{" "}
                   <button className="btn sm danger" onClick={() => setElimina(m)}>Elimina</button>
                 </td>
               </tr>
@@ -99,11 +102,10 @@ export function ModelloEditor({ id }: { id: string }) {
 
   return (
     <EditorPiano piano={comePiano} cliente={CLIENTE_ESEMPIO} aggiorna={aggiorna} riassunto={m.tipo}
-      azioniInPiu={<button className="btn" title="Crea un altro modello uguale a questo e lo apre" onClick={() => {
+      azioniInPiu={<button className="btn" title="Crea in Piani alimentari un altro modello uguale a questo; tu resti qui" onClick={() => {
         const copia = duplicaModello(m, OGGI);
         setModelli((l) => [...l, copia]);
-        toast(`Creato «${copia.nome}»: ora stai modificando la copia`);
-        vai({ nome: "modello", id: copia.id });
+        toast(`Copia creata in Piani alimentari: «${copia.nome}». Stai ancora modificando «${m.nome}»`);
       }}>Salva come copia</button>}
       intestazione={<>
         <button className="btn ghost sm" style={{ marginBottom: 8, paddingLeft: 0 }} onClick={() => vai({ nome: "modelli" })}><Icon.back /> Piani alimentari</button>

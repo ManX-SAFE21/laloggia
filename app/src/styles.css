@@ -319,3 +319,7 @@ h3 { font-size: 15px; font-family: var(--font); font-weight: 600; }
 .avviso-annulla { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); z-index: 60; display: flex; align-items: center; gap: 12px; padding: 10px 12px 10px 16px; background: var(--ink); color: var(--cream); border-radius: 10px; box-shadow: 0 6px 18px rgba(20, 28, 24, 0.25); font-size: 14px; }
 .avviso-annulla button { border: 0; background: var(--cream); color: var(--ink); font: inherit; font-weight: 600; padding: 4px 12px; border-radius: 6px; cursor: pointer; }
 .avviso-annulla button.chiudi { background: none; color: var(--cream); font-weight: 400; padding: 4px 6px; }
+
+/* Riga appena creata (es. Duplica): si illumina e poi torna normale */
+.table tr.riga-nuova td { animation: riga-nuova 4s ease-out; }
+@keyframes riga-nuova { 0%, 60% { background: var(--accent-2); } 100% { background: transparent; } }
