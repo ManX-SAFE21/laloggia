@@ -249,11 +249,46 @@ impl Db {
         }))
     }
 
-    // --- Scritture singole (usate dal programma nella fase 3, una per ogni modifica) ---
+    /// Salva un elemento arrivato dal programma (una chiamata per ogni elemento cambiato).
+    /// tipo: cliente (con visite e allegati, che vengono allineati), modello, piano, appuntamento,
+    /// alimento, dieta, immagine ({chiave, nome, src: data URL}).
+    pub fn salva(&mut self, tipo: &str, dati: &Value) -> Ris<()> {
+        let tx = self.conn.transaction()?;
+        {
+            let s = Scrittura { c: &tx };
+            match tipo {
+                "cliente" => s.salva_cliente_allineato(dati)?,
+                "modello" => s.salva_modello(dati)?,
+                "piano" => s.salva_piano(dati)?,
+                "appuntamento" => s.salva_appuntamento(dati)?,
+                "alimento" => s.salva_alimento(dati)?,
+                "dieta" => s.salva_dieta(dati)?,
+                "immagine" => s.salva_immagine_data_url(dati)?,
+                _ => return Err(Errore::Json(format!("tipo sconosciuto: {tipo}"))),
+            }
+        }
+        tx.commit()?;
+        Ok(())
+    }
+
+    /// Elimina un elemento (per un cliente: anche tutto ciò che è suo, vedi le regole in cima).
+    pub fn elimina(&self, tipo: &str, id: &str) -> Ris<()> {
+        let (tabella, colonna) = match tipo {
+            "cliente" => ("clienti", "id"),
+            "modello" => ("modelli", "id"),
+            "piano" => ("piani", "id"),
+            "appuntamento" => ("appuntamenti", "id"),
+            "alimento" => ("alimenti", "id"),
+            "dieta" => ("diete", "id"),
+            "immagine" => ("immagini", "chiave"),
+            _ => return Err(Errore::Json(format!("tipo sconosciuto: {tipo}"))),
+        };
+        self.conn.execute(&format!("DELETE FROM {tabella} WHERE {colonna} = ?1"), [id])?;
+        Ok(())
+    }
+
+    // --- Scritture singole ---
     pub fn salva_cliente(&self, c: &Value) -> Ris<()> { Scrittura { c: &self.conn }.salva_cliente(c) }
-    pub fn salva_visita(&self, cliente_id: &str, v: &Value) -> Ris<()> { Scrittura { c: &self.conn }.salva_visita(cliente_id, v) }
-    pub fn salva_modello(&self, m: &Value) -> Ris<()> { Scrittura { c: &self.conn }.salva_modello(m) }
-    pub fn salva_piano(&self, p: &Value) -> Ris<()> { Scrittura { c: &self.conn }.salva_piano(p) }
     pub fn salva_immagine(&self, chiave: &str, nome: &str, mime: &str, byte: &[u8]) -> Ris<()> {
         self.conn.execute(
             "INSERT INTO immagini(chiave, nome, mime, contenuto) VALUES (?1, ?2, ?3, ?4)
@@ -302,6 +337,52 @@ impl Scrittura<'_> {
                 params![testo(a, "id")?, id, testo(a, "nome")?, testo(a, "tipo")?, testo(a, "data")?, a.get("dimensioneKb").and_then(Value::as_i64)],
             )?;
         }
+        Ok(())
+    }
+    /// Cliente con le sue visite e allegati: aggiorna tutto e toglie dal database ciò che il programma ha tolto.
+    fn salva_cliente_allineato(&self, c: &Value) -> Ris<()> {
+        self.salva_cliente(c)?;
+        let id = testo(c, "id")?;
+        let mut visite = Vec::new();
+        for v in lista(c, "visite") {
+            self.salva_visita(&id, v)?;
+            visite.push(testo(v, "id")?);
+        }
+        let mut allegati = Vec::new();
+        for a in lista(c, "allegati") {
+            // solo i dati descrittivi: il contenuto del file, se c'è, resta com'è
+            self.c.execute(
+                "INSERT INTO allegati(id, cliente_id, nome, tipo, data, dimensione_kb) VALUES (?1, ?2, ?3, ?4, ?5, ?6)
+                 ON CONFLICT(id) DO UPDATE SET nome = excluded.nome, tipo = excluded.tipo, data = excluded.data, dimensione_kb = excluded.dimensione_kb",
+                params![testo(a, "id")?, id, testo(a, "nome")?, testo(a, "tipo")?, testo(a, "data")?, a.get("dimensioneKb").and_then(Value::as_i64)],
+            )?;
+            allegati.push(testo(a, "id")?);
+        }
+        self.togli_mancanti("visite", &id, &visite)?;
+        self.togli_mancanti("allegati", &id, &allegati)?;
+        Ok(())
+    }
+    fn togli_mancanti(&self, tabella: &str, cliente_id: &str, da_tenere: &[String]) -> Ris<()> {
+        let presenti: Vec<String> = {
+            let mut q = self.c.prepare(&format!("SELECT id FROM {tabella} WHERE cliente_id = ?1"))?;
+            let r = q.query_map([cliente_id], |r| r.get::<_, String>(0))?.collect::<Result<_, _>>()?;
+            r
+        };
+        for p in presenti.iter().filter(|p| !da_tenere.contains(p)) {
+            self.c.execute(&format!("DELETE FROM {tabella} WHERE id = ?1"), [p])?;
+        }
+        Ok(())
+    }
+    fn salva_immagine_data_url(&self, d: &Value) -> Ris<()> {
+        let src = testo(d, "src")?;
+        let (testa, b64) = src.split_once(',').ok_or_else(|| Errore::Json("immagine non valida".into()))?;
+        let mime = testa.strip_prefix("data:").and_then(|t| t.strip_suffix(";base64")).ok_or_else(|| Errore::Json("immagine non valida".into()))?;
+        let byte = base64::engine::general_purpose::STANDARD.decode(b64).map_err(|e| Errore::Json(e.to_string()))?;
+        self.c.execute(
+            "INSERT INTO immagini(chiave, nome, mime, contenuto) VALUES (?1, ?2, ?3, ?4)
+             ON CONFLICT(chiave) DO UPDATE SET nome = excluded.nome, mime = excluded.mime, contenuto = excluded.contenuto",
+            params![testo(d, "chiave")?, testo(d, "nome")?, mime, byte],
+        )?;
         Ok(())
     }
     fn salva_visita(&self, cliente_id: &str, v: &Value) -> Ris<()> {
@@ -458,6 +539,34 @@ mod test {
         assert!(src.starts_with("data:image/png;base64,"));
         let b = base64::engine::general_purpose::STANDARD.decode(src.split(',').nth(1).unwrap()).unwrap();
         assert_eq!(b, png);
+        drop(db);
+        let _ = std::fs::remove_file(&p);
+    }
+
+    #[test]
+    fn salva_generico_allinea_visite_ed_elimina() {
+        let p = file_prova("generico");
+        let mut db = Db::apri(&p, &CHIAVE).unwrap();
+        db.semina_se_vuoto(DATI_ESEMPIO).unwrap();
+        let tutto = db.carica_tutto().unwrap();
+        let mut laura = tutto["clienti"].as_array().unwrap().iter().find(|x| x["id"] == "c9").unwrap().clone();
+        let n = laura["visite"].as_array().unwrap().len();
+        // tolgo una visita e ne aggiungo una nuova: il database deve seguire
+        laura["visite"].as_array_mut().unwrap().remove(0);
+        laura["visite"].as_array_mut().unwrap().push(json!({ "id": "vis-nuova", "data": "2026-10-23", "tipo": "Controllo", "peso": 65.5 }));
+        db.salva("cliente", &laura).unwrap();
+        let riletta = db.carica_tutto().unwrap()["clienti"].as_array().unwrap().iter().find(|x| x["id"] == "c9").unwrap().clone();
+        assert_eq!(riletta["visite"].as_array().unwrap().len(), n);
+        assert!(riletta["visite"].as_array().unwrap().iter().any(|v| v["id"] == "vis-nuova"));
+        assert_eq!(riletta, laura);
+        // immagine da data URL e cancellazioni generiche
+        db.salva("immagine", &json!({ "chiave": "img-x", "nome": "foto", "src": "data:image/png;base64,iVBORw==" })).unwrap();
+        assert_eq!(db.conta("immagini").unwrap(), 1);
+        db.elimina("immagine", "img-x").unwrap();
+        db.elimina("appuntamento", "ap10").unwrap();
+        assert_eq!(db.conta("immagini").unwrap(), 0);
+        assert!(db.carica_tutto().unwrap()["appuntamenti"].as_array().unwrap().iter().all(|a| a["id"] != "ap10"));
+        assert!(db.salva("sconosciuto", &json!({})).is_err());
         drop(db);
         let _ = std::fs::remove_file(&p);
     }

@@ -237,9 +237,16 @@ salvia (`#a9ba98`), titoli con grazie. Vedi le variabili in `mockup/src/styles.c
     piano intatto, `modello_id` NULL; cancellare un cliente → cancellati visite, allegati, piani, diete, appuntamenti.
     Allegati e immagini caricate dentro il database (cifrati). Dati di esempio in `src-tauri/dati-esempio.json`
     (rigenerare con `node scripts/esporta-dati-esempio.mjs`), caricati quando il database nasce vuoto.
-    Test: `cargo test --lib db::` in `src-tauri` (6 test; serve Strawberry Perl nel PATH).
-    **Non ancora collegato all'interfaccia** (fase 3: comandi Tauri, salvataggio automatico, indicatore
-    «✓ Salvato»). La chiave per ora arriva da fuori: come ricavarla da PIN/password è la fase 4 (punto 00b).
+    Test: `cargo test --lib db::` in `src-tauri` (7 test; serve Strawberry Perl nel PATH).
+  - **Collegamento (fase 3, 2026-10-23)**: comandi Tauri `db_apri`, `db_salva`, `db_elimina` (`src-tauri/src/lib.rs`).
+    File in `%APPDATA%\it.laloggia.gestionale\dati\gestionale.db`. Salvataggio automatico in `src/store.tsx`:
+    0,4 s dopo l'ultima modifica si mandano solo gli elementi cambiati/nuovi/tolti (`src/sincronizza.ts`);
+    alla chiusura della finestra si salva ciò che manca. Indicatore sempre visibile nella barra laterale
+    («✓ Salvato alle HH:MM», «Salvataggio…», «⚠ Non salvato» + Riprova); Ctrl+S conferma «Già tutto salvato».
+    Nell'anteprima del browser niente database («⚠ Anteprima: non salvato»).
+    **CHIAVE PROVVISORIA**: casuale, nel file `dati\chiave-provvisoria.bin` accanto al database → chi copia la
+    cartella legge i dati. Solo per le prove, niente dati veri. Fase 4 (da discutere prima con Manuxxx, punto 00b):
+    chiave protetta da PIN/password.
   - `npm test`: test automatici (vitest) di `src/bia.test.ts`, `src/misure.test.ts` e `src/modelli.test.ts`
     (quest'ultimo controlla le regole modelli/piani). Solo dati inventati.
   - Menu "Piani alimentari": `screens/Modelli.tsx` (elenco con filtro per tipo, nuovo/duplica/elimina, modifica

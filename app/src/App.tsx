@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { StoreProvider, useStore, Vista } from "./store";
+import { inTauri, StoreProvider, useStore, Vista } from "./store";
 import { Icon } from "./components/ui";
 import { Leaf, PinScreen } from "./screens/Lock";
 import { Oggi } from "./screens/Oggi";
@@ -79,12 +79,14 @@ function Shell() {
           );
         })}
         <div className="sidebar-foot">
+          <IndicatoreSalvataggio />
           <div className="backup-pill">{backup.ok ? "✓" : "⚠"} Backup: <b>{backup.ultimo}</b></div>
           <button className="nav-btn" onClick={bloccaOra}><Icon.lock /> Blocca ora</button>
         </div>
       </aside>
       <main className="main">
-        <div className="demo-banner">Mockup dimostrativo: dati inventati, nessun salvataggio reale. Le modifiche si perdono ricaricando la pagina.</div>
+        {!inTauri && <div className="demo-banner">Anteprima nel browser: dati di esempio, nessun salvataggio. Le modifiche si perdono ricaricando la pagina.</div>}
+        {inTauri && <div className="demo-banner">Versione di prova: dati di esempio salvati sul disco con una chiave provvisoria. Non inserire ancora dati veri.</div>}
         {vista.nome === "oggi" && <Oggi />}
         {vista.nome === "clienti" && <Clienti />}
         {vista.nome === "cliente" && <ClienteScheda key={vista.id + (vista.tab ?? "")} id={vista.id} tab={vista.tab} />}
@@ -98,4 +100,19 @@ function Shell() {
       </main>
     </div>
   );
+}
+
+/** Sempre visibile: dice se l'ultima modifica è già nel database. */
+function IndicatoreSalvataggio() {
+  const { salvataggio: s, salvaOra } = useStore();
+  if (s.stato === "browser") return <div className="salva-pill avviso" title="Nell'anteprima del browser non c'è il database">⚠ Anteprima: non salvato</div>;
+  if (s.stato === "caricamento") return <div className="salva-pill">Apertura archivio…</div>;
+  if (s.stato === "in-corso") return <div className="salva-pill">Salvataggio…</div>;
+  if (s.stato === "errore")
+    return (
+      <div className="salva-pill errore" title={s.errore}>
+        ⚠ Non salvato <button className="salva-riprova" onClick={() => void salvaOra()}>Riprova</button>
+      </div>
+    );
+  return <div className="salva-pill ok" title={s.percorso}>✓ Salvato{s.ora ? ` alle ${s.ora}` : ""}</div>;
 }

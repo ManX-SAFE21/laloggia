@@ -42,8 +42,11 @@ export const ALIMENTI: Alimento[] = [
   { id: "a30", icona: "🍯", nome: "Miele", categoria: "Condimenti", kcal: 304, proteine: 0.6, carboidrati: 80.3, grassi: 0.0 },
 ];
 
-let seq = 1000;
-export const nuovoId = (p = "id") => `${p}${++seq}`;
+// Codici unici anche fra un avvio e l'altro (col database un codice ripetuto sovrascriverebbe un dato salvato):
+// prefisso + istante + contatore + parte casuale.
+let seq = 0;
+export const nuovoId = (p = "id") =>
+  `${p}-${Date.now().toString(36)}${(++seq).toString(36)}${Math.random().toString(36).slice(2, 7)}`;
 
 const v = (alimentoId: string, grammi: number): VoceDieta => ({ id: nuovoId("v"), alimentoId, grammi });
 
