@@ -180,6 +180,7 @@ h3 { font-size: 15px; font-family: var(--font); font-weight: 600; }
 .modal { width: 460px; max-width: calc(100vw - 32px); padding: 22px; }
 .modal { max-height: calc(100vh - 32px); overflow-y: auto; }
 .modal.largo { width: 760px; }
+.modal.medio { width: 600px; } /* +30% rispetto alla finestra normale (460px) */
 /* Importazione BIA */
 .bia-avviso { background: var(--danger-bg); border: 1px solid #f4c7c4; color: var(--danger); border-radius: 10px; padding: 10px 14px; margin-bottom: 14px; font-size: 13px; }
 .bia-avviso ul { margin: 6px 0 8px 18px; padding: 0; }
@@ -226,8 +227,8 @@ h3 { font-size: 15px; font-family: var(--font); font-weight: 600; }
 
 /* --- icone alimenti: set monocromatico vettoriale (Noto Emoji, licenza OFL) --- */
 .ico { display: inline-block; width: 1.5em; text-align: center; margin-right: 4px; font-family: "IconeCibo", sans-serif; font-weight: 500; font-style: normal; color: var(--ink); line-height: 1; }
-.icon-pick { display: grid; grid-template-columns: repeat(auto-fill, minmax(40px, 1fr)); gap: 2px; padding: 6px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface-2); }
-.icon-pick button { min-width: 0; border: 1px solid transparent; background: transparent; border-radius: 6px; cursor: pointer; font-size: 20px; padding: 3px 0; font-family: "IconeCibo", sans-serif; font-weight: 500; color: var(--ink); line-height: 1; }
+.icon-pick { display: grid; grid-template-columns: repeat(auto-fill, minmax(46px, 1fr)); gap: 2px; padding: 6px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface-2); }
+.icon-pick button { min-width: 0; border: 1px solid transparent; background: transparent; border-radius: 6px; cursor: pointer; font-size: 23px; padding: 3px 0; font-family: "IconeCibo", sans-serif; font-weight: 500; color: var(--ink); line-height: 1; }
 .icon-pick button:hover { background: var(--surface); }
 .icon-pick button.on { background: var(--accent-2); border-color: var(--accent); }
 .p-food { display: flex; align-items: center; gap: 6px; padding: 2px 0; }

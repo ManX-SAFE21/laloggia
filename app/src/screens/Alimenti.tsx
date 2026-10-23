@@ -133,7 +133,7 @@ function FormAlimento({ iniziale, categorie, esistenti, onClose, onSave }: {
   });
 
   return (
-    <Modal title={iniziale ? "Modifica alimento" : "Nuovo alimento"} onClose={onClose}
+    <Modal title={iniziale ? "Modifica alimento" : "Nuovo alimento"} onClose={onClose} medio
       footer={<><button className="btn" onClick={onClose}>Annulla</button><button className="btn primary" disabled={!valido} onClick={salva}>Salva</button></>}>
       <div className="grid g2">
         <div className="field" style={{ gridColumn: "1 / -1" }}><label>Nome</label>

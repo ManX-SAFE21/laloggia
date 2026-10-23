@@ -17,10 +17,10 @@ export const Icon = {
   print: () => (<svg viewBox="0 0 24 24" {...P} width="16" height="16"><path d="M6 9V3h12v6" /><rect x="3" y="9" width="18" height="8" rx="2" /><path d="M7 14h10v7H7z" /></svg>),
 };
 
-export function Modal({ title, children, onClose, footer, largo }: { title: string; children: ReactNode; onClose: () => void; footer?: ReactNode; largo?: boolean }) {
+export function Modal({ title, children, onClose, footer, largo, medio }: { title: string; children: ReactNode; onClose: () => void; footer?: ReactNode; largo?: boolean; medio?: boolean }) {
   return (
     <div className="modal-back" onMouseDown={onClose}>
-      <div className={"card modal" + (largo ? " largo" : "")} onMouseDown={(e) => e.stopPropagation()}>
+      <div className={"card modal" + (largo ? " largo" : medio ? " medio" : "")} onMouseDown={(e) => e.stopPropagation()}>
         <h2>{title}</h2>
         {children}
         <div className="modal-foot">{footer ?? <button className="btn" onClick={onClose}>Chiudi</button>}</div>
