@@ -28,7 +28,7 @@ export function PianoEditor({ id }: { id: string }) {
 }
 
 /** Editor comune di piani e modelli: sezioni a sinistra, foglio A4 a destra, collegati nei due sensi. */
-export function EditorPiano({ piano, cliente, aggiorna, intestazione, campiInPiu, riassunto }: {
+export function EditorPiano({ piano, cliente, aggiorna: aggiornaEsterno, intestazione, campiInPiu, riassunto }: {
   piano: PianoAlimentare;
   cliente: Cliente;
   aggiorna: (f: (p: PianoAlimentare) => PianoAlimentare) => void;
@@ -37,6 +37,59 @@ export function EditorPiano({ piano, cliente, aggiorna, intestazione, campiInPiu
   riassunto?: string; // riga dei dati principali, col riquadro chiuso
 }) {
   const { toast } = useStore();
+
+  // --- Annulla / Ripeti: copie del piano prima di ogni modifica (max PASSI). Scrivere di seguito
+  // nello stesso campo (modifiche a meno di UNISCI_MS) vale un solo passo.
+  const [passato, setPassato] = useState<PianoAlimentare[]>([]);
+  const [futuro, setFuturo] = useState<PianoAlimentare[]>([]);
+  const ultimaModifica = useRef(0);
+  const [avviso, setAvviso] = useState<string | null>(null); // "Immagine tolta" ecc., con Annulla
+  const timerAvviso = useRef<number | undefined>(undefined);
+  const aggiorna = (f: (p: PianoAlimentare) => PianoAlimentare) => {
+    const dopo = f(piano);
+    if (dopo === piano) return;
+    const adesso = Date.now();
+    if (adesso - ultimaModifica.current > UNISCI_MS || passato.length === 0) setPassato((l) => [...l, piano].slice(-PASSI));
+    ultimaModifica.current = adesso;
+    setFuturo([]);
+    aggiornaEsterno(() => dopo);
+    const tolto = cosaTolta(piano, dopo);
+    if (tolto) {
+      setAvviso(tolto);
+      window.clearTimeout(timerAvviso.current);
+      timerAvviso.current = window.setTimeout(() => setAvviso(null), 7000);
+    }
+  };
+  const annulla = () => {
+    if (!passato.length) return;
+    const prec = passato[passato.length - 1];
+    setPassato((l) => l.slice(0, -1));
+    setFuturo((l) => [piano, ...l].slice(0, PASSI));
+    ultimaModifica.current = 0;
+    setAvviso(null);
+    aggiornaEsterno(() => prec);
+  };
+  const ripeti = () => {
+    if (!futuro.length) return;
+    const succ = futuro[0];
+    setFuturo((l) => l.slice(1));
+    setPassato((l) => [...l, piano].slice(-PASSI));
+    ultimaModifica.current = 0;
+    aggiornaEsterno(() => succ);
+  };
+  // Ctrl+Z / Ctrl+Y (e Ctrl+Maiusc+Z). Dentro una casella di testo resta l'annulla normale della casella.
+  useEffect(() => {
+    const tasti = (e: KeyboardEvent) => {
+      if (!(e.ctrlKey || e.metaKey)) return;
+      const t = e.target as HTMLElement | null;
+      if (t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.tagName === "SELECT" || t.isContentEditable)) return;
+      const k = e.key.toLowerCase();
+      if (k === "z" && !e.shiftKey) { e.preventDefault(); annulla(); }
+      else if (k === "y" || (k === "z" && e.shiftKey)) { e.preventDefault(); ripeti(); }
+    };
+    window.addEventListener("keydown", tasti);
+    return () => window.removeEventListener("keydown", tasti);
+  });
   const [aperta, setAperta] = useState<string | null>(null); // dettagli aperti a sinistra (▸)
   const [selezionata, setSelezionata] = useState<string | null>(null); // segnata sul foglio
   const [datiAperti, setDatiAperti] = useState(false);
@@ -219,6 +272,10 @@ export function EditorPiano({ piano, cliente, aggiorna, intestazione, campiInPiu
             {senzaPannello ? "» Mostra pannello" : "« Nascondi pannello"}
           </button>
           <div className="row" style={{ gap: 4 }}>
+            <button className="btn sm" onClick={annulla} title={passato.length ? `Annulla l'ultima modifica (Ctrl+Z) · ${passato.length} passi disponibili` : "Niente da annullare"} style={{ opacity: passato.length ? 1 : 0.45 }}>↶ Annulla</button>
+            <button className="btn sm" onClick={ripeti} title={futuro.length ? `Ripeti (Ctrl+Y) · ${futuro.length} passi` : "Niente da ripetere"} style={{ opacity: futuro.length ? 1 : 0.45 }}>↷ Ripeti</button>
+          </div>
+          <div className="row" style={{ gap: 4 }}>
             <button className="btn sm" title="Rimpicciolisci il foglio" onClick={() => cambiaZoom(-0.1)}>−</button>
             <span className="num foglio-zoom" title="Ingrandimento del foglio a schermo (la stampa resta A4)">{Math.round(zoomFoglio * 100)}%</span>
             <button className="btn sm" title="Ingrandisci il foglio" onClick={() => cambiaZoom(0.1)}>+</button>
@@ -231,8 +288,28 @@ export function EditorPiano({ piano, cliente, aggiorna, intestazione, campiInPiu
         </div>
         </div>
       </div>
+      {avviso && (
+        <div className="avviso-annulla no-print" role="status">
+          {avviso}
+          <button onClick={annulla}>Annulla</button>
+          <button className="chiudi" aria-label="Chiudi" onClick={() => setAvviso(null)}>✕</button>
+        </div>
+      )}
     </div>
   );
+}
+
+const PASSI = 100; // livelli di Annulla
+const UNISCI_MS = 800; // modifiche più ravvicinate di così (es. scrivere in un campo) = un solo passo
+
+/** Se la modifica ha tolto qualcosa, il messaggio per l'avviso (con Annulla). */
+function cosaTolta(prima: PianoAlimentare, dopo: PianoAlimentare): string | null {
+  const conta = (p: PianoAlimentare, k: "immagini" | "opzioni") =>
+    p.sezioni.reduce((n, s) => n + s.elementi.reduce((m, e) => m + (e.k === k ? e.voci.length : 0), 0), 0);
+  if (conta(dopo, "immagini") < conta(prima, "immagini")) return "Immagine tolta";
+  if (conta(dopo, "opzioni") < conta(prima, "opzioni")) return "Alternativa tolta";
+  if (dopo.sezioni.length < prima.sezioni.length) return "Sezione tolta";
+  return null;
 }
 
 function EditorElemento({ el, onChange }: { el: ElementoPiano; onChange: (e: ElementoPiano) => void }) {
