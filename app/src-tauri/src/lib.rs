@@ -1,3 +1,7 @@
+// Database cifrato (fase 2). Non ancora usato dall'interfaccia: il collegamento è la fase 3.
+#[allow(dead_code)]
+mod db;
+
 // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
 #[tauri::command]
 fn greet(name: &str) -> String {

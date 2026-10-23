@@ -27,7 +27,13 @@ La nutrizionista è l'unica utente. Il software non è pensato per essere vendut
 ### Piattaforma e stack
 - Windows (10/11), un solo PC.
 - **Tauri 2**: backend in **Rust**, interfaccia in **TypeScript + React** (Vite).
-- Database **SQLite cifrato con SQLCipher** (es. crate `rusqlite` con feature `bundled-sqlcipher`).
+- Database **SQLite cifrato con SQLCipher**: crate `rusqlite` con feature `bundled-sqlcipher-vendored-openssl`
+  (OpenSSL compilato dentro il programma). Provato il 2026-10-23: SQLCipher 4.14, file illeggibile senza chiave,
+  chiave sbagliata rifiutata; Argon2id (256 MiB, 3 passaggi) ≈ 0,9 s per tentativo sul PC di Manuxxx.
+- **Per compilare serve Strawberry Perl** (`winget install StrawberryPerl.StrawberryPerl`, in `C:\Strawberry\perl\bin`):
+  solo sul PC di sviluppo, il programma consegnato non ne ha bisogno. La prima compilazione con OpenSSL dura ~10 min
+  in più. Attenzione ai **percorsi troppo lunghi** di Windows: una cartella di compilazione con percorso lungo fa
+  fallire OpenSSL con "There are files missing" (in `C:\LALOGGIA_esempio\app` il problema non si pone).
 - Distribuzione: installer `.msi`/`.exe` generato con `npm run tauri build`.
   - Nessuna firma del codice per ora: alla prima installazione compare "Windows ha protetto il PC".
   - Aggiornamenti manuali (nuovo installer). L'updater automatico di Tauri si valuterà più avanti.
@@ -225,6 +231,15 @@ salvia (`#a9ba98`), titoli con grazie. Vedi le variabili in `mockup/src/styles.c
   - Installer in `src-tauri/target/release/bundle/`: `nsis/…-setup.exe` e `msi/…_it-IT.msi`
     (entrambi in italiano). Eseguibile: `src-tauri/target/release/gestionale-laloggia.exe`.
   - Prima compilazione ~6 min, ricompilazione ~4 min (PC di Manuxxx, Windows 11).
+  - **Database (fase 2, 2026-10-23)**: `src-tauri/src/db.rs`, SQLCipher, 10 tabelle (clienti, visite, allegati,
+    modelli, piani, diete, appuntamenti, alimenti, immagini, impostazioni). Colonne vere per ricerca/ordine/legami,
+    il resto della scheda in `dati` (JSON). Migrazioni con `PRAGMA user_version`. Regole: eliminare un modello →
+    piano intatto, `modello_id` NULL; cancellare un cliente → cancellati visite, allegati, piani, diete, appuntamenti.
+    Allegati e immagini caricate dentro il database (cifrati). Dati di esempio in `src-tauri/dati-esempio.json`
+    (rigenerare con `node scripts/esporta-dati-esempio.mjs`), caricati quando il database nasce vuoto.
+    Test: `cargo test --lib db::` in `src-tauri` (6 test; serve Strawberry Perl nel PATH).
+    **Non ancora collegato all'interfaccia** (fase 3: comandi Tauri, salvataggio automatico, indicatore
+    «✓ Salvato»). La chiave per ora arriva da fuori: come ricavarla da PIN/password è la fase 4 (punto 00b).
   - `npm test`: test automatici (vitest) di `src/bia.test.ts`, `src/misure.test.ts` e `src/modelli.test.ts`
     (quest'ultimo controlla le regole modelli/piani). Solo dati inventati.
   - Menu "Piani alimentari": `screens/Modelli.tsx` (elenco con filtro per tipo, nuovo/duplica/elimina, modifica

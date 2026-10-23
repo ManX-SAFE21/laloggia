@@ -1,0 +1,2667 @@
+{
+ "clienti": [
+  {
+   "id": "c9",
+   "primaVisita": {
+    "data": "2026-02-24",
+    "motivazione": "Vuole sentirsi più leggera e sgonfia; si è vista ingrassare negli ultimi anni.",
+    "andamentoPeso": "60 kg a 30 anni; +8 kg dopo la seconda gravidanza; ulteriori +3 kg negli ultimi 2 anni. Diete fai-da-te con recupero del peso.",
+    "intestino": "Tendenza alla stitichezza, gonfiore serale.",
+    "stomaco": "Qualche episodio di reflusso dopo cena.",
+    "fegato": "Nella norma.",
+    "cervicali": "Mal di testa 2-3 volte al mese.",
+    "tiroide": "Tiroidite di Hashimoto, in terapia.",
+    "doloriArticolari": "Ginocchia, a volte.",
+    "stressUmore": "Stress lavorativo alto, umore altalenante.",
+    "fameNervosa": "Sì",
+    "fameNervosaQuando": "Pomeriggio in ufficio (16-17) e la sera davanti alla TV.",
+    "vogliaDi": "Dolce",
+    "vogliaNote": "Cioccolato e biscotti.",
+    "sonno": "Si sveglia spesso verso le 3, fatica a riaddormentarsi.",
+    "energia": "Bassa al mattino, calo dopo pranzo.",
+    "urine": "Poche, beve poco (circa 0,8 litri).",
+    "lavoro": "Impiegata, seduta 8 ore; pranza in ufficio.",
+    "possibilitaAttivita": "Sì, camminata vicino a casa",
+    "quanteVolte": "3 volte a settimana",
+    "ciclo": "Regolare.",
+    "analisi": "Febbraio 2026: TSH nella norma in terapia, vitamina D bassa (da integrare su indicazione del medico).",
+    "giornataTipo": [
+     {
+      "momento": "Sveglia",
+      "ora": "06:45",
+      "testo": "Caffè"
+     },
+     {
+      "momento": "Colazione",
+      "ora": "07:15",
+      "testo": "Caffè e latte, 3 biscotti"
+     },
+     {
+      "momento": "Spuntino mattina",
+      "ora": "10:30",
+      "testo": "Spesso salta; a volte cracker dalla macchinetta"
+     },
+     {
+      "momento": "Pranzo",
+      "ora": "13:00",
+      "testo": "Panino o piadina al bar, oppure pasta portata da casa"
+     },
+     {
+      "momento": "Merenda",
+      "ora": "16:30",
+      "testo": "Barretta o cioccolato (fame nervosa)"
+     },
+     {
+      "momento": "Cena",
+      "ora": "20:00",
+      "testo": "Secondo con verdura, pane; spesso formaggio"
+     },
+     {
+      "momento": "Dopo cena",
+      "ora": "21:30",
+      "testo": "Qualcosa di dolce sul divano"
+     }
+    ],
+    "frequenze": {
+     "Carne bianca": 2,
+     "Carne rossa": 1,
+     "Salumi": 3,
+     "Pesce": 1,
+     "Uova": 1,
+     "Legumi": 0,
+     "Latticini e formaggi": 5,
+     "Pasta, riso, cereali": 6,
+     "Pane e sostituti": 7,
+     "Verdura": 5,
+     "Frutta": 3,
+     "Dolci": 7,
+     "Bibite zuccherate": 1,
+     "Alcol": 2,
+     "Pasti fuori casa": 5
+    },
+    "noteAlimentazione": "Mangia velocemente. Pochi legumi e pesce. Acqua insufficiente."
+   },
+   "nome": "Laura",
+   "cognome": "Fontana",
+   "sesso": "F",
+   "dataNascita": "1979-04-02",
+   "telefono": "333 900 1009",
+   "email": "laura.fontana@esempio.it",
+   "altezza": 163,
+   "obiettivo": "Ridurre la massa grassa e migliorare l'idratazione",
+   "pesoTeorico": 61.5,
+   "fabbisogno": 1630,
+   "anamnesi": {
+    "patologie": "Tiroidite di Hashimoto (in cura)",
+    "farmaci": "Levotiroxina",
+    "allergieIntolleranze": "Nessuna",
+    "attivitaFisica": "Camminata 3 volte a settimana (da aprile)",
+    "abitudini": "Impiegata, pranza in ufficio; fame nervosa nel pomeriggio"
+   },
+   "visite": [
+    {
+     "data": "2026-02-24",
+     "tipo": "Prima visita",
+     "vita": 88,
+     "note": "Prima visita: gonfiore serale, fame nervosa nel pomeriggio.",
+     "id": "vis1001",
+     "peso": 71.2,
+     "fianchi": 103,
+     "massaGrassa": 36,
+     "bia": {
+      "dataMisura": "2026-02-24",
+      "ora": "10:30",
+      "fonte": "BIA 2026-02-24.pdf",
+      "peso": 71.2,
+      "altezza": 163,
+      "bmi": 26.8,
+      "fmPerc": 36,
+      "fmKg": 25.6,
+      "tbwPerc": 40,
+      "tbwLitri": 28.5,
+      "aat": 395,
+      "pha": 5.4,
+      "smmPerc": 28,
+      "smmKg": 12.8,
+      "ffmPerc": 64,
+      "ffmKg": 45.6,
+      "bmr": 1330,
+      "ee24": 1680,
+      "pesoIdeale": 61.5
+     }
+    },
+    {
+     "data": "2026-04-21",
+     "tipo": "Controllo",
+     "vita": 85,
+     "note": "Meno gonfiore. Inserita camminata 3 volte a settimana.",
+     "id": "vis1002",
+     "peso": 69.6,
+     "fianchi": 100,
+     "massaGrassa": 34.5,
+     "bia": {
+      "dataMisura": "2026-04-21",
+      "ora": "10:30",
+      "fonte": "BIA 2026-04-21.pdf",
+      "peso": 69.6,
+      "altezza": 163,
+      "bmi": 26.2,
+      "fmPerc": 34.5,
+      "fmKg": 24,
+      "tbwPerc": 41,
+      "tbwLitri": 28.5,
+      "aat": 372,
+      "pha": 5.6,
+      "smmPerc": 28.6,
+      "smmKg": 13,
+      "ffmPerc": 65.5,
+      "ffmKg": 45.6,
+      "bmr": 1325,
+      "ee24": 1660,
+      "pesoIdeale": 61.5
+     }
+    },
+    {
+     "data": "2026-06-23",
+     "tipo": "Controllo",
+     "vita": 83,
+     "note": "Buona aderenza al piano, aumentata l'acqua.",
+     "id": "vis1003",
+     "peso": 68.1,
+     "fianchi": 98,
+     "massaGrassa": 33,
+     "bia": {
+      "dataMisura": "2026-06-23",
+      "ora": "10:30",
+      "fonte": "BIA 2026-06-23.pdf",
+      "peso": 68.1,
+      "altezza": 163,
+      "bmi": 25.6,
+      "fmPerc": 33,
+      "fmKg": 22.5,
+      "tbwPerc": 42,
+      "tbwLitri": 28.6,
+      "aat": 351,
+      "pha": 5.8,
+      "smmPerc": 29.1,
+      "smmKg": 13.3,
+      "ffmPerc": 67,
+      "ffmKg": 45.6,
+      "bmr": 1322,
+      "ee24": 1645,
+      "pesoIdeale": 61.5
+     }
+    },
+    {
+     "data": "2026-08-25",
+     "tipo": "Controllo",
+     "vita": 81,
+     "note": "Estate gestita bene. Prossimo obiettivo: -2 kg di massa grassa.",
+     "id": "vis1004",
+     "peso": 66.9,
+     "fianchi": 96,
+     "massaGrassa": 31.8,
+     "bia": {
+      "dataMisura": "2026-08-25",
+      "ora": "10:30",
+      "fonte": "BIA 2026-08-25.pdf",
+      "peso": 66.9,
+      "altezza": 163,
+      "bmi": 25.2,
+      "fmPerc": 31.8,
+      "fmKg": 21.3,
+      "tbwPerc": 43,
+      "tbwLitri": 28.8,
+      "aat": 333,
+      "pha": 6,
+      "smmPerc": 29.6,
+      "smmKg": 13.5,
+      "ffmPerc": 68.2,
+      "ffmKg": 45.6,
+      "bmr": 1320,
+      "ee24": 1630,
+      "pesoIdeale": 61.5
+     }
+    }
+   ],
+   "allegati": [
+    {
+     "id": "al9",
+     "nome": "Analisi del sangue febbraio 2026.pdf",
+     "tipo": "pdf",
+     "data": "2026-02-24",
+     "dimensioneKb": 380
+    }
+   ],
+   "consenso": {
+    "firmato": true,
+    "data": "2026-02-24",
+    "versioneInformativa": "v0 (segnaposto)",
+    "modalita": "cartaceo"
+   },
+   "attivo": true
+  },
+  {
+   "id": "c1",
+   "nome": "Giulia",
+   "cognome": "Martini",
+   "sesso": "F",
+   "dataNascita": "1988-03-14",
+   "telefono": "333 100 2001",
+   "email": "giulia.martini@esempio.it",
+   "altezza": 165,
+   "obiettivo": "Dimagrimento graduale, -6 kg",
+   "anamnesi": {
+    "patologie": "Nessuna rilevante",
+    "farmaci": "Nessuno",
+    "allergieIntolleranze": "Intolleranza al lattosio (lieve)",
+    "attivitaFisica": "Pilates 2 volte a settimana",
+    "abitudini": "Lavoro d'ufficio, pranza spesso fuori"
+   },
+   "visite": [
+    {
+     "id": "vis1005",
+     "data": "2026-05-12",
+     "tipo": "Prima visita",
+     "peso": 72.4,
+     "vita": 86,
+     "fianchi": 102,
+     "massaGrassa": 31.5
+    },
+    {
+     "id": "vis1006",
+     "data": "2026-06-09",
+     "tipo": "Controllo",
+     "peso": 71,
+     "vita": 84,
+     "fianchi": 100,
+     "massaGrassa": 30.8
+    },
+    {
+     "id": "vis1007",
+     "data": "2026-07-07",
+     "tipo": "Controllo",
+     "peso": 69.8,
+     "vita": 82,
+     "fianchi": 98,
+     "massaGrassa": 30.1
+    },
+    {
+     "id": "vis1008",
+     "data": "2026-08-25",
+     "tipo": "Controllo",
+     "peso": 69.1,
+     "vita": 81,
+     "fianchi": 97,
+     "massaGrassa": 29.6
+    },
+    {
+     "id": "vis1009",
+     "data": "2026-09-22",
+     "tipo": "Controllo",
+     "peso": 68,
+     "vita": 80,
+     "fianchi": 96,
+     "massaGrassa": 29
+    }
+   ],
+   "allegati": [
+    {
+     "id": "al1",
+     "nome": "Analisi del sangue maggio 2026.pdf",
+     "tipo": "pdf",
+     "data": "2026-05-12",
+     "dimensioneKb": 412
+    },
+    {
+     "id": "al2",
+     "nome": "Foto frontale maggio.jpg",
+     "tipo": "foto",
+     "data": "2026-05-12",
+     "dimensioneKb": 1830
+    }
+   ],
+   "consenso": {
+    "firmato": true,
+    "data": "2026-05-12",
+    "versioneInformativa": "v0 (segnaposto)",
+    "modalita": "cartaceo"
+   },
+   "dietaId": "d1",
+   "attivo": true
+  },
+  {
+   "id": "c2",
+   "nome": "Marco",
+   "cognome": "Bellini",
+   "sesso": "M",
+   "dataNascita": "1979-11-02",
+   "telefono": "347 200 3002",
+   "email": "m.bellini@esempio.it",
+   "altezza": 180,
+   "obiettivo": "Ricomposizione corporea, supporto allenamento",
+   "anamnesi": {
+    "patologie": "Ipercolesterolemia familiare",
+    "farmaci": "Statina (prescrizione del medico)",
+    "allergieIntolleranze": "Nessuna",
+    "attivitaFisica": "Corsa 3 volte a settimana",
+    "abitudini": "Salta spesso la colazione"
+   },
+   "visite": [
+    {
+     "id": "vis1010",
+     "data": "2026-04-03",
+     "tipo": "Prima visita",
+     "peso": 88.5,
+     "vita": 98,
+     "fianchi": 114,
+     "massaGrassa": 24
+    },
+    {
+     "id": "vis1011",
+     "data": "2026-05-08",
+     "tipo": "Controllo",
+     "peso": 87,
+     "vita": 96,
+     "fianchi": 112,
+     "massaGrassa": 23.1
+    },
+    {
+     "id": "vis1012",
+     "data": "2026-06-19",
+     "tipo": "Controllo",
+     "peso": 86.2,
+     "vita": 95,
+     "fianchi": 111,
+     "massaGrassa": 22.4
+    },
+    {
+     "id": "vis1013",
+     "data": "2026-09-15",
+     "tipo": "Controllo",
+     "peso": 85.4,
+     "vita": 93,
+     "fianchi": 109,
+     "massaGrassa": 21.5
+    }
+   ],
+   "allegati": [
+    {
+     "id": "al3",
+     "nome": "Profilo lipidico aprile.pdf",
+     "tipo": "pdf",
+     "data": "2026-04-03",
+     "dimensioneKb": 236
+    }
+   ],
+   "consenso": {
+    "firmato": true,
+    "data": "2026-04-03",
+    "versioneInformativa": "v0 (segnaposto)",
+    "modalita": "cartaceo"
+   },
+   "attivo": true
+  },
+  {
+   "id": "c3",
+   "nome": "Sara",
+   "cognome": "Colombo",
+   "sesso": "F",
+   "dataNascita": "1995-07-21",
+   "telefono": "340 300 4003",
+   "email": "sara.colombo@esempio.it",
+   "altezza": 170,
+   "obiettivo": "Alimentazione per gravidanza (2° trimestre)",
+   "anamnesi": {
+    "patologie": "Nessuna",
+    "farmaci": "Acido folico",
+    "allergieIntolleranze": "Nessuna",
+    "attivitaFisica": "Camminata quotidiana",
+    "abitudini": "Vegetariana"
+   },
+   "visite": [
+    {
+     "id": "vis1014",
+     "data": "2026-08-04",
+     "tipo": "Prima visita",
+     "peso": 63,
+     "vita": 80,
+     "fianchi": 96,
+     "massaGrassa": 27
+    },
+    {
+     "id": "vis1015",
+     "data": "2026-09-08",
+     "tipo": "Controllo",
+     "peso": 64.6,
+     "vita": 84,
+     "fianchi": 100,
+     "massaGrassa": 27.4
+    },
+    {
+     "id": "vis1016",
+     "data": "2026-10-06",
+     "tipo": "Controllo",
+     "peso": 66,
+     "vita": 88,
+     "fianchi": 104,
+     "massaGrassa": 27.8
+    }
+   ],
+   "allegati": [],
+   "consenso": {
+    "firmato": true,
+    "data": "2026-08-04",
+    "versioneInformativa": "v0 (segnaposto)",
+    "modalita": "cartaceo"
+   },
+   "attivo": true
+  },
+  {
+   "id": "c4",
+   "nome": "Luca",
+   "cognome": "Ferrari",
+   "sesso": "M",
+   "dataNascita": "2001-01-30",
+   "telefono": "328 400 5004",
+   "email": "luca.ferrari@esempio.it",
+   "altezza": 176,
+   "obiettivo": "Aumento massa muscolare",
+   "anamnesi": {
+    "patologie": "Nessuna",
+    "farmaci": "Nessuno",
+    "allergieIntolleranze": "Allergia alla frutta a guscio",
+    "attivitaFisica": "Palestra 4 volte a settimana",
+    "abitudini": "Studente, orari irregolari"
+   },
+   "visite": [
+    {
+     "id": "vis1017",
+     "data": "2026-06-02",
+     "tipo": "Prima visita",
+     "peso": 68,
+     "vita": 76,
+     "fianchi": 92,
+     "massaGrassa": 14
+    },
+    {
+     "id": "vis1018",
+     "data": "2026-07-14",
+     "tipo": "Controllo",
+     "peso": 69.3,
+     "vita": 77,
+     "fianchi": 93,
+     "massaGrassa": 14.2
+    },
+    {
+     "id": "vis1019",
+     "data": "2026-09-29",
+     "tipo": "Controllo",
+     "peso": 71.1,
+     "vita": 78,
+     "fianchi": 94,
+     "massaGrassa": 14.5
+    }
+   ],
+   "allegati": [],
+   "consenso": {
+    "firmato": false
+   },
+   "attivo": true
+  },
+  {
+   "id": "c5",
+   "nome": "Elena",
+   "cognome": "Rizzo",
+   "sesso": "F",
+   "dataNascita": "1969-09-09",
+   "telefono": "339 500 6005",
+   "email": "elena.rizzo@esempio.it",
+   "altezza": 160,
+   "obiettivo": "Menopausa, controllo peso",
+   "anamnesi": {
+    "patologie": "Ipotiroidismo",
+    "farmaci": "Levotiroxina",
+    "allergieIntolleranze": "Nessuna",
+    "attivitaFisica": "Acquagym",
+    "abitudini": "Spuntini serali frequenti"
+   },
+   "visite": [
+    {
+     "id": "vis1020",
+     "data": "2026-03-10",
+     "tipo": "Prima visita",
+     "peso": 74,
+     "vita": 92,
+     "fianchi": 108,
+     "massaGrassa": 36
+    },
+    {
+     "id": "vis1021",
+     "data": "2026-04-21",
+     "tipo": "Controllo",
+     "peso": 72.8,
+     "vita": 90,
+     "fianchi": 106,
+     "massaGrassa": 35.2
+    },
+    {
+     "id": "vis1022",
+     "data": "2026-06-03",
+     "tipo": "Controllo",
+     "peso": 71.5,
+     "vita": 89,
+     "fianchi": 105,
+     "massaGrassa": 34.6
+    },
+    {
+     "id": "vis1023",
+     "data": "2026-07-15",
+     "tipo": "Controllo",
+     "peso": 71.9,
+     "vita": 89,
+     "fianchi": 105,
+     "massaGrassa": 34.8
+    },
+    {
+     "id": "vis1024",
+     "data": "2026-09-30",
+     "tipo": "Controllo",
+     "peso": 70.2,
+     "vita": 87,
+     "fianchi": 103,
+     "massaGrassa": 34
+    }
+   ],
+   "allegati": [
+    {
+     "id": "al4",
+     "nome": "Esami tiroide marzo.pdf",
+     "tipo": "pdf",
+     "data": "2026-03-10",
+     "dimensioneKb": 188
+    }
+   ],
+   "consenso": {
+    "firmato": true,
+    "data": "2026-03-10",
+    "versioneInformativa": "v0 (segnaposto)",
+    "modalita": "cartaceo"
+   },
+   "attivo": true
+  },
+  {
+   "id": "c6",
+   "nome": "Davide",
+   "cognome": "Greco",
+   "sesso": "M",
+   "dataNascita": "1985-05-17",
+   "telefono": "320 600 7006",
+   "email": "davide.greco@esempio.it",
+   "altezza": 174,
+   "obiettivo": "Dimagrimento, -10 kg",
+   "anamnesi": {
+    "patologie": "Glicemia a digiuno alta (riferita dal medico)",
+    "farmaci": "Nessuno",
+    "allergieIntolleranze": "Nessuna",
+    "attivitaFisica": "Sedentario",
+    "abitudini": "Turni di notte"
+   },
+   "visite": [
+    {
+     "id": "vis1025",
+     "data": "2026-07-01",
+     "tipo": "Prima visita",
+     "peso": 96,
+     "vita": 108,
+     "fianchi": 124,
+     "massaGrassa": 31
+    },
+    {
+     "id": "vis1026",
+     "data": "2026-08-05",
+     "tipo": "Controllo",
+     "peso": 93.4,
+     "vita": 105,
+     "fianchi": 121,
+     "massaGrassa": 30
+    },
+    {
+     "id": "vis1027",
+     "data": "2026-09-09",
+     "tipo": "Controllo",
+     "peso": 91.8,
+     "vita": 103,
+     "fianchi": 119,
+     "massaGrassa": 29.3
+    },
+    {
+     "id": "vis1028",
+     "data": "2026-10-14",
+     "tipo": "Controllo",
+     "peso": 90.5,
+     "vita": 101,
+     "fianchi": 117,
+     "massaGrassa": 28.7
+    }
+   ],
+   "allegati": [],
+   "consenso": {
+    "firmato": true,
+    "data": "2026-07-01",
+    "versioneInformativa": "v0 (segnaposto)",
+    "modalita": "cartaceo"
+   },
+   "attivo": true
+  },
+  {
+   "id": "c7",
+   "nome": "Chiara",
+   "cognome": "Bruno",
+   "sesso": "F",
+   "dataNascita": "1992-12-05",
+   "telefono": "345 700 8007",
+   "email": "chiara.bruno@esempio.it",
+   "altezza": 168,
+   "obiettivo": "Alimentazione sportiva (triathlon)",
+   "anamnesi": {
+    "patologie": "Nessuna",
+    "farmaci": "Nessuno",
+    "allergieIntolleranze": "Celiachia",
+    "attivitaFisica": "Allenamento quotidiano",
+    "abitudini": "Gare nel weekend"
+   },
+   "visite": [
+    {
+     "id": "vis1029",
+     "data": "2026-05-20",
+     "tipo": "Prima visita",
+     "peso": 58,
+     "vita": 66,
+     "fianchi": 82,
+     "massaGrassa": 19
+    },
+    {
+     "id": "vis1030",
+     "data": "2026-08-12",
+     "tipo": "Controllo",
+     "peso": 57.4,
+     "vita": 65,
+     "fianchi": 81,
+     "massaGrassa": 18.4
+    }
+   ],
+   "allegati": [],
+   "consenso": {
+    "firmato": true,
+    "data": "2026-05-20",
+    "versioneInformativa": "v0 (segnaposto)",
+    "modalita": "cartaceo"
+   },
+   "attivo": true
+  },
+  {
+   "id": "c8",
+   "nome": "Paolo",
+   "cognome": "Gallo",
+   "sesso": "M",
+   "dataNascita": "1958-02-11",
+   "telefono": "331 800 9008",
+   "email": "paolo.gallo@esempio.it",
+   "altezza": 172,
+   "obiettivo": "Mantenimento, alimentazione equilibrata",
+   "anamnesi": {
+    "patologie": "Ipertensione",
+    "farmaci": "Antipertensivo (prescrizione del medico)",
+    "allergieIntolleranze": "Nessuna",
+    "attivitaFisica": "Bicicletta nel weekend",
+    "abitudini": "Pensionato"
+   },
+   "visite": [
+    {
+     "id": "vis1031",
+     "data": "2026-02-18",
+     "tipo": "Prima visita",
+     "peso": 81,
+     "vita": 99,
+     "fianchi": 115,
+     "massaGrassa": 27.5
+    },
+    {
+     "id": "vis1032",
+     "data": "2026-06-16",
+     "tipo": "Controllo",
+     "peso": 79.8,
+     "vita": 97,
+     "fianchi": 113,
+     "massaGrassa": 26.9
+    }
+   ],
+   "allegati": [],
+   "consenso": {
+    "firmato": true,
+    "data": "2026-02-18",
+    "versioneInformativa": "v0 (segnaposto)",
+    "modalita": "cartaceo"
+   },
+   "attivo": false
+  }
+ ],
+ "modelli": [
+  {
+   "id": "m1450",
+   "nome": "1450 – Piatto completo",
+   "tipo": "Ipocalorico",
+   "kcal": 1450,
+   "modificato": "2026-10-22",
+   "nota": "Trascritto dal Word di Valentina. Tipo «Ipocalorico» da confermare con lei.",
+   "titolo": "Piano alimentare",
+   "sezioni": [
+    {
+     "id": "sez1",
+     "titolo": "Colazione",
+     "icona": "☕",
+     "inclusa": true,
+     "elementi": [
+      {
+       "k": "testo",
+       "testo": "**Prima di colazione:** un bicchiere di acqua tiepida con un cucchiaio di semi di lino (a bisogno in caso di intestino lento)."
+      },
+      {
+       "k": "testo",
+       "testo": "**Bevanda:** tè verde o infuso di frutta; a piacere 1 caffè, da preferire a stomaco pieno (se consumato)."
+      },
+      {
+       "k": "opzioni",
+       "titolo": "Scegliere tra:",
+       "voci": [
+        {
+         "testo": "40-50 g di **pane di segale tostato** + 2 **uova** strapazzate/occhio di bue (o 1 uovo + 100 ml albume) + 1 tipo di **verdura** (pomodorini, insalatina…) oppure 1/3 di **avocado**"
+        },
+        {
+         "testo": "40-50 g di **pane di segale tostato** + 50-60 g di **salmone affumicato selvaggio** + 1 tipo di **verdura** (pomodorini, insalatina…) oppure 1/3 di **avocado**"
+        },
+        {
+         "titolo": "Pancake",
+         "testo": "Frullare 1 banana (o ½ banana + ½ mela) + 1 uovo/100 ml di albume + 3 cucchiai di farina di avena/riso integrale/grano saraceno + un pizzico di cannella + 1 cucchiaio di semi di lino/chia + poco lievito per dolci + 1 cucchiaino di olio di cocco/girasole/evo. Cuocere 2 minuti per lato."
+        },
+        {
+         "titolo": "Porridge d'avena",
+         "testo": "Ammollare 3-4 cucchiai di **fiocchi di avena** + un cucchiaio di semi di chia/lino con acqua calda a copertura (o riscaldare al momento). Al mattino aggiungere 150 g di **yogurt bianco** 0-2% non dolcificato + qualche pezzo di frutta oleosa come mandorle, nocciole… (o 1 cucchiaino in crema) oppure 10 g di cioccolato fondente > 85%. A piacere un pizzico di cannella/cacao. Aggiungere 1 frutto fresco o frutti rossi a completamento.",
+         "nota": "Esempi: mela cotta + cannella + pinoli · cocco + pistacchi + cioccolato fondente · mandorle + cacao + lamponi"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "sez2",
+     "titolo": "Spuntino mattino – pomeriggio",
+     "icona": "🍎",
+     "inclusa": true,
+     "elementi": [
+      {
+       "k": "opzioni",
+       "titolo": "Scegliere tra:",
+       "voci": [
+        {
+         "testo": "6-7 **mandorle** + 1 **frutto** medio",
+         "nota": "Alternare la tipologia di frutta; la banana è da preferire ½, mescolata ad un altro piccolo frutto."
+        },
+        {
+         "testo": "**Crudité di verdure** + 5-6 **olive verdi**"
+        },
+        {
+         "testo": "1 **yogurt vegetale** di cocco o mandorla non dolcificato + 1 **frutto** medio"
+        }
+       ]
+      },
+      {
+       "k": "testo",
+       "testo": "È consigliato tostare la frutta oleosa scaldandola in una padella fino a che profuma. Lasciar raffreddare e poi conservarla in un vaso di vetro. Può essere preparata in grande quantità."
+      }
+     ]
+    },
+    {
+     "id": "sez3",
+     "titolo": "Pranzo",
+     "icona": "🍝",
+     "inclusa": true,
+     "nuovaPagina": true,
+     "elementi": [
+      {
+       "k": "avviso",
+       "testo": "**Importante:** per la gestione glicemica il primo piatto va sempre accompagnato da un piatto di verdura cruda o cotta, da consumare come antipasto, condito con un cucchiaino di olio evo e limone a piacere."
+      },
+      {
+       "k": "opzioni",
+       "titolo": "Scegliere tra:",
+       "voci": [
+        {
+         "frequenza": "3 volte",
+         "testo": "60-70 g di **cereali in chicco**: quinoa, riso integrale originario (tondo), riso nero, rosso, orzo, farro"
+        },
+        {
+         "testo": "60-70 g di **cous cous di farro**"
+        },
+        {
+         "testo": "70 g di **pasta** di farro, grano saraceno o pasta di legumi"
+        }
+       ]
+      },
+      {
+       "k": "testo",
+       "testo": "**Condimento:** il sugo dovrà essere almeno pari al volume della pasta o del cereale cotto. Dovrà contenere verdura spadellata, alla griglia, al vapore o al forno tra quelle indicate. Se non desiderato, consumare la verdura a parte."
+      },
+      {
+       "k": "elenco",
+       "titolo": "Aggiungere qualche cucchiaio (70-80 g) di:",
+       "voci": [
+        "**pesce** (totani, vongole, branzino, calamari, gamberi…)",
+        "**carne bianca** (pollo, coniglio, tacchino, vitello)",
+        "120-150 g cotti di **legumi** (ceci o hummus di legumi), anche sotto forma di zuppa aggiungendo 40-50 g di cereale in chicco",
+        "**tonno** al naturale"
+       ]
+      },
+      {
+       "k": "avviso",
+       "testo": "**1 volta a settimana** è possibile sostituire la pasta o il cous cous con 50-60 g di **piadina integrale di farro** farcita con: 1 tipo di verdura cruda + 1 tipo di verdura cotta + 1 tipo di proteina (5-6 fette di bresaola, un petto di pollo alla griglia, 2 uova strapazzate, pesce fresco) + olive/avocado/1 cucchiaio di yogurt greco + 1 cucchiaio di semi di chia, girasole o canapa decorticati."
+      }
+     ]
+    },
+    {
+     "id": "sez4",
+     "titolo": "Cena",
+     "icona": "🍽",
+     "inclusa": true,
+     "elementi": [
+      {
+       "k": "avviso",
+       "testo": "**Antipasto:** iniziare il pasto con un piatto di verdura cruda o cotta, condito con un cucchiaino di olio evo e limone a piacere."
+      },
+      {
+       "k": "opzioni",
+       "titolo": "Scegliere tra:",
+       "voci": [
+        {
+         "frequenza": "2 volte",
+         "testo": "150 g di **carne bianca**"
+        },
+        {
+         "frequenza": "1-2 volte",
+         "testo": "2 **uova**"
+        },
+        {
+         "frequenza": "2 volte",
+         "testo": "180-200 g di **pesce**: merluzzo, platessa, orata, branzino… (salmone selvaggio 120 g)"
+        },
+        {
+         "frequenza": "1-2 volte",
+         "testo": "**Zuppa di legumi** con 2-3 tipi di verdura, senza patate + 50 g secchi/150 g cotti di legume + 30 g di cereali (tra quelli del pranzo) o pane di segale tostato"
+        }
+       ]
+      },
+      {
+       "k": "elenco",
+       "titolo": "Aggiungere:",
+       "voci": [
+        "**verdura cotta** (al dente)",
+        "50 g di **pane integrale tostato** di segale o di farro integrale, oppure 30 g di **riso basmati** (o altri cereali scritti sopra), oppure 1-2 volte 150 g di **patate** bollite e lasciate raffreddare dopo la cottura"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "sez5",
+     "titolo": "Da limitare",
+     "icona": "🧂",
+     "inclusa": true,
+     "nuovaPagina": true,
+     "elementi": [
+      {
+       "k": "elenco",
+       "voci": [
+        "**Latticini** (se non scritti nel piano)",
+        "**Caffè**: massimo 2 al giorno",
+        "**Ginseng**",
+        "**Zucchero bianco**",
+        "**Edulcoranti artificiali**",
+        "**Frumento**",
+        "**Piselli** (da limitare in caso di reazione avversa da favismo)",
+        "**Iceberg e lattuga**"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "sez6",
+     "titolo": "Note",
+     "icona": "💧",
+     "inclusa": true,
+     "elementi": [
+      {
+       "k": "testo",
+       "testo": "**Integrazione:** —"
+      },
+      {
+       "k": "elenco",
+       "voci": [
+        "Bere **fuori pasto 1,5 litri** di acqua con residuo fisso < 100 mg",
+        "Evitare l'acqua del rubinetto, da preferire in **bottiglia di vetro**, soprattutto in caso di tiroiditi o ipotiroidismo",
+        "**Tisane** libere",
+        "È consentito **un pasto libero a settimana**"
+       ]
+      },
+      {
+       "k": "testo",
+       "testo": "**Attività fisica:** inserimento di attività cardio e di costruzione muscolare."
+      }
+     ]
+    },
+    {
+     "id": "sez7",
+     "titolo": "Condimenti e dolcificanti",
+     "icona": "🥄",
+     "inclusa": true,
+     "elementi": [
+      {
+       "k": "tabella",
+       "righe": [
+        [
+         "Olio e.v.o. 100% italiano, non da comunità europea",
+         "2-3 cucchiai al giorno, da preferire a crudo"
+        ],
+        [
+         "Sale integrale marino o himalayano (rosa)",
+         "In piccola quantità"
+        ],
+        [
+         "Gomasio, tamari",
+         "Al posto del sale come insaporitore"
+        ],
+        [
+         "Aceto di mele, acidulato di umeboshi",
+         ""
+        ],
+        [
+         "Spezie e erbe aromatiche",
+         "Limitare pepe e peperoncino"
+        ],
+        [
+         "Malto di orzo/riso (no se è tolto il glutine), sciroppo di agave/acero, stevia pura, miele non pastorizzato",
+         "Limitare l'uso dei dolcificanti"
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "id": "sez8",
+     "titolo": "Gruppi alimentari",
+     "icona": "🥗",
+     "inclusa": true,
+     "informativa": true,
+     "nuovaPagina": true,
+     "elementi": [
+      {
+       "k": "testo",
+       "testo": "Lista generale per aiutare nella distinzione dei gruppi alimentari. Valutare e scegliere a seconda di ciò che è consentito nel proprio piano alimentare, secondo le indicazioni delle pagine precedenti."
+      },
+      {
+       "k": "immagini",
+       "voci": [
+        {
+         "chiave": "proteine-vegetali",
+         "mm": 19
+        },
+        {
+         "chiave": "proteine-uova-latticini",
+         "mm": 19
+        },
+        {
+         "chiave": "proteine-carne-pesce",
+         "mm": 19
+        }
+       ]
+      },
+      {
+       "k": "voci",
+       "voci": [
+        {
+         "titolo": "Proteine di origine animale",
+         "testo": "**Carne:** bianca (pollo, tacchino, coniglio, faraona), rosata (maiale, vitello), rossa (manzo, agnello, cavallo). **Pesce e animali marini:** molluschi (gamberetti, aragosta, astice, gamberi, mazzancolle, scampi, polpo, calamari, seppie, totani, vongole, cozze), pesci di mare (branzino, orata, sardine, alici, acciughe, pesce spada e tonno da limitare, merluzzo, sgombro, platessa, sogliola), pesci d'acqua dolce (salmone selvaggio surgelato/affumicato, persico, trota, luccio, carpa). **Latticini:** yogurt vaccino/caprino/ovino, ricotta, robiola, parmigiano reggiano, pecorino. **Uova.**"
+        },
+        {
+         "titolo": "Proteine di origine vegetale",
+         "testo": "**Legumi:** fagioli, ceci, lenticchie, azuki, soia. **Tofu:** derivato dalla bevanda di soia cagliata. **Tempeh:** derivato dalla bevanda di soia fermentata. **Seitan:** derivato del glutine dei cereali."
+        }
+       ]
+      },
+      {
+       "k": "immagini",
+       "voci": [
+        {
+         "chiave": "carboidrati",
+         "mm": 26
+        }
+       ]
+      },
+      {
+       "k": "voci",
+       "voci": [
+        {
+         "titolo": "Carboidrati",
+         "testo": "**Pane e derivati** (gallette, fette biscottate, wasa). **Cereali** con glutine (frumento, segale, farro, kamut, orzo, grani antichi: senatore cappelli, timilia, arso, russello, gentil rosso, jervicella, maiorca, saragolla) e senza glutine (riso nero/rosso/basmati/integrale/selvatico, quinoa, amaranto, avena, grano saraceno, teff, miglio, mais, sorgo) e **farine di cereali**. **Patate. Legumi. Frutta e verdura. Dolcificanti naturali** (miele, melassa, malto di riso o di orzo)."
+        }
+       ]
+      },
+      {
+       "k": "immagini",
+       "voci": [
+        {
+         "chiave": "grassi-1",
+         "mm": 19
+        },
+        {
+         "chiave": "grassi-2",
+         "mm": 19
+        }
+       ]
+      },
+      {
+       "k": "voci",
+       "voci": [
+        {
+         "titolo": "Grassi",
+         "testo": "**Avocado. Frutta oleosa** (anacardi, mandorle, noci, noci brasiliane, nocciole, pistacchi). **Arachidi** (legumi). **Cocco. Oli vegetali** (evo, cocco, semi). **Burro chiarificato** (ghee). **Semi oleosi** (chia, girasole, zucca, sesamo, canapa, lino)."
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "sez9",
+     "titolo": "Cotture",
+     "icona": "🍜",
+     "inclusa": true,
+     "informativa": true,
+     "elementi": [
+      {
+       "k": "immagini",
+       "voci": [
+        {
+         "chiave": "cotture",
+         "mm": 30
+        }
+       ]
+      },
+      {
+       "k": "voci",
+       "voci": [
+        {
+         "titolo": "Padella",
+         "testo": "Aggiungere un filo di olio evo dopo aver aggiunto l'alimento. Evitare i soffritti; se la ricetta lo richiede, aggiungere un cucchiaio di acqua e lasciar appassire prima di aggiungere l'olio. Per aumentare il sapore si possono usare aglio o cipolla liofilizzati in polvere o in scaglie (senza conservanti o oli), spezie, erbe aromatiche."
+        },
+        {
+         "titolo": "Forno",
+         "testo": "A cottura diretta con un filo di olio evo, erbe e spezie a piacere; per più croccantezza si può aggiungere farina di cereali consentiti o fiocchi non dolcificati. Possibile la cottura al cartoccio con la carta forno (evitare l'alluminio) o in vasocottura."
+        },
+        {
+         "titolo": "Vapore",
+         "testo": ""
+        },
+        {
+         "titolo": "Piastra",
+         "testo": "Evitare di abbrustolire troppo gli alimenti ed evitare la carbonizzazione; nel caso, scartare la parte scura."
+        },
+        {
+         "titolo": "Friggitrice ad aria",
+         "testo": "Può sostituire la friggitrice classica, senza condimenti o con un cucchiaino di olio evo. Evitare temperature oltre 180°, che favoriscono la formazione di composti tossici."
+        },
+        {
+         "titolo": "Slow cooking",
+         "testo": "Con elettrodomestici appositi che cuociono a bassa temperatura per tempi più lunghi."
+        },
+        {
+         "titolo": "Pressione",
+         "testo": "Riduce a circa ¼ il tempo di cottura: utile per cereali integrali o cibi che richiedono lunga cottura."
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "sez10",
+     "titolo": "Consigli per la spesa e la preparazione",
+     "icona": "🥕",
+     "inclusa": true,
+     "informativa": true,
+     "nuovaPagina": true,
+     "elementi": [
+      {
+       "k": "voci",
+       "voci": [
+        {
+         "titolo": "Frutta e verdura",
+         "testo": "Scegliere frutta e verdura **biologica** e/o da **coltivatori a km zero, stagionale e non trattata**: più ricca di micronutrienti e con meno pesticidi ed erbicidi. La frutta si può consumare cruda, in macedonia o cotta: a pezzetti, 5 minuti con un cucchiaio di acqua e a piacere un cucchiaino di cannella, vaniglia o altre spezie. L'insalata è da preferire fresca, non confezionata in atmosfera protetta. Le zuppe dovranno contenere al massimo 3 tipi di verdura, evitando la patata, con cotture di 20-25 minuti al massimo. Per evitare fermentazione lasciarla a pezzetti o passarla con il passaverdure; se frullata a immersione, attendere un paio d'ore prima del consumo. Si può aggiungere 1 cm di alga kombu a persona, ammollata in acqua tiepida, per evitare gonfiori."
+        },
+        {
+         "titolo": "Carne e pesce",
+         "testo": "Scegliere **pesce pescato** e non da allevamento, **carne senza antibiotici e OGM**, da preferire biologica. Preferire il pesce di taglia piccola come il pesce azzurro. Consumare pesci di grossa taglia (salmone, tonno, spada) al massimo 1 volta ogni 10 giorni. Il tonno in scatola non è consigliato: limitarlo a 1 volta a settimana, al naturale e in vasetto di vetro."
+        },
+        {
+         "titolo": "Cereali",
+         "testo": "Prima dell'uso sciacquarli bene. Si cuociono per assorbimento: 1 parte di cereale con 2 parti di acqua fredda e un pizzico di sale integrale, a fuoco lento e coperto fino a completo assorbimento. Si possono preparare in quantità e conservare in frigorifero 5-6 giorni, ben scolati. Il cous cous va reidratato con acqua bollente pari al suo volume. La pasta va scelta integrale, meglio di cereali alternativi (farro, timilia, arso, senatore cappelli), **essiccata lentamente** e biologica. Per un indice glicemico più basso cuocerla al dente e abbinarla sempre a verdura cruda o poco cotta. **Senza glutine:** riso, mais, quinoa, grano saraceno, amaranto, miglio, avena, teff. **Con glutine:** frumento, grano, kamut, farro, orzo, grani antichi."
+        },
+        {
+         "titolo": "Uova",
+         "testo": "Consigliata una cottura non troppo prolungata per una buona digeribilità: all'occhio di bue, strapazzate, frittata senza latte con verdure, alla coque (6 minuti al massimo dall'ebollizione) o in camicia. Utilizzare uova **codice 0**."
+        },
+        {
+         "titolo": "Legumi",
+         "testo": "Lasciarli in ammollo almeno 8 ore per eliminare sostanze che favoriscono il gonfiore. Cuocerli al vapore, bolliti o in casseruola con erbe o spezie. Si possono usare farine 100% di legume per polpette, farinata, crêpes. La pasta di legumi non va lavata: cuocerla 2-3 minuti dall'ebollizione e abbinarla a un sugo di verdura. Solo in caso di necessità, precotti in vasetto di vetro o surgelati senza conservanti."
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "sez11",
+     "titolo": "Pesi e porzioni",
+     "icona": "🥣",
+     "inclusa": true,
+     "informativa": true,
+     "nuovaPagina": true,
+     "elementi": [
+      {
+       "k": "testo",
+       "testo": "Indicazione visiva delle porzioni:"
+      },
+      {
+       "k": "immagini",
+       "voci": [
+        {
+         "chiave": "porzioni",
+         "mm": 60
+        }
+       ]
+      },
+      {
+       "k": "avviso",
+       "testo": "Salvo diversa indicazione, gli alimenti del piano si intendono **pesati a crudo**."
+      },
+      {
+       "k": "testo",
+       "testo": "Se pesi gli alimenti da cotti, puoi usare questi indici di conversione pratici:"
+      },
+      {
+       "k": "tabella",
+       "righe": [
+        [
+         "Pasta: aumenta circa ×2,5",
+         "50 g crudi ≈ 120-130 g cotti"
+        ],
+        [
+         "Riso: aumenta circa ×2,5 – ×3",
+         "50 g crudi ≈ 130-150 g cotti"
+        ],
+        [
+         "Cereali (farro, orzo, cous cous…): aumentano circa ×2 – ×2,5",
+         "50 g crudi ≈ 100-125 g cotti"
+        ],
+        [
+         "Patate: rimangono quasi invariate",
+         "100 g crudi ≈ 100-120 g cotti"
+        ],
+        [
+         "Carne: diminuisce circa ×0,7 – ×0,75",
+         "100 g crudi ≈ 70-75 g cotti"
+        ],
+        [
+         "Pesce: diminuisce circa ×0,7 – ×0,75",
+         "100 g crudi ≈ 70-75 g cotti"
+        ]
+       ]
+      },
+      {
+       "k": "voci",
+       "voci": [
+        {
+         "titolo": "Legumi: secco – fresco",
+         "testo": "I legumi secchi, rispetto al prodotto surgelato, ammollato e fresco, pesano il 70% in meno: 250 g di fagioli freschi corrispondono a circa 75 g di fagioli secchi."
+        },
+        {
+         "titolo": "Legumi: crudo – cotto",
+         "testo": "Ceci secchi: moltiplicare il peso per 3; fagioli e lenticchie: moltiplicare per 2,5. Esempio: 250 g di fagioli freschi = 625 g di fagioli lessi."
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "piani": [
+  {
+   "id": "pa1",
+   "clienteId": "c9",
+   "titolo": "Piano alimentare",
+   "modello": "1450 – Piatto completo",
+   "modelloId": "m1450",
+   "creato": "2026-08-25",
+   "kcal": 1450,
+   "messaggio": "Laura, ottimo lavoro in questi mesi! Continuiamo così: più acqua e la camminata 3 volte a settimana.",
+   "sezioni": [
+    {
+     "id": "sez1137",
+     "titolo": "Colazione",
+     "icona": "☕",
+     "inclusa": true,
+     "elementi": [
+      {
+       "k": "testo",
+       "testo": "**Prima di colazione:** un bicchiere di acqua tiepida con un cucchiaio di semi di lino (a bisogno in caso di intestino lento)."
+      },
+      {
+       "k": "testo",
+       "testo": "**Bevanda:** tè verde o infuso di frutta; a piacere 1 caffè, da preferire a stomaco pieno (se consumato)."
+      },
+      {
+       "k": "opzioni",
+       "titolo": "Scegliere tra:",
+       "voci": [
+        {
+         "testo": "40-50 g di **pane di segale tostato** + 2 **uova** strapazzate/occhio di bue (o 1 uovo + 100 ml albume) + 1 tipo di **verdura** (pomodorini, insalatina…) oppure 1/3 di **avocado**"
+        },
+        {
+         "testo": "40-50 g di **pane di segale tostato** + 50-60 g di **salmone affumicato selvaggio** + 1 tipo di **verdura** (pomodorini, insalatina…) oppure 1/3 di **avocado**"
+        },
+        {
+         "titolo": "Pancake",
+         "testo": "Frullare 1 banana (o ½ banana + ½ mela) + 1 uovo/100 ml di albume + 3 cucchiai di farina di avena/riso integrale/grano saraceno + un pizzico di cannella + 1 cucchiaio di semi di lino/chia + poco lievito per dolci + 1 cucchiaino di olio di cocco/girasole/evo. Cuocere 2 minuti per lato."
+        },
+        {
+         "titolo": "Porridge d'avena",
+         "testo": "Ammollare 3-4 cucchiai di **fiocchi di avena** + un cucchiaio di semi di chia/lino con acqua calda a copertura (o riscaldare al momento). Al mattino aggiungere 150 g di **yogurt bianco** 0-2% non dolcificato + qualche pezzo di frutta oleosa come mandorle, nocciole… (o 1 cucchiaino in crema) oppure 10 g di cioccolato fondente > 85%. A piacere un pizzico di cannella/cacao. Aggiungere 1 frutto fresco o frutti rossi a completamento.",
+         "nota": "Esempi: mela cotta + cannella + pinoli · cocco + pistacchi + cioccolato fondente · mandorle + cacao + lamponi"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "sez1138",
+     "titolo": "Spuntino mattino – pomeriggio",
+     "icona": "🍎",
+     "inclusa": true,
+     "elementi": [
+      {
+       "k": "opzioni",
+       "titolo": "Scegliere tra:",
+       "voci": [
+        {
+         "testo": "6-7 **mandorle** + 1 **frutto** medio",
+         "nota": "Alternare la tipologia di frutta; la banana è da preferire ½, mescolata ad un altro piccolo frutto."
+        },
+        {
+         "testo": "**Crudité di verdure** + 5-6 **olive verdi**"
+        },
+        {
+         "testo": "1 **yogurt vegetale** di cocco o mandorla non dolcificato + 1 **frutto** medio"
+        }
+       ]
+      },
+      {
+       "k": "testo",
+       "testo": "È consigliato tostare la frutta oleosa scaldandola in una padella fino a che profuma. Lasciar raffreddare e poi conservarla in un vaso di vetro. Può essere preparata in grande quantità."
+      }
+     ]
+    },
+    {
+     "id": "sez1139",
+     "titolo": "Pranzo",
+     "icona": "🍝",
+     "inclusa": true,
+     "nuovaPagina": true,
+     "elementi": [
+      {
+       "k": "avviso",
+       "testo": "**Importante:** per la gestione glicemica il primo piatto va sempre accompagnato da un piatto di verdura cruda o cotta, da consumare come antipasto, condito con un cucchiaino di olio evo e limone a piacere."
+      },
+      {
+       "k": "opzioni",
+       "titolo": "Scegliere tra:",
+       "voci": [
+        {
+         "frequenza": "3 volte",
+         "testo": "60-70 g di **cereali in chicco**: quinoa, riso integrale originario (tondo), riso nero, rosso, orzo, farro"
+        },
+        {
+         "testo": "60-70 g di **cous cous di farro**"
+        },
+        {
+         "testo": "70 g di **pasta** di farro, grano saraceno o pasta di legumi"
+        }
+       ]
+      },
+      {
+       "k": "testo",
+       "testo": "**Condimento:** il sugo dovrà essere almeno pari al volume della pasta o del cereale cotto. Dovrà contenere verdura spadellata, alla griglia, al vapore o al forno tra quelle indicate. Se non desiderato, consumare la verdura a parte."
+      },
+      {
+       "k": "elenco",
+       "titolo": "Aggiungere qualche cucchiaio (70-80 g) di:",
+       "voci": [
+        "**pesce** (totani, vongole, branzino, calamari, gamberi…)",
+        "**carne bianca** (pollo, coniglio, tacchino, vitello)",
+        "120-150 g cotti di **legumi** (ceci o hummus di legumi), anche sotto forma di zuppa aggiungendo 40-50 g di cereale in chicco",
+        "**tonno** al naturale"
+       ]
+      },
+      {
+       "k": "avviso",
+       "testo": "**1 volta a settimana** è possibile sostituire la pasta o il cous cous con 50-60 g di **piadina integrale di farro** farcita con: 1 tipo di verdura cruda + 1 tipo di verdura cotta + 1 tipo di proteina (5-6 fette di bresaola, un petto di pollo alla griglia, 2 uova strapazzate, pesce fresco) + olive/avocado/1 cucchiaio di yogurt greco + 1 cucchiaio di semi di chia, girasole o canapa decorticati."
+      }
+     ]
+    },
+    {
+     "id": "sez1140",
+     "titolo": "Cena",
+     "icona": "🍽",
+     "inclusa": true,
+     "elementi": [
+      {
+       "k": "avviso",
+       "testo": "**Antipasto:** iniziare il pasto con un piatto di verdura cruda o cotta, condito con un cucchiaino di olio evo e limone a piacere."
+      },
+      {
+       "k": "opzioni",
+       "titolo": "Scegliere tra:",
+       "voci": [
+        {
+         "frequenza": "2 volte",
+         "testo": "150 g di **carne bianca**"
+        },
+        {
+         "frequenza": "1-2 volte",
+         "testo": "2 **uova**"
+        },
+        {
+         "frequenza": "2 volte",
+         "testo": "180-200 g di **pesce**: merluzzo, platessa, orata, branzino… (salmone selvaggio 120 g)"
+        },
+        {
+         "frequenza": "1-2 volte",
+         "testo": "**Zuppa di legumi** con 2-3 tipi di verdura, senza patate + 50 g secchi/150 g cotti di legume + 30 g di cereali (tra quelli del pranzo) o pane di segale tostato"
+        }
+       ]
+      },
+      {
+       "k": "elenco",
+       "titolo": "Aggiungere:",
+       "voci": [
+        "**verdura cotta** (al dente)",
+        "50 g di **pane integrale tostato** di segale o di farro integrale, oppure 30 g di **riso basmati** (o altri cereali scritti sopra), oppure 1-2 volte 150 g di **patate** bollite e lasciate raffreddare dopo la cottura"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "sez1141",
+     "titolo": "Da limitare",
+     "icona": "🧂",
+     "inclusa": true,
+     "nuovaPagina": true,
+     "elementi": [
+      {
+       "k": "elenco",
+       "voci": [
+        "**Latticini** (se non scritti nel piano)",
+        "**Caffè**: massimo 2 al giorno",
+        "**Ginseng**",
+        "**Zucchero bianco**",
+        "**Edulcoranti artificiali**",
+        "**Frumento**",
+        "**Piselli** (da limitare in caso di reazione avversa da favismo)",
+        "**Iceberg e lattuga**"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "sez1142",
+     "titolo": "Note",
+     "icona": "💧",
+     "inclusa": true,
+     "elementi": [
+      {
+       "k": "testo",
+       "testo": "**Integrazione:** —"
+      },
+      {
+       "k": "elenco",
+       "voci": [
+        "Bere **fuori pasto 1,5 litri** di acqua con residuo fisso < 100 mg",
+        "Evitare l'acqua del rubinetto, da preferire in **bottiglia di vetro**, soprattutto in caso di tiroiditi o ipotiroidismo",
+        "**Tisane** libere",
+        "È consentito **un pasto libero a settimana**"
+       ]
+      },
+      {
+       "k": "testo",
+       "testo": "**Attività fisica:** inserimento di attività cardio e di costruzione muscolare."
+      }
+     ]
+    },
+    {
+     "id": "sez1143",
+     "titolo": "Condimenti e dolcificanti",
+     "icona": "🥄",
+     "inclusa": true,
+     "elementi": [
+      {
+       "k": "tabella",
+       "righe": [
+        [
+         "Olio e.v.o. 100% italiano, non da comunità europea",
+         "2-3 cucchiai al giorno, da preferire a crudo"
+        ],
+        [
+         "Sale integrale marino o himalayano (rosa)",
+         "In piccola quantità"
+        ],
+        [
+         "Gomasio, tamari",
+         "Al posto del sale come insaporitore"
+        ],
+        [
+         "Aceto di mele, acidulato di umeboshi",
+         ""
+        ],
+        [
+         "Spezie e erbe aromatiche",
+         "Limitare pepe e peperoncino"
+        ],
+        [
+         "Malto di orzo/riso (no se è tolto il glutine), sciroppo di agave/acero, stevia pura, miele non pastorizzato",
+         "Limitare l'uso dei dolcificanti"
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "id": "sez1144",
+     "titolo": "Gruppi alimentari",
+     "icona": "🥗",
+     "inclusa": true,
+     "informativa": true,
+     "nuovaPagina": true,
+     "elementi": [
+      {
+       "k": "testo",
+       "testo": "Lista generale per aiutare nella distinzione dei gruppi alimentari. Valutare e scegliere a seconda di ciò che è consentito nel proprio piano alimentare, secondo le indicazioni delle pagine precedenti."
+      },
+      {
+       "k": "immagini",
+       "voci": [
+        {
+         "chiave": "proteine-vegetali",
+         "mm": 19
+        },
+        {
+         "chiave": "proteine-uova-latticini",
+         "mm": 19
+        },
+        {
+         "chiave": "proteine-carne-pesce",
+         "mm": 19
+        }
+       ]
+      },
+      {
+       "k": "voci",
+       "voci": [
+        {
+         "titolo": "Proteine di origine animale",
+         "testo": "**Carne:** bianca (pollo, tacchino, coniglio, faraona), rosata (maiale, vitello), rossa (manzo, agnello, cavallo). **Pesce e animali marini:** molluschi (gamberetti, aragosta, astice, gamberi, mazzancolle, scampi, polpo, calamari, seppie, totani, vongole, cozze), pesci di mare (branzino, orata, sardine, alici, acciughe, pesce spada e tonno da limitare, merluzzo, sgombro, platessa, sogliola), pesci d'acqua dolce (salmone selvaggio surgelato/affumicato, persico, trota, luccio, carpa). **Latticini:** yogurt vaccino/caprino/ovino, ricotta, robiola, parmigiano reggiano, pecorino. **Uova.**"
+        },
+        {
+         "titolo": "Proteine di origine vegetale",
+         "testo": "**Legumi:** fagioli, ceci, lenticchie, azuki, soia. **Tofu:** derivato dalla bevanda di soia cagliata. **Tempeh:** derivato dalla bevanda di soia fermentata. **Seitan:** derivato del glutine dei cereali."
+        }
+       ]
+      },
+      {
+       "k": "immagini",
+       "voci": [
+        {
+         "chiave": "carboidrati",
+         "mm": 26
+        }
+       ]
+      },
+      {
+       "k": "voci",
+       "voci": [
+        {
+         "titolo": "Carboidrati",
+         "testo": "**Pane e derivati** (gallette, fette biscottate, wasa). **Cereali** con glutine (frumento, segale, farro, kamut, orzo, grani antichi: senatore cappelli, timilia, arso, russello, gentil rosso, jervicella, maiorca, saragolla) e senza glutine (riso nero/rosso/basmati/integrale/selvatico, quinoa, amaranto, avena, grano saraceno, teff, miglio, mais, sorgo) e **farine di cereali**. **Patate. Legumi. Frutta e verdura. Dolcificanti naturali** (miele, melassa, malto di riso o di orzo)."
+        }
+       ]
+      },
+      {
+       "k": "immagini",
+       "voci": [
+        {
+         "chiave": "grassi-1",
+         "mm": 19
+        },
+        {
+         "chiave": "grassi-2",
+         "mm": 19
+        }
+       ]
+      },
+      {
+       "k": "voci",
+       "voci": [
+        {
+         "titolo": "Grassi",
+         "testo": "**Avocado. Frutta oleosa** (anacardi, mandorle, noci, noci brasiliane, nocciole, pistacchi). **Arachidi** (legumi). **Cocco. Oli vegetali** (evo, cocco, semi). **Burro chiarificato** (ghee). **Semi oleosi** (chia, girasole, zucca, sesamo, canapa, lino)."
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "sez1145",
+     "titolo": "Cotture",
+     "icona": "🍜",
+     "inclusa": true,
+     "informativa": true,
+     "elementi": [
+      {
+       "k": "immagini",
+       "voci": [
+        {
+         "chiave": "cotture",
+         "mm": 30
+        }
+       ]
+      },
+      {
+       "k": "voci",
+       "voci": [
+        {
+         "titolo": "Padella",
+         "testo": "Aggiungere un filo di olio evo dopo aver aggiunto l'alimento. Evitare i soffritti; se la ricetta lo richiede, aggiungere un cucchiaio di acqua e lasciar appassire prima di aggiungere l'olio. Per aumentare il sapore si possono usare aglio o cipolla liofilizzati in polvere o in scaglie (senza conservanti o oli), spezie, erbe aromatiche."
+        },
+        {
+         "titolo": "Forno",
+         "testo": "A cottura diretta con un filo di olio evo, erbe e spezie a piacere; per più croccantezza si può aggiungere farina di cereali consentiti o fiocchi non dolcificati. Possibile la cottura al cartoccio con la carta forno (evitare l'alluminio) o in vasocottura."
+        },
+        {
+         "titolo": "Vapore",
+         "testo": ""
+        },
+        {
+         "titolo": "Piastra",
+         "testo": "Evitare di abbrustolire troppo gli alimenti ed evitare la carbonizzazione; nel caso, scartare la parte scura."
+        },
+        {
+         "titolo": "Friggitrice ad aria",
+         "testo": "Può sostituire la friggitrice classica, senza condimenti o con un cucchiaino di olio evo. Evitare temperature oltre 180°, che favoriscono la formazione di composti tossici."
+        },
+        {
+         "titolo": "Slow cooking",
+         "testo": "Con elettrodomestici appositi che cuociono a bassa temperatura per tempi più lunghi."
+        },
+        {
+         "titolo": "Pressione",
+         "testo": "Riduce a circa ¼ il tempo di cottura: utile per cereali integrali o cibi che richiedono lunga cottura."
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "sez1146",
+     "titolo": "Consigli per la spesa e la preparazione",
+     "icona": "🥕",
+     "inclusa": true,
+     "informativa": true,
+     "nuovaPagina": true,
+     "elementi": [
+      {
+       "k": "voci",
+       "voci": [
+        {
+         "titolo": "Frutta e verdura",
+         "testo": "Scegliere frutta e verdura **biologica** e/o da **coltivatori a km zero, stagionale e non trattata**: più ricca di micronutrienti e con meno pesticidi ed erbicidi. La frutta si può consumare cruda, in macedonia o cotta: a pezzetti, 5 minuti con un cucchiaio di acqua e a piacere un cucchiaino di cannella, vaniglia o altre spezie. L'insalata è da preferire fresca, non confezionata in atmosfera protetta. Le zuppe dovranno contenere al massimo 3 tipi di verdura, evitando la patata, con cotture di 20-25 minuti al massimo. Per evitare fermentazione lasciarla a pezzetti o passarla con il passaverdure; se frullata a immersione, attendere un paio d'ore prima del consumo. Si può aggiungere 1 cm di alga kombu a persona, ammollata in acqua tiepida, per evitare gonfiori."
+        },
+        {
+         "titolo": "Carne e pesce",
+         "testo": "Scegliere **pesce pescato** e non da allevamento, **carne senza antibiotici e OGM**, da preferire biologica. Preferire il pesce di taglia piccola come il pesce azzurro. Consumare pesci di grossa taglia (salmone, tonno, spada) al massimo 1 volta ogni 10 giorni. Il tonno in scatola non è consigliato: limitarlo a 1 volta a settimana, al naturale e in vasetto di vetro."
+        },
+        {
+         "titolo": "Cereali",
+         "testo": "Prima dell'uso sciacquarli bene. Si cuociono per assorbimento: 1 parte di cereale con 2 parti di acqua fredda e un pizzico di sale integrale, a fuoco lento e coperto fino a completo assorbimento. Si possono preparare in quantità e conservare in frigorifero 5-6 giorni, ben scolati. Il cous cous va reidratato con acqua bollente pari al suo volume. La pasta va scelta integrale, meglio di cereali alternativi (farro, timilia, arso, senatore cappelli), **essiccata lentamente** e biologica. Per un indice glicemico più basso cuocerla al dente e abbinarla sempre a verdura cruda o poco cotta. **Senza glutine:** riso, mais, quinoa, grano saraceno, amaranto, miglio, avena, teff. **Con glutine:** frumento, grano, kamut, farro, orzo, grani antichi."
+        },
+        {
+         "titolo": "Uova",
+         "testo": "Consigliata una cottura non troppo prolungata per una buona digeribilità: all'occhio di bue, strapazzate, frittata senza latte con verdure, alla coque (6 minuti al massimo dall'ebollizione) o in camicia. Utilizzare uova **codice 0**."
+        },
+        {
+         "titolo": "Legumi",
+         "testo": "Lasciarli in ammollo almeno 8 ore per eliminare sostanze che favoriscono il gonfiore. Cuocerli al vapore, bolliti o in casseruola con erbe o spezie. Si possono usare farine 100% di legume per polpette, farinata, crêpes. La pasta di legumi non va lavata: cuocerla 2-3 minuti dall'ebollizione e abbinarla a un sugo di verdura. Solo in caso di necessità, precotti in vasetto di vetro o surgelati senza conservanti."
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "sez1147",
+     "titolo": "Pesi e porzioni",
+     "icona": "🥣",
+     "inclusa": true,
+     "informativa": true,
+     "nuovaPagina": true,
+     "elementi": [
+      {
+       "k": "testo",
+       "testo": "Indicazione visiva delle porzioni:"
+      },
+      {
+       "k": "immagini",
+       "voci": [
+        {
+         "chiave": "porzioni",
+         "mm": 60
+        }
+       ]
+      },
+      {
+       "k": "avviso",
+       "testo": "Salvo diversa indicazione, gli alimenti del piano si intendono **pesati a crudo**."
+      },
+      {
+       "k": "testo",
+       "testo": "Se pesi gli alimenti da cotti, puoi usare questi indici di conversione pratici:"
+      },
+      {
+       "k": "tabella",
+       "righe": [
+        [
+         "Pasta: aumenta circa ×2,5",
+         "50 g crudi ≈ 120-130 g cotti"
+        ],
+        [
+         "Riso: aumenta circa ×2,5 – ×3",
+         "50 g crudi ≈ 130-150 g cotti"
+        ],
+        [
+         "Cereali (farro, orzo, cous cous…): aumentano circa ×2 – ×2,5",
+         "50 g crudi ≈ 100-125 g cotti"
+        ],
+        [
+         "Patate: rimangono quasi invariate",
+         "100 g crudi ≈ 100-120 g cotti"
+        ],
+        [
+         "Carne: diminuisce circa ×0,7 – ×0,75",
+         "100 g crudi ≈ 70-75 g cotti"
+        ],
+        [
+         "Pesce: diminuisce circa ×0,7 – ×0,75",
+         "100 g crudi ≈ 70-75 g cotti"
+        ]
+       ]
+      },
+      {
+       "k": "voci",
+       "voci": [
+        {
+         "titolo": "Legumi: secco – fresco",
+         "testo": "I legumi secchi, rispetto al prodotto surgelato, ammollato e fresco, pesano il 70% in meno: 250 g di fagioli freschi corrispondono a circa 75 g di fagioli secchi."
+        },
+        {
+         "titolo": "Legumi: crudo – cotto",
+         "testo": "Ceci secchi: moltiplicare il peso per 3; fagioli e lenticchie: moltiplicare per 2,5. Esempio: 250 g di fagioli freschi = 625 g di fagioli lessi."
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "appuntamenti": [
+  {
+   "id": "ap1",
+   "clienteId": "c6",
+   "data": "2026-10-19",
+   "ora": "09:00",
+   "durata": 45,
+   "tipo": "Controllo"
+  },
+  {
+   "id": "ap2",
+   "clienteId": "c3",
+   "data": "2026-10-19",
+   "ora": "15:30",
+   "durata": 45,
+   "tipo": "Controllo"
+  },
+  {
+   "id": "ap3",
+   "clienteId": "c1",
+   "data": "2026-10-20",
+   "ora": "10:00",
+   "durata": 45,
+   "tipo": "Controllo"
+  },
+  {
+   "id": "ap4",
+   "clienteId": "c4",
+   "data": "2026-10-20",
+   "ora": "11:00",
+   "durata": 30,
+   "tipo": "Online"
+  },
+  {
+   "id": "ap5",
+   "clienteId": "c2",
+   "data": "2026-10-20",
+   "ora": "17:00",
+   "durata": 45,
+   "tipo": "Controllo"
+  },
+  {
+   "id": "ap6",
+   "clienteId": "c5",
+   "data": "2026-10-21",
+   "ora": "09:30",
+   "durata": 45,
+   "tipo": "Controllo"
+  },
+  {
+   "id": "ap7",
+   "clienteId": "c7",
+   "data": "2026-10-22",
+   "ora": "14:00",
+   "durata": 60,
+   "tipo": "Prima visita"
+  },
+  {
+   "id": "ap8",
+   "clienteId": "c6",
+   "data": "2026-10-23",
+   "ora": "18:00",
+   "durata": 30,
+   "tipo": "Online"
+  },
+  {
+   "id": "ap9",
+   "clienteId": "c3",
+   "data": "2026-10-24",
+   "ora": "10:00",
+   "durata": 45,
+   "tipo": "Controllo"
+  },
+  {
+   "id": "ap10",
+   "clienteId": "c9",
+   "data": "2026-10-27",
+   "ora": "10:30",
+   "durata": 45,
+   "tipo": "Controllo"
+  }
+ ],
+ "alimenti": [
+  {
+   "id": "a1",
+   "icona": "🥛",
+   "nome": "Latte parzialmente scremato",
+   "categoria": "Latte e derivati",
+   "kcal": 46,
+   "proteine": 3.5,
+   "carboidrati": 5,
+   "grassi": 1.5
+  },
+  {
+   "id": "a2",
+   "icona": "🥣",
+   "nome": "Yogurt greco 0%",
+   "categoria": "Latte e derivati",
+   "kcal": 57,
+   "proteine": 10,
+   "carboidrati": 4,
+   "grassi": 0.2
+  },
+  {
+   "id": "a3",
+   "icona": "🧀",
+   "nome": "Parmigiano Reggiano",
+   "categoria": "Latte e derivati",
+   "kcal": 392,
+   "proteine": 33,
+   "carboidrati": 0,
+   "grassi": 28
+  },
+  {
+   "id": "a4",
+   "nome": "Ricotta vaccina",
+   "categoria": "Latte e derivati",
+   "kcal": 146,
+   "proteine": 8.8,
+   "carboidrati": 3.5,
+   "grassi": 10.9
+  },
+  {
+   "id": "a5",
+   "icona": "🌾",
+   "nome": "Fiocchi d'avena",
+   "categoria": "Cereali",
+   "kcal": 372,
+   "proteine": 13,
+   "carboidrati": 60,
+   "grassi": 7
+  },
+  {
+   "id": "a6",
+   "icona": "🍞",
+   "nome": "Pane integrale",
+   "categoria": "Cereali",
+   "kcal": 224,
+   "proteine": 7.5,
+   "carboidrati": 41,
+   "grassi": 1.3
+  },
+  {
+   "id": "a7",
+   "icona": "🍝",
+   "nome": "Pasta di semola",
+   "categoria": "Cereali",
+   "kcal": 353,
+   "proteine": 12,
+   "carboidrati": 72,
+   "grassi": 1.4
+  },
+  {
+   "id": "a8",
+   "icona": "🍚",
+   "nome": "Riso integrale",
+   "categoria": "Cereali",
+   "kcal": 337,
+   "proteine": 7.5,
+   "carboidrati": 74,
+   "grassi": 1.9
+  },
+  {
+   "id": "a9",
+   "nome": "Fette biscottate integrali",
+   "categoria": "Cereali",
+   "kcal": 390,
+   "proteine": 11,
+   "carboidrati": 70,
+   "grassi": 6
+  },
+  {
+   "id": "a10",
+   "icona": "🍗",
+   "nome": "Petto di pollo",
+   "categoria": "Carne",
+   "kcal": 100,
+   "proteine": 23,
+   "carboidrati": 0,
+   "grassi": 0.8
+  },
+  {
+   "id": "a11",
+   "icona": "🦃",
+   "nome": "Fesa di tacchino",
+   "categoria": "Carne",
+   "kcal": 107,
+   "proteine": 24,
+   "carboidrati": 0,
+   "grassi": 1.2
+  },
+  {
+   "id": "a12",
+   "nome": "Bresaola",
+   "categoria": "Carne",
+   "kcal": 151,
+   "proteine": 32,
+   "carboidrati": 0,
+   "grassi": 2.6
+  },
+  {
+   "id": "a13",
+   "icona": "🐟",
+   "nome": "Salmone fresco",
+   "categoria": "Pesce",
+   "kcal": 185,
+   "proteine": 18.4,
+   "carboidrati": 0,
+   "grassi": 12
+  },
+  {
+   "id": "a14",
+   "icona": "🐟",
+   "nome": "Merluzzo",
+   "categoria": "Pesce",
+   "kcal": 71,
+   "proteine": 17,
+   "carboidrati": 0,
+   "grassi": 0.3
+  },
+  {
+   "id": "a15",
+   "icona": "🐟",
+   "nome": "Tonno al naturale",
+   "categoria": "Pesce",
+   "kcal": 103,
+   "proteine": 25,
+   "carboidrati": 0,
+   "grassi": 0.3
+  },
+  {
+   "id": "a16",
+   "icona": "🥚",
+   "nome": "Uovo intero",
+   "categoria": "Uova",
+   "kcal": 128,
+   "proteine": 12.4,
+   "carboidrati": 0,
+   "grassi": 8.7
+  },
+  {
+   "id": "a17",
+   "nome": "Ceci secchi",
+   "categoria": "Legumi",
+   "kcal": 334,
+   "proteine": 21,
+   "carboidrati": 47,
+   "grassi": 6.3
+  },
+  {
+   "id": "a18",
+   "nome": "Lenticchie secche",
+   "categoria": "Legumi",
+   "kcal": 325,
+   "proteine": 23,
+   "carboidrati": 51,
+   "grassi": 2.5
+  },
+  {
+   "id": "a19",
+   "icona": "🥒",
+   "nome": "Zucchine",
+   "categoria": "Verdura",
+   "kcal": 11,
+   "proteine": 1.3,
+   "carboidrati": 1.4,
+   "grassi": 0.1
+  },
+  {
+   "id": "a20",
+   "icona": "🥗",
+   "nome": "Insalata mista",
+   "categoria": "Verdura",
+   "kcal": 19,
+   "proteine": 1.5,
+   "carboidrati": 2.5,
+   "grassi": 0.3
+  },
+  {
+   "id": "a21",
+   "icona": "🍅",
+   "nome": "Pomodori",
+   "categoria": "Verdura",
+   "kcal": 17,
+   "proteine": 1,
+   "carboidrati": 3,
+   "grassi": 0.2
+  },
+  {
+   "id": "a22",
+   "icona": "🥦",
+   "nome": "Broccoli",
+   "categoria": "Verdura",
+   "kcal": 27,
+   "proteine": 3,
+   "carboidrati": 3.1,
+   "grassi": 0.4
+  },
+  {
+   "id": "a23",
+   "icona": "🍎",
+   "nome": "Mela",
+   "categoria": "Frutta",
+   "kcal": 45,
+   "proteine": 0.3,
+   "carboidrati": 10.5,
+   "grassi": 0.1
+  },
+  {
+   "id": "a24",
+   "icona": "🍌",
+   "nome": "Banana",
+   "categoria": "Frutta",
+   "kcal": 65,
+   "proteine": 1.2,
+   "carboidrati": 15.4,
+   "grassi": 0.3
+  },
+  {
+   "id": "a25",
+   "icona": "🥝",
+   "nome": "Kiwi",
+   "categoria": "Frutta",
+   "kcal": 44,
+   "proteine": 1.2,
+   "carboidrati": 9,
+   "grassi": 0.6
+  },
+  {
+   "id": "a26",
+   "icona": "🍓",
+   "nome": "Frutti di bosco",
+   "categoria": "Frutta",
+   "kcal": 40,
+   "proteine": 0.9,
+   "carboidrati": 7,
+   "grassi": 0.3
+  },
+  {
+   "id": "a27",
+   "nome": "Mandorle",
+   "categoria": "Frutta secca",
+   "kcal": 603,
+   "proteine": 22,
+   "carboidrati": 4.6,
+   "grassi": 55
+  },
+  {
+   "id": "a28",
+   "nome": "Noci",
+   "categoria": "Frutta secca",
+   "kcal": 689,
+   "proteine": 14.3,
+   "carboidrati": 5.1,
+   "grassi": 68.1
+  },
+  {
+   "id": "a29",
+   "icona": "🥄",
+   "nome": "Olio extravergine d'oliva",
+   "categoria": "Condimenti",
+   "kcal": 899,
+   "proteine": 0,
+   "carboidrati": 0,
+   "grassi": 99.9
+  },
+  {
+   "id": "a30",
+   "icona": "🍯",
+   "nome": "Miele",
+   "categoria": "Condimenti",
+   "kcal": 304,
+   "proteine": 0.6,
+   "carboidrati": 80.3,
+   "grassi": 0
+  }
+ ],
+ "diete": [
+  {
+   "id": "d1",
+   "clienteId": "c1",
+   "titolo": "Piano ipocalorico — autunno 2026",
+   "creata": "2026-09-22",
+   "kcalObiettivo": 1600,
+   "settimana": {
+    "0": {
+     "Colazione": [
+      {
+       "id": "v1033",
+       "alimentoId": "a2",
+       "grammi": 150
+      },
+      {
+       "id": "v1034",
+       "alimentoId": "a5",
+       "grammi": 40
+      },
+      {
+       "id": "v1035",
+       "alimentoId": "a26",
+       "grammi": 80
+      }
+     ],
+     "Spuntino": [
+      {
+       "id": "v1036",
+       "alimentoId": "a23",
+       "grammi": 150
+      }
+     ],
+     "Pranzo": [
+      {
+       "id": "v1037",
+       "alimentoId": "a7",
+       "grammi": 80
+      },
+      {
+       "id": "v1038",
+       "alimentoId": "a21",
+       "grammi": 150
+      },
+      {
+       "id": "v1039",
+       "alimentoId": "a3",
+       "grammi": 10
+      },
+      {
+       "id": "v1040",
+       "alimentoId": "a29",
+       "grammi": 10
+      }
+     ],
+     "Merenda": [
+      {
+       "id": "v1041",
+       "alimentoId": "a27",
+       "grammi": 15
+      }
+     ],
+     "Cena": [
+      {
+       "id": "v1042",
+       "alimentoId": "a13",
+       "grammi": 150
+      },
+      {
+       "id": "v1043",
+       "alimentoId": "a22",
+       "grammi": 200
+      },
+      {
+       "id": "v1044",
+       "alimentoId": "a6",
+       "grammi": 50
+      },
+      {
+       "id": "v1045",
+       "alimentoId": "a29",
+       "grammi": 10
+      }
+     ]
+    },
+    "1": {
+     "Colazione": [
+      {
+       "id": "v1046",
+       "alimentoId": "a2",
+       "grammi": 150
+      },
+      {
+       "id": "v1047",
+       "alimentoId": "a5",
+       "grammi": 40
+      },
+      {
+       "id": "v1048",
+       "alimentoId": "a26",
+       "grammi": 80
+      }
+     ],
+     "Spuntino": [
+      {
+       "id": "v1049",
+       "alimentoId": "a23",
+       "grammi": 150
+      }
+     ],
+     "Pranzo": [
+      {
+       "id": "v1050",
+       "alimentoId": "a7",
+       "grammi": 80
+      },
+      {
+       "id": "v1051",
+       "alimentoId": "a21",
+       "grammi": 150
+      },
+      {
+       "id": "v1052",
+       "alimentoId": "a3",
+       "grammi": 10
+      },
+      {
+       "id": "v1053",
+       "alimentoId": "a29",
+       "grammi": 10
+      }
+     ],
+     "Merenda": [
+      {
+       "id": "v1054",
+       "alimentoId": "a27",
+       "grammi": 15
+      }
+     ],
+     "Cena": [
+      {
+       "id": "v1124",
+       "alimentoId": "a10",
+       "grammi": 150
+      },
+      {
+       "id": "v1125",
+       "alimentoId": "a19",
+       "grammi": 200
+      },
+      {
+       "id": "v1126",
+       "alimentoId": "a8",
+       "grammi": 60
+      },
+      {
+       "id": "v1127",
+       "alimentoId": "a29",
+       "grammi": 10
+      }
+     ]
+    },
+    "2": {
+     "Colazione": [
+      {
+       "id": "v1059",
+       "alimentoId": "a2",
+       "grammi": 150
+      },
+      {
+       "id": "v1060",
+       "alimentoId": "a5",
+       "grammi": 40
+      },
+      {
+       "id": "v1061",
+       "alimentoId": "a26",
+       "grammi": 80
+      }
+     ],
+     "Spuntino": [
+      {
+       "id": "v1062",
+       "alimentoId": "a23",
+       "grammi": 150
+      }
+     ],
+     "Pranzo": [
+      {
+       "id": "v1063",
+       "alimentoId": "a7",
+       "grammi": 80
+      },
+      {
+       "id": "v1064",
+       "alimentoId": "a21",
+       "grammi": 150
+      },
+      {
+       "id": "v1065",
+       "alimentoId": "a3",
+       "grammi": 10
+      },
+      {
+       "id": "v1066",
+       "alimentoId": "a29",
+       "grammi": 10
+      }
+     ],
+     "Merenda": [
+      {
+       "id": "v1067",
+       "alimentoId": "a27",
+       "grammi": 15
+      }
+     ],
+     "Cena": [
+      {
+       "id": "v1068",
+       "alimentoId": "a13",
+       "grammi": 150
+      },
+      {
+       "id": "v1069",
+       "alimentoId": "a22",
+       "grammi": 200
+      },
+      {
+       "id": "v1070",
+       "alimentoId": "a6",
+       "grammi": 50
+      },
+      {
+       "id": "v1071",
+       "alimentoId": "a29",
+       "grammi": 10
+      }
+     ]
+    },
+    "3": {
+     "Colazione": [
+      {
+       "id": "v1072",
+       "alimentoId": "a2",
+       "grammi": 150
+      },
+      {
+       "id": "v1073",
+       "alimentoId": "a5",
+       "grammi": 40
+      },
+      {
+       "id": "v1074",
+       "alimentoId": "a26",
+       "grammi": 80
+      }
+     ],
+     "Spuntino": [
+      {
+       "id": "v1075",
+       "alimentoId": "a23",
+       "grammi": 150
+      }
+     ],
+     "Pranzo": [
+      {
+       "id": "v1128",
+       "alimentoId": "a18",
+       "grammi": 70
+      },
+      {
+       "id": "v1129",
+       "alimentoId": "a20",
+       "grammi": 100
+      },
+      {
+       "id": "v1130",
+       "alimentoId": "a6",
+       "grammi": 40
+      },
+      {
+       "id": "v1131",
+       "alimentoId": "a29",
+       "grammi": 10
+      }
+     ],
+     "Merenda": [
+      {
+       "id": "v1080",
+       "alimentoId": "a27",
+       "grammi": 15
+      }
+     ],
+     "Cena": [
+      {
+       "id": "v1081",
+       "alimentoId": "a13",
+       "grammi": 150
+      },
+      {
+       "id": "v1082",
+       "alimentoId": "a22",
+       "grammi": 200
+      },
+      {
+       "id": "v1083",
+       "alimentoId": "a6",
+       "grammi": 50
+      },
+      {
+       "id": "v1084",
+       "alimentoId": "a29",
+       "grammi": 10
+      }
+     ]
+    },
+    "4": {
+     "Colazione": [
+      {
+       "id": "v1085",
+       "alimentoId": "a2",
+       "grammi": 150
+      },
+      {
+       "id": "v1086",
+       "alimentoId": "a5",
+       "grammi": 40
+      },
+      {
+       "id": "v1087",
+       "alimentoId": "a26",
+       "grammi": 80
+      }
+     ],
+     "Spuntino": [
+      {
+       "id": "v1088",
+       "alimentoId": "a23",
+       "grammi": 150
+      }
+     ],
+     "Pranzo": [
+      {
+       "id": "v1089",
+       "alimentoId": "a7",
+       "grammi": 80
+      },
+      {
+       "id": "v1090",
+       "alimentoId": "a21",
+       "grammi": 150
+      },
+      {
+       "id": "v1091",
+       "alimentoId": "a3",
+       "grammi": 10
+      },
+      {
+       "id": "v1092",
+       "alimentoId": "a29",
+       "grammi": 10
+      }
+     ],
+     "Merenda": [
+      {
+       "id": "v1093",
+       "alimentoId": "a27",
+       "grammi": 15
+      }
+     ],
+     "Cena": [
+      {
+       "id": "v1094",
+       "alimentoId": "a13",
+       "grammi": 150
+      },
+      {
+       "id": "v1095",
+       "alimentoId": "a22",
+       "grammi": 200
+      },
+      {
+       "id": "v1096",
+       "alimentoId": "a6",
+       "grammi": 50
+      },
+      {
+       "id": "v1097",
+       "alimentoId": "a29",
+       "grammi": 10
+      }
+     ]
+    },
+    "5": {
+     "Colazione": [
+      {
+       "id": "v1098",
+       "alimentoId": "a2",
+       "grammi": 150
+      },
+      {
+       "id": "v1099",
+       "alimentoId": "a5",
+       "grammi": 40
+      },
+      {
+       "id": "v1100",
+       "alimentoId": "a26",
+       "grammi": 80
+      }
+     ],
+     "Spuntino": [
+      {
+       "id": "v1101",
+       "alimentoId": "a23",
+       "grammi": 150
+      }
+     ],
+     "Pranzo": [
+      {
+       "id": "v1102",
+       "alimentoId": "a7",
+       "grammi": 80
+      },
+      {
+       "id": "v1103",
+       "alimentoId": "a21",
+       "grammi": 150
+      },
+      {
+       "id": "v1104",
+       "alimentoId": "a3",
+       "grammi": 10
+      },
+      {
+       "id": "v1105",
+       "alimentoId": "a29",
+       "grammi": 10
+      }
+     ],
+     "Merenda": [
+      {
+       "id": "v1106",
+       "alimentoId": "a27",
+       "grammi": 15
+      }
+     ],
+     "Cena": [
+      {
+       "id": "v1132",
+       "alimentoId": "a14",
+       "grammi": 200
+      },
+      {
+       "id": "v1133",
+       "alimentoId": "a20",
+       "grammi": 150
+      },
+      {
+       "id": "v1134",
+       "alimentoId": "a6",
+       "grammi": 60
+      },
+      {
+       "id": "v1135",
+       "alimentoId": "a29",
+       "grammi": 10
+      }
+     ]
+    },
+    "6": {
+     "Colazione": [
+      {
+       "id": "v1111",
+       "alimentoId": "a2",
+       "grammi": 150
+      },
+      {
+       "id": "v1112",
+       "alimentoId": "a5",
+       "grammi": 40
+      },
+      {
+       "id": "v1113",
+       "alimentoId": "a26",
+       "grammi": 80
+      }
+     ],
+     "Spuntino": [
+      {
+       "id": "v1114",
+       "alimentoId": "a23",
+       "grammi": 150
+      }
+     ],
+     "Pranzo": [
+      {
+       "id": "v1115",
+       "alimentoId": "a7",
+       "grammi": 80
+      },
+      {
+       "id": "v1116",
+       "alimentoId": "a21",
+       "grammi": 150
+      },
+      {
+       "id": "v1117",
+       "alimentoId": "a3",
+       "grammi": 10
+      },
+      {
+       "id": "v1118",
+       "alimentoId": "a29",
+       "grammi": 10
+      }
+     ],
+     "Merenda": [
+      {
+       "id": "v1119",
+       "alimentoId": "a27",
+       "grammi": 15
+      }
+     ],
+     "Cena": [
+      {
+       "id": "v1120",
+       "alimentoId": "a13",
+       "grammi": 150
+      },
+      {
+       "id": "v1121",
+       "alimentoId": "a22",
+       "grammi": 200
+      },
+      {
+       "id": "v1122",
+       "alimentoId": "a6",
+       "grammi": 50
+      },
+      {
+       "id": "v1123",
+       "alimentoId": "a29",
+       "grammi": 10
+      }
+     ]
+    }
+   },
+   "noteGenerali": "Bere almeno 1,5 litri d'acqua al giorno. Le verdure sono a volontà. Se pranzi fuori, scegli un primo semplice o un secondo con contorno."
+  }
+ ]
+}

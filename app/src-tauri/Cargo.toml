@@ -22,6 +22,10 @@ tauri = { version = "2", features = [] }
 tauri-plugin-opener = "2"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
+# Database SQLite cifrato (SQLCipher). OpenSSL viene compilato dentro il programma:
+# per compilare su Windows serve Strawberry Perl (solo sul PC di sviluppo).
+rusqlite = { version = "0.40", features = ["bundled-sqlcipher-vendored-openssl"] }
+base64 = "0.22"
 
 
 # Read the optimization guideline for more details: https://tauri.app/concept/size/#cargo-configuration
