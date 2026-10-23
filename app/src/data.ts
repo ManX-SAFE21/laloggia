@@ -275,6 +275,12 @@ export function nuovoModello(data: string): ModelloPiano {
   };
 }
 
+/** Nuovo modello ricavato dal piano di un cliente: COPIA indipendente (regola in CLAUDE.md),
+ *  senza nulla di personale (il messaggio in copertina non si copia). */
+export function modelloDaPiano(p: PianoAlimentare, nome: string, tipo: ModelloPiano["tipo"], kcal: number | undefined, nota: string, data: string): ModelloPiano {
+  return { id: nuovoId("m"), nome, tipo, kcal, modificato: data, nota, titolo: p.titolo, sezioni: copiaSezioni(p.sezioni) };
+}
+
 export function duplicaModello(m: ModelloPiano, data: string): ModelloPiano {
   return { ...structuredClone(m), id: nuovoId("m"), nome: `${m.nome} (copia)`, nota: `Copia di «${m.nome}»`, modificato: data, sezioni: copiaSezioni(m.sezioni) };
 }

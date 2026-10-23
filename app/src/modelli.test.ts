@@ -1,6 +1,6 @@
 // Regole dei modelli di piano (CLAUDE.md, "Piani alimentari: modelli e piani dei clienti").
 import { describe, expect, it } from "vitest";
-import { MODELLI, duplicaModello, nuovoModello, nuovoPianoDaModello } from "./data";
+import { MODELLI, duplicaModello, modelloDaPiano, nuovoModello, nuovoPianoDaModello } from "./data";
 import { ModelloPiano } from "./types";
 
 const modello = (): ModelloPiano => structuredClone(MODELLI[0]);
@@ -55,5 +55,22 @@ describe("nuovo modello e duplica", () => {
     copia.sezioni[0].titolo = "Cambiata nella copia";
     expect(m.sezioni[0].titolo).toBe("Colazione");
     expect(copia.nome).toBe("1450 – Piatto completo (copia)");
+  });
+});
+
+describe("salva il piano di un cliente come nuovo modello", () => {
+  it("è una copia indipendente e senza il messaggio personale", () => {
+    const piano = { ...nuovoPianoDaModello(modello(), "c9", "2026-10-23"), messaggio: "Laura, brava!" };
+    piano.sezioni[0].titolo = "Colazione di Laura";
+    const nuovo = modelloDaPiano(piano, "1450 – variante", "Isocalorico", 1500, "Creato dal piano di Laura Fontana", "2026-10-23");
+    expect(nuovo.messaggio).toBeUndefined();
+    expect(nuovo.sezioni[0].titolo).toBe("Colazione di Laura");
+    expect(nuovo).toMatchObject({ nome: "1450 – variante", tipo: "Isocalorico", kcal: 1500 });
+    // cambiare il modello non tocca il piano e viceversa
+    nuovo.sezioni[0].titolo = "Cambiata nel modello";
+    expect(piano.sezioni[0].titolo).toBe("Colazione di Laura");
+    piano.sezioni[1].titolo = "Cambiata nel piano";
+    expect(nuovo.sezioni[1].titolo).not.toBe("Cambiata nel piano");
+    expect(nuovo.sezioni.some((s) => piano.sezioni.some((x) => x.id === s.id))).toBe(false);
   });
 });

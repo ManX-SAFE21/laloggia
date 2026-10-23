@@ -1,15 +1,16 @@
 import { ReactNode, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useStore } from "../store";
-import { Icon } from "../components/ui";
+import { Icon, Modal } from "../components/ui";
 import { PianoStampa } from "../components/PianoStampa";
-import { fmtData } from "../data";
-import { Cliente, ElementoPiano, OpzionePiano, PianoAlimentare, SezionePiano } from "../types";
+import { OGGI, fmtData, modelloDaPiano } from "../data";
+import { Cliente, ElementoPiano, OpzionePiano, PianoAlimentare, SezionePiano, TIPI_MODELLO, TipoModello } from "../types";
 
 /** Piano del cliente: l'editor comune con la data di consegna e il ritorno alla scheda cliente. */
 export function PianoEditor({ id }: { id: string }) {
   const { piani, setPiani, clienti, vai } = useStore();
   const piano = piani.find((p) => p.id === id);
   const cliente = clienti.find((c) => c.id === piano?.clienteId);
+  const [salvaModello, setSalvaModello] = useState(false);
   if (!piano || !cliente) return <div className="page">Piano non trovato</div>;
   const aggiorna = (f: (p: PianoAlimentare) => PianoAlimentare) => setPiani((l) => l.map((x) => (x.id === id ? f(x) : x)));
   return (
@@ -22,19 +23,24 @@ export function PianoEditor({ id }: { id: string }) {
         </div>
       </>}
       riassunto={`consegna ${fmtData(piano.creato)}`}
+      azioniInPiu={<>
+        <button className="btn" onClick={() => setSalvaModello(true)} title="Crea un modello nuovo da questo piano, da usare con altri clienti">Salva come nuovo modello</button>
+        {salvaModello && <SalvaComeModello piano={piano} cliente={cliente} onClose={() => setSalvaModello(false)} />}
+      </>}
       campiInPiu={<div className="field"><label>Data di consegna</label><input className="input" type="date" value={piano.creato} onChange={(e) => aggiorna((p) => ({ ...p, creato: e.target.value }))} /></div>}
     />
   );
 }
 
 /** Editor comune di piani e modelli: sezioni a sinistra, foglio A4 a destra, collegati nei due sensi. */
-export function EditorPiano({ piano, cliente, aggiorna: aggiornaEsterno, intestazione, campiInPiu, riassunto }: {
+export function EditorPiano({ piano, cliente, aggiorna: aggiornaEsterno, intestazione, campiInPiu, riassunto, azioniInPiu }: {
   piano: PianoAlimentare;
   cliente: Cliente;
   aggiorna: (f: (p: PianoAlimentare) => PianoAlimentare) => void;
   intestazione: ReactNode; // a sinistra del pulsante di stampa
   campiInPiu?: ReactNode; // in cima al riquadro dei dati
   riassunto?: string; // riga dei dati principali, col riquadro chiuso
+  azioniInPiu?: ReactNode; // pulsanti accanto a «Stampa / Salva PDF»
 }) {
   const { toast } = useStore();
 
@@ -221,7 +227,10 @@ export function EditorPiano({ piano, cliente, aggiorna: aggiornaEsterno, intesta
       <div className="no-print">
         <div className="page-head">
           <div>{intestazione}</div>
-          <button className="btn primary" onClick={() => window.print()}><Icon.print /> Stampa / Salva PDF</button>
+          <div className="row" style={{ gap: 8 }}>
+            {azioniInPiu}
+            <button className="btn primary" onClick={() => window.print()}><Icon.print /> Stampa / Salva PDF</button>
+          </div>
         </div>
       </div>
 
@@ -405,5 +414,47 @@ function EditorOpzioni({ el, onChange }: { el: Extract<ElementoPiano, { k: "opzi
       ))}
       <button className="btn ghost sm" onClick={() => onChange({ ...el, voci: [...el.voci, { testo: "" }] })}><Icon.plus /> Aggiungi alternativa</button>
     </div>
+  );
+}
+
+/** Finestra «Salva come nuovo modello»: nome, tipo e kcal; il modello nasce come copia indipendente del piano. */
+function SalvaComeModello({ piano, cliente, onClose }: { piano: PianoAlimentare; cliente: Cliente; onClose: () => void }) {
+  const { modelli, setModelli, vai, toast } = useStore();
+  const origine = modelli.find((m) => m.id === piano.modelloId);
+  const [nome, setNome] = useState(`${piano.modello} (da ${cliente.nome} ${cliente.cognome})`);
+  const [tipo, setTipo] = useState<TipoModello>(origine?.tipo ?? "Isocalorico");
+  const [kcal, setKcal] = useState(piano.kcal != null ? String(piano.kcal) : "");
+  const nomeOk = nome.trim().length > 0;
+  const salva = (apri: boolean) => {
+    if (!nomeOk) return;
+    const n = Number(kcal);
+    const m = modelloDaPiano(piano, nome.trim(), tipo, kcal.trim() && !isNaN(n) ? n : undefined, `Creato dal piano di ${cliente.nome} ${cliente.cognome} del ${fmtData(piano.creato)}`, OGGI);
+    setModelli((l) => [...l, m]);
+    toast(`Modello «${m.nome}» salvato in Piani alimentari`);
+    onClose();
+    if (apri) vai({ nome: "modello", id: m.id });
+  };
+  return (
+    <Modal title="Salva come nuovo modello" onClose={onClose}
+      footer={<>
+        <button className="btn" onClick={onClose}>Annulla</button>
+        <button className="btn" disabled={!nomeOk} onClick={() => salva(true)}>Salva e apri il modello</button>
+        <button className="btn primary" disabled={!nomeOk} onClick={() => salva(false)}>Salva</button>
+      </>}>
+      <p className="small muted" style={{ marginTop: 0 }}>
+        Il modello nasce come copia di questo piano (sezioni, testi, alternative, immagini) ed è indipendente:
+        cambiarlo non tocca il piano di {cliente.nome}. Il messaggio personale in copertina non viene copiato.
+      </p>
+      <div className="field"><label>Nome del modello</label><input className="input" autoFocus value={nome} onChange={(e) => setNome(e.target.value)} /></div>
+      <div className="grid g2" style={{ marginTop: 8 }}>
+        <div className="field"><label>Tipo</label>
+          <select className="select" value={tipo} onChange={(e) => setTipo(e.target.value as TipoModello)}>
+            {TIPI_MODELLO.map((t) => <option key={t}>{t}</option>)}
+          </select>
+        </div>
+        <div className="field"><label>Kcal indicative</label><input className="input" value={kcal} onChange={(e) => setKcal(e.target.value)} /></div>
+      </div>
+      {!nomeOk && <p className="err">Scrivi un nome per il modello.</p>}
+    </Modal>
   );
 }

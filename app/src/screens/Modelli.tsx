@@ -84,7 +84,7 @@ const CLIENTE_ESEMPIO = { id: "", nome: "Nome", cognome: "Cognome", obiettivo: "
 
 /** Modifica di un modello: stesso editor dei piani, più nome, tipo e nota. */
 export function ModelloEditor({ id }: { id: string }) {
-  const { modelli, setModelli, piani, vai } = useStore();
+  const { modelli, setModelli, piani, vai, toast } = useStore();
   const m = modelli.find((x) => x.id === id);
   if (!m) return <div className="page">Modello non trovato</div>;
 
@@ -99,6 +99,12 @@ export function ModelloEditor({ id }: { id: string }) {
 
   return (
     <EditorPiano piano={comePiano} cliente={CLIENTE_ESEMPIO} aggiorna={aggiorna} riassunto={m.tipo}
+      azioniInPiu={<button className="btn" title="Crea un altro modello uguale a questo e lo apre" onClick={() => {
+        const copia = duplicaModello(m, OGGI);
+        setModelli((l) => [...l, copia]);
+        toast(`Creato «${copia.nome}»: ora stai modificando la copia`);
+        vai({ nome: "modello", id: copia.id });
+      }}>Salva come copia</button>}
       intestazione={<>
         <button className="btn ghost sm" style={{ marginBottom: 8, paddingLeft: 0 }} onClick={() => vai({ nome: "modelli" })}><Icon.back /> Piani alimentari</button>
         <div>
