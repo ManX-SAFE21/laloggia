@@ -6,6 +6,7 @@ import { Bia, Cliente, TIPI_MODELLO, TipoVisita, Visita } from "../types";
 import { INTERVALLO_CONTROLLO_MESI, MISURE, Misura, differenza, fmt, misura, piuMesi } from "../misure";
 import { ImportaBia } from "./ImportaBia";
 import { PrimaVisita } from "./PrimaVisita";
+import { Allegati } from "../components/Allegati";
 
 const TABS = [
   ["panoramica", "Panoramica"],
@@ -341,33 +342,6 @@ function Diete({ c, aggiorna }: { c: Cliente; aggiorna: (f: (c: Cliente) => Clie
         </table>
         {sue.length === 0 && <div className="empty">Nessuna dieta a griglia.</div>}
       </div>
-    </div>
-  );
-}
-
-function Allegati({ c, aggiorna }: { c: Cliente; aggiorna: (f: (c: Cliente) => Cliente) => void }) {
-  const { toast } = useStore();
-  const aggiungi = () => {
-    aggiorna((x) => ({ ...x, allegati: [...x.allegati, { id: nuovoId("al"), nome: `Referto ${fmtData(OGGI).replace(/\//g, "-")}.pdf`, tipo: "pdf", data: OGGI, dimensioneKb: 320 }] }));
-    toast("Allegato aggiunto (simulato)");
-  };
-  return (
-    <div className="card">
-      <div className="card-head"><h2>Allegati</h2><button className="btn sm" onClick={aggiungi}><Icon.plus /> Aggiungi PDF o foto</button></div>
-      <table className="table">
-        <tbody>
-          {c.allegati.map((a) => (
-            <tr key={a.id}>
-              <td style={{ width: 30, color: "var(--ink-2)" }}>{a.tipo === "pdf" ? <Icon.file /> : <Icon.image />}</td>
-              <td>{a.nome}</td>
-              <td className="muted num">{fmtData(a.data)}</td>
-              <td className="muted num" style={{ textAlign: "right" }}>{a.dimensioneKb >= 1000 ? `${(a.dimensioneKb / 1024).toFixed(1)} MB` : `${a.dimensioneKb} KB`}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      {c.allegati.length === 0 && <div className="empty">Nessun allegato</div>}
-      <div className="card-pad small muted" style={{ borderTop: "1px solid var(--line)" }}>Nel programma vero gli allegati vengono salvati cifrati dentro l'archivio e inclusi nei backup.</div>
     </div>
   );
 }

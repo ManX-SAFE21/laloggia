@@ -77,6 +77,8 @@ export interface Allegato {
   tipo: "pdf" | "foto";
   data: string;
   dimensioneKb: number;
+  conFile?: boolean; // il file è nel database (gli allegati di esempio non ne hanno)
+  descrizione?: string; // scritta da Valentina; se manca si mostra il nome del file
 }
 
 export interface Consenso {

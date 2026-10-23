@@ -1,4 +1,5 @@
 import { ReactNode, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { prossimoZoom } from "../zoomFoglio";
 import { useStore } from "../store";
 import { Icon, Modal } from "../components/ui";
 import { PianoStampa } from "../components/PianoStampa";
@@ -145,9 +146,9 @@ export function EditorPiano({ piano, cliente, aggiorna: aggiornaEsterno, intesta
   }, [adatta, senzaPannello, larghezzaPannello]);
   const LARGHEZZA_A4 = (210 * 96) / 25.4; // 210 mm in pixel
   const zoomFoglio = adatta && larghezza ? Math.max(0.4, Math.min(2.5, (larghezza - 24) / LARGHEZZA_A4)) : zoom;
-  const cambiaZoom = (passo: number) => {
+  const cambiaZoom = (verso: 1 | -1) => {
     setAdatta(false);
-    setZoom(Math.round(Math.max(0.5, Math.min(2, zoomFoglio + passo)) * 100) / 100);
+    setZoom(prossimoZoom(zoomFoglio, verso));
   };
 
   // Mentre si scorre il foglio, si evidenzia a sinistra la sezione che occupa la parte più grande della finestra
@@ -306,9 +307,9 @@ export function EditorPiano({ piano, cliente, aggiorna: aggiornaEsterno, intesta
             <button className="btn sm" onClick={ripeti} title={futuro.length ? `Ripeti (Ctrl+Y) · ${futuro.length} passi` : "Niente da ripetere"} style={{ opacity: futuro.length ? 1 : 0.45 }}>↷ Ripeti</button>
           </div>
           <div className="row" style={{ gap: 4 }}>
-            <button className="btn sm" title="Rimpicciolisci il foglio" onClick={() => cambiaZoom(-0.1)}>−</button>
-            <span className="num foglio-zoom" title="Ingrandimento del foglio a schermo (la stampa resta A4)">{Math.round(zoomFoglio * 100)}%</span>
-            <button className="btn sm" title="Ingrandisci il foglio" onClick={() => cambiaZoom(0.1)}>+</button>
+            <button className="btn sm" title="Rimpicciolisci il foglio" onClick={() => cambiaZoom(-1)}>−</button>
+            <span className="num foglio-zoom" title="Ingrandimento del foglio a schermo (la stampa resta A4). Clic: torna a 100%" onClick={() => { setAdatta(false); setZoom(1); }}>{Math.round(zoomFoglio * 100)}%</span>
+            <button className="btn sm" title="Ingrandisci il foglio" onClick={() => cambiaZoom(1)}>+</button>
             <button className={"btn sm" + (adatta ? " primary" : "")} title="Il foglio occupa tutta la larghezza libera" onClick={() => setAdatta((a) => !a)}>Adatta alla larghezza</button>
           </div>
         </div>

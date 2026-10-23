@@ -247,6 +247,17 @@ salvia (`#a9ba98`), titoli con grazie. Vedi le variabili in `mockup/src/styles.c
     **CHIAVE PROVVISORIA**: casuale, nel file `dati\chiave-provvisoria.bin` accanto al database → chi copia la
     cartella legge i dati. Solo per le prove, niente dati veri. Fase 4 (da discutere prima con Manuxxx, punto 00b):
     chiave protetta da PIN/password.
+  - **Allegati (2026-10-24)**: file dentro il database (`allegati.contenuto`), comandi a parte `allegato_salva_file`,
+    `allegato_leggi`, `allegato_esporta` (mai insieme alla scheda del cliente: il salvataggio automatico manda solo
+    i dati descrittivi e non tocca il file). Si aprono DENTRO il programma (pdf.js / immagine), nessuna copia in
+    chiaro sul disco; «Salva una copia…» (plugin dialog) crea un file normale dove sceglie Valentina.
+    Descrizione e data modificabili (migrazione v2: colonna `descrizione`). PDF/JPG/PNG/WebP fino a 20 MB.
+  - **Annulla / Ripeti di tutto il programma** (`src/annulla.ts`, store): ultime 20 modifiche (scelta di Manuxxx),
+    modifiche a meno di 0,8 s = un passo; allegati esclusi (il file eliminato non torna). Nell'editor del piano
+    restano i suoi (100 passi). Conferma alla X della finestra, con «No, resta» selezionato.
+  - Icona: cerchio salvia con piantina, `python scripts/crea-icona.py` poi `npm run tauri icon src-tauri/icons/sorgente-icona.png`
+    (cancellare le cartelle android/ e ios/ che crea). Visibile sull'exe solo dopo la ricompilazione.
+  - **Data di oggi ancora fissa** (`OGGI` in `src/data.ts`, viene dal mockup): da mettere reale prima dell'uso vero.
   - `npm test`: test automatici (vitest) di `src/bia.test.ts`, `src/misure.test.ts` e `src/modelli.test.ts`
     (quest'ultimo controlla le regole modelli/piani). Solo dati inventati.
   - Menu "Piani alimentari": `screens/Modelli.tsx` (elenco con filtro per tipo, nuovo/duplica/elimina, modifica

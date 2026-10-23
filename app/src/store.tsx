@@ -3,6 +3,7 @@ import { ALIMENTI, APPUNTAMENTI, CLIENTI, DIETE, MODELLI, PIANI } from "./data";
 import { Alimento, Appuntamento, Cliente, Dieta, ModelloPiano, PianoAlimentare } from "./types";
 import { ImmaginiCaricate } from "./immaginiPiano";
 import { DatiArchivio, differenze, fotografa, Fotografia } from "./sincronizza";
+import { PASSI_ANNULLA, UNISCI_MS, conAllegatiDiOggi, descriviPassaggio } from "./annulla";
 
 export type Vista =
   | { nome: "oggi" }
@@ -55,6 +56,11 @@ interface Store {
   bloccaOra: () => void;
   salvataggio: StatoSalvataggio;
   salvaOra: () => Promise<void>;
+  chiusura: boolean; // cliccata la X della finestra: si chiede conferma
+  confermaChiusura: (si: boolean) => void;
+  annulla: () => void; // Annulla / Ripeti di tutto il programma (l'editor del piano ha i suoi)
+  ripeti: () => void;
+  passiAnnulla: { indietro: number; avanti: number };
 }
 
 const Ctx = createContext<Store | null>(null);
@@ -122,11 +128,86 @@ export function StoreProvider({ children, toast, bloccaOra }: { children: ReactN
     inCorso.current = null;
   }, []);
 
+  // --- Annulla / Ripeti di tutto il programma: copie dei dati prima di ogni modifica (max PASSI_ANNULLA).
+  // Scrivere di seguito (modifiche a meno di UNISCI_MS) vale un passo solo. Gli allegati restano fuori.
+  const passato = useRef<DatiArchivio[]>([]);
+  const futuro = useRef<DatiArchivio[]>([]);
+  const ultimo = useRef<DatiArchivio | null>(null); // i dati dopo l'ultima modifica
+  const ultimaModifica = useRef(0);
+  const nonRegistrare = useRef(false); // il prossimo cambiamento viene da Annulla/Ripeti o dall'apertura
+  const [passiAnnulla, setPassiAnnulla] = useState({ indietro: 0, avanti: 0 });
+  const contaPassi = () => setPassiAnnulla({ indietro: passato.current.length, avanti: futuro.current.length });
+  useEffect(() => {
+    const prima = ultimo.current;
+    const ora = datiRef.current;
+    ultimo.current = ora;
+    if (!prima || (Object.keys(ora) as (keyof DatiArchivio)[]).every((k) => ora[k] === prima[k])) return; // niente di nuovo
+    if (nonRegistrare.current) { nonRegistrare.current = false; return; }
+    const t = Date.now();
+    if (t - ultimaModifica.current > UNISCI_MS || passato.current.length === 0) passato.current = [...passato.current, prima].slice(-PASSI_ANNULLA);
+    ultimaModifica.current = t;
+    futuro.current = [];
+    contaPassi();
+  }, [clienti, modelli, piani, appuntamenti, alimenti, diete, immagini]);
+  const metti = (d: DatiArchivio) => {
+    nonRegistrare.current = true;
+    ultimaModifica.current = 0;
+    setC(d.clienti); setM(d.modelli); setP(d.piani); setA(d.appuntamenti); setAl(d.alimenti); setD(d.diete); setI(d.immagini);
+  };
+  const annulla = useCallback(() => {
+    const ora = datiRef.current;
+    while (passato.current.length) {
+      const verso = conAllegatiDiOggi(passato.current[passato.current.length - 1], ora);
+      passato.current = passato.current.slice(0, -1);
+      const cosa = descriviPassaggio(ora, verso);
+      if (!cosa) continue; // cambiava solo un allegato: si salta
+      futuro.current = [ora, ...futuro.current].slice(0, PASSI_ANNULLA);
+      metti(verso);
+      contaPassi();
+      toast(`Annullata la modifica a: ${cosa}`);
+      return;
+    }
+    contaPassi();
+    toast("Niente da annullare");
+  }, [toast]);
+  const ripeti = useCallback(() => {
+    const ora = datiRef.current;
+    while (futuro.current.length) {
+      const verso = conAllegatiDiOggi(futuro.current[0], ora);
+      futuro.current = futuro.current.slice(1);
+      const cosa = descriviPassaggio(ora, verso);
+      if (!cosa) continue;
+      passato.current = [...passato.current, ora].slice(-PASSI_ANNULLA);
+      metti(verso);
+      contaPassi();
+      toast(`Rifatta la modifica a: ${cosa}`);
+      return;
+    }
+    contaPassi();
+    toast("Niente da ripetere");
+  }, [toast]);
+  // Ctrl+Z / Ctrl+Y (e Ctrl+Maiusc+Z) fuori dalle caselle di testo; nell'editor del piano valgono i suoi
+  const vistaRef = useRef(vista);
+  vistaRef.current = vista;
+  useEffect(() => {
+    const tasti = (e: KeyboardEvent) => {
+      if (!(e.ctrlKey || e.metaKey) || vistaRef.current.nome === "piano" || vistaRef.current.nome === "modello") return;
+      const t = e.target as HTMLElement | null;
+      if (t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.tagName === "SELECT" || t.isContentEditable)) return;
+      const k = e.key.toLowerCase();
+      if (k === "z" && !e.shiftKey) { e.preventDefault(); annulla(); }
+      else if (k === "y" || (k === "z" && e.shiftKey)) { e.preventDefault(); ripeti(); }
+    };
+    window.addEventListener("keydown", tasti);
+    return () => window.removeEventListener("keydown", tasti);
+  }, [annulla, ripeti]);
+
   // Apertura del database all'avvio
   useEffect(() => {
     if (!inTauri) return;
     comando<DatiArchivio & { percorso: string }>("db_apri")
       .then((t) => {
+        nonRegistrare.current = true; // i dati appena letti non sono una modifica da annullare
         setC(t.clienti); setM(t.modelli); setP(t.piani); setA(t.appuntamenti); setAl(t.alimenti); setD(t.diete); setI(t.immagini);
         salvati.current = fotografa(t);
         setSalvataggio({ stato: "salvato", ora: adesso(), percorso: t.percorso });
@@ -158,25 +239,31 @@ export function StoreProvider({ children, toast, bloccaOra }: { children: ReactN
     return () => window.removeEventListener("keydown", tasti);
   }, [salvaOra, toast]);
 
-  // Chiudendo la finestra: se c'è ancora qualcosa da salvare, si salva prima di chiudere
+  // X della finestra: prima si chiede conferma (contro i clic per sbaglio), poi si salva ciò che manca e si chiude
+  const [chiusura, setChiusura] = useState(false);
   useEffect(() => {
     if (!inTauri) return;
     let smetti: (() => void) | undefined;
     import("@tauri-apps/api/window").then(async ({ getCurrentWindow }) => {
-      const w = getCurrentWindow();
-      smetti = await w.onCloseRequested(async (ev) => {
-        const resta = salvati.current && differenze(salvati.current, datiRef.current).length > 0;
-        if (!resta && !inCorso.current) return;
+      smetti = await getCurrentWindow().onCloseRequested((ev) => {
         ev.preventDefault();
-        await salvaOra();
-        await w.destroy();
+        setChiusura(true);
       });
     });
     return () => smetti?.();
+  }, []);
+  const confermaChiusura = useCallback((si: boolean) => {
+    setChiusura(false);
+    if (!si || !inTauri) return;
+    void (async () => {
+      await salvaOra();
+      const { getCurrentWindow } = await import("@tauri-apps/api/window");
+      await getCurrentWindow().destroy();
+    })();
   }, [salvaOra]);
 
   return (
-    <Ctx.Provider value={{ alimenti, setAlimenti: setAl, clienti, setClienti: setC, diete, setDiete: setD, piani, setPiani: setP, modelli, setModelli: setM, immagini, setImmagini: setI, appuntamenti, setAppuntamenti: setA, vista, vai, toast, backup, setBackup, bloccaOra, salvataggio, salvaOra }}>
+    <Ctx.Provider value={{ alimenti, setAlimenti: setAl, clienti, setClienti: setC, diete, setDiete: setD, piani, setPiani: setP, modelli, setModelli: setM, immagini, setImmagini: setI, appuntamenti, setAppuntamenti: setA, vista, vai, toast, backup, setBackup, bloccaOra, salvataggio, salvaOra, chiusura, confermaChiusura, annulla, ripeti, passiAnnulla }}>
       {children}
     </Ctx.Provider>
   );

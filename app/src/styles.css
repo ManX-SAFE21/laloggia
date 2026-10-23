@@ -49,6 +49,10 @@ h3 { font-size: 15px; font-family: var(--font); font-weight: 600; }
 .nav-btn.active { background: rgba(255,255,255,0.12); color: #fff; }
 .nav-btn svg { width: 18px; height: 18px; flex: none; }
 .sidebar-foot { margin-top: auto; display: flex; flex-direction: column; gap: 8px; }
+.annulla-riga { display: flex; gap: 6px; }
+.annulla-btn { flex: 1; font: inherit; font-size: 13px; padding: 7px 8px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.18); background: rgba(255,255,255,0.06); color: #fff; cursor: pointer; }
+.annulla-btn:hover:not(:disabled) { background: rgba(255,255,255,0.14); }
+.annulla-btn:disabled { opacity: 0.4; cursor: default; }
 .backup-pill { font-size: 12px; color: #e6dfd2; padding: 8px 10px; border-radius: 8px; background: rgba(255,255,255,0.05); }
 .backup-pill b { color: #fff; font-weight: 600; }
 .salva-pill { font-size: 12px; color: #e6dfd2; padding: 8px 10px; border-radius: 8px; background: rgba(255,255,255,0.05); margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
@@ -294,7 +298,8 @@ h3 { font-size: 15px; font-family: var(--font); font-weight: 600; }
 /* Barra dello zoom del foglio e pannello nascosto */
 .piano-destra { min-width: 0; }
 .foglio-barra { position: sticky; top: 0; z-index: 5; display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 8px 4px; margin-bottom: 6px; background: var(--bg); border-bottom: 1px solid var(--line); }
-.foglio-zoom { min-width: 48px; text-align: center; font-weight: 600; }
+.foglio-zoom { min-width: 48px; text-align: center; font-weight: 600; cursor: pointer; border-radius: 6px; }
+.foglio-zoom:hover { background: var(--accent-2); }
 .piano-layout.senza-pannello { grid-template-columns: 1fr; }
 .piano-layout.senza-pannello .piano-editor { display: none; }
 .piano-layout.senza-pannello .piano-divisore { display: none; }
@@ -335,3 +340,14 @@ h3 { font-size: 15px; font-family: var(--font); font-weight: 600; }
 /* Riga appena creata (es. Duplica): si illumina e poi torna normale */
 .table tr.riga-nuova td { animation: riga-nuova 4s ease-out; }
 @keyframes riga-nuova { 0%, 60% { background: var(--accent-2); } 100% { background: transparent; } }
+
+/* Allegati del cliente */
+.allegati-sopra { outline: 3px dashed var(--olive); outline-offset: -3px; background: var(--accent-2); }
+.riga-cliccabile { cursor: pointer; }
+.riga-cliccabile:hover td { background: var(--surface-2); }
+.visore { max-height: 70vh; overflow: auto; background: var(--surface-2); border-radius: 8px; padding: 4px; text-align: center; }
+.visore img { max-width: 100%; }
+.visore-pagina { display: block; max-width: 100%; height: auto; margin: 0 auto 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.15); background: #fff; }
+.cambiabile { cursor: text; border-radius: 4px; padding: 1px 3px; margin: -1px -3px; }
+.cambiabile:hover { background: var(--accent-2); }
+.cambiabile-input { padding: 3px 6px; font-size: 14px; width: 100%; min-width: 120px; }

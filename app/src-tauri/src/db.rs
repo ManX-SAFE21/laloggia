@@ -91,6 +91,10 @@ const MIGRAZIONI: &[&str] = &[
       valore TEXT NOT NULL
     );
     "#,
+    // v2 (2026-10-24): descrizione degli allegati, scritta da Valentina (prima c'era solo il nome del file)
+    r#"
+    ALTER TABLE allegati ADD COLUMN descrizione TEXT;
+    "#,
 ];
 
 pub const VERSIONE_SCHEMA: i64 = MIGRAZIONI.len() as i64;
@@ -203,11 +207,17 @@ impl Db {
                 let mut qv = c.prepare("SELECT dati FROM visite WHERE cliente_id = ?1 ORDER BY data")?;
                 for d in qv.query_map([&id], |r| r.get::<_, String>(0))? { visite.push(json_da(&d?)?); }
                 let mut allegati = Vec::new();
-                let mut qa = c.prepare("SELECT id, nome, tipo, data, dimensione_kb FROM allegati WHERE cliente_id = ?1 ORDER BY data")?;
-                for a in qa.query_map([&id], |r| Ok(json!({
-                    "id": r.get::<_, String>(0)?, "nome": r.get::<_, String>(1)?, "tipo": r.get::<_, String>(2)?,
-                    "data": r.get::<_, String>(3)?, "dimensioneKb": r.get::<_, Option<i64>>(4)?,
-                })))? { allegati.push(a?); }
+                let mut qa = c.prepare("SELECT id, nome, tipo, data, dimensione_kb, contenuto IS NOT NULL, descrizione FROM allegati WHERE cliente_id = ?1 ORDER BY data")?;
+                for a in qa.query_map([&id], |r| {
+                    let mut a = json!({
+                        "id": r.get::<_, String>(0)?, "nome": r.get::<_, String>(1)?, "tipo": r.get::<_, String>(2)?,
+                        "data": r.get::<_, String>(3)?, "dimensioneKb": r.get::<_, Option<i64>>(4)?,
+                    });
+                    // il file non viaggia con il cliente: si legge a parte con allegato_leggi
+                    if r.get::<_, bool>(5)? { a["conFile"] = json!(true); }
+                    if let Some(d) = r.get::<_, Option<String>>(6)? { a["descrizione"] = json!(d); }
+                    Ok(a)
+                })? { allegati.push(a?); }
                 if let Some(o) = cl.as_object_mut() {
                     o.insert("visite".into(), Value::Array(visite));
                     o.insert("allegati".into(), Value::Array(allegati));
@@ -297,6 +307,22 @@ impl Db {
         )?;
         Ok(())
     }
+    /// Il file di un allegato (PDF o foto), dentro il database cifrato. Crea la riga se non c'è ancora:
+    /// il salvataggio automatico del cliente può arrivare prima o dopo, e non tocca mai il contenuto.
+    pub fn allegato_salva_file(&self, cliente_id: &str, a: &Value, byte: &[u8]) -> Ris<()> {
+        self.conn.execute(
+            "INSERT INTO allegati(id, cliente_id, nome, tipo, data, dimensione_kb, descrizione, contenuto) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8)
+             ON CONFLICT(id) DO UPDATE SET contenuto = excluded.contenuto",
+            params![testo(a, "id")?, cliente_id, testo(a, "nome")?, testo(a, "tipo")?, testo(a, "data")?, a.get("dimensioneKb").and_then(Value::as_i64),
+                    a.get("descrizione").and_then(Value::as_str), byte],
+        )?;
+        Ok(())
+    }
+    /// Nome e contenuto del file di un allegato (None se l'allegato non ha file, es. quelli di esempio).
+    pub fn allegato_leggi(&self, id: &str) -> Ris<Option<(String, Vec<u8>)>> {
+        Ok(self.conn.query_row("SELECT nome, contenuto FROM allegati WHERE id = ?1 AND contenuto IS NOT NULL", [id],
+            |r| Ok((r.get::<_, String>(0)?, r.get::<_, Vec<u8>>(1)?))).optional()?)
+    }
     pub fn elimina_cliente(&self, id: &str) -> Ris<()> {
         self.conn.execute("DELETE FROM clienti WHERE id = ?1", [id])?;
         Ok(())
@@ -352,9 +378,11 @@ impl Scrittura<'_> {
         for a in lista(c, "allegati") {
             // solo i dati descrittivi: il contenuto del file, se c'è, resta com'è
             self.c.execute(
-                "INSERT INTO allegati(id, cliente_id, nome, tipo, data, dimensione_kb) VALUES (?1, ?2, ?3, ?4, ?5, ?6)
-                 ON CONFLICT(id) DO UPDATE SET nome = excluded.nome, tipo = excluded.tipo, data = excluded.data, dimensione_kb = excluded.dimensione_kb",
-                params![testo(a, "id")?, id, testo(a, "nome")?, testo(a, "tipo")?, testo(a, "data")?, a.get("dimensioneKb").and_then(Value::as_i64)],
+                "INSERT INTO allegati(id, cliente_id, nome, tipo, data, dimensione_kb, descrizione) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7)
+                 ON CONFLICT(id) DO UPDATE SET nome = excluded.nome, tipo = excluded.tipo, data = excluded.data, dimensione_kb = excluded.dimensione_kb,
+                   descrizione = excluded.descrizione",
+                params![testo(a, "id")?, id, testo(a, "nome")?, testo(a, "tipo")?, testo(a, "data")?, a.get("dimensioneKb").and_then(Value::as_i64),
+                        a.get("descrizione").and_then(Value::as_str)],
             )?;
             allegati.push(testo(a, "id")?);
         }
@@ -567,6 +595,43 @@ mod test {
         assert_eq!(db.conta("immagini").unwrap(), 0);
         assert!(db.carica_tutto().unwrap()["appuntamenti"].as_array().unwrap().iter().all(|a| a["id"] != "ap10"));
         assert!(db.salva("sconosciuto", &json!({})).is_err());
+        drop(db);
+        let _ = std::fs::remove_file(&p);
+    }
+
+    #[test]
+    fn allegato_con_file_resiste_al_salvataggio_del_cliente() {
+        let p = file_prova("allegati");
+        let mut db = Db::apri(&p, &CHIAVE).unwrap();
+        db.semina_se_vuoto(DATI_ESEMPIO).unwrap();
+        let mut c = db.carica_tutto().unwrap()["clienti"][0].clone();
+        let id = c["id"].as_str().unwrap().to_string();
+        let a = json!({ "id": "al-vero", "nome": "Referto.pdf", "tipo": "pdf", "data": "2026-10-24", "dimensioneKb": 1 });
+        // il file arriva prima del salvataggio automatico del cliente
+        db.allegato_salva_file(&id, &a, b"%PDF-prova").unwrap();
+        assert_eq!(db.allegato_leggi("al-vero").unwrap(), Some(("Referto.pdf".into(), b"%PDF-prova".to_vec())));
+        c["allegati"].as_array_mut().unwrap().push(a.clone());
+        c["obiettivo"] = json!("cambiato");
+        db.salva("cliente", &c).unwrap();
+        // salvare il cliente (solo dati descrittivi) non cancella il file
+        assert_eq!(db.allegato_leggi("al-vero").unwrap().unwrap().1, b"%PDF-prova".to_vec());
+        let riletto = db.carica_tutto().unwrap()["clienti"].as_array().unwrap().iter().find(|x| x["id"] == id.as_str()).unwrap().clone();
+        assert_eq!(riletto["allegati"].as_array().unwrap().iter().find(|x| x["id"] == "al-vero").unwrap()["conFile"], true);
+        // descrizione e data cambiate da Valentina: salvate, e il file resta
+        let al = c["allegati"].as_array_mut().unwrap().iter_mut().find(|x| x["id"] == "al-vero").unwrap();
+        al["descrizione"] = json!("Analisi del sangue");
+        al["data"] = json!("2026-03-15");
+        db.salva("cliente", &c).unwrap();
+        let riletto = db.carica_tutto().unwrap()["clienti"].as_array().unwrap().iter().find(|x| x["id"] == id.as_str()).unwrap().clone();
+        let al = riletto["allegati"].as_array().unwrap().iter().find(|x| x["id"] == "al-vero").unwrap().clone();
+        assert_eq!((al["descrizione"].as_str(), al["data"].as_str()), (Some("Analisi del sangue"), Some("2026-03-15")));
+        assert!(db.allegato_leggi("al-vero").unwrap().is_some());
+        // allegati di esempio: senza file
+        assert!(db.allegato_leggi("nessuno").unwrap().is_none());
+        // tolto dal cliente: via anche il file
+        c["allegati"].as_array_mut().unwrap().retain(|x| x["id"] != "al-vero");
+        db.salva("cliente", &c).unwrap();
+        assert!(db.allegato_leggi("al-vero").unwrap().is_none());
         drop(db);
         let _ = std::fs::remove_file(&p);
     }

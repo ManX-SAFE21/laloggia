@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { inTauri, StoreProvider, useStore, Vista } from "./store";
-import { Icon } from "./components/ui";
+import { Icon, Modal } from "./components/ui";
 import { Leaf, PinScreen } from "./screens/Lock";
 import { Oggi } from "./screens/Oggi";
 import { Clienti } from "./screens/Clienti";
@@ -45,6 +45,7 @@ export default function App() {
       {stato === "pin-avvio" && <PinScreen motivo="avvio" onOk={() => setStato("sbloccato")} />}
       {stato === "pin" && <PinScreen motivo="inattivita" onOk={() => setStato("sbloccato")} />}
       <div style={{ display: stato === "sbloccato" ? "contents" : "none" }}><Shell /></div>
+      <ConfermaChiusura />
       {msg && <div className="toast">{msg}</div>}
     </StoreProvider>
   );
@@ -56,7 +57,6 @@ const NAV: { key: Vista["nome"]; label: string; icon: keyof typeof Icon }[] = [
   { key: "agenda", label: "Agenda", icon: "calendar" },
   { key: "alimenti", label: "Alimenti", icon: "diet" },
   { key: "modelli", label: "Piani alimentari", icon: "file" },
-  { key: "impostazioni", label: "Impostazioni", icon: "settings" },
 ];
 
 function Shell() {
@@ -79,6 +79,10 @@ function Shell() {
           );
         })}
         <div className="sidebar-foot">
+          <button className={"nav-btn" + (sezione === "impostazioni" ? " active" : "")} onClick={() => vai({ nome: "impostazioni" })}>
+            <Icon.settings /> Impostazioni
+          </button>
+          {vista.nome !== "piano" && vista.nome !== "modello" && <AnnullaRipeti />}
           <IndicatoreSalvataggio />
           <div className="backup-pill">{backup.ok ? "✓" : "⚠"} Backup: <b>{backup.ultimo}</b></div>
           <button className="nav-btn" onClick={bloccaOra}><Icon.lock /> Blocca ora</button>
@@ -115,4 +119,41 @@ function IndicatoreSalvataggio() {
       </div>
     );
   return <div className="salva-pill ok" title={s.percorso}>✓ Salvato{s.ora ? ` alle ${s.ora}` : ""}</div>;
+}
+
+/** Cliccata la X della finestra: chiudere davvero? (selezionato «No, resta»: Invio o Esc lasciano aperto; per chiudere si clicca «Sì, chiudi») */
+function ConfermaChiusura() {
+  const { chiusura, confermaChiusura, salvataggio } = useStore();
+  useEffect(() => {
+    if (!chiusura) return;
+    const tasti = (e: KeyboardEvent) => {
+      if (e.key === "Escape") { e.preventDefault(); confermaChiusura(false); }
+    };
+    window.addEventListener("keydown", tasti);
+    return () => window.removeEventListener("keydown", tasti);
+  }, [chiusura, confermaChiusura]);
+  if (!chiusura) return null;
+  return (
+    <Modal title="Chiudere il programma?" onClose={() => confermaChiusura(false)}
+      footer={<><button className="btn primary" autoFocus onClick={() => confermaChiusura(false)}>No, resta</button><button className="btn" onClick={() => confermaChiusura(true)}>Sì, chiudi</button></>}>
+      <p style={{ margin: 0 }}>
+        {salvataggio.stato === "errore"
+          ? "Attenzione: l'ultima modifica non risulta salvata. Chiudendo, il programma riprova a salvarla."
+          : "I dati sono già salvati: puoi chiudere tranquillamente."}
+      </p>
+    </Modal>
+  );
+}
+
+/** Annulla / Ripeti di tutto il programma (ultime 20 modifiche). Nell'editor del piano ci sono i suoi. */
+function AnnullaRipeti() {
+  const { annulla, ripeti, passiAnnulla } = useStore();
+  return (
+    <div className="annulla-riga">
+      <button className="annulla-btn" disabled={!passiAnnulla.indietro} onClick={annulla}
+        title={`Annulla l'ultima modifica (Ctrl+Z) · ${passiAnnulla.indietro} disponibili`}>↶ Annulla</button>
+      <button className="annulla-btn" disabled={!passiAnnulla.avanti} onClick={ripeti}
+        title={`Rifai la modifica annullata (Ctrl+Y) · ${passiAnnulla.avanti} disponibili`}>↷ Ripeti</button>
+    </div>
+  );
 }
