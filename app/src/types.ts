@@ -167,7 +167,13 @@ export type ElementoPiano =
   | { k: "elenco"; titolo?: string; voci: string[] } // elenco puntato
   | { k: "tabella"; righe: [string, string][] }
   | { k: "voci"; voci: { titolo: string; testo: string }[] } // titolo + spiegazione (gruppi, cotture, consigli)
-  | { k: "immagini"; chiavi: string[]; altezzaMm?: number }; // immagini da src/assets/piano (vedi immaginiPiano.ts)
+  | { k: "immagini"; voci: ImmaginePiano[] }; // riga di immagini (incluse nel programma o caricate)
+
+/** Un'immagine del piano: chiave nella libreria (immaginiPiano.ts o caricata) e altezza stampata in mm. */
+export interface ImmaginePiano {
+  chiave: string;
+  mm: number;
+}
 
 export interface SezionePiano {
   id: string;

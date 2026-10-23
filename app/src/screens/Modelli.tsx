@@ -98,7 +98,7 @@ export function ModelloEditor({ id }: { id: string }) {
   const usato = piani.filter((p) => p.modelloId === m.id).length;
 
   return (
-    <EditorPiano piano={comePiano} cliente={CLIENTE_ESEMPIO} aggiorna={aggiorna}
+    <EditorPiano piano={comePiano} cliente={CLIENTE_ESEMPIO} aggiorna={aggiorna} riassunto={m.tipo}
       intestazione={<>
         <button className="btn ghost sm" style={{ marginBottom: 8, paddingLeft: 0 }} onClick={() => vai({ nome: "modelli" })}><Icon.back /> Piani alimentari</button>
         <div>

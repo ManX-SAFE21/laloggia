@@ -229,6 +229,11 @@ salvia (`#a9ba98`), titoli con grazie. Vedi le variabili in `mockup/src/styles.c
     (quest'ultimo controlla le regole modelli/piani). Solo dati inventati.
   - Menu "Piani alimentari": `screens/Modelli.tsx` (elenco con filtro per tipo, nuovo/duplica/elimina, modifica
     del modello). Editor comune a piani e modelli: `EditorPiano` in `screens/PianoEditor.tsx`.
+  - Editor del piano: pannello sinistro snello (dati del piano richiudibili, indice delle sezioni, ▸ dettagli);
+    sul foglio si scrivono i testi (clic) e, passando il mouse, ci sono i pulsanti di alternative (frequenza,
+    + titolo/nota, ↑↓, togli, + aggiungi) e immagini (cambia, S/M/L/XL, ←→, togli, + aggiungi).
+    Libreria immagini: `components/LibreriaImmagini.tsx` (incluse + caricate dal PC; le caricate per ora in
+    memoria, poi nel database e nei backup). Ogni immagine ha la sua altezza in mm (`ImmaginePiano`).
 - `materiale/`: file di Valentina con nomi fittizi: `0NUOVO CLIENTE.docx` (modulo di prima visita) e
   `1450 - PIATTO COMPLETO.docx` (modello di piano). **Il PDF della BIA non va mai nel repository.**
 

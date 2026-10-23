@@ -21,21 +21,25 @@ export function PianoEditor({ id }: { id: string }) {
           <p>Dal modello «{piano.modello}» · creato il {fmtData(piano.creato)} · le modifiche valgono solo per questo cliente, il modello non cambia</p>
         </div>
       </>}
+      riassunto={`consegna ${fmtData(piano.creato)}`}
       campiInPiu={<div className="field"><label>Data di consegna</label><input className="input" type="date" value={piano.creato} onChange={(e) => aggiorna((p) => ({ ...p, creato: e.target.value }))} /></div>}
     />
   );
 }
 
 /** Editor comune di piani e modelli: sezioni a sinistra, foglio A4 a destra, collegati nei due sensi. */
-export function EditorPiano({ piano, cliente, aggiorna, intestazione, campiInPiu }: {
+export function EditorPiano({ piano, cliente, aggiorna, intestazione, campiInPiu, riassunto }: {
   piano: PianoAlimentare;
   cliente: Cliente;
   aggiorna: (f: (p: PianoAlimentare) => PianoAlimentare) => void;
   intestazione: ReactNode; // a sinistra del pulsante di stampa
   campiInPiu?: ReactNode; // in cima al riquadro dei dati
+  riassunto?: string; // riga dei dati principali, col riquadro chiuso
 }) {
   const { toast } = useStore();
-  const [aperta, setAperta] = useState<string | null>(null);
+  const [aperta, setAperta] = useState<string | null>(null); // dettagli aperti a sinistra (▸)
+  const [selezionata, setSelezionata] = useState<string | null>(null); // segnata sul foglio
+  const [datiAperti, setDatiAperti] = useState(false);
   const [attiva, setAttiva] = useState<string | null>(null); // sezione visibile ora nel foglio
   const editorRef = useRef<HTMLElement>(null);
   const foglioRef = useRef<HTMLDivElement>(null);
@@ -125,11 +129,12 @@ export function EditorPiano({ piano, cliente, aggiorna, intestazione, campiInPiu
   const apriChiudi = (s: SezionePiano) => {
     if (aperta === s.id) { setAperta(null); return; }
     setAperta(s.id);
+    setSelezionata(s.id);
     mostraNelFoglio(s);
   };
-  // Clic su una sezione del foglio: la apre a sinistra per la modifica.
-  const apriDalFoglio = (sid: string) => {
-    setAperta(sid);
+  // Clic su una sezione del foglio: la seleziona (bordo sul foglio, riga accesa a sinistra).
+  const selezionaDalFoglio = (sid: string) => {
+    setSelezionata(sid);
     window.setTimeout(() => mostraRiga(sid), 0);
   };
 
@@ -153,7 +158,15 @@ export function EditorPiano({ piano, cliente, aggiorna, intestazione, campiInPiu
 
       <div className={"piano-layout" + (senzaPannello ? " senza-pannello" : "")}>
         <aside className="piano-editor no-print" ref={editorRef}>
-          <div className="card card-pad">
+          <div className="card card-pad piano-dati">
+            <div className="row" style={{ justifyContent: "space-between", gap: 8 }}>
+              <div style={{ minWidth: 0 }}>
+                <div className="small muted">Dati del piano</div>
+                <div className="piano-dati-riassunto">{[piano.kcal ? `${piano.kcal} kcal` : null, riassunto].filter(Boolean).join(" · ") || "—"}</div>
+              </div>
+              <button className="btn sm" onClick={() => setDatiAperti((v) => !v)}>{datiAperti ? "Chiudi" : "Modifica dati"}</button>
+            </div>
+            {datiAperti && <div style={{ marginTop: 10 }}>
             {campiInPiu && <div style={{ marginBottom: 8 }}>{campiInPiu}</div>}
             <div className="grid g2">
               <div className="field"><label>Titolo in copertina</label><input className="input" value={piano.titolo} onChange={(e) => aggiorna((p) => ({ ...p, titolo: e.target.value }))} /></div>
@@ -161,18 +174,19 @@ export function EditorPiano({ piano, cliente, aggiorna, intestazione, campiInPiu
             </div>
             <div className="field" style={{ marginTop: 8 }}><label>Messaggio personale in copertina</label><textarea className="textarea" rows={2} value={piano.messaggio ?? ""} onChange={(e) => aggiorna((p) => ({ ...p, messaggio: e.target.value || undefined }))} /></div>
             <p className="small muted" style={{ margin: "8px 0 0" }}>Nel testo, <b>**parola**</b> si stampa in grassetto.</p>
+            </div>}
           </div>
 
           <p className="small muted piano-aiuto">
-            <b>▸</b> apre la sezione per modificarla · <b>clic sul nome</b> la mostra nel foglio · <b>clic sul foglio</b> apre qui la sezione · la casella la include nella stampa
+            <b>Sul foglio:</b> clic sui testi per scriverli; passa il mouse su alternative e immagini per i pulsanti. <b>Qui:</b> clic sul nome per andarci, casella per includerla nella stampa, <b>▸</b> per i dettagli
           </p>
           <div className="piano-sezioni">
             {piano.sezioni.map((s, i) => (
               <div key={s.id} data-riga={s.id}
-                className={"card piano-sez" + (s.inclusa ? "" : " esclusa") + (attiva === s.id ? " attiva" : "") + (aperta === s.id ? " aperta" : "")}>
+                className={"card piano-sez" + (s.inclusa ? "" : " esclusa") + (attiva === s.id ? " attiva" : "") + (aperta === s.id ? " aperta" : "") + (selezionata === s.id ? " selezionata" : "")}>
                 <div className="piano-sez-testa">
                   <input type="checkbox" title="Includi nella stampa" checked={s.inclusa} onChange={(e) => aggSezione(s.id, (x) => ({ ...x, inclusa: e.target.checked }))} />
-                  <button className="piano-sez-freccia" aria-expanded={aperta === s.id} title={aperta === s.id ? "Chiudi la modifica" : "Apri per modificare"} onClick={() => apriChiudi(s)}>
+                  <button className="piano-sez-freccia" aria-expanded={aperta === s.id} title={aperta === s.id ? "Chiudi i dettagli" : "Dettagli della sezione"} onClick={() => apriChiudi(s)}>
                     <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 6l6 6-6 6" /></svg>
                   </button>
                   <button className="piano-sez-nome" title="Mostra nel foglio" onClick={() => mostraNelFoglio(s)}>
@@ -212,7 +226,7 @@ export function EditorPiano({ piano, cliente, aggiorna, intestazione, campiInPiu
           </div>
         </div>
         <div className="piano-anteprima" ref={foglioRef} style={{ ["--zoom-foglio" as string]: zoomFoglio }}>
-          <PianoStampa piano={piano} cliente={cliente} onApri={apriDalFoglio} aperta={aperta}
+          <PianoStampa piano={piano} cliente={cliente} onApri={selezionaDalFoglio} aperta={selezionata}
             onCambiaSezione={aggSezione} onCambiaPiano={(patch) => aggiorna((p) => ({ ...p, ...patch }))} />
         </div>
         </div>
@@ -264,7 +278,7 @@ function EditorElemento({ el, onChange }: { el: ElementoPiano; onChange: (e: Ele
         </div>
       );
     case "immagini":
-      return <div className="small muted piano-el">Immagini: {el.chiavi.join(", ")}</div>;
+      return <div className="small muted piano-el">Immagini ({el.voci.length}): si cambiano, ridimensionano e spostano direttamente sul foglio.</div>;
     case "opzioni":
       return <EditorOpzioni el={el} onChange={onChange} />;
   }

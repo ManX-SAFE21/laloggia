@@ -112,6 +112,20 @@
   .pd-vuoto { color: #a19a88; }
   .pd-input { display: block; width: 100%; field-sizing: content; min-height: 1.5em; resize: none; font: inherit; color: inherit; letter-spacing: inherit; text-transform: none; line-height: inherit; background: #fffdf6; border: 2px solid var(--pd-oliva); border-radius: 6px; padding: 2px 6px; outline: none; box-shadow: 0 0 0 4px rgba(169, 186, 152, 0.35); }
   .pd-input.riga { display: inline-block; width: auto; min-width: 12em; }
+  /* Barre dei pulsanti sul foglio (alternative e immagini): compaiono passando il mouse */
+  .pd-con-barra { position: relative; }
+  .pd-barra { position: absolute; top: -13px; right: 8px; z-index: 3; display: none; align-items: center; gap: 2px; padding: 2px; background: #fff; border: 1px solid #cfc7b6; border-radius: 8px; box-shadow: 0 2px 6px rgba(30, 35, 25, 0.12); font-family: "Segoe UI", sans-serif; font-size: 12px; }
+  .pd-con-barra:hover > .pd-barra, .pd-barra:focus-within { display: flex; }
+  .pd-barra button, .pd-barra select { font: inherit; font-size: 12px; border: 0; background: none; color: var(--pd-testo); padding: 2px 7px; border-radius: 6px; cursor: pointer; }
+  .pd-barra select { border: 1px solid #e3dccd; padding: 1px 4px; }
+  .pd-barra button:hover, .pd-barra button.on { background: var(--pd-crema); color: var(--pd-oliva-scuro); }
+  .pd-barra .pd-via:hover { background: #fbebeb; color: #b42318; }
+  .pd-con-barra:hover { box-shadow: 0 0 0 2px var(--pd-salvia); }
+  .pd-aggiungi-riga { margin: 1mm 0 3mm; }
+  .pd-aggiungi { width: 100%; border: 1.5px dashed #cfc7b6; background: none; border-radius: 10px; padding: 5px; color: var(--pd-tenue); font: inherit; font-size: 9.5pt; cursor: pointer; }
+  .pd-aggiungi:hover { border-color: var(--pd-oliva); color: var(--pd-oliva-scuro); background: var(--pd-crema-chiaro); }
+  .pd-img { margin: 0; border-radius: 6px; }
+  .pd-img-mancante { min-width: 30mm; display: grid; place-items: center; border: 1px dashed #cfc7b6; color: var(--pd-tenue); font-size: 9pt; }
   .piano-doc { width: 210mm; padding: 14mm 15mm; box-shadow: 0 2px 12px rgba(30, 35, 25, 0.15); border-radius: 4px; }
   .pd-copertina { min-height: 267mm; border-bottom: 2px dashed #d6cfbf; margin-bottom: 14mm; padding-bottom: 6mm; }
   .pd-nuova-pagina { border-top: 2px dashed #d6cfbf; padding-top: 14mm; margin-top: 14mm; }

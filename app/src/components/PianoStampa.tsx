@@ -4,8 +4,10 @@
 import { Fragment, KeyboardEvent, ReactNode, useState } from "react";
 import "../piano.css";
 import { STUDIO, fmtData } from "../data";
-import { IMMAGINI_PIANO } from "../immaginiPiano";
-import { Cliente, ElementoPiano, PianoAlimentare, SezionePiano } from "../types";
+import { useStore } from "../store";
+import { LibreriaImmagini } from "./LibreriaImmagini";
+import { DIMENSIONI_IMMAGINE, IMMAGINI_PIANO, srcImmagine } from "../immaginiPiano";
+import { Cliente, ElementoPiano, OpzionePiano, PianoAlimentare, SezionePiano } from "../types";
 import { Leaf } from "../screens/Lock";
 
 /** Testo con **grassetto**. */
@@ -123,20 +125,49 @@ function Firma() {
 function Sezione({ s, onApri, aperta, onCambiaSezione }: { s: SezionePiano; onApri?: (id: string) => void; aperta?: boolean; onCambiaSezione?: CambiaSezione }) {
   const cambia = onCambiaSezione && ((f: (x: SezionePiano) => SezionePiano) => onCambiaSezione(s.id, f));
   return (
-    <section data-sez={s.id} title={onApri ? "Clic per modificare questa sezione" : undefined} onClick={onApri ? () => onApri(s.id) : undefined}
+    <section data-sez={s.id} title={onApri ? "Clic per selezionare questa sezione" : undefined} onClick={onApri ? () => onApri(s.id) : undefined}
       className={"pd-sezione" + (s.nuovaPagina ? " pd-nuova-pagina" : "") + (s.informativa ? " pd-informativa" : "") + (onApri ? " pd-cliccabile" : "") + (aperta ? " pd-aperta" : "")}>
       <h2 className="pd-sez-titolo">
         <span className="pd-sez-ico">{s.icona ?? "•"}</span>
         <Modificabile t={s.titolo} riga salva={cambia && ((titolo) => cambia((x) => ({ ...x, titolo })))} />
       </h2>
       {s.elementi.map((e, i) => (
-        <Elemento key={i} e={e} cambia={cambia && ((nuovo) => cambia((x) => ({ ...x, elementi: x.elementi.map((e2, k) => (k === i ? nuovo : e2)) })))} />
+        <Elemento key={i} e={e} cambia={cambia && ((nuovo) => cambia((x) => ({
+          ...x,
+          elementi: nuovo ? x.elementi.map((e2, k) => (k === i ? nuovo : e2)) : x.elementi.filter((_, k) => k !== i),
+        })))} />
       ))}
+      {cambia && <AggiungiImmagine onScegli={(chiave) => cambia((x) => ({ ...x, elementi: [...x.elementi, { k: "immagini", voci: [{ chiave, mm: 25 }] }] }))} />}
     </section>
   );
 }
 
-function Elemento({ e, cambia }: { e: ElementoPiano; cambia?: (nuovo: ElementoPiano) => void }): ReactNode {
+const FREQUENZE = ["1 volta", "1-2 volte", "2 volte", "2-3 volte", "3 volte", "4 volte", "5 volte"];
+
+/** Pulsante (solo a schermo) che apre la libreria e aggiunge un'immagine in fondo alla sezione. */
+function AggiungiImmagine({ onScegli }: { onScegli: (chiave: string) => void }) {
+  const [libreria, setLibreria] = useState(false);
+  return (
+    <div className="pd-aggiungi-riga pd-solo-schermo" onClick={(e) => e.stopPropagation()}>
+      <button className="pd-aggiungi" onClick={() => setLibreria(true)}>+ Aggiungi immagine</button>
+      {libreria && <LibreriaImmagini titolo="Aggiungi un'immagine" onClose={() => setLibreria(false)} onScegli={(k) => { onScegli(k); setLibreria(false); }} />}
+    </div>
+  );
+}
+
+const scambia = <T,>(lista: T[], i: number, d: number): T[] => {
+  const l = [...lista];
+  const j = i + d;
+  if (j < 0 || j >= l.length) return l;
+  [l[i], l[j]] = [l[j], l[i]];
+  return l;
+};
+const ferma = (ev: { stopPropagation: () => void }) => ev.stopPropagation();
+
+/** cambia(null) toglie l'elemento dalla sezione (es. l'ultima immagine eliminata). */
+function Elemento({ e, cambia }: { e: ElementoPiano; cambia?: (nuovo: ElementoPiano | null) => void }): ReactNode {
+  const { immagini } = useStore();
+  const [libreriaPer, setLibreriaPer] = useState<number | null>(null); // indice dell'immagine da cambiare
   // M: un testo dell'elemento, modificabile se l'elemento lo è.
   const M = (t: string, set: (v: string) => ElementoPiano, riga = false) => <Modificabile t={t} riga={riga} salva={cambia && ((v) => cambia(set(v)))} />;
   switch (e.k) {
@@ -145,25 +176,43 @@ function Elemento({ e, cambia }: { e: ElementoPiano; cambia?: (nuovo: ElementoPi
     case "avviso":
       return <div className="pd-avviso">{M(e.testo, (testo) => ({ ...e, testo }))}</div>;
     case "opzioni": {
-      const voce = (i: number, patch: Partial<(typeof e.voci)[number]>) => ({ ...e, voci: e.voci.map((o, k) => (k === i ? { ...o, ...patch } : o)) });
+      const voce = (i: number, patch: Partial<OpzionePiano>) => ({ ...e, voci: e.voci.map((o, k) => (k === i ? { ...o, ...patch } : o)) });
       return (
         <div className="pd-opzioni">
           {e.titolo && <div className="pd-sottotitolo">{M(e.titolo, (titolo) => ({ ...e, titolo }), true)}</div>}
           {e.voci.map((o, i) => (
-            <div className="pd-opzione" key={i}>
+            <div className={"pd-opzione" + (cambia ? " pd-con-barra" : "")} key={i}>
               <div className="pd-num">{i + 1}</div>
               <div className="pd-opz-corpo">
-                {(o.titolo || o.frequenza) && (
+                {(o.titolo !== undefined || o.frequenza) && (
                   <div className="pd-opz-testa">
-                    {o.titolo && <span className="pd-opz-titolo">{M(o.titolo, (titolo) => voce(i, { titolo: titolo || undefined }), true)}</span>}
+                    {o.titolo !== undefined && <span className="pd-opz-titolo">{M(o.titolo, (titolo) => voce(i, { titolo: titolo || undefined }), true)}</span>}
                     {o.frequenza && <span className="pd-freq">{o.frequenza} a settimana</span>}
                   </div>
                 )}
                 <div>{M(o.testo, (testo) => voce(i, { testo }))}</div>
-                {o.nota && <div className="pd-nota">{M(o.nota, (nota) => voce(i, { nota: nota || undefined }))}</div>}
+                {o.nota !== undefined && <div className="pd-nota">{M(o.nota, (nota) => voce(i, { nota: nota || undefined }))}</div>}
               </div>
+              {cambia && (
+                <div className="pd-barra pd-solo-schermo" onClick={ferma}>
+                  <select value={o.frequenza ?? ""} title="Frequenza settimanale" onChange={(ev) => cambia(voce(i, { frequenza: ev.target.value || undefined }))}>
+                    <option value="">frequenza…</option>
+                    {[...new Set([...(o.frequenza ? [o.frequenza] : []), ...FREQUENZE])].map((f) => <option key={f}>{f}</option>)}
+                  </select>
+                  {o.titolo === undefined && <button onClick={() => cambia(voce(i, { titolo: "" }))}>+ titolo</button>}
+                  {o.nota === undefined && <button onClick={() => cambia(voce(i, { nota: "" }))}>+ nota</button>}
+                  <button title="Sposta su" onClick={() => cambia({ ...e, voci: scambia(e.voci, i, -1) })}>↑</button>
+                  <button title="Sposta giù" onClick={() => cambia({ ...e, voci: scambia(e.voci, i, 1) })}>↓</button>
+                  <button title="Togli questa alternativa" className="pd-via" onClick={() => cambia({ ...e, voci: e.voci.filter((_, k) => k !== i) })}>✕</button>
+                </div>
+              )}
             </div>
           ))}
+          {cambia && (
+            <div className="pd-aggiungi-riga pd-solo-schermo" onClick={ferma}>
+              <button className="pd-aggiungi" onClick={() => cambia({ ...e, voci: [...e.voci, { testo: "" }] })}>+ Aggiungi alternativa</button>
+            </div>
+          )}
         </div>
       );
     }
@@ -195,12 +244,36 @@ function Elemento({ e, cambia }: { e: ElementoPiano; cambia?: (nuovo: ElementoPi
         </dl>
       );
     }
-    case "immagini":
+    case "immagini": {
+      const imm = (i: number, patch: Partial<(typeof e.voci)[number]>) => ({ ...e, voci: e.voci.map((x, k) => (k === i ? { ...x, ...patch } : x)) });
       return (
         <div className="pd-immagini">
-          {e.chiavi.map((k) => IMMAGINI_PIANO[k] && <img key={k} src={IMMAGINI_PIANO[k]} alt="" style={{ height: `${e.altezzaMm ?? 25}mm` }} />)}
+          {e.voci.map((v, i) => {
+            const src = srcImmagine(v.chiave, immagini);
+            return (
+              <figure key={i} className={"pd-img" + (cambia ? " pd-con-barra" : "")}>
+                {src ? <img src={src} alt="" style={{ height: `${v.mm}mm` }} /> : <div className="pd-img-mancante pd-solo-schermo" style={{ height: `${v.mm}mm` }}>immagine non trovata</div>}
+                {cambia && (
+                  <div className="pd-barra pd-solo-schermo" onClick={ferma}>
+                    <button onClick={() => setLibreriaPer(i)}>Cambia</button>
+                    {DIMENSIONI_IMMAGINE.map((d) => (
+                      <button key={d.nome} className={v.mm === d.mm ? "on" : ""} title={`Altezza ${d.mm} mm`} onClick={() => cambia(imm(i, { mm: d.mm }))}>{d.nome}</button>
+                    ))}
+                    <button title="Sposta a sinistra" onClick={() => cambia({ ...e, voci: scambia(e.voci, i, -1) })}>←</button>
+                    <button title="Sposta a destra" onClick={() => cambia({ ...e, voci: scambia(e.voci, i, 1) })}>→</button>
+                    <button title="Togli l'immagine" className="pd-via" onClick={() => cambia(e.voci.length > 1 ? { ...e, voci: e.voci.filter((_, k) => k !== i) } : null)}>✕</button>
+                  </div>
+                )}
+              </figure>
+            );
+          })}
+          {libreriaPer !== null && cambia && (
+            <LibreriaImmagini titolo="Cambia immagine" onClose={() => setLibreriaPer(null)}
+              onScegli={(chiave) => { cambia(imm(libreriaPer, { chiave })); setLibreriaPer(null); }} />
+          )}
         </div>
       );
+    }
   }
 }
 

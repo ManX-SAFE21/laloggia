@@ -129,20 +129,20 @@ export const MODELLO_1450 = {
       id: id(), titolo: "Gruppi alimentari", icona: "🥗", inclusa: true, informativa: true, nuovaPagina: true,
       elementi: [
         { k: "testo", testo: "Lista generale per aiutare nella distinzione dei gruppi alimentari. Valutare e scegliere a seconda di ciò che è consentito nel proprio piano alimentare, secondo le indicazioni delle pagine precedenti." },
-        { k: "immagini", chiavi: ["proteine-vegetali", "proteine-uova-latticini", "proteine-carne-pesce"], altezzaMm: 19 },
+        { k: "immagini", voci: [{ chiave: "proteine-vegetali", mm: 19 }, { chiave: "proteine-uova-latticini", mm: 19 }, { chiave: "proteine-carne-pesce", mm: 19 }] },
         {
           k: "voci", voci: [
             { titolo: "Proteine di origine animale", testo: "**Carne:** bianca (pollo, tacchino, coniglio, faraona), rosata (maiale, vitello), rossa (manzo, agnello, cavallo). **Pesce e animali marini:** molluschi (gamberetti, aragosta, astice, gamberi, mazzancolle, scampi, polpo, calamari, seppie, totani, vongole, cozze), pesci di mare (branzino, orata, sardine, alici, acciughe, pesce spada e tonno da limitare, merluzzo, sgombro, platessa, sogliola), pesci d'acqua dolce (salmone selvaggio surgelato/affumicato, persico, trota, luccio, carpa). **Latticini:** yogurt vaccino/caprino/ovino, ricotta, robiola, parmigiano reggiano, pecorino. **Uova.**" },
             { titolo: "Proteine di origine vegetale", testo: "**Legumi:** fagioli, ceci, lenticchie, azuki, soia. **Tofu:** derivato dalla bevanda di soia cagliata. **Tempeh:** derivato dalla bevanda di soia fermentata. **Seitan:** derivato del glutine dei cereali." },
           ],
         },
-        { k: "immagini", chiavi: ["carboidrati"], altezzaMm: 26 },
+        { k: "immagini", voci: [{ chiave: "carboidrati", mm: 26 }] },
         {
           k: "voci", voci: [
             { titolo: "Carboidrati", testo: "**Pane e derivati** (gallette, fette biscottate, wasa). **Cereali** con glutine (frumento, segale, farro, kamut, orzo, grani antichi: senatore cappelli, timilia, arso, russello, gentil rosso, jervicella, maiorca, saragolla) e senza glutine (riso nero/rosso/basmati/integrale/selvatico, quinoa, amaranto, avena, grano saraceno, teff, miglio, mais, sorgo) e **farine di cereali**. **Patate. Legumi. Frutta e verdura. Dolcificanti naturali** (miele, melassa, malto di riso o di orzo)." },
           ],
         },
-        { k: "immagini", chiavi: ["grassi-1", "grassi-2"], altezzaMm: 19 },
+        { k: "immagini", voci: [{ chiave: "grassi-1", mm: 19 }, { chiave: "grassi-2", mm: 19 }] },
         {
           k: "voci", voci: [
             { titolo: "Grassi", testo: "**Avocado. Frutta oleosa** (anacardi, mandorle, noci, noci brasiliane, nocciole, pistacchi). **Arachidi** (legumi). **Cocco. Oli vegetali** (evo, cocco, semi). **Burro chiarificato** (ghee). **Semi oleosi** (chia, girasole, zucca, sesamo, canapa, lino)." },
@@ -153,7 +153,7 @@ export const MODELLO_1450 = {
     {
       id: id(), titolo: "Cotture", icona: "🍜", inclusa: true, informativa: true,
       elementi: [
-        { k: "immagini", chiavi: ["cotture"], altezzaMm: 30 },
+        { k: "immagini", voci: [{ chiave: "cotture", mm: 30 }] },
         {
           k: "voci", voci: [
             { titolo: "Padella", testo: "Aggiungere un filo di olio evo dopo aver aggiunto l'alimento. Evitare i soffritti; se la ricetta lo richiede, aggiungere un cucchiaio di acqua e lasciar appassire prima di aggiungere l'olio. Per aumentare il sapore si possono usare aglio o cipolla liofilizzati in polvere o in scaglie (senza conservanti o oli), spezie, erbe aromatiche." },
@@ -185,7 +185,7 @@ export const MODELLO_1450 = {
       id: id(), titolo: "Pesi e porzioni", icona: "🥣", inclusa: true, informativa: true, nuovaPagina: true,
       elementi: [
         { k: "testo", testo: "Indicazione visiva delle porzioni:" },
-        { k: "immagini", chiavi: ["porzioni"], altezzaMm: 60 },
+        { k: "immagini", voci: [{ chiave: "porzioni", mm: 60 }] },
         { k: "avviso", testo: "Salvo diversa indicazione, gli alimenti del piano si intendono **pesati a crudo**." },
         { k: "testo", testo: "Se pesi gli alimenti da cotti, puoi usare questi indici di conversione pratici:" },
         {
