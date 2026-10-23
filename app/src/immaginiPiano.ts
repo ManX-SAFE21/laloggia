@@ -10,6 +10,7 @@ import cotture from "./assets/piano/cotture.jpg";
 import porzioni from "./assets/piano/porzioni.png";
 import instagram from "./assets/piano/instagram.png";
 import facebook from "./assets/piano/facebook.png";
+import { Cliente, ModelloPiano, PianoAlimentare, SezionePiano } from "./types";
 
 export const IMMAGINI_PIANO: Record<string, string> = {
   "proteine-vegetali": proteine1,
@@ -36,7 +37,7 @@ export const LIBRERIA_INCLUSA: { chiave: string; nome: string }[] = [
   { chiave: "porzioni", nome: "Porzioni" },
 ];
 
-/** Immagini caricate da Valentina: chiave -> nome e contenuto (data URL). Per ora in memoria; poi nel database. */
+/** Immagini caricate da Valentina: chiave -> nome e contenuto (data URL). Salvate nel database. */
 export type ImmaginiCaricate = Record<string, { nome: string; src: string }>;
 
 /** Indirizzo dell'immagine: inclusa nel programma o caricata. */
@@ -49,3 +50,15 @@ export const DIMENSIONI_IMMAGINE = [
   { nome: "L", mm: 40 },
   { nome: "XL", mm: 60 },
 ];
+
+const usaImmagine = (sezioni: SezionePiano[], chiave: string) =>
+  sezioni.some((s) => s.elementi.some((e) => e.k === "immagini" && e.voci.some((v) => v.chiave === chiave)));
+
+/** Dove è usata un'immagine (modelli e piani dei clienti): se l'elenco non è vuoto non si può eliminare. */
+export function doveUsata(chiave: string, modelli: ModelloPiano[], piani: PianoAlimentare[], clienti: Cliente[]): string[] {
+  const nome = (id: string) => { const c = clienti.find((x) => x.id === id); return c ? `${c.nome} ${c.cognome}` : "cliente sconosciuto"; };
+  return [
+    ...modelli.filter((m) => usaImmagine(m.sezioni, chiave)).map((m) => `Modello «${m.nome}»`),
+    ...piani.filter((p) => usaImmagine(p.sezioni, chiave)).map((p) => `Piano di ${nome(p.clienteId)} («${p.titolo}»)`),
+  ];
+}
