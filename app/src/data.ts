@@ -1,7 +1,7 @@
 // DATI INVENTATI per il mockup. Nessun cliente reale.
 // I valori nutrizionali sono indicativi: nel programma vero si userà
 // una banca dati ufficiale (es. tabelle CREA), da concordare.
-import { Alimento, Appuntamento, Bia, Cliente, Dieta, PASTI, Pasto, PianoAlimentare, SchedaPrimaVisita, Settimana, Visita, VoceDieta } from "./types";
+import { Alimento, Appuntamento, Bia, Cliente, Dieta, ModelloPiano, PASTI, Pasto, PianoAlimentare, SchedaPrimaVisita, SezionePiano, Settimana, Visita, VoceDieta } from "./types";
 import { MODELLO_1450 } from "./modelli/piano1450";
 
 export const OGGI = "2026-10-20";
@@ -240,19 +240,48 @@ export const STUDIO = {
   facebook: "laloggia.malo",
 };
 
-// Modelli disponibili per un nuovo piano. Gli altri livelli (basso/alto) arriveranno dai file di Valentina.
-export const MODELLI_PIANO = [MODELLO_1450];
+// Modelli di piano (menu "Piani alimentari"). Gli altri arriveranno dai file di Valentina.
+export const MODELLI: ModelloPiano[] = [
+  {
+    id: "m1450", nome: MODELLO_1450.nome, tipo: "Ipocalorico", kcal: MODELLO_1450.kcal, modificato: "2026-10-22",
+    nota: "Trascritto dal Word di Valentina. Tipo «Ipocalorico» da confermare con lei.",
+    titolo: "Piano alimentare", sezioni: MODELLO_1450.sezioni(),
+  },
+];
 
-export function nuovoPianoDaModello(modello: typeof MODELLO_1450, clienteId: string, data: string): PianoAlimentare {
+/** Copia profonda delle sezioni con id nuovi: piano e modello non condividono nulla. */
+const copiaSezioni = (sezioni: SezionePiano[]) => structuredClone(sezioni).map((s) => ({ ...s, id: nuovoId("sez") }));
+
+/** Piano del cliente: COPIA indipendente del modello (regola in CLAUDE.md). */
+export function nuovoPianoDaModello(m: ModelloPiano, clienteId: string, data: string): PianoAlimentare {
   return {
-    id: nuovoId("pa"), clienteId, titolo: "Piano alimentare", modello: modello.nome, creato: data, kcal: modello.kcal,
-    sezioni: modello.sezioni().map((s) => ({ ...s, id: nuovoId("sez") })),
+    id: nuovoId("pa"), clienteId, titolo: m.titolo, modello: m.nome, modelloId: m.id, creato: data,
+    kcal: m.kcal, messaggio: m.messaggio, sezioni: copiaSezioni(m.sezioni),
   };
+}
+
+/** Modello nuovo: i quattro pasti con un'alternativa vuota + le pagine di consigli del 1450. */
+export function nuovoModello(data: string): ModelloPiano {
+  const pasto = (titolo: string, icona: string): SezionePiano => ({
+    id: nuovoId("sez"), titolo, icona, inclusa: true,
+    elementi: [{ k: "opzioni", titolo: "Scegliere tra:", voci: [{ testo: "" }] }],
+  });
+  return {
+    id: nuovoId("m"), nome: "Nuovo modello", tipo: "Isocalorico", modificato: data, titolo: "Piano alimentare",
+    sezioni: [
+      pasto("Colazione", "☕"), pasto("Spuntino mattino – pomeriggio", "🍎"), pasto("Pranzo", "🍝"), pasto("Cena", "🍽"),
+      ...copiaSezioni(MODELLO_1450.sezioni().filter((s) => s.informativa)),
+    ],
+  };
+}
+
+export function duplicaModello(m: ModelloPiano, data: string): ModelloPiano {
+  return { ...structuredClone(m), id: nuovoId("m"), nome: `${m.nome} (copia)`, nota: `Copia di «${m.nome}»`, modificato: data, sezioni: copiaSezioni(m.sezioni) };
 }
 
 export const PIANI: PianoAlimentare[] = [
   {
-    ...nuovoPianoDaModello(MODELLO_1450, "c9", "2026-08-25"),
+    ...nuovoPianoDaModello(MODELLI[0], "c9", "2026-08-25"),
     id: "pa1",
     messaggio: "Laura, ottimo lavoro in questi mesi! Continuiamo così: più acqua e la camminata 3 volte a settimana.",
   },

@@ -130,6 +130,21 @@ Obiettivo: i backup devono restare apribili anche se il programma ha bug o non e
   Regole fiscali e Sistema TS vanno verificati su fonti aggiornate, mai dati per scontati.
 - Importazione semiautomatica dei ~100 file Word esistenti: da valutare dopo aver visto i file.
 
+### Piani alimentari: modelli e piani dei clienti (deciso da Manuxxx il 2026-10-23)
+- Voce di menu **"Piani alimentari"**: archivio dei **modelli** di piano, separato dai clienti. Ogni modello ha
+  nome, **tipo** (Ipocalorico · Isocalorico · Ipercalorico · Altro), kcal indicative e le sezioni del piano.
+  Primo modello: **"1450 – Piatto completo"**, tipo Ipocalorico (tipo da confermare con Valentina).
+- Dal modello si crea il **piano del cliente** (scheda cliente → Diete → "Nuovo piano dal modello").
+- **REGOLE (obbligatorie, valgono anche per il database vero):**
+  1. **Il piano del cliente è una copia indipendente del modello.** Modificare un modello **non cambia mai**
+     i piani già creati o consegnati ai clienti; modificare il piano di un cliente non cambia il modello.
+  2. **Eliminare un modello non cancella né altera i piani dei clienti** creati da quel modello: il piano
+     conserva il nome del modello di partenza solo come informazione.
+  3. Il collegamento piano → modello serve solo a sapere da quale modello è nato (e a contare quanti clienti
+     lo usano), mai a ricopiarne i contenuti in seguito.
+- Nel database: modelli e piani in tabelle separate; il piano salva tutto il proprio contenuto (non un rimando
+  al modello). Stesso principio della regola sugli alimenti (punto aperto 00).
+
 ### Stile grafico
 Ripreso dalla pagina Facebook dello studio: verde oliva (`#6c7559`), crema (`#ece3d6`),
 salvia (`#a9ba98`), titoli con grazie. Vedi le variabili in `mockup/src/styles.css`.
@@ -210,7 +225,10 @@ salvia (`#a9ba98`), titoli con grazie. Vedi le variabili in `mockup/src/styles.c
   - Installer in `src-tauri/target/release/bundle/`: `nsis/…-setup.exe` e `msi/…_it-IT.msi`
     (entrambi in italiano). Eseguibile: `src-tauri/target/release/gestionale-laloggia.exe`.
   - Prima compilazione ~6 min, ricompilazione ~4 min (PC di Manuxxx, Windows 11).
-  - `npm test`: test automatici (vitest) di `src/bia.test.ts` e `src/misure.test.ts`. Solo dati inventati.
+  - `npm test`: test automatici (vitest) di `src/bia.test.ts`, `src/misure.test.ts` e `src/modelli.test.ts`
+    (quest'ultimo controlla le regole modelli/piani). Solo dati inventati.
+  - Menu "Piani alimentari": `screens/Modelli.tsx` (elenco con filtro per tipo, nuovo/duplica/elimina, modifica
+    del modello). Editor comune a piani e modelli: `EditorPiano` in `screens/PianoEditor.tsx`.
 - `materiale/`: file di Valentina con nomi fittizi: `0NUOVO CLIENTE.docx` (modulo di prima visita) e
   `1450 - PIATTO COMPLETO.docx` (modello di piano). **Il PDF della BIA non va mai nel repository.**
 

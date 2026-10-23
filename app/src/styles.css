@@ -280,3 +280,8 @@ h3 { font-size: 15px; font-family: var(--font); font-weight: 600; }
 .piano-sez.aperta .piano-sez-freccia { background: var(--olive); border-color: var(--olive); color: var(--cream); }
 .piano-sez.aperta .piano-sez-freccia svg { transform: rotate(90deg); }
 .piano-sez-nome:hover { color: var(--olive); text-decoration: underline; text-underline-offset: 3px; }
+
+/* Tipi di modello di piano */
+.badge.tipo-ipocalorico { background: #e7f1fb; border-color: #c9ddf2; color: #2f5d8a; }
+.badge.tipo-isocalorico { background: var(--ok-bg); border-color: #c7e6d1; color: var(--ok); }
+.badge.tipo-ipercalorico { background: var(--warn-bg); border-color: #f1dcb5; color: var(--warn); }

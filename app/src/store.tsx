@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useContext, useState } from "react";
-import { ALIMENTI, APPUNTAMENTI, CLIENTI, DIETE, PIANI } from "./data";
-import { Alimento, Appuntamento, Cliente, Dieta, PianoAlimentare } from "./types";
+import { ALIMENTI, APPUNTAMENTI, CLIENTI, DIETE, MODELLI, PIANI } from "./data";
+import { Alimento, Appuntamento, Cliente, Dieta, ModelloPiano, PianoAlimentare } from "./types";
 
 export type Vista =
   | { nome: "oggi" }
@@ -8,6 +8,8 @@ export type Vista =
   | { nome: "cliente"; id: string; tab?: string }
   | { nome: "dieta"; id: string }
   | { nome: "piano"; id: string }
+  | { nome: "modelli" }
+  | { nome: "modello"; id: string }
   | { nome: "alimenti" }
   | { nome: "agenda" }
   | { nome: "impostazioni" };
@@ -29,6 +31,8 @@ interface Store {
   setDiete: (f: (d: Dieta[]) => Dieta[]) => void;
   piani: PianoAlimentare[];
   setPiani: (f: (p: PianoAlimentare[]) => PianoAlimentare[]) => void;
+  modelli: ModelloPiano[];
+  setModelli: (f: (m: ModelloPiano[]) => ModelloPiano[]) => void;
   appuntamenti: Appuntamento[];
   setAppuntamenti: (f: (a: Appuntamento[]) => Appuntamento[]) => void;
   vista: Vista;
@@ -48,6 +52,7 @@ export function StoreProvider({ children, toast, bloccaOra }: { children: ReactN
   const [alimenti, setAl] = useState<Alimento[]>(() => structuredClone(ALIMENTI));
   const [diete, setD] = useState<Dieta[]>(() => structuredClone(DIETE));
   const [piani, setP] = useState<PianoAlimentare[]>(() => structuredClone(PIANI));
+  const [modelli, setM] = useState<ModelloPiano[]>(() => structuredClone(MODELLI));
   const [appuntamenti, setA] = useState<Appuntamento[]>(() => structuredClone(APPUNTAMENTI));
   const [vista, setVista] = useState<Vista>({ nome: "oggi" });
   const [backup, setBackup] = useState<Backup>({
@@ -59,7 +64,7 @@ export function StoreProvider({ children, toast, bloccaOra }: { children: ReactN
   });
   const vai = (v: Vista) => { setVista(v); document.querySelector(".main")?.scrollTo(0, 0); };
   return (
-    <Ctx.Provider value={{ alimenti, setAlimenti: setAl, clienti, setClienti: setC, diete, setDiete: setD, piani, setPiani: setP, appuntamenti, setAppuntamenti: setA, vista, vai, toast, backup, setBackup, bloccaOra }}>
+    <Ctx.Provider value={{ alimenti, setAlimenti: setAl, clienti, setClienti: setC, diete, setDiete: setD, piani, setPiani: setP, modelli, setModelli: setM, appuntamenti, setAppuntamenti: setA, vista, vai, toast, backup, setBackup, bloccaOra }}>
       {children}
     </Ctx.Provider>
   );

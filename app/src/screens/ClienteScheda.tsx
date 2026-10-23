@@ -1,8 +1,8 @@
 import { Fragment, useState } from "react";
-import { MODELLI_PIANO, OGGI, VERSIONE_INFORMATIVA, bmi, eta, fmtData, nuovoId, nuovoPianoDaModello, settimanaVuota } from "../data";
+import { OGGI, VERSIONE_INFORMATIVA, bmi, eta, fmtData, nuovoId, nuovoPianoDaModello, settimanaVuota } from "../data";
 import { useStore } from "../store";
 import { Icon, LineChart, Modal, iniziali } from "../components/ui";
-import { Bia, Cliente, TipoVisita, Visita } from "../types";
+import { Bia, Cliente, TIPI_MODELLO, TipoVisita, Visita } from "../types";
 import { INTERVALLO_CONTROLLO_MESI, MISURE, Misura, differenza, fmt, misura, piuMesi } from "../misure";
 import { ImportaBia } from "./ImportaBia";
 import { PrimaVisita } from "./PrimaVisita";
@@ -275,10 +275,10 @@ function NuovaVisitaBtn({ onSave, onPianifica, ultima, prima }: {
 }
 
 function Diete({ c, aggiorna }: { c: Cliente; aggiorna: (f: (c: Cliente) => Cliente) => void }) {
-  const { diete, setDiete, piani, setPiani, vai, toast } = useStore();
+  const { diete, setDiete, piani, setPiani, modelli, vai, toast } = useStore();
   const sue = diete.filter((d) => d.clienteId === c.id);
   const suoiPiani = piani.filter((p) => p.clienteId === c.id).sort((x, y) => y.creato.localeCompare(x.creato));
-  const [modello, setModello] = useState(MODELLI_PIANO[0].nome);
+  const [modelloId, setModelloId] = useState(modelli[0]?.id ?? "");
   const crea = () => {
     const id = nuovoId("d");
     setDiete((l) => [...l, { id, clienteId: c.id, titolo: `Piano alimentare ${fmtData(OGGI)}`, creata: OGGI, kcalObiettivo: c.fabbisogno ?? 1800, settimana: settimanaVuota(), noteGenerali: "" }]);
@@ -287,7 +287,8 @@ function Diete({ c, aggiorna }: { c: Cliente; aggiorna: (f: (c: Cliente) => Clie
     vai({ nome: "dieta", id });
   };
   const creaPiano = () => {
-    const m = MODELLI_PIANO.find((x) => x.nome === modello)!;
+    const m = modelli.find((x) => x.id === modelloId);
+    if (!m) { toast("Scegli un modello (menu Piani alimentari)"); return; }
     const p = nuovoPianoDaModello(m, c.id, OGGI);
     setPiani((l) => [...l, p]);
     toast(`Piano creato dal modello «${m.nome}»`);
@@ -299,8 +300,12 @@ function Diete({ c, aggiorna }: { c: Cliente; aggiorna: (f: (c: Cliente) => Clie
         <div className="card-head">
           <h2>Piani alimentari da stampare</h2>
           <div className="row">
-            <select className="select" style={{ width: "auto" }} value={modello} onChange={(e) => setModello(e.target.value)}>
-              {MODELLI_PIANO.map((m) => <option key={m.nome}>{m.nome}</option>)}
+            <select className="select" style={{ width: "auto" }} value={modelloId} onChange={(e) => setModelloId(e.target.value)}>
+              {TIPI_MODELLO.filter((t) => modelli.some((m) => m.tipo === t)).map((t) => (
+                <optgroup key={t} label={t}>
+                  {modelli.filter((m) => m.tipo === t).map((m) => <option key={m.id} value={m.id}>{m.nome}{m.kcal ? ` · ${m.kcal} kcal` : ""}</option>)}
+                </optgroup>
+              ))}
             </select>
             <button className="btn primary sm" onClick={creaPiano}><Icon.plus /> Nuovo piano dal modello</button>
           </div>

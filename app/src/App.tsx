@@ -10,6 +10,7 @@ import { Agenda } from "./screens/Agenda";
 import { Alimenti } from "./screens/Alimenti";
 import { Impostazioni } from "./screens/Impostazioni";
 import { PianoEditor } from "./screens/PianoEditor";
+import { ModelloEditor, Modelli } from "./screens/Modelli";
 
 const INATTIVITA_MS = 10 * 60 * 1000; // 10 minuti
 
@@ -54,12 +55,13 @@ const NAV: { key: Vista["nome"]; label: string; icon: keyof typeof Icon }[] = [
   { key: "clienti", label: "Clienti", icon: "users" },
   { key: "agenda", label: "Agenda", icon: "calendar" },
   { key: "alimenti", label: "Alimenti", icon: "diet" },
+  { key: "modelli", label: "Piani alimentari", icon: "file" },
   { key: "impostazioni", label: "Impostazioni", icon: "settings" },
 ];
 
 function Shell() {
   const { vista, vai, backup, bloccaOra } = useStore();
-  const sezione = vista.nome === "cliente" || vista.nome === "dieta" || vista.nome === "piano" ? "clienti" : vista.nome;
+  const sezione = vista.nome === "cliente" || vista.nome === "dieta" || vista.nome === "piano" ? "clienti" : vista.nome === "modello" ? "modelli" : vista.nome;
   return (
     <div className="app">
       <aside className="sidebar">
@@ -88,6 +90,8 @@ function Shell() {
         {vista.nome === "cliente" && <ClienteScheda key={vista.id + (vista.tab ?? "")} id={vista.id} tab={vista.tab} />}
         {vista.nome === "dieta" && <DietaEditor id={vista.id} />}
         {vista.nome === "piano" && <PianoEditor key={vista.id} id={vista.id} />}
+        {vista.nome === "modelli" && <Modelli />}
+        {vista.nome === "modello" && <ModelloEditor key={vista.id} id={vista.id} />}
         {vista.nome === "agenda" && <Agenda />}
         {vista.nome === "alimenti" && <Alimenti />}
         {vista.nome === "impostazioni" && <Impostazioni />}

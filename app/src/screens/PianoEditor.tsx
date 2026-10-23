@@ -1,15 +1,40 @@
-import { useEffect, useRef, useState } from "react";
+import { ReactNode, useEffect, useRef, useState } from "react";
 import { useStore } from "../store";
 import { Icon } from "../components/ui";
 import { PianoStampa } from "../components/PianoStampa";
 import { fmtData } from "../data";
-import { ElementoPiano, OpzionePiano, PianoAlimentare, SezionePiano } from "../types";
+import { Cliente, ElementoPiano, OpzionePiano, PianoAlimentare, SezionePiano } from "../types";
 
-/** Piano alimentare: modifica a sinistra, anteprima del foglio A4 a destra, stampa o PDF. */
+/** Piano del cliente: l'editor comune con la data di consegna e il ritorno alla scheda cliente. */
 export function PianoEditor({ id }: { id: string }) {
-  const { piani, setPiani, clienti, vai, toast } = useStore();
+  const { piani, setPiani, clienti, vai } = useStore();
   const piano = piani.find((p) => p.id === id);
   const cliente = clienti.find((c) => c.id === piano?.clienteId);
+  if (!piano || !cliente) return <div className="page">Piano non trovato</div>;
+  const aggiorna = (f: (p: PianoAlimentare) => PianoAlimentare) => setPiani((l) => l.map((x) => (x.id === id ? f(x) : x)));
+  return (
+    <EditorPiano piano={piano} cliente={cliente} aggiorna={aggiorna}
+      intestazione={<>
+        <button className="btn ghost sm" style={{ marginBottom: 8, paddingLeft: 0 }} onClick={() => vai({ nome: "cliente", id: cliente.id, tab: "diete" })}><Icon.back /> {cliente.nome} {cliente.cognome}</button>
+        <div>
+          <h1>Piano alimentare</h1>
+          <p>Dal modello «{piano.modello}» · creato il {fmtData(piano.creato)} · le modifiche valgono solo per questo cliente, il modello non cambia</p>
+        </div>
+      </>}
+      campiInPiu={<div className="field"><label>Data di consegna</label><input className="input" type="date" value={piano.creato} onChange={(e) => aggiorna((p) => ({ ...p, creato: e.target.value }))} /></div>}
+    />
+  );
+}
+
+/** Editor comune di piani e modelli: sezioni a sinistra, foglio A4 a destra, collegati nei due sensi. */
+export function EditorPiano({ piano, cliente, aggiorna, intestazione, campiInPiu }: {
+  piano: PianoAlimentare;
+  cliente: Cliente;
+  aggiorna: (f: (p: PianoAlimentare) => PianoAlimentare) => void;
+  intestazione: ReactNode; // a sinistra del pulsante di stampa
+  campiInPiu?: ReactNode; // in cima al riquadro dei dati
+}) {
+  const { toast } = useStore();
   const [aperta, setAperta] = useState<string | null>(null);
   const [attiva, setAttiva] = useState<string | null>(null); // sezione visibile ora nel foglio
   const editorRef = useRef<HTMLElement>(null);
@@ -31,7 +56,7 @@ export function PianoEditor({ id }: { id: string }) {
     calcola();
     main.addEventListener("scroll", calcola, { passive: true });
     return () => main.removeEventListener("scroll", calcola);
-  }, [piano?.sezioni]);
+  }, [piano.sezioni]);
 
   // Tiene visibile a sinistra la riga di una sezione (l'elenco ha uno scorrimento suo).
   const mostraRiga = (sid: string | null) => {
@@ -43,8 +68,6 @@ export function PianoEditor({ id }: { id: string }) {
     else if (b.top > a.bottom - 60) ed.scrollTop += b.top - a.top - 80;
   };
   useEffect(() => { if (!aperta) mostraRiga(attiva); }, [attiva, aperta]);
-
-  if (!piano || !cliente) return <div className="page">Piano non trovato</div>;
 
   /** Porta il foglio all'inizio della sezione e la fa lampeggiare. */
   const mostraNelFoglio = (s: SezionePiano) => {
@@ -72,7 +95,6 @@ export function PianoEditor({ id }: { id: string }) {
     window.setTimeout(() => mostraRiga(sid), 0);
   };
 
-  const aggiorna = (f: (p: PianoAlimentare) => PianoAlimentare) => setPiani((l) => l.map((x) => (x.id === id ? f(x) : x)));
   const aggSezione = (sid: string, f: (s: SezionePiano) => SezionePiano) => aggiorna((p) => ({ ...p, sezioni: p.sezioni.map((s) => (s.id === sid ? f(s) : s)) }));
   const sposta = (i: number, d: number) => aggiorna((p) => {
     const s = [...p.sezioni];
@@ -85,12 +107,8 @@ export function PianoEditor({ id }: { id: string }) {
   return (
     <div className="page piano-pagina">
       <div className="no-print">
-        <button className="btn ghost sm" style={{ marginBottom: 8, paddingLeft: 0 }} onClick={() => vai({ nome: "cliente", id: cliente.id, tab: "diete" })}><Icon.back /> {cliente.nome} {cliente.cognome}</button>
         <div className="page-head">
-          <div>
-            <h1>Piano alimentare</h1>
-            <p>Modello «{piano.modello}» · creato il {fmtData(piano.creato)} · le modifiche valgono solo per questo cliente</p>
-          </div>
+          <div>{intestazione}</div>
           <button className="btn primary" onClick={() => window.print()}><Icon.print /> Stampa / Salva PDF</button>
         </div>
       </div>
@@ -98,9 +116,9 @@ export function PianoEditor({ id }: { id: string }) {
       <div className="piano-layout">
         <aside className="piano-editor no-print" ref={editorRef}>
           <div className="card card-pad">
-            <div className="field"><label>Titolo in copertina</label><input className="input" value={piano.titolo} onChange={(e) => aggiorna((p) => ({ ...p, titolo: e.target.value }))} /></div>
-            <div className="grid g2" style={{ marginTop: 8 }}>
-              <div className="field"><label>Data di consegna</label><input className="input" type="date" value={piano.creato} onChange={(e) => aggiorna((p) => ({ ...p, creato: e.target.value }))} /></div>
+            {campiInPiu && <div style={{ marginBottom: 8 }}>{campiInPiu}</div>}
+            <div className="grid g2">
+              <div className="field"><label>Titolo in copertina</label><input className="input" value={piano.titolo} onChange={(e) => aggiorna((p) => ({ ...p, titolo: e.target.value }))} /></div>
               <div className="field"><label>Kcal indicative</label><input className="input" value={piano.kcal ?? ""} onChange={(e) => { const v = Number(e.target.value); aggiorna((p) => ({ ...p, kcal: e.target.value.trim() && !isNaN(v) ? v : undefined })); }} /></div>
             </div>
             <div className="field" style={{ marginTop: 8 }}><label>Messaggio personale in copertina</label><textarea className="textarea" rows={2} value={piano.messaggio ?? ""} onChange={(e) => aggiorna((p) => ({ ...p, messaggio: e.target.value || undefined }))} /></div>

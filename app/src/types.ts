@@ -179,11 +179,29 @@ export interface SezionePiano {
   elementi: ElementoPiano[];
 }
 
+export const TIPI_MODELLO = ["Ipocalorico", "Isocalorico", "Ipercalorico", "Altro"] as const;
+export type TipoModello = (typeof TIPI_MODELLO)[number];
+
+/** Modello di piano (menu "Piani alimentari"). Da qui si crea il piano del cliente, che ne è una COPIA:
+ *  modificare o eliminare un modello non tocca mai i piani dei clienti (regole in CLAUDE.md). */
+export interface ModelloPiano {
+  id: string;
+  nome: string; // es. "1450 – Piatto completo"
+  tipo: TipoModello;
+  kcal?: number;
+  modificato: string; // ISO
+  nota?: string; // nota interna, non stampata
+  titolo: string; // titolo in copertina
+  messaggio?: string;
+  sezioni: SezionePiano[];
+}
+
 export interface PianoAlimentare {
   id: string;
   clienteId: string;
   titolo: string;
-  modello: string; // modello di partenza, es. "1450 – Piatto completo"
+  modello: string; // nome del modello di partenza al momento della creazione (solo informazione)
+  modelloId?: string; // da quale modello è nato: serve solo a contare i clienti, mai a ricopiarne i contenuti
   creato: string; // ISO
   kcal?: number;
   messaggio?: string; // frase personale in copertina
