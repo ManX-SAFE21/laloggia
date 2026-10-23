@@ -194,12 +194,20 @@ function Sezione({ s, onApri, aperta, onCambiaSezione }: { s: SezionePiano; onAp
         <span className="pd-sez-ico">{s.icona ?? "•"}</span>
         <Modificabile t={s.titolo} riga salva={cambia && ((titolo) => cambia((x) => ({ ...x, titolo })))} />
       </h2>
-      {s.elementi.map((e, i) => (
-        <Elemento key={i} e={e} sid={s.id} el={i} cambia={cambia && ((nuovo) => cambia((x) => ({
-          ...x,
-          elementi: nuovo ? x.elementi.map((e2, k) => (k === i ? nuovo : e2)) : x.elementi.filter((_, k) => k !== i),
-        })))} />
-      ))}
+      {s.elementi.map((e, i) => {
+        // Ogni blocco (testo, elenco, tabella…): un'immagine rilasciata sopra o sotto va in una riga nuova lì.
+        const dove = (l: string) => `blk:${s.id}:${i}:${l}`;
+        return (
+          <div key={i} className={"pd-blocco" + (tr?.bersaglio === dove("prima") ? " pd-drop-sopra" : tr?.bersaglio === dove("dopo") ? " pd-drop-sotto" : "")}
+            onDragOver={tr ? (ev) => { if (!tr.accettaImmagine(ev)) return; ev.preventDefault(); ev.stopPropagation(); tr.setBersaglio(dove(lato(ev, true))); } : undefined}
+            onDrop={tr ? (ev) => { if (!tr.accettaImmagine(ev)) return; ev.preventDefault(); ev.stopPropagation(); tr.rilascia({ sid: s.id, rigaNuova: lato(ev, true) === "dopo" ? i + 1 : i }, ev); } : undefined}>
+            <Elemento e={e} sid={s.id} el={i} cambia={cambia && ((nuovo) => cambia((x) => ({
+              ...x,
+              elementi: nuovo ? x.elementi.map((e2, k) => (k === i ? nuovo : e2)) : x.elementi.filter((_, k) => k !== i),
+            })))} />
+          </div>
+        );
+      })}
       {cambia && <AggiungiImmagine onScegli={(chiave) => cambia((x) => ({ ...x, elementi: [...x.elementi, { k: "immagini", voci: [{ chiave, mm: 25 }] }] }))} />}
     </section>
   );

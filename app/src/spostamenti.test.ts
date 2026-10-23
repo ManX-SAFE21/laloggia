@@ -16,6 +16,32 @@ const chiavi = (s: SezionePiano[], sid: string, el: number) => {
   return e.k === "immagini" ? e.voci.map((v) => v.chiave) : null;
 };
 
+const tipi = (s: SezionePiano[], sid: string) => s.find((x) => x.id === sid)!.elementi.map((e) => (e.k === "immagini" ? `img[${e.voci.map((v) => v.chiave).join(",")}]` : e.k));
+
+describe("immagine fra due blocchi (riga nuova)", () => {
+  it("nuova immagine prima, in mezzo e dopo i blocchi", () => {
+    expect(tipi(inserisciImmagine(sezioni(), { sid: "a", rigaNuova: 0 }, img("n")), "a")).toEqual(["img[n]", "testo", "img[1,2,3]", "opzioni"]);
+    expect(tipi(inserisciImmagine(sezioni(), { sid: "a", rigaNuova: 1 }, img("n")), "a")).toEqual(["testo", "img[n]", "img[1,2,3]", "opzioni"]);
+    expect(tipi(inserisciImmagine(sezioni(), { sid: "a", rigaNuova: 3 }, img("n")), "a")).toEqual(["testo", "img[1,2,3]", "opzioni", "img[n]"]);
+  });
+
+  it("spostata fra due blocchi: lascia la sua riga e ne crea una nuova", () => {
+    const s = spostaImmagine(sezioni(), { sid: "a", el: 1, i: 0 }, { sid: "a", rigaNuova: 3 });
+    expect(tipi(s, "a")).toEqual(["testo", "img[2,3]", "opzioni", "img[1]"]);
+  });
+
+  it("unica immagine della riga spostata sopra il testo: la riga vecchia sparisce", () => {
+    const s = spostaImmagine(sezioni(), { sid: "b", el: 0, i: 0 }, { sid: "a", rigaNuova: 0 });
+    expect(tipi(s, "a")).toEqual(["img[9]", "testo", "img[1,2,3]", "opzioni"]);
+    expect(tipi(s, "b")).toEqual([]);
+  });
+
+  it("rilasciata accanto alla propria riga (stessa sezione): nessuna immagine persa", () => {
+    const s = spostaImmagine(sezioni(), { sid: "a", el: 1, i: 2 }, { sid: "a", rigaNuova: 1 });
+    expect(tipi(s, "a")).toEqual(["testo", "img[3]", "img[1,2]", "opzioni"]);
+  });
+});
+
 describe("spostaImmagine", () => {
   it("dentro la stessa riga, verso destra e verso sinistra", () => {
     expect(chiavi(spostaImmagine(sezioni(), { sid: "a", el: 1, i: 0 }, { sid: "a", el: 1, i: 3 }), "a", 1)).toEqual(["2", "3", "1"]);

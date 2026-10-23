@@ -5,9 +5,10 @@ import { ImmaginePiano, SezionePiano } from "./types";
 /** Posizione di un'immagine o di un'alternativa: sezione, elemento nella sezione, indice nell'elemento. */
 export interface Posizione { sid: string; el: number; i: number }
 
-/** Dove lasciare un'immagine: dentro una riga di immagini esistente (el + i = posizione d'inserimento)
- *  oppure, senza el, in una riga nuova in fondo alla sezione. */
-export interface Destinazione { sid: string; el?: number; i?: number }
+/** Dove lasciare un'immagine: dentro una riga di immagini esistente (el + i = posizione d'inserimento),
+ *  in una riga nuova fra due blocchi (rigaNuova = indice del blocco davanti a cui va: 0..n)
+ *  oppure, senza el né rigaNuova, in una riga nuova in fondo alla sezione. */
+export interface Destinazione { sid: string; el?: number; i?: number; rigaNuova?: number }
 
 const VUOTO = Symbol("posto liberato");
 
@@ -15,6 +16,11 @@ const VUOTO = Symbol("posto liberato");
 export function inserisciImmagine(sezioni: SezionePiano[], a: Destinazione, img: ImmaginePiano): SezionePiano[] {
   return sezioni.map((s) => {
     if (s.id !== a.sid) return s;
+    if (a.rigaNuova !== undefined) {
+      const elementi = [...s.elementi];
+      elementi.splice(Math.max(0, Math.min(a.rigaNuova, elementi.length)), 0, { k: "immagini", voci: [img] });
+      return { ...s, elementi };
+    }
     if (a.el === undefined) return { ...s, elementi: [...s.elementi, { k: "immagini", voci: [img] }] };
     return {
       ...s,
