@@ -6,6 +6,7 @@ import { OGGI, fmtData, nuovoId } from "../data";
 import { useStore } from "../store";
 import { Allegato, Cliente } from "../types";
 import { Icon, Modal } from "./ui";
+import { prossimoZoom } from "../zoomFoglio";
 import { MAX_MB_ALLEGATO, base64DaFile, byteDaBase64, controllaFile, esportaAllegato, leggiFileAllegato, mimeDaNome, salvaFileAllegato } from "../allegati";
 
 const dimensione = (kb: number) => (kb >= 1000 ? `${(kb / 1024).toFixed(1)} MB` : `${kb} KB`);
@@ -134,13 +135,36 @@ export function Allegati({ c, aggiorna }: { c: Cliente; aggiorna: (f: (c: Client
   );
 }
 
-/** Mostra il PDF (pagine disegnate con pdf.js) o la foto, senza creare file sul disco. */
+/** Mostra il PDF (pagine disegnate con pdf.js) o la foto, senza creare file sul disco.
+ *  «Ingrandisci» = la finestra occupa tutto il programma (la scelta si ricorda); zoom 100% = larghezza della finestra. */
 function VisoreAllegato({ a, onClose, onSalvaCopia }: { a: Allegato; onClose: () => void; onSalvaCopia: () => void }) {
   const [b64, setB64] = useState<string | null>(null);
   const [errore, setErrore] = useState("");
+  const [pieno, setPieno] = useState(() => { try { return localStorage.getItem(PIENO) === "1"; } catch { return false; } });
+  const [zoom, setZoom] = useState(1);
+  const [base, setBase] = useState(0); // larghezza utile della finestra, in pixel
+  const [naturale, setNaturale] = useState(0); // larghezza vera della foto
+  const visore = useRef<HTMLDivElement>(null);
   const pagine = useRef<HTMLDivElement>(null);
+  const larghezza = Math.max(200, base) * zoom;
 
   useEffect(() => { leggiFileAllegato(a.id).then(setB64, (e) => setErrore(String(e))); }, [a.id]);
+  useEffect(() => { try { localStorage.setItem(PIENO, pieno ? "1" : "0"); } catch { /* solo una comodità */ } }, [pieno]);
+  useEffect(() => {
+    const el = visore.current;
+    if (!el) return;
+    const misura = () => setBase(el.clientWidth - 16);
+    misura();
+    const ro = new ResizeObserver(misura);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+  // Le pagine si disegnano una volta sola, ben definite; ingrandire cambia solo la larghezza a schermo.
+  useEffect(() => {
+    for (const t of pagine.current?.querySelectorAll("canvas") ?? []) t.style.width = `${larghezza}px`;
+  }, [larghezza]);
+  const larghezzaRef = useRef(larghezza);
+  larghezzaRef.current = larghezza;
 
   useEffect(() => {
     if (!b64 || a.tipo !== "pdf" || !pagine.current) return;
@@ -154,15 +178,13 @@ function VisoreAllegato({ a, onClose, onSalvaCopia }: { a: Allegato; onClose: ()
       const caricamento = pdfjs.getDocument({ data: byteDaBase64(b64) });
       distruggi = () => void caricamento.destroy();
       const doc = await caricamento.promise;
-      const larghezza = Math.max(300, dove.clientWidth - 16);
       for (let i = 1; i <= doc.numPages && !finito; i++) {
         const pagina = await doc.getPage(i);
-        const scala = larghezza / pagina.getViewport({ scale: 1 }).width;
-        const vista = pagina.getViewport({ scale: scala * window.devicePixelRatio });
+        const vista = pagina.getViewport({ scale: PIXEL_PAGINA / pagina.getViewport({ scale: 1 }).width });
         const tela = document.createElement("canvas");
         tela.width = vista.width;
         tela.height = vista.height;
-        tela.style.width = `${larghezza}px`;
+        tela.style.width = `${larghezzaRef.current}px`;
         tela.className = "visore-pagina";
         dove.appendChild(tela);
         await pagina.render({ canvas: tela, viewport: vista }).promise;
@@ -172,15 +194,31 @@ function VisoreAllegato({ a, onClose, onSalvaCopia }: { a: Allegato; onClose: ()
   }, [b64, a.tipo]);
 
   return createPortal(
-    <Modal title={titoloAllegato(a)} onClose={onClose} largo
+    <Modal title={titoloAllegato(a)} onClose={onClose} largo pieno={pieno}
       footer={<><button className="btn" onClick={onSalvaCopia}>Salva una copia…</button><button className="btn primary" onClick={onClose}>Chiudi</button></>}>
+      <div className="visore-barra">
+        <button className="btn sm" title="Rimpicciolisci" onClick={() => setZoom((z) => prossimoZoom(z, -1, ZOOM_VISORE_MIN, ZOOM_VISORE_MAX))}>−</button>
+        <span className="num foglio-zoom" title="Ingrandimento (100% = larghezza della finestra). Clic: torna a 100%" onClick={() => setZoom(1)}>{Math.round(zoom * 100)}%</span>
+        <button className="btn sm" title="Ingrandisci il documento" onClick={() => setZoom((z) => prossimoZoom(z, 1, ZOOM_VISORE_MIN, ZOOM_VISORE_MAX))}>+</button>
+        <button className="btn sm" style={{ marginLeft: "auto" }} title={pieno ? "Torna alla finestra normale" : "La finestra occupa tutto il programma"} onClick={() => setPieno((p) => !p)}>
+          {pieno ? "⤡ Riduci" : "⤢ Ingrandisci"}
+        </button>
+      </div>
       {errore && <p className="err">{errore}</p>}
       {!b64 && !errore && <p className="muted">Apertura…</p>}
-      <div className="visore">
-        {b64 && a.tipo === "foto" && <img src={`data:${mimeDaNome(a.nome)};base64,${b64}`} alt={a.nome} />}
+      <div className="visore" ref={visore}>
+        {b64 && a.tipo === "foto" && (
+          <img src={`data:${mimeDaNome(a.nome)};base64,${b64}`} alt={a.nome} onLoad={(e) => setNaturale(e.currentTarget.naturalWidth)}
+            style={{ width: naturale ? Math.min(naturale, Math.max(200, base)) * zoom : undefined }} />
+        )}
         {a.tipo === "pdf" && <div ref={pagine} />}
       </div>
     </Modal>,
     document.body,
   );
 }
+
+const PIENO = "laloggia.visore.pieno";
+const PIXEL_PAGINA = 1800; // risoluzione a cui si disegna ogni pagina (nitida anche ingrandita)
+const ZOOM_VISORE_MIN = 0.5;
+const ZOOM_VISORE_MAX = 3;

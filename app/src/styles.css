@@ -346,8 +346,11 @@ h3 { font-size: 15px; font-family: var(--font); font-weight: 600; }
 .riga-cliccabile { cursor: pointer; }
 .riga-cliccabile:hover td { background: var(--surface-2); }
 .visore { max-height: 70vh; overflow: auto; background: var(--surface-2); border-radius: 8px; padding: 4px; text-align: center; }
-.visore img { max-width: 100%; }
-.visore-pagina { display: block; max-width: 100%; height: auto; margin: 0 auto 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.15); background: #fff; }
+.visore img { display: block; margin: 0 auto; }
+.visore-barra { display: flex; align-items: center; gap: 4px; margin-bottom: 8px; }
+.modal.pieno { width: calc(100vw - 24px); max-width: none; height: calc(100vh - 24px); max-height: none; display: flex; flex-direction: column; }
+.modal.pieno .visore { flex: 1; min-height: 0; max-height: none; }
+.visore-pagina { display: block; height: auto; margin: 0 auto 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.15); background: #fff; }
 .cambiabile { cursor: text; border-radius: 4px; padding: 1px 3px; margin: -1px -3px; }
 .cambiabile:hover { background: var(--accent-2); }
 .cambiabile-input { padding: 3px 6px; font-size: 14px; width: 100%; min-width: 120px; }
