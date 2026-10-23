@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useRef, useState } from "react";
+import { ReactNode, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useStore } from "../store";
 import { Icon } from "../components/ui";
 import { PianoStampa } from "../components/PianoStampa";
@@ -39,6 +39,37 @@ export function EditorPiano({ piano, cliente, aggiorna, intestazione, campiInPiu
   const [attiva, setAttiva] = useState<string | null>(null); // sezione visibile ora nel foglio
   const editorRef = useRef<HTMLElement>(null);
   const foglioRef = useRef<HTMLDivElement>(null);
+
+  // Zoom del foglio a schermo (la stampa resta sempre A4 al 100%). La scelta si ricorda (solo su questo PC).
+  const leggi = <T,>(k: string, d: T): T => { try { const v = localStorage.getItem(k); return v ? (JSON.parse(v) as T) : d; } catch { return d; } };
+  const [zoom, setZoom] = useState<number>(() => leggi("laloggia.foglio.zoom", 0.82));
+  const [adatta, setAdatta] = useState<boolean>(() => leggi("laloggia.foglio.adatta", false));
+  const [senzaPannello, setSenzaPannello] = useState<boolean>(() => leggi("laloggia.foglio.senzaPannello", false));
+  const [larghezza, setLarghezza] = useState(0);
+  useEffect(() => {
+    try {
+      localStorage.setItem("laloggia.foglio.zoom", JSON.stringify(zoom));
+      localStorage.setItem("laloggia.foglio.adatta", JSON.stringify(adatta));
+      localStorage.setItem("laloggia.foglio.senzaPannello", JSON.stringify(senzaPannello));
+    } catch { /* memoria non disponibile: vale solo finché il programma è aperto */ }
+  }, [zoom, adatta, senzaPannello]);
+  // Spazio libero per il foglio: misurato subito (adatta, pannello) e a ogni cambio di dimensione della finestra.
+  useLayoutEffect(() => {
+    const el = foglioRef.current;
+    if (!el) return;
+    const misura = () => setLarghezza(el.clientWidth);
+    misura();
+    const ro = new ResizeObserver(misura);
+    ro.observe(el);
+    window.addEventListener("resize", misura);
+    return () => { ro.disconnect(); window.removeEventListener("resize", misura); };
+  }, [adatta, senzaPannello]);
+  const LARGHEZZA_A4 = (210 * 96) / 25.4; // 210 mm in pixel
+  const zoomFoglio = adatta && larghezza ? Math.max(0.4, Math.min(2.5, (larghezza - 24) / LARGHEZZA_A4)) : zoom;
+  const cambiaZoom = (passo: number) => {
+    setAdatta(false);
+    setZoom(Math.round(Math.max(0.5, Math.min(2, zoomFoglio + passo)) * 100) / 100);
+  };
 
   // Mentre si scorre il foglio, si evidenzia a sinistra la sezione che occupa la parte più grande della finestra
   // (quella su cui sta l'occhio). Se a occupare di più è la copertina, non si evidenzia nulla.
@@ -120,7 +151,7 @@ export function EditorPiano({ piano, cliente, aggiorna, intestazione, campiInPiu
         </div>
       </div>
 
-      <div className="piano-layout">
+      <div className={"piano-layout" + (senzaPannello ? " senza-pannello" : "")}>
         <aside className="piano-editor no-print" ref={editorRef}>
           <div className="card card-pad">
             {campiInPiu && <div style={{ marginBottom: 8 }}>{campiInPiu}</div>}
@@ -168,8 +199,22 @@ export function EditorPiano({ piano, cliente, aggiorna, intestazione, campiInPiu
           </div>
         </aside>
 
-        <div className="piano-anteprima" ref={foglioRef}>
-          <PianoStampa piano={piano} cliente={cliente} onApri={apriDalFoglio} aperta={aperta} />
+        <div className="piano-destra">
+        <div className="foglio-barra no-print">
+          <button className="btn sm" onClick={() => setSenzaPannello((v) => !v)} title={senzaPannello ? "Riapri l'elenco delle sezioni" : "Nasconde l'elenco delle sezioni e allarga il foglio"}>
+            {senzaPannello ? "» Mostra pannello" : "« Nascondi pannello"}
+          </button>
+          <div className="row" style={{ gap: 4 }}>
+            <button className="btn sm" title="Rimpicciolisci il foglio" onClick={() => cambiaZoom(-0.1)}>−</button>
+            <span className="num foglio-zoom" title="Ingrandimento del foglio a schermo (la stampa resta A4)">{Math.round(zoomFoglio * 100)}%</span>
+            <button className="btn sm" title="Ingrandisci il foglio" onClick={() => cambiaZoom(0.1)}>+</button>
+            <button className={"btn sm" + (adatta ? " primary" : "")} title="Il foglio occupa tutta la larghezza libera" onClick={() => setAdatta((a) => !a)}>Adatta alla larghezza</button>
+          </div>
+        </div>
+        <div className="piano-anteprima" ref={foglioRef} style={{ ["--zoom-foglio" as string]: zoomFoglio }}>
+          <PianoStampa piano={piano} cliente={cliente} onApri={apriDalFoglio} aperta={aperta}
+            onCambiaSezione={aggSezione} onCambiaPiano={(patch) => aggiorna((p) => ({ ...p, ...patch }))} />
+        </div>
         </div>
       </div>
     </div>

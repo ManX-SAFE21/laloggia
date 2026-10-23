@@ -249,7 +249,7 @@ h3 { font-size: 15px; font-family: var(--font); font-weight: 600; }
 .piano-opz { display: grid; gap: 4px; padding: 8px; border: 1px solid var(--line); border-radius: 8px; margin-bottom: 6px; background: var(--surface-2); }
 .piano-opz-num { width: 22px; height: 22px; border-radius: 50%; background: var(--olive); color: var(--cream); display: grid; place-items: center; font-size: 12px; font-weight: 700; flex: none; }
 .piano-anteprima { overflow-x: auto; padding: 4px 4px 40px; }
-.piano-anteprima .piano-doc { zoom: 0.82; margin: 0 auto; }
+.piano-anteprima .piano-doc { zoom: var(--zoom-foglio, 0.82); margin: 0 auto; }
 @media print {
   html, body, #root, .app, .main { height: auto !important; overflow: visible !important; }
   .piano-layout { display: block; }
@@ -285,3 +285,10 @@ h3 { font-size: 15px; font-family: var(--font); font-weight: 600; }
 .badge.tipo-ipocalorico { background: #e7f1fb; border-color: #c9ddf2; color: #2f5d8a; }
 .badge.tipo-isocalorico { background: var(--ok-bg); border-color: #c7e6d1; color: var(--ok); }
 .badge.tipo-ipercalorico { background: var(--warn-bg); border-color: #f1dcb5; color: var(--warn); }
+
+/* Barra dello zoom del foglio e pannello nascosto */
+.piano-destra { min-width: 0; }
+.foglio-barra { position: sticky; top: 0; z-index: 5; display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 8px 4px; margin-bottom: 6px; background: var(--bg); border-bottom: 1px solid var(--line); }
+.foglio-zoom { min-width: 48px; text-align: center; font-weight: 600; }
+.piano-layout.senza-pannello { grid-template-columns: 1fr; }
+.piano-layout.senza-pannello .piano-editor { display: none; }
