@@ -102,6 +102,22 @@ export function EditorPiano({ piano, cliente, aggiorna: aggiornaEsterno, intesta
   const [zoom, setZoom] = useState<number>(() => leggi("laloggia.foglio.zoom", 0.82));
   const [adatta, setAdatta] = useState<boolean>(() => leggi("laloggia.foglio.adatta", false));
   const [senzaPannello, setSenzaPannello] = useState<boolean>(() => leggi("laloggia.foglio.senzaPannello", false));
+  const [larghezzaPannello, setLarghezzaPannello] = useState<number>(() => leggi("laloggia.foglio.pannello", PANNELLO_NORMALE));
+  useEffect(() => { try { localStorage.setItem("laloggia.foglio.pannello", JSON.stringify(larghezzaPannello)); } catch { /* vale solo finché è aperto */ } }, [larghezzaPannello]);
+  // Divisore: trascinandolo cambia la larghezza del pannello (PANNELLO_MIN..PANNELLO_MAX); doppio clic = normale.
+  const trascinaDivisore = (e: React.PointerEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    const x0 = e.clientX, w0 = larghezzaPannello;
+    const muovi = (ev: PointerEvent) => setLarghezzaPannello(Math.round(Math.max(PANNELLO_MIN, Math.min(PANNELLO_MAX, w0 + ev.clientX - x0))));
+    const fine = () => {
+      window.removeEventListener("pointermove", muovi);
+      window.removeEventListener("pointerup", fine);
+      document.body.classList.remove("trascina-divisore");
+    };
+    window.addEventListener("pointermove", muovi);
+    window.addEventListener("pointerup", fine);
+    document.body.classList.add("trascina-divisore");
+  };
   const [larghezza, setLarghezza] = useState(0);
   useEffect(() => {
     try {
@@ -120,7 +136,7 @@ export function EditorPiano({ piano, cliente, aggiorna: aggiornaEsterno, intesta
     ro.observe(el);
     window.addEventListener("resize", misura);
     return () => { ro.disconnect(); window.removeEventListener("resize", misura); };
-  }, [adatta, senzaPannello]);
+  }, [adatta, senzaPannello, larghezzaPannello]);
   const LARGHEZZA_A4 = (210 * 96) / 25.4; // 210 mm in pixel
   const zoomFoglio = adatta && larghezza ? Math.max(0.4, Math.min(2.5, (larghezza - 24) / LARGHEZZA_A4)) : zoom;
   const cambiaZoom = (passo: number) => {
@@ -209,7 +225,8 @@ export function EditorPiano({ piano, cliente, aggiorna: aggiornaEsterno, intesta
         </div>
       </div>
 
-      <div className={"piano-layout" + (senzaPannello ? " senza-pannello" : "")}>
+      <div className={"piano-layout" + (senzaPannello ? " senza-pannello" : "")}
+        style={senzaPannello ? undefined : { gridTemplateColumns: `${larghezzaPannello}px 12px minmax(0, 1fr)` }}>
         <aside className="piano-editor no-print" ref={editorRef}>
           <div className="card card-pad piano-dati">
             <div className="row" style={{ justifyContent: "space-between", gap: 8 }}>
@@ -266,6 +283,10 @@ export function EditorPiano({ piano, cliente, aggiorna: aggiornaEsterno, intesta
           </div>
         </aside>
 
+        <div className="piano-divisore no-print" role="separator" aria-orientation="vertical" aria-valuenow={larghezzaPannello}
+          title="Trascina per allargare o stringere il pannello · doppio clic: larghezza normale"
+          onPointerDown={trascinaDivisore} onDoubleClick={() => setLarghezzaPannello(PANNELLO_NORMALE)} />
+
         <div className="piano-destra">
         <div className="foglio-barra no-print">
           <button className="btn sm" onClick={() => setSenzaPannello((v) => !v)} title={senzaPannello ? "Riapri l'elenco delle sezioni" : "Nasconde l'elenco delle sezioni e allarga il foglio"}>
@@ -301,6 +322,9 @@ export function EditorPiano({ piano, cliente, aggiorna: aggiornaEsterno, intesta
 }
 
 const PASSI = 100; // livelli di Annulla
+const PANNELLO_NORMALE = 300; // px
+const PANNELLO_MIN = 220;
+const PANNELLO_MAX = 600;
 const UNISCI_MS = 800; // modifiche più ravvicinate di così (es. scrivere in un campo) = un solo passo
 
 /** Se la modifica ha tolto qualcosa, il messaggio per l'avviso (con Annulla). */

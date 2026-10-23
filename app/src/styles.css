@@ -238,7 +238,7 @@ h3 { font-size: 15px; font-family: var(--font); font-weight: 600; }
 
 /* Piano alimentare: modifica a sinistra, foglio A4 a destra */
 .piano-pagina { max-width: none; }
-.piano-layout { display: grid; grid-template-columns: minmax(250px, 300px) 1fr; gap: 20px; align-items: start; }
+.piano-layout { display: grid; grid-template-columns: 300px 12px minmax(0, 1fr); gap: 4px; align-items: stretch; }
 .piano-editor { display: grid; gap: 12px; position: sticky; top: 0; max-height: calc(100vh - 40px); overflow-y: auto; padding-right: 4px; }
 .piano-sezioni { display: grid; gap: 6px; }
 .piano-sez.esclusa { opacity: 0.55; }
@@ -292,6 +292,13 @@ h3 { font-size: 15px; font-family: var(--font); font-weight: 600; }
 .foglio-zoom { min-width: 48px; text-align: center; font-weight: 600; }
 .piano-layout.senza-pannello { grid-template-columns: 1fr; }
 .piano-layout.senza-pannello .piano-editor { display: none; }
+.piano-layout.senza-pannello .piano-divisore { display: none; }
+/* Divisore trascinabile tra pannello e foglio */
+.piano-editor { align-self: start; }
+.piano-divisore { position: relative; cursor: col-resize; touch-action: none; }
+.piano-divisore::after { content: ""; position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; transform: translateX(-50%); background: var(--line); border-radius: 2px; transition: background .15s, width .15s; }
+.piano-divisore:hover::after, .trascina-divisore .piano-divisore::after { width: 4px; background: var(--olive); }
+.trascina-divisore, .trascina-divisore * { cursor: col-resize !important; user-select: none !important; }
 
 /* Pannello snello */
 .piano-dati { padding: 10px 12px; }
