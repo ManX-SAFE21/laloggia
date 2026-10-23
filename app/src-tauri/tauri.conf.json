@@ -15,7 +15,8 @@
         "title": "Gestionale La Loggia",
         "width": 1280,
         "height": 800,
-        "zoomHotkeysEnabled": true
+        "zoomHotkeysEnabled": true,
+        "dragDropEnabled": false
       }
     ],
     "security": {
