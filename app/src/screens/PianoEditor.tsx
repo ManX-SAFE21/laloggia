@@ -231,7 +231,7 @@ export function EditorPiano({ piano, cliente, aggiorna: aggiornaEsterno, intesta
           </div>
 
           <p className="small muted piano-aiuto">
-            <b>Sul foglio:</b> clic sui testi per scriverli; passa il mouse su alternative e immagini per i pulsanti. <b>Qui:</b> clic sul nome per andarci, casella per includerla nella stampa, <b>▸</b> per i dettagli
+            <b>Sul foglio:</b> clic sui testi per scriverli; passa il mouse su alternative e immagini per i pulsanti; trascina le immagini (anche dal PC) e le alternative (dal numero). <b>Qui:</b> clic sul nome per andarci, casella per includerla nella stampa, <b>▸</b> per i dettagli
           </p>
           <div className="piano-sezioni">
             {piano.sezioni.map((s, i) => (
@@ -284,7 +284,8 @@ export function EditorPiano({ piano, cliente, aggiorna: aggiornaEsterno, intesta
         </div>
         <div className="piano-anteprima" ref={foglioRef} style={{ ["--zoom-foglio" as string]: zoomFoglio }}>
           <PianoStampa piano={piano} cliente={cliente} onApri={selezionaDalFoglio} aperta={selezionata}
-            onCambiaSezione={aggSezione} onCambiaPiano={(patch) => aggiorna((p) => ({ ...p, ...patch }))} />
+            onCambiaSezione={aggSezione} onCambiaPiano={(patch) => aggiorna((p) => ({ ...p, ...patch }))}
+            onSezioni={(f) => aggiorna((p) => ({ ...p, sezioni: f(p.sezioni) }))} />
         </div>
         </div>
       </div>

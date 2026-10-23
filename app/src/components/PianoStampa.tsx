@@ -1,14 +1,15 @@
 // Impaginazione del piano alimentare: la stessa per l'anteprima a schermo e per la stampa/PDF (A4).
-// Nell'editor i testi si possono modificare direttamente sul foglio (clic sul testo); la struttura
-// (alternative, frequenze, sezioni incluse e ordine) si cambia nel pannello di sinistra.
-import { Fragment, KeyboardEvent, ReactNode, useState } from "react";
+// Nell'editor il foglio è modificabile: testi (clic), pulsanti passando il mouse, trascinamento di
+// immagini e alternative. Sezioni incluse e ordine si cambiano nel pannello di sinistra.
+import { DragEvent, Fragment, KeyboardEvent, ReactNode, createContext, useContext, useRef, useState } from "react";
 import "../piano.css";
-import { STUDIO, fmtData } from "../data";
+import { STUDIO, fmtData, nuovoId } from "../data";
 import { useStore } from "../store";
 import { LibreriaImmagini } from "./LibreriaImmagini";
 import { DIMENSIONI_IMMAGINE, IMMAGINI_PIANO, srcImmagine } from "../immaginiPiano";
 import { Cliente, ElementoPiano, OpzionePiano, PianoAlimentare, SezionePiano } from "../types";
 import { Leaf } from "../screens/Lock";
+import { Destinazione, Posizione, inserisciImmagine, spostaAlternativa, spostaImmagine } from "../spostamenti";
 
 /** Testo con **grassetto**. */
 export function Testo({ t }: { t: string }) {
@@ -50,21 +51,79 @@ function Modificabile({ t, salva, riga, vuoto = "clic per scrivere" }: { t: stri
 
 type CambiaSezione = (sid: string, f: (s: SezionePiano) => SezionePiano) => void;
 
-/** onApri: a schermo, il clic su una sezione la apre nella modifica. onCambiaSezione / onCambiaPiano:
- *  se presenti, i testi sono modificabili sul foglio. In stampa non hanno effetto. */
-export function PianoStampa({ piano, cliente, onApri, aperta, onCambiaSezione, onCambiaPiano }: {
+// --- Trascinamento sul foglio (immagini, alternative, foto dal PC) ---
+type Trascinato = { tipo: "img" | "opz"; da: Posizione };
+interface Trascina {
+  inCorso: Trascinato | null;
+  bersaglio: string | null; // dove apparirà la linea verde
+  setBersaglio: (k: string | null) => void;
+  inizia: (t: Trascinato) => void;
+  fine: () => void;
+  accettaImmagine: (e: DragEvent) => boolean; // un'immagine del foglio o un file dal PC
+  rilascia: (a: Destinazione, e: DragEvent) => void;
+  rilasciaAlternativa: (sid: string, el: number, verso: number) => void;
+}
+const TrascinaCtx = createContext<Trascina | null>(null);
+const MAX_MB_FOTO = 5;
+
+/** onApri: a schermo, il clic su una sezione la seleziona. onCambiaSezione / onCambiaPiano / onSezioni:
+ *  se presenti, il foglio è modificabile (testi, pulsanti, trascinamento). In stampa non hanno effetto. */
+export function PianoStampa({ piano, cliente, onApri, aperta, onCambiaSezione, onCambiaPiano, onSezioni }: {
   piano: PianoAlimentare; cliente: Cliente; onApri?: (id: string) => void; aperta?: string | null;
   onCambiaSezione?: CambiaSezione; onCambiaPiano?: (patch: Partial<Pick<PianoAlimentare, "titolo" | "messaggio">>) => void;
+  onSezioni?: (f: (s: SezionePiano[]) => SezionePiano[]) => void;
 }) {
+  const { setImmagini, toast } = useStore();
+  const trascinato = useRef<Trascinato | null>(null);
+  const [inCorso, setInCorso] = useState<Trascinato | null>(null);
+  const [bersaglio, setBersaglio] = useState<string | null>(null);
+  const fine = () => { trascinato.current = null; setInCorso(null); setBersaglio(null); };
+  const trascina: Trascina | null = !onSezioni ? null : {
+    inCorso, bersaglio, setBersaglio, fine,
+    inizia: (t) => { trascinato.current = t; setInCorso(t); },
+    accettaImmagine: (e) => trascinato.current?.tipo === "img" || (!trascinato.current && e.dataTransfer.types.includes("Files")),
+    rilascia: (a, e) => {
+      const t = trascinato.current;
+      fine();
+      if (t?.tipo === "img") { onSezioni((s) => spostaImmagine(s, t.da, a)); return; }
+      if (t) return;
+      // Foto trascinate da una cartella di Windows: entrano nella libreria e nel punto scelto.
+      const files = [...e.dataTransfer.files];
+      const buone = files.filter((f) => /^image\/(png|jpeg|webp)$/.test(f.type) && f.size <= MAX_MB_FOTO * 1024 * 1024);
+      if (buone.length < files.length) toast(`Solo immagini PNG, JPG o WebP fino a ${MAX_MB_FOTO} MB`);
+      for (const f of buone) {
+        const r = new FileReader();
+        r.onload = () => {
+          const chiave = nuovoId("img");
+          setImmagini((x) => ({ ...x, [chiave]: { nome: f.name.replace(/\.[^.]+$/, ""), src: String(r.result) } }));
+          onSezioni((s) => inserisciImmagine(s, a, { chiave, mm: 25 }));
+        };
+        r.readAsDataURL(f);
+      }
+    },
+    rilasciaAlternativa: (sid, el, verso) => {
+      const t = trascinato.current;
+      fine();
+      if (t?.tipo === "opz" && t.da.sid === sid && t.da.el === el) onSezioni((s) => spostaAlternativa(s, t.da, verso));
+    },
+  };
   const sezioni = piano.sezioni.filter((s) => s.inclusa);
   return (
-    <article className="piano-doc">
-      <Copertina piano={piano} cliente={cliente} sezioni={sezioni} onCambiaPiano={onCambiaPiano} />
-      {sezioni.map((s) => <Sezione key={s.id} s={s} onApri={onApri} aperta={aperta === s.id} onCambiaSezione={onCambiaSezione} />)}
-      <Contatti />
-    </article>
+    <TrascinaCtx.Provider value={trascina}>
+      <article className={"piano-doc" + (inCorso ? " pd-in-trascinamento" : "")}>
+        <Copertina piano={piano} cliente={cliente} sezioni={sezioni} onCambiaPiano={onCambiaPiano} />
+        {sezioni.map((s) => <Sezione key={s.id} s={s} onApri={onApri} aperta={aperta === s.id} onCambiaSezione={onCambiaSezione} />)}
+        <Contatti />
+      </article>
+    </TrascinaCtx.Provider>
   );
 }
+
+/** Metà sinistra/destra (immagini) o superiore/inferiore (alternative) dell'elemento sotto il mouse. */
+const lato = (e: DragEvent, verticale: boolean) => {
+  const r = (e.currentTarget as HTMLElement).getBoundingClientRect();
+  return verticale ? (e.clientY < r.top + r.height / 2 ? "prima" : "dopo") : (e.clientX < r.left + r.width / 2 ? "prima" : "dopo");
+};
 
 function Copertina({ piano, cliente, sezioni, onCambiaPiano }: { piano: PianoAlimentare; cliente: Cliente; sezioni: SezionePiano[]; onCambiaPiano?: (patch: Partial<Pick<PianoAlimentare, "titolo" | "messaggio">>) => void }) {
   return (
@@ -124,15 +183,19 @@ function Firma() {
 
 function Sezione({ s, onApri, aperta, onCambiaSezione }: { s: SezionePiano; onApri?: (id: string) => void; aperta?: boolean; onCambiaSezione?: CambiaSezione }) {
   const cambia = onCambiaSezione && ((f: (x: SezionePiano) => SezionePiano) => onCambiaSezione(s.id, f));
+  const tr = useContext(TrascinaCtx);
+  const qui = `sez:${s.id}`;
   return (
-    <section data-sez={s.id} title={onApri ? "Clic per selezionare questa sezione" : undefined} onClick={onApri ? () => onApri(s.id) : undefined}
-      className={"pd-sezione" + (s.nuovaPagina ? " pd-nuova-pagina" : "") + (s.informativa ? " pd-informativa" : "") + (onApri ? " pd-cliccabile" : "") + (aperta ? " pd-aperta" : "")}>
+    <section data-sez={s.id}
+      onDragOver={tr ? (e) => { if (!tr.accettaImmagine(e)) return; e.preventDefault(); tr.setBersaglio(qui); } : undefined}
+      onDrop={tr ? (e) => { if (!tr.accettaImmagine(e)) return; e.preventDefault(); tr.rilascia({ sid: s.id }, e); } : undefined} title={onApri ? "Clic per selezionare questa sezione" : undefined} onClick={onApri ? () => onApri(s.id) : undefined}
+      className={"pd-sezione" + (s.nuovaPagina ? " pd-nuova-pagina" : "") + (s.informativa ? " pd-informativa" : "") + (onApri ? " pd-cliccabile" : "") + (aperta ? " pd-aperta" : "") + (tr?.bersaglio === qui ? " pd-drop-sezione" : "")}>
       <h2 className="pd-sez-titolo">
         <span className="pd-sez-ico">{s.icona ?? "•"}</span>
         <Modificabile t={s.titolo} riga salva={cambia && ((titolo) => cambia((x) => ({ ...x, titolo })))} />
       </h2>
       {s.elementi.map((e, i) => (
-        <Elemento key={i} e={e} cambia={cambia && ((nuovo) => cambia((x) => ({
+        <Elemento key={i} e={e} sid={s.id} el={i} cambia={cambia && ((nuovo) => cambia((x) => ({
           ...x,
           elementi: nuovo ? x.elementi.map((e2, k) => (k === i ? nuovo : e2)) : x.elementi.filter((_, k) => k !== i),
         })))} />
@@ -165,8 +228,9 @@ const scambia = <T,>(lista: T[], i: number, d: number): T[] => {
 const ferma = (ev: { stopPropagation: () => void }) => ev.stopPropagation();
 
 /** cambia(null) toglie l'elemento dalla sezione (es. l'ultima immagine eliminata). */
-function Elemento({ e, cambia }: { e: ElementoPiano; cambia?: (nuovo: ElementoPiano | null) => void }): ReactNode {
+function Elemento({ e, sid, el, cambia }: { e: ElementoPiano; sid: string; el: number; cambia?: (nuovo: ElementoPiano | null) => void }): ReactNode {
   const { immagini } = useStore();
+  const tr = useContext(TrascinaCtx);
   const [libreriaPer, setLibreriaPer] = useState<number | null>(null); // indice dell'immagine da cambiare
   // M: un testo dell'elemento, modificabile se l'elemento lo è.
   const M = (t: string, set: (v: string) => ElementoPiano, riga = false) => <Modificabile t={t} riga={riga} salva={cambia && ((v) => cambia(set(v)))} />;
@@ -180,9 +244,26 @@ function Elemento({ e, cambia }: { e: ElementoPiano; cambia?: (nuovo: ElementoPi
       return (
         <div className="pd-opzioni">
           {e.titolo && <div className="pd-sottotitolo">{M(e.titolo, (titolo) => ({ ...e, titolo }), true)}</div>}
-          {e.voci.map((o, i) => (
-            <div className={"pd-opzione" + (cambia ? " pd-con-barra" : "")} key={i}>
-              <div className="pd-num">{i + 1}</div>
+          {e.voci.map((o, i) => {
+            const k = (l: string) => `opz:${sid}:${el}:${i}:${l}`;
+            const stessoGruppo = () => tr?.inCorso?.tipo === "opz" && tr.inCorso.da.sid === sid && tr.inCorso.da.el === el;
+            return (
+            <div key={i}
+              className={"pd-opzione" + (cambia ? " pd-con-barra" : "") + (tr?.bersaglio === k("prima") ? " pd-drop-sopra" : tr?.bersaglio === k("dopo") ? " pd-drop-sotto" : "")
+                + (tr?.inCorso?.tipo === "opz" && tr.inCorso.da.sid === sid && tr.inCorso.da.el === el && tr.inCorso.da.i === i ? " pd-trascinato" : "")}
+              onDragOver={tr ? (ev) => { if (!stessoGruppo()) return; ev.preventDefault(); ev.stopPropagation(); tr.setBersaglio(k(lato(ev, true))); } : undefined}
+              onDrop={tr ? (ev) => { if (!stessoGruppo()) return; ev.preventDefault(); ev.stopPropagation(); tr.rilasciaAlternativa(sid, el, lato(ev, true) === "dopo" ? i + 1 : i); } : undefined}>
+              <div className={"pd-num" + (tr ? " pd-maniglia" : "")} draggable={!!tr} title={tr ? "Trascina per spostare l'alternativa" : undefined}
+                onClick={tr ? ferma : undefined}
+                onDragStart={tr ? (ev) => {
+                  ev.stopPropagation();
+                  ev.dataTransfer.effectAllowed = "move";
+                  ev.dataTransfer.setData("text/plain", "alternativa");
+                  const riquadro = (ev.currentTarget as HTMLElement).parentElement;
+                  if (riquadro) ev.dataTransfer.setDragImage(riquadro, 16, 16);
+                  tr.inizia({ tipo: "opz", da: { sid, el, i } });
+                } : undefined}
+                onDragEnd={tr ? () => tr.fine() : undefined}>{i + 1}</div>
               <div className="pd-opz-corpo">
                 {(o.titolo !== undefined || o.frequenza) && (
                   <div className="pd-opz-testa">
@@ -207,7 +288,8 @@ function Elemento({ e, cambia }: { e: ElementoPiano; cambia?: (nuovo: ElementoPi
                 </div>
               )}
             </div>
-          ))}
+            );
+          })}
           {cambia && (
             <div className="pd-aggiungi-riga pd-solo-schermo" onClick={ferma}>
               <button className="pd-aggiungi" onClick={() => cambia({ ...e, voci: [...e.voci, { testo: "" }] })}>+ Aggiungi alternativa</button>
@@ -250,9 +332,19 @@ function Elemento({ e, cambia }: { e: ElementoPiano; cambia?: (nuovo: ElementoPi
         <div className="pd-immagini">
           {e.voci.map((v, i) => {
             const src = srcImmagine(v.chiave, immagini);
+            const k = (l: string) => `img:${sid}:${el}:${i}:${l}`;
             return (
-              <figure key={i} className={"pd-img" + (cambia ? " pd-con-barra" : "")}>
-                {src ? <img src={src} alt="" style={{ height: `${v.mm}mm` }} /> : <div className="pd-img-mancante pd-solo-schermo" style={{ height: `${v.mm}mm` }}>immagine non trovata</div>}
+              <figure key={i}
+                className={"pd-img" + (cambia ? " pd-con-barra" : "") + (tr ? " pd-trascinabile" : "")
+                  + (tr?.bersaglio === k("prima") ? " pd-drop-prima" : tr?.bersaglio === k("dopo") ? " pd-drop-dopo" : "")
+                  + (tr?.inCorso?.tipo === "img" && tr.inCorso.da.sid === sid && tr.inCorso.da.el === el && tr.inCorso.da.i === i ? " pd-trascinato" : "")}
+                title={tr ? "Trascina per spostare l'immagine" : undefined}
+                draggable={!!tr}
+                onDragStart={tr ? (ev) => { ev.stopPropagation(); ev.dataTransfer.effectAllowed = "move"; ev.dataTransfer.setData("text/plain", "immagine"); tr.inizia({ tipo: "img", da: { sid, el, i } }); } : undefined}
+                onDragEnd={tr ? () => tr.fine() : undefined}
+                onDragOver={tr ? (ev) => { if (!tr.accettaImmagine(ev)) return; ev.preventDefault(); ev.stopPropagation(); tr.setBersaglio(k(lato(ev, false))); } : undefined}
+                onDrop={tr ? (ev) => { if (!tr.accettaImmagine(ev)) return; ev.preventDefault(); ev.stopPropagation(); tr.rilascia({ sid, el, i: lato(ev, false) === "dopo" ? i + 1 : i }, ev); } : undefined}>
+                {src ? <img src={src} alt="" draggable={false} style={{ height: `${v.mm}mm` }} /> : <div className="pd-img-mancante pd-solo-schermo" style={{ height: `${v.mm}mm` }}>immagine non trovata</div>}
                 {cambia && (
                   <div className="pd-barra pd-solo-schermo" onClick={ferma}>
                     <button onClick={() => setLibreriaPer(i)}>Cambia</button>

@@ -125,6 +125,17 @@
   .pd-aggiungi { width: 100%; border: 1.5px dashed #cfc7b6; background: none; border-radius: 10px; padding: 5px; color: var(--pd-tenue); font: inherit; font-size: 9.5pt; cursor: pointer; }
   .pd-aggiungi:hover { border-color: var(--pd-oliva); color: var(--pd-oliva-scuro); background: var(--pd-crema-chiaro); }
   .pd-img { margin: 0; border-radius: 6px; }
+  /* Trascinamento: maniglie, elemento trascinato, linea verde dove cadrà */
+  .pd-trascinabile, .pd-maniglia { cursor: grab; }
+  .pd-trascinabile:active, .pd-maniglia:active { cursor: grabbing; }
+  .pd-maniglia:hover { box-shadow: 0 0 0 3px var(--pd-salvia); }
+  .pd-trascinato { opacity: 0.35; }
+  .pd-drop-prima { box-shadow: -5px 0 0 var(--pd-oliva) !important; }
+  .pd-drop-dopo { box-shadow: 5px 0 0 var(--pd-oliva) !important; }
+  .pd-drop-sopra { box-shadow: 0 -4px 0 var(--pd-oliva) !important; }
+  .pd-drop-sotto { box-shadow: 0 4px 0 var(--pd-oliva) !important; }
+  .pd-drop-sezione { outline: 3px dashed var(--pd-oliva) !important; outline-offset: 3mm; background: rgba(169, 186, 152, 0.12); }
+  .pd-in-trascinamento .pd-barra { display: none !important; }
   .pd-img-mancante { min-width: 30mm; display: grid; place-items: center; border: 1px dashed #cfc7b6; color: var(--pd-tenue); font-size: 9pt; }
   .piano-doc { width: 210mm; padding: 14mm 15mm; box-shadow: 0 2px 12px rgba(30, 35, 25, 0.15); border-radius: 4px; }
   .pd-copertina { min-height: 267mm; border-bottom: 2px dashed #d6cfbf; margin-bottom: 14mm; padding-bottom: 6mm; }
