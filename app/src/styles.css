@@ -270,3 +270,13 @@ h3 { font-size: 15px; font-family: var(--font); font-weight: 600; }
 .pv-frequenze { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 6px 14px; }
 .pv-freq { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 4px 8px; border: 1px solid var(--line); border-radius: 8px; }
 .pv-freq.vuota { color: var(--ink-3); }
+
+/* Piano: collegamento elenco sezioni <-> foglio */
+.piano-aiuto { margin: 0; line-height: 1.5; }
+.piano-sez.attiva { box-shadow: inset 4px 0 0 var(--olive); background: var(--accent-2); }
+.piano-sez-freccia { flex: none; width: 26px; height: 26px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); color: var(--ink-2); cursor: pointer; padding: 0; }
+.piano-sez-freccia:hover { border-color: var(--olive); color: var(--olive); }
+.piano-sez-freccia svg { transition: transform .15s ease; }
+.piano-sez.aperta .piano-sez-freccia { background: var(--olive); border-color: var(--olive); color: var(--cream); }
+.piano-sez.aperta .piano-sez-freccia svg { transform: rotate(90deg); }
+.piano-sez-nome:hover { color: var(--olive); text-decoration: underline; text-underline-offset: 3px; }

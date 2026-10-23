@@ -11,12 +11,13 @@ export function Testo({ t }: { t: string }) {
   return <>{t.split("**").map((p, i) => (i % 2 ? <strong key={i}>{p}</strong> : <Fragment key={i}>{p}</Fragment>))}</>;
 }
 
-export function PianoStampa({ piano, cliente }: { piano: PianoAlimentare; cliente: Cliente }) {
+/** onApri: a schermo, il clic su una sezione la apre nella modifica (in stampa non ha effetto). */
+export function PianoStampa({ piano, cliente, onApri }: { piano: PianoAlimentare; cliente: Cliente; onApri?: (id: string) => void }) {
   const sezioni = piano.sezioni.filter((s) => s.inclusa);
   return (
     <article className="piano-doc">
       <Copertina piano={piano} cliente={cliente} sezioni={sezioni} />
-      {sezioni.map((s) => <Sezione key={s.id} s={s} />)}
+      {sezioni.map((s) => <Sezione key={s.id} s={s} onApri={onApri} />)}
       <Contatti />
     </article>
   );
@@ -73,9 +74,10 @@ function Firma() {
   );
 }
 
-function Sezione({ s }: { s: SezionePiano }) {
+function Sezione({ s, onApri }: { s: SezionePiano; onApri?: (id: string) => void }) {
   return (
-    <section className={"pd-sezione" + (s.nuovaPagina ? " pd-nuova-pagina" : "") + (s.informativa ? " pd-informativa" : "")}>
+    <section data-sez={s.id} title={onApri ? "Clic per modificare questa sezione" : undefined} onClick={onApri ? () => onApri(s.id) : undefined}
+      className={"pd-sezione" + (s.nuovaPagina ? " pd-nuova-pagina" : "") + (s.informativa ? " pd-informativa" : "") + (onApri ? " pd-cliccabile" : "")}>
       <h2 className="pd-sez-titolo"><span className="pd-sez-ico">{s.icona ?? "•"}</span>{s.titolo}</h2>
       {s.elementi.map((e, i) => <Elemento key={i} e={e} />)}
     </section>

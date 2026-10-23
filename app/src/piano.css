@@ -101,6 +101,9 @@
 
 /* A schermo: foglio bianco largo come un A4, con un segno dove inizia una nuova pagina. */
 @media screen {
+  .pd-cliccabile { cursor: pointer; border-radius: 6px; }
+  .pd-cliccabile:hover { outline: 2px dashed var(--pd-salvia); outline-offset: 3mm; }
+  .pd-lampo { animation: pd-lampo 1.5s ease-out; }
   .piano-doc { width: 210mm; padding: 14mm 15mm; box-shadow: 0 2px 12px rgba(30, 35, 25, 0.15); border-radius: 4px; }
   .pd-copertina { min-height: 267mm; border-bottom: 2px dashed #d6cfbf; margin-bottom: 14mm; padding-bottom: 6mm; }
   .pd-nuova-pagina { border-top: 2px dashed #d6cfbf; padding-top: 14mm; margin-top: 14mm; }
@@ -109,4 +112,9 @@
 @media print {
   .piano-doc { width: auto; padding: 0; box-shadow: none; }
   .piano-doc * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+
+@keyframes pd-lampo {
+  0% { background: rgba(169, 186, 152, 0.45); box-shadow: 0 0 0 4mm rgba(169, 186, 152, 0.45); }
+  100% { background: transparent; box-shadow: 0 0 0 4mm rgba(169, 186, 152, 0); }
 }
