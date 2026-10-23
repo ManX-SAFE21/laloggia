@@ -40,16 +40,23 @@ export function EditorPiano({ piano, cliente, aggiorna, intestazione, campiInPiu
   const editorRef = useRef<HTMLElement>(null);
   const foglioRef = useRef<HTMLDivElement>(null);
 
-  // Mentre si scorre il foglio, si evidenzia a sinistra la sezione in vista (quella il cui inizio è sopra la soglia).
+  // Mentre si scorre il foglio, si evidenzia a sinistra la sezione che occupa la parte più grande della finestra
+  // (quella su cui sta l'occhio). Se a occupare di più è la copertina, non si evidenzia nulla.
   useEffect(() => {
     const main = document.querySelector<HTMLElement>(".main");
     if (!main) return;
     const calcola = () => {
-      const soglia = main.getBoundingClientRect().top + 140;
+      const vista = main.getBoundingClientRect();
+      const visibile = (el: Element) => {
+        const r = el.getBoundingClientRect();
+        return Math.min(r.bottom, vista.bottom) - Math.max(r.top, vista.top);
+      };
+      const copertina = foglioRef.current?.querySelector(".pd-copertina");
       let corrente: string | null = null;
+      let massimo = copertina ? visibile(copertina) : 0;
       for (const el of foglioRef.current?.querySelectorAll<HTMLElement>("[data-sez]") ?? []) {
-        if (el.getBoundingClientRect().top <= soglia) corrente = el.dataset.sez ?? null;
-        else break;
+        const v = visibile(el);
+        if (v > massimo) { massimo = v; corrente = el.dataset.sez ?? null; }
       }
       setAttiva(corrente);
     };
@@ -162,7 +169,7 @@ export function EditorPiano({ piano, cliente, aggiorna, intestazione, campiInPiu
         </aside>
 
         <div className="piano-anteprima" ref={foglioRef}>
-          <PianoStampa piano={piano} cliente={cliente} onApri={apriDalFoglio} />
+          <PianoStampa piano={piano} cliente={cliente} onApri={apriDalFoglio} aperta={aperta} />
         </div>
       </div>
     </div>
