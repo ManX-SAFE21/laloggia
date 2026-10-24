@@ -1,8 +1,9 @@
-// Database cifrato (fase 2) collegato al programma (fase 3) con tre comandi: apri, salva, elimina.
+// Archivio SQLite in chiaro (decisione 2026-10-25) collegato al programma con i comandi apri, salva, elimina
+// e quelli degli allegati. La protezione del PC rubato è la cifratura del disco di Windows.
 mod db;
 
 use serde_json::Value;
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 use std::sync::Mutex;
 use tauri::Manager;
 
@@ -16,21 +17,24 @@ fn cartella_dati(app: &tauri::AppHandle) -> Result<PathBuf, String> {
     Ok(d)
 }
 
-/// CHIAVE PROVVISORIA (solo per le prove, fase 3): casuale, creata al primo avvio e tenuta in un file
-/// accanto al database. Chi copia l'intera cartella può aprire i dati: NON usare con dati veri.
-/// Nella fase 4 la chiave verrà dal PIN e dalla password lunga (punto 00b di CLAUDE.md).
-fn chiave_provvisoria(cartella: &PathBuf) -> Result<[u8; 32], String> {
-    let f = cartella.join("chiave-provvisoria.bin");
-    if let Ok(b) = std::fs::read(&f) {
-        if let Ok(k) = <[u8; 32]>::try_from(b.as_slice()) {
-            return Ok(k);
-        }
-        return Err("il file della chiave provvisoria è danneggiato".into());
+/// Archivio in chiaro (decisione 2026-10-25). Se trova il vecchio archivio cifrato delle versioni 0.1.x
+/// (con la sua chiave provvisoria accanto), lo converte in chiaro una volta sola e tiene da parte l'originale:
+/// gestionale-cifrato-vecchio.db + gestionale-cifrato-vecchio.chiave.
+fn converti_vecchio_archivio(cartella: &Path) -> Result<(), String> {
+    let db = cartella.join("gestionale.db");
+    let chiave_file = cartella.join("chiave-provvisoria.bin");
+    if !db::Db::file_cifrato(&db) {
+        return Ok(());
     }
-    let mut k = [0u8; 32];
-    getrandom::fill(&mut k).map_err(|e| e.to_string())?;
-    std::fs::write(&f, k).map_err(|e| format!("chiave provvisoria: {e}"))?;
-    Ok(k)
+    let b = std::fs::read(&chiave_file).map_err(|_| "archivio cifrato ma la chiave provvisoria non c'è: non lo converto".to_string())?;
+    let chiave = <[u8; 32]>::try_from(b.as_slice()).map_err(|_| "il file della chiave provvisoria è danneggiato".to_string())?;
+    let nuovo = cartella.join("gestionale-chiaro.tmp");
+    db::Db::converti_in_chiaro(&db, &chiave, &nuovo).map_err(|e| format!("conversione in chiaro non riuscita: {e}"))?;
+    let vecchio = cartella.join("gestionale-cifrato-vecchio.db");
+    std::fs::rename(&db, &vecchio).map_err(|e| format!("copia del vecchio archivio: {e}"))?;
+    std::fs::rename(&nuovo, &db).map_err(|e| format!("archivio convertito: {e}"))?;
+    std::fs::rename(&chiave_file, cartella.join("gestionale-cifrato-vecchio.chiave")).map_err(|e| e.to_string())?;
+    Ok(())
 }
 
 /// Apre il database (creandolo con i dati di esempio la prima volta) e restituisce tutto il contenuto.
@@ -39,8 +43,8 @@ fn db_apri(app: tauri::AppHandle, archivio: tauri::State<Archivio>) -> Result<Va
     let mut g = archivio.0.lock().map_err(|_| "database bloccato".to_string())?;
     if g.is_none() {
         let cartella = cartella_dati(&app)?;
-        let chiave = chiave_provvisoria(&cartella)?;
-        let mut d = db::Db::apri(&cartella.join("gestionale.db"), &chiave).map_err(|e| e.to_string())?;
+        converti_vecchio_archivio(&cartella)?;
+        let mut d = db::Db::apri(&cartella.join("gestionale.db"), None).map_err(|e| e.to_string())?;
         d.semina_se_vuoto(db::DATI_ESEMPIO).map_err(|e| e.to_string())?;
         *g = Some(d);
     }

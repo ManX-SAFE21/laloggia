@@ -40,7 +40,25 @@ La nutrizionista è l'unica utente. Il software non è pensato per essere vendut
 - I dati stanno in una cartella separata dal programma (es. `%APPDATA%`), quindi
   gli aggiornamenti non li toccano.
 
-### Sicurezza (scelta "C")
+### Sicurezza — DECISIONE DEL 2026-10-25 (sostituisce la cifratura del database descritta sotto)
+- **Archivio sul PC NON cifrato** (SQLite normale; libreria SQLCipher tenuta ma usata senza chiave).
+  Motivo di Manuxxx: niente rischio di bug o di chiavi perse nella crittografia del programma.
+  L'archivio di prova cifrato delle versioni 0.1.x viene **convertito in chiaro** al primo avvio
+  (il vecchio file resta come `gestionale-cifrato-vecchio.db`).
+- **Protezione del PC rubato = cifratura di Windows** (Crittografia dispositivo / BitLocker) + password di Windows.
+  Il programma **avvisa** (senza bloccare) se il disco dell'archivio non risulta cifrato; il controllo si fa senza
+  permessi di amministratore (proprietà Shell `System.Volume.BitLockerProtection`; sul PC di Manuxxx, Win 11 Home
+  non cifrato, vale 0: significato dei valori da verificare su un PC cifrato).
+- **PIN = solo blocco dello schermo** (avvio e inattività), non protegge i file.
+- **Backup su disco esterno: in chiaro** (il disco è tenuto sotto chiave).
+- **Backup su cloud (Dropbox): .7z AES-256 con nomi nascosti**, creato con 7-Zip (installato, o 7za incluso).
+  **Password generata dal programma** con il generatore sicuro di Windows (CSPRNG, crate `getrandom`):
+  8 gruppi di 4 caratteri senza 0/O e 1/I/L (~158 bit), mostrata una volta da stampare, conservata sul PC.
+- **Rotazione ovunque: 7 giornaliere, 4 settimanali, 12 mensili (1 anno)**. Scelta anche per il GDPR
+  (conservare solo il necessario). Avviso sullo spazio occupato in Dropbox.
+- Ordine dei lavori: passo 1 archivio in chiaro + PIN solo blocco → passo 3 avviso disco → passo 4 backup.
+
+### Sicurezza (scelta "C") — SUPERATA per la parte "database cifrato" (vedi sopra)
 - **Nessuna dipendenza dal portachiavi del sistema operativo** (no Gestione credenziali di Windows):
   la cifratura la gestisce il programma da solo.
 - **All'avvio:** password di almeno **10 caratteri** (può essere una frase).
@@ -73,7 +91,8 @@ Obiettivo: i backup devono restare apribili anche se il programma ha bug o non e
   - **Dropbox** (piano gratuito, installato da Manuxxx sul PC di lei; cartella sincronizzata,
     nessuna API): ci va l'archivio 7-Zip già cifrato. Funziona anche con altri servizi cloud.
   - **Disco esterno o chiavetta:** se non è collegato, la copia si fa appena lo si collega.
-- **Rotazione:** 7 giornalieri, 4 settimanali, 12 mensili.
+- **Rotazione:** 7 giornalieri, 4 settimanali, 12 mensili (confermato il 2026-10-25, su disco e su cloud).
+- **Disco esterno: copia in chiaro** (decisione 2026-10-25); **solo il cloud** riceve il .7z cifrato.
 - **Verifica automatica dopo ogni backup:** decifrare in una cartella temporanea, aprire il
   database, eseguire il controllo di integrità di SQLite, contare clienti, visite e diete.
   In caso di errore, avviso chiaro. Stato visibile ("Ultimo backup: …") e avviso se manca
@@ -244,9 +263,10 @@ salvia (`#a9ba98`), titoli con grazie. Vedi le variabili in `mockup/src/styles.c
     alla chiusura della finestra si salva ciò che manca. Indicatore sempre visibile nella barra laterale
     («✓ Salvato alle HH:MM», «Salvataggio…», «⚠ Non salvato» + Riprova); Ctrl+S conferma «Già tutto salvato».
     Nell'anteprima del browser niente database («⚠ Anteprima: non salvato»).
-    **CHIAVE PROVVISORIA**: casuale, nel file `dati\chiave-provvisoria.bin` accanto al database → chi copia la
-    cartella legge i dati. Solo per le prove, niente dati veri. Fase 4 (da discutere prima con Manuxxx, punto 00b):
-    chiave protetta da PIN/password.
+    **Archivio in chiaro dal 2026-10-25** (passo 1 della decisione «Sicurezza»): `Db::apri(percorso, None)`.
+    Al primo avvio il vecchio archivio cifrato (chiave in `chiave-provvisoria.bin`) viene convertito con
+    `sqlcipher_export` e tenuto come `gestionale-cifrato-vecchio.db` + `.chiave`. Dopo la conversione le versioni
+    0.1.x installate NON aprono più l'archivio: installare la versione nuova.
   - **Allegati (2026-10-24)**: file dentro il database (`allegati.contenuto`), comandi a parte `allegato_salva_file`,
     `allegato_leggi`, `allegato_esporta` (mai insieme alla scheda del cliente: il salvataggio automatico manda solo
     i dati descrittivi e non tocca il file). Si aprono DENTRO il programma (pdf.js / immagine), nessuna copia in

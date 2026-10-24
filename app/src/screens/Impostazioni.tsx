@@ -4,13 +4,10 @@ import { Modal } from "../components/ui";
 import { VERSIONE_INFORMATIVA } from "../data";
 import { cambiaPin, LUNGHEZZA_PIN, TENTATIVI_PIN } from "../pin";
 
-// Frase di recupero di ESEMPIO (non usata per nulla).
-const FRASE_DEMO = ["salvia", "ponte", "lampada", "fiume", "ottobre", "cedro", "vela", "mattone", "giardino", "orbita", "latte", "faro"];
 
 export function Impostazioni() {
   const { backup, setBackup, toast, impostazioni, setImpostazioni } = useStore();
   const [inCorso, setInCorso] = useState(false);
-  const [frase, setFrase] = useState(false);
   const [ripristino, setRipristino] = useState(false);
   const [cambioPin, setCambioPin] = useState(false);
 
@@ -59,15 +56,15 @@ export function Impostazioni() {
             <div className="card-head"><h2>Sicurezza</h2></div>
             <div className="card-pad">
               <dl className="kv">
-                <dt>Archivio</dt><dd>Cifrato (AES-256)</dd>
+                <dt>Archivio</dt><dd>Sul disco di questo PC, non cifrato dal programma: lo protegge la cifratura del disco di Windows</dd>
                 <dt>All'avvio</dt><dd>PIN di {LUNGHEZZA_PIN} cifre</dd>
                 <dt>Blocco automatico</dt><dd>Dopo 10 minuti di inattività</dd>
                 <dt>Sblocco</dt><dd>Stesso PIN di {LUNGHEZZA_PIN} cifre</dd>
                 <dt>Dopo {TENTATIVI_PIN} PIN errati</dt><dd>Attesa di 5 minuti (le prime 3 volte), poi 30 minuti, poi 1 ora</dd>
               </dl>
+              <p className="small muted" style={{ marginBottom: 0 }}>Il PIN blocca lo schermo quando ti allontani: non protegge i file. Se il computer viene rubato, i dati li protegge la cifratura del disco di Windows (Crittografia dispositivo o BitLocker).</p>
               <div className="row" style={{ marginTop: 16, flexWrap: "wrap" }}>
                 <button className="btn" onClick={() => setCambioPin(true)}>Cambia PIN</button>
-                <button className="btn" onClick={() => setFrase(true)}>Frase di recupero</button>
               </div>
             </div>
           </div>
@@ -95,13 +92,6 @@ export function Impostazioni() {
         </div>
       </div>
 
-      {frase && (
-        <Modal title="Frase di recupero" onClose={() => setFrase(false)}>
-          <p className="small muted" style={{ marginTop: 0 }}>Serve se dimentichi la password e per ripristinare i backup su un altro PC. Va stampata e conservata in un posto sicuro, lontano dal computer.</p>
-          <div className="recovery">{FRASE_DEMO.map((w, i) => <span key={i}><i>{i + 1}</i>{w}</span>)}</div>
-          <p className="small" style={{ color: "var(--warn)" }}>Esempio dimostrativo: nel programma vero la frase viene generata alla prima configurazione e mostrata una sola volta.</p>
-        </Modal>
-      )}
       {cambioPin && <CambiaPin onClose={() => setCambioPin(false)} onFatto={() => { setCambioPin(false); toast("PIN cambiato"); }} />}
       {ripristino && (
         <Modal title="Ripristina da backup" onClose={() => setRipristino(false)}

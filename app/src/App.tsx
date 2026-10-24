@@ -90,7 +90,7 @@ function Shell() {
       </aside>
       <main className="main">
         {!inTauri && <div className="demo-banner">Anteprima nel browser: dati di esempio, nessun salvataggio. Le modifiche si perdono ricaricando la pagina.</div>}
-        {inTauri && <div className="demo-banner">Versione di prova: dati di esempio salvati sul disco con una chiave provvisoria. Non inserire ancora dati veri.</div>}
+        {inTauri && <div className="demo-banner">Versione di prova: dati di esempio. Non inserire ancora dati veri (il backup automatico non c'è ancora).</div>}
         {vista.nome === "oggi" && <Oggi />}
         {vista.nome === "clienti" && <Clienti />}
         {vista.nome === "cliente" && <ClienteScheda key={vista.id + (vista.tab ?? "")} id={vista.id} tab={vista.tab} />}
