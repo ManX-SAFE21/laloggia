@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useCallback, useContext, useEffect, useRef, useState } from "react";
-import { ALIMENTI, APPUNTAMENTI, CLIENTI, DIETE, MODELLI, PIANI } from "./data";
-import { Alimento, Appuntamento, Cliente, Dieta, ModelloPiano, PianoAlimentare } from "./types";
+import { ALIMENTI, APPUNTAMENTI, CLIENTI, DIETE, IMPOSTAZIONI_PREDEFINITE, MODELLI, PIANI } from "./data";
+import { Alimento, Appuntamento, Cliente, Dieta, Impostazioni, ModelloPiano, PianoAlimentare } from "./types";
 import { ImmaginiCaricate } from "./immaginiPiano";
 import { DatiArchivio, differenze, fotografa, Fotografia } from "./sincronizza";
 import { PASSI_ANNULLA, UNISCI_MS, conAllegatiDiOggi, descriviPassaggio } from "./annulla";
@@ -46,6 +46,8 @@ interface Store {
   setModelli: (f: (m: ModelloPiano[]) => ModelloPiano[]) => void;
   immagini: ImmaginiCaricate;
   setImmagini: (f: (i: ImmaginiCaricate) => ImmaginiCaricate) => void;
+  impostazioni: Impostazioni;
+  setImpostazioni: (f: (i: Impostazioni) => Impostazioni) => void;
   appuntamenti: Appuntamento[];
   setAppuntamenti: (f: (a: Appuntamento[]) => Appuntamento[]) => void;
   vista: Vista;
@@ -84,6 +86,7 @@ export function StoreProvider({ children, toast, bloccaOra }: { children: ReactN
   const [piani, setP] = useState<PianoAlimentare[]>(() => structuredClone(PIANI));
   const [modelli, setM] = useState<ModelloPiano[]>(() => structuredClone(MODELLI));
   const [immagini, setI] = useState<ImmaginiCaricate>({});
+  const [impostazioni, setImp] = useState<Impostazioni>(IMPOSTAZIONI_PREDEFINITE);
   const [appuntamenti, setA] = useState<Appuntamento[]>(() => structuredClone(APPUNTAMENTI));
   const [vista, setVista] = useState<Vista>({ nome: "oggi" });
   const [backup, setBackup] = useState<Backup>({
@@ -97,7 +100,7 @@ export function StoreProvider({ children, toast, bloccaOra }: { children: ReactN
 
   // --- Salvataggio automatico ---
   const [salvataggio, setSalvataggio] = useState<StatoSalvataggio>({ stato: inTauri ? "caricamento" : "browser" });
-  const dati: DatiArchivio = { clienti, modelli, piani, appuntamenti, alimenti, diete, immagini };
+  const dati: DatiArchivio = { clienti, modelli, piani, appuntamenti, alimenti, diete, immagini, impostazioni };
   const datiRef = useRef(dati);
   datiRef.current = dati;
   const salvati = useRef<Fotografia | null>(null); // ultima versione arrivata nel database
@@ -148,11 +151,11 @@ export function StoreProvider({ children, toast, bloccaOra }: { children: ReactN
     ultimaModifica.current = t;
     futuro.current = [];
     contaPassi();
-  }, [clienti, modelli, piani, appuntamenti, alimenti, diete, immagini]);
+  }, [clienti, modelli, piani, appuntamenti, alimenti, diete, immagini, impostazioni]);
   const metti = (d: DatiArchivio) => {
     nonRegistrare.current = true;
     ultimaModifica.current = 0;
-    setC(d.clienti); setM(d.modelli); setP(d.piani); setA(d.appuntamenti); setAl(d.alimenti); setD(d.diete); setI(d.immagini);
+    setC(d.clienti); setM(d.modelli); setP(d.piani); setA(d.appuntamenti); setAl(d.alimenti); setD(d.diete); setI(d.immagini); setImp(d.impostazioni);
   };
   const annulla = useCallback(() => {
     const ora = datiRef.current;
@@ -208,8 +211,10 @@ export function StoreProvider({ children, toast, bloccaOra }: { children: ReactN
     comando<DatiArchivio & { percorso: string }>("db_apri")
       .then((t) => {
         nonRegistrare.current = true; // i dati appena letti non sono una modifica da annullare
-        setC(t.clienti); setM(t.modelli); setP(t.piani); setA(t.appuntamenti); setAl(t.alimenti); setD(t.diete); setI(t.immagini);
-        salvati.current = fotografa(t);
+        // impostazioni mai scritte: quelle predefinite (non vanno salvate finché Valentina non le cambia)
+        const imp = { ...IMPOSTAZIONI_PREDEFINITE, ...t.impostazioni };
+        setC(t.clienti); setM(t.modelli); setP(t.piani); setA(t.appuntamenti); setAl(t.alimenti); setD(t.diete); setI(t.immagini); setImp(imp);
+        salvati.current = fotografa({ ...t, impostazioni: imp });
         setSalvataggio({ stato: "salvato", ora: adesso(), percorso: t.percorso });
       })
       .catch((e) => setSalvataggio({ stato: "errore", errore: `Archivio non aperto: ${e}` }));
@@ -222,7 +227,7 @@ export function StoreProvider({ children, toast, bloccaOra }: { children: ReactN
     setSalvataggio((s) => (s.stato === "errore" ? s : { ...s, stato: "in-corso" }));
     const t = window.setTimeout(() => { void salvaOra(); }, ATTESA_MS);
     return () => window.clearTimeout(t);
-  }, [clienti, modelli, piani, appuntamenti, alimenti, diete, immagini, salvaOra]);
+  }, [clienti, modelli, piani, appuntamenti, alimenti, diete, immagini, impostazioni, salvaOra]);
 
   // Ctrl+S: non serve, ma per abitudine conferma che è tutto salvato
   useEffect(() => {
@@ -263,7 +268,7 @@ export function StoreProvider({ children, toast, bloccaOra }: { children: ReactN
   }, [salvaOra]);
 
   return (
-    <Ctx.Provider value={{ alimenti, setAlimenti: setAl, clienti, setClienti: setC, diete, setDiete: setD, piani, setPiani: setP, modelli, setModelli: setM, immagini, setImmagini: setI, appuntamenti, setAppuntamenti: setA, vista, vai, toast, backup, setBackup, bloccaOra, salvataggio, salvaOra, chiusura, confermaChiusura, annulla, ripeti, passiAnnulla }}>
+    <Ctx.Provider value={{ alimenti, setAlimenti: setAl, clienti, setClienti: setC, diete, setDiete: setD, piani, setPiani: setP, modelli, setModelli: setM, immagini, setImmagini: setI, impostazioni, setImpostazioni: setImp, appuntamenti, setAppuntamenti: setA, vista, vai, toast, backup, setBackup, bloccaOra, salvataggio, salvaOra, chiusura, confermaChiusura, annulla, ripeti, passiAnnulla }}>
       {children}
     </Ctx.Provider>
   );

@@ -8,7 +8,7 @@ import { cambiaPin, LUNGHEZZA_PIN, TENTATIVI_PIN } from "../pin";
 const FRASE_DEMO = ["salvia", "ponte", "lampada", "fiume", "ottobre", "cedro", "vela", "mattone", "giardino", "orbita", "latte", "faro"];
 
 export function Impostazioni() {
-  const { backup, setBackup, toast } = useStore();
+  const { backup, setBackup, toast, impostazioni, setImpostazioni } = useStore();
   const [inCorso, setInCorso] = useState(false);
   const [frase, setFrase] = useState(false);
   const [ripristino, setRipristino] = useState(false);
@@ -80,6 +80,17 @@ export function Impostazioni() {
               <dt>Versione programma</dt><dd>{__APP_VERSION__}</dd>
             </dl>
             <p className="small muted" style={{ marginBottom: 0 }}>Intestazione usata nelle stampe delle diete. Fatturazione: da definire.</p>
+          </div>
+          <div className="card card-pad">
+            <h2 style={{ marginBottom: 12 }}>Clienti</h2>
+            <div className="field" style={{ marginBottom: 6 }}>
+              <label htmlFor="mesi-richiamo">Da richiamare dopo</label>
+              <select id="mesi-richiamo" className="select" style={{ width: 160 }} value={impostazioni.mesiRichiamo}
+                onChange={(e) => { const mesiRichiamo = Number(e.target.value); setImpostazioni((i) => ({ ...i, mesiRichiamo })); toast(`Da richiamare: dopo ${mesiRichiamo} ${mesiRichiamo === 1 ? "mese" : "mesi"} senza visite`); }}>
+                {Array.from({ length: 12 }, (_, i) => i + 1).map((m) => <option key={m} value={m}>{m} {m === 1 ? "mese" : "mesi"}</option>)}
+              </select>
+            </div>
+            <p className="small muted" style={{ margin: 0 }}>Nella lista clienti, il filtro «Da richiamare» mostra i clienti attivi senza appuntamento in agenda e con l'ultima visita più vecchia di così.</p>
           </div>
         </div>
       </div>

@@ -1,9 +1,9 @@
 // Salvataggio automatico: confronta i dati del programma con l'ultima versione salvata e produce
 // le operazioni da mandare al database (solo ciò che è cambiato, è nuovo o è stato tolto).
 import { ImmaginiCaricate } from "./immaginiPiano";
-import { Alimento, Appuntamento, Cliente, Dieta, ModelloPiano, PianoAlimentare } from "./types";
+import { Alimento, Appuntamento, Cliente, Dieta, Impostazioni, ModelloPiano, PianoAlimentare } from "./types";
 
-export type TipoDato = "cliente" | "modello" | "piano" | "appuntamento" | "alimento" | "dieta" | "immagine";
+export type TipoDato = "cliente" | "modello" | "piano" | "appuntamento" | "alimento" | "dieta" | "immagine" | "impostazione";
 
 export interface DatiArchivio {
   clienti: Cliente[];
@@ -13,6 +13,7 @@ export interface DatiArchivio {
   alimenti: Alimento[];
   diete: Dieta[];
   immagini: ImmaginiCaricate;
+  impostazioni: Impostazioni;
 }
 
 export type Operazione =
@@ -33,6 +34,7 @@ function elementi(d: DatiArchivio): Record<TipoDato, [string, unknown][]> {
     alimento: conId(d.alimenti),
     dieta: conId(d.diete),
     immagine: Object.entries(d.immagini).map(([chiave, v]) => [chiave, { chiave, ...v }]),
+    impostazione: Object.entries(d.impostazioni).map(([chiave, valore]) => [chiave, { chiave, valore }]),
   };
 }
 
@@ -58,7 +60,7 @@ export function differenze(prima: Fotografia, ora: DatiArchivio): Operazione[] {
     for (const id of vecchi.keys()) if (!visti.has(id)) elimina.push({ azione: "elimina", tipo, id });
   }
   // i modelli prima dei piani e i clienti prima di ciò che li richiama (legami nel database)
-  const ordine: TipoDato[] = ["immagine", "modello", "alimento", "cliente", "piano", "dieta", "appuntamento"];
+  const ordine: TipoDato[] = ["impostazione", "immagine", "modello", "alimento", "cliente", "piano", "dieta", "appuntamento"];
   salva.sort((a, b) => ordine.indexOf(a.tipo) - ordine.indexOf(b.tipo));
   return [...salva, ...elimina];
 }

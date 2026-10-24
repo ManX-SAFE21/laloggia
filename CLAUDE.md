@@ -257,6 +257,11 @@ salvia (`#a9ba98`), titoli con grazie. Vedi le variabili in `mockup/src/styles.c
     restano i suoi (100 passi). Conferma alla X della finestra, con «No, resta» selezionato.
   - Icona: cerchio salvia con piantina, `python scripts/crea-icona.py` poi `npm run tauri icon src-tauri/icons/sorgente-icona.png`
     (cancellare le cartelle android/ e ios/ che crea). Visibile sull'exe solo dopo la ricompilazione.
+  - **Lista clienti** (`src/listaClienti.ts`): ordinamento per colonna, filtri rapidi con conteggi (Da richiamare,
+    Con appuntamento, Nuovi 30 gg, Privacy, Archiviati), ricerca senza accenti/apostrofi e in qualsiasi ordine.
+    «Da richiamare dopo N mesi» in Impostazioni, salvato nell'archivio (tabella `impostazioni`, tipo «impostazione»).
+    Archivia in alto nella scheda; cliente archiviato = scheda grigia. Cancellazione: due conferme + frase «sì, sono sicura».
+  - Prove con tanti dati: 150 clienti inventati con id `fx-...` (si tolgono cancellando quei clienti: cascata).
   - **Data di oggi ancora fissa** (`OGGI` in `src/data.ts`, viene dal mockup): da mettere reale prima dell'uso vero.
   - `npm test`: test automatici (vitest) di `src/bia.test.ts`, `src/misure.test.ts` e `src/modelli.test.ts`
     (quest'ultimo controlla le regole modelli/piani). Solo dati inventati.

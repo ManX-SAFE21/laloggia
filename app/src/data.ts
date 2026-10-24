@@ -1,10 +1,12 @@
 // DATI INVENTATI per il mockup. Nessun cliente reale.
 // I valori nutrizionali sono indicativi: nel programma vero si userà
 // una banca dati ufficiale (es. tabelle CREA), da concordare.
-import { Alimento, Appuntamento, Bia, Cliente, Dieta, ModelloPiano, PASTI, Pasto, PianoAlimentare, SchedaPrimaVisita, SezionePiano, Settimana, Visita, VoceDieta } from "./types";
+import { Alimento, Appuntamento, Bia, Cliente, Dieta, ModelloPiano, PASTI, Pasto, PianoAlimentare, SchedaPrimaVisita, SezionePiano, Settimana, Visita, VoceDieta, Impostazioni } from "./types";
 import { MODELLO_1450 } from "./modelli/piano1450";
 
 export const OGGI = "2026-10-20";
+
+export const IMPOSTAZIONI_PREDEFINITE: Impostazioni = { mesiRichiamo: 2 };
 
 // Versione dell'informativa: SEGNAPOSTO finché non arriva il modulo ufficiale dello studio.
 export const VERSIONE_INFORMATIVA = "v0 (segnaposto)";

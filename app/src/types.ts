@@ -216,6 +216,11 @@ export interface PianoAlimentare {
   sezioni: SezionePiano[];
 }
 
+/** Impostazioni dello studio, salvate nell'archivio (tabella impostazioni). */
+export interface Impostazioni {
+  mesiRichiamo: number; // lista clienti, filtro "Da richiamare": ultima visita più vecchia di così, senza appuntamento
+}
+
 export interface Appuntamento {
   id: string;
   clienteId: string;

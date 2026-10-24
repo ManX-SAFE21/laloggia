@@ -354,3 +354,25 @@ h3 { font-size: 15px; font-family: var(--font); font-weight: 600; }
 .cambiabile { cursor: text; border-radius: 4px; padding: 1px 3px; margin: -1px -3px; }
 .cambiabile:hover { background: var(--accent-2); }
 .cambiabile-input { padding: 3px 6px; font-size: 14px; width: 100%; min-width: 120px; }
+/* Lista clienti: filtri rapidi, colonne ordinabili, intestazione fissa */
+.filtri-rapidi { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+.chip { font: inherit; font-size: 13px; padding: 5px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer; }
+.chip:hover { border-color: var(--olive); }
+.chip.on { background: var(--olive); border-color: var(--olive); color: #fff; }
+.chip-num { display: inline-block; min-width: 18px; padding: 0 5px; margin-left: 4px; border-radius: 999px; background: var(--surface-2); color: var(--ink-2); font-size: 12px; text-align: center; }
+.chip.on .chip-num { background: rgba(255,255,255,0.25); color: #fff; }
+.chip.evidenzia:not(.on) .chip-num { background: var(--warn-bg); color: #8a5a00; font-weight: 600; }
+.ordinabile { cursor: pointer; user-select: none; white-space: nowrap; }
+.ordinabile:hover { color: var(--ink); }
+.freccia { font-size: 10px; }
+.tabella-fissa thead th { position: sticky; top: 0; z-index: 2; }
+.striscia-archiviato { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 14px; margin-bottom: 14px; border-radius: 10px; background: var(--surface-2); border: 1px solid var(--line); font-size: 14px; }
+/* Cliente archiviato: schede grigie e poco contrastate (la striscia "Riattiva" resta normale) */
+.cliente-archiviato .card { background: #e4e2dd; border-color: #d3d0c9; box-shadow: none; filter: grayscale(1); color: #6f6f6f; }
+.cliente-archiviato .card .table th, .cliente-archiviato .card .card-head { background: #dad8d2; }
+.cliente-archiviato .avatar.lg { filter: grayscale(1); background: #d3d0c9; }
+/* testi e linee più chiari: niente nero pieno sul grigio */
+.cliente-archiviato .card, .cliente-archiviato .card * { color: #8f8d88 !important; border-color: #d6d3cc !important; }
+.cliente-archiviato .card svg { opacity: 0.5; }
+.cliente-archiviato .page-head h1, .cliente-archiviato .page-head p { color: var(--ink-2); }
+@media print { .cliente-archiviato .card { filter: none; opacity: 1; } }

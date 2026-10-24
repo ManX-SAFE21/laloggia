@@ -7,6 +7,7 @@ import { INTERVALLO_CONTROLLO_MESI, MISURE, Misura, differenza, fmt, misura, piu
 import { ImportaBia } from "./ImportaBia";
 import { PrimaVisita } from "./PrimaVisita";
 import { Allegati } from "../components/Allegati";
+import { FRASE_CONFERMA, fraseGiusta } from "../conferme";
 
 const TABS = [
   ["panoramica", "Panoramica"],
@@ -26,13 +27,20 @@ export function ClienteScheda({ id, tab: tabIniziale }: { id: string; tab?: stri
   const aggiorna = (f: (c: Cliente) => Cliente) => setClienti((l) => l.map((x) => (x.id === id ? f(x) : x)));
   const ult = c.visite[c.visite.length - 1];
   const prossimo = appuntamenti.filter((a) => a.clienteId === c.id && a.data >= OGGI).sort((a, b) => (a.data + a.ora).localeCompare(b.data + b.ora))[0];
+  // Archiviare: cosa di tutti i giorni (percorso finito), si annulla con Riattiva o con Annulla
+  const archivia = () => {
+    const ora = !c.attivo;
+    aggiorna((x) => ({ ...x, attivo: ora }));
+    if (ora) toast("Cliente riattivato");
+    else toast(prossimo ? `Cliente archiviato. Ha ancora un appuntamento il ${fmtData(prossimo.data)} alle ${prossimo.ora}: controllalo in agenda` : "Cliente archiviato: lo trovi nella lista clienti, in «Archiviati»");
+  };
   const pianifica = (data: string, ora: string) => {
     setAppuntamenti((l) => [...l, { id: nuovoId("ap"), clienteId: c.id, data, ora, durata: 45, tipo: "Controllo" }]);
     toast(`Controllo aggiunto in agenda il ${fmtData(data)} alle ${ora}`);
   };
 
   return (
-    <div className="page">
+    <div className={"page" + (c.attivo ? "" : " cliente-archiviato")}>
       <div className="no-print">
       <button className="btn ghost sm" style={{ marginBottom: 8, paddingLeft: 0 }} onClick={() => vai({ nome: "clienti" })}><Icon.back /> Clienti</button>
       <div className="page-head">
@@ -45,11 +53,19 @@ export function ClienteScheda({ id, tab: tabIniziale }: { id: string; tab?: stri
         </div>
         <div className="row">
           {!c.consenso.firmato && <span className="badge warn">Privacy da firmare</span>}
+          {c.attivo && <button className="btn" title="Il cliente ha finito il percorso: esce dagli attivi (si può riattivare)" onClick={archivia}>Archivia</button>}
           <button className="btn" onClick={() => setImporta(true)}><Icon.file /> Importa BIA (PDF)</button>
           <NuovaVisitaBtn prima={c.visite.length === 0} ultima={ult} onPianifica={pianifica}
             onSave={(v) => { aggiorna((x) => ({ ...x, visite: [...x.visite, v].sort((a, b) => a.data.localeCompare(b.data)) })); setTab("visite"); }} />
         </div>
       </div>
+
+      {!c.attivo && (
+        <div className="striscia-archiviato">
+          <span><b>Cliente archiviato.</b> Non compare tra gli attivi; i dati restano tutti qui.</span>
+          <button className="btn sm" onClick={archivia}>Riattiva</button>
+        </div>
+      )}
 
       <div className="tabs">
         {TABS.map(([k, l]) => <button key={k} className={"tab" + (tab === k ? " active" : "")} onClick={() => setTab(k)}>{l}</button>)}
@@ -347,7 +363,7 @@ function Diete({ c, aggiorna }: { c: Cliente; aggiorna: (f: (c: Cliente) => Clie
 }
 
 function Privacy({ c, aggiorna }: { c: Cliente; aggiorna: (f: (c: Cliente) => Cliente) => void }) {
-  const { toast, setClienti, vai } = useStore();
+  const { toast, setClienti, setAppuntamenti, setPiani, setDiete, vai } = useStore();
   const [conferma, setConferma] = useState(false);
   const [spunta, setSpunta] = useState(false);
   const [dataFirma, setDataFirma] = useState(OGGI);
@@ -413,9 +429,14 @@ function Privacy({ c, aggiorna }: { c: Cliente; aggiorna: (f: (c: Cliente) => Cl
         </div>
       </div>
       {conferma && (
-        <Modal title="Cancellare il cliente?" onClose={() => setConferma(false)} footer={<><button className="btn" onClick={() => setConferma(false)}>Annulla</button><button className="btn primary" style={{ background: "var(--danger)", borderColor: "var(--danger)" }} onClick={() => { setClienti((l) => l.filter((x) => x.id !== c.id)); toast("Cliente cancellato"); vai({ nome: "clienti" }); }}>Cancella</button></>}>
-          <p>Verranno cancellati anagrafica, visite, diete e allegati di <b>{c.nome} {c.cognome}</b>. L'operazione non si può annullare.</p>
-        </Modal>
+        <ConfermaCancellazione c={c} onClose={() => setConferma(false)} onCancella={() => {
+          // via anche ciò che è suo (nell'archivio lo fa già la cancellazione a cascata)
+          setClienti((l) => l.filter((x) => x.id !== c.id));
+          setAppuntamenti((l) => l.filter((x) => x.clienteId !== c.id));
+          setPiani((l) => l.filter((x) => x.clienteId !== c.id));
+          setDiete((l) => l.filter((x) => x.clienteId !== c.id));
+          toast("Cliente cancellato"); vai({ nome: "clienti" });
+        }} />
       )}
     </div>
   );
@@ -450,5 +471,30 @@ function ModuloPrivacy({ c }: { c: Cliente }) {
       </div>
       <div className="modulo-foot">Versione informativa: {VERSIONE_INFORMATIVA}</div>
     </div>
+  );
+}
+
+
+/** Cancellazione definitiva in due passi: prima la conferma, poi la frase da scrivere. */
+function ConfermaCancellazione({ c, onClose, onCancella }: { c: Cliente; onClose: () => void; onCancella: () => void }) {
+  const [passo, setPasso] = useState<1 | 2>(1);
+  const [frase, setFrase] = useState("");
+  const rosso = { background: "var(--danger)", borderColor: "var(--danger)" };
+  if (passo === 1)
+    return (
+      <Modal title="Cancellare il cliente?" onClose={onClose}
+        footer={<><button className="btn" onClick={onClose}>Annulla</button><button className="btn primary" style={rosso} onClick={() => setPasso(2)}>Cancella</button></>}>
+        <p>Verranno cancellati anagrafica, visite, diete e allegati di <b>{c.nome} {c.cognome}</b>.</p>
+        <p className="small muted">Subito dopo, «Annulla» può ancora recuperare anagrafica, visite e diete, ma <b>non i file degli allegati</b>, che vengono tolti dall'archivio. Se vuoi solo toglierlo dalla lista, usa «Archivia».</p>
+      </Modal>
+    );
+  const ok = fraseGiusta(frase);
+  return (
+    <Modal title="Ultima conferma" onClose={onClose}
+      footer={<><button className="btn" onClick={onClose}>Annulla</button><button className="btn primary" style={rosso} disabled={!ok} onClick={onCancella}>Cancella definitivamente</button></>}>
+      <p style={{ marginTop: 0 }}>Per cancellare <b>{c.nome} {c.cognome}</b> scrivi qui sotto: <b>{FRASE_CONFERMA}</b></p>
+      <input className="input" autoFocus value={frase} placeholder={FRASE_CONFERMA} onChange={(e) => setFrase(e.target.value)}
+        onKeyDown={(e) => { if (e.key === "Enter" && ok) onCancella(); }} />
+    </Modal>
   );
 }

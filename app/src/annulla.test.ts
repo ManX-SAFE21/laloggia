@@ -1,10 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { ALIMENTI, APPUNTAMENTI, CLIENTI, DIETE, MODELLI, PIANI } from "./data";
+import { ALIMENTI, APPUNTAMENTI, CLIENTI, DIETE, IMPOSTAZIONI_PREDEFINITE, MODELLI, PIANI } from "./data";
 import { conAllegatiDiOggi, descriviPassaggio } from "./annulla";
 import { DatiArchivio } from "./sincronizza";
 
 const dati = (): DatiArchivio => structuredClone({
-  clienti: CLIENTI, modelli: MODELLI, piani: PIANI, appuntamenti: APPUNTAMENTI, alimenti: ALIMENTI, diete: DIETE, immagini: {},
+  clienti: CLIENTI, modelli: MODELLI, piani: PIANI, appuntamenti: APPUNTAMENTI, alimenti: ALIMENTI, diete: DIETE, immagini: {}, impostazioni: IMPOSTAZIONI_PREDEFINITE,
 });
 
 describe("Annulla di tutto il programma", () => {
@@ -25,6 +25,20 @@ describe("Annulla di tutto il programma", () => {
     dopo.appuntamenti = dopo.appuntamenti.slice(1);
     const c = prima.clienti.find((x) => x.id === ap.clienteId)!;
     expect(descriviPassaggio(prima, dopo)).toContain(`(${c.nome} ${c.cognome})`);
+  });
+
+  it("cliente cancellato e recuperato con Annulla: tornano le visite, non gli allegati con file", () => {
+    const prima = dati();
+    prima.clienti[0].allegati = [
+      { id: "al-file", nome: "Referto.pdf", tipo: "pdf", data: "2026-10-01", dimensioneKb: 10, conFile: true },
+      { id: "al-esempio", nome: "Esempio.pdf", tipo: "pdf", data: "2026-10-01", dimensioneKb: 10 },
+    ];
+    const oggi = dati();
+    oggi.clienti = oggi.clienti.slice(1); // cliente cancellato
+    const rimesso = conAllegatiDiOggi(prima, oggi).clienti[0];
+    expect(rimesso.id).toBe(prima.clienti[0].id);
+    expect(rimesso.visite).toEqual(prima.clienti[0].visite);
+    expect(rimesso.allegati.map((a) => a.id)).toEqual(["al-esempio"]);
   });
 
   it("gli allegati non tornano indietro (il file eliminato non c'è più)", () => {

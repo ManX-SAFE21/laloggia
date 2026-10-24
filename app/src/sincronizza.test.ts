@@ -1,9 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { ALIMENTI, APPUNTAMENTI, CLIENTI, DIETE, MODELLI, PIANI } from "./data";
+import { ALIMENTI, APPUNTAMENTI, CLIENTI, DIETE, IMPOSTAZIONI_PREDEFINITE, MODELLI, PIANI } from "./data";
 import { DatiArchivio, differenze, fotografa } from "./sincronizza";
 
 const dati = (): DatiArchivio => structuredClone({
-  clienti: CLIENTI, modelli: MODELLI, piani: PIANI, appuntamenti: APPUNTAMENTI, alimenti: ALIMENTI, diete: DIETE, immagini: {},
+  clienti: CLIENTI, modelli: MODELLI, piani: PIANI, appuntamenti: APPUNTAMENTI, alimenti: ALIMENTI, diete: DIETE, immagini: {}, impostazioni: IMPOSTAZIONI_PREDEFINITE,
 });
 
 describe("salvataggio automatico: cosa mandare al database", () => {

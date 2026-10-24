@@ -248,6 +248,14 @@ impl Db {
                 immagini.insert(chiave, json!({ "nome": nome, "src": src }));
             }
         }
+        let mut impostazioni = Map::new();
+        {
+            let mut q = c.prepare("SELECT chiave, valore FROM impostazioni")?;
+            for i in q.query_map([], |r| Ok((r.get::<_, String>(0)?, r.get::<_, String>(1)?)))? {
+                let (chiave, valore) = i?;
+                impostazioni.insert(chiave, json_da(&valore)?);
+            }
+        }
         Ok(json!({
             "clienti": clienti,
             "modelli": dati_di("SELECT dati FROM modelli ORDER BY tipo, kcal, nome")?,
@@ -256,6 +264,7 @@ impl Db {
             "alimenti": dati_di("SELECT dati FROM alimenti ORDER BY categoria, nome")?,
             "diete": dati_di("SELECT dati FROM diete")?,
             "immagini": immagini,
+            "impostazioni": impostazioni,
         }))
     }
 
@@ -274,6 +283,7 @@ impl Db {
                 "alimento" => s.salva_alimento(dati)?,
                 "dieta" => s.salva_dieta(dati)?,
                 "immagine" => s.salva_immagine_data_url(dati)?,
+                "impostazione" => s.salva_impostazione(dati)?,
                 _ => return Err(Errore::Json(format!("tipo sconosciuto: {tipo}"))),
             }
         }
@@ -291,6 +301,7 @@ impl Db {
             "alimento" => ("alimenti", "id"),
             "dieta" => ("diete", "id"),
             "immagine" => ("immagini", "chiave"),
+            "impostazione" => ("impostazioni", "chiave"),
             _ => return Err(Errore::Json(format!("tipo sconosciuto: {tipo}"))),
         };
         self.conn.execute(&format!("DELETE FROM {tabella} WHERE {colonna} = ?1"), [id])?;
@@ -410,6 +421,15 @@ impl Scrittura<'_> {
             "INSERT INTO immagini(chiave, nome, mime, contenuto) VALUES (?1, ?2, ?3, ?4)
              ON CONFLICT(chiave) DO UPDATE SET nome = excluded.nome, mime = excluded.mime, contenuto = excluded.contenuto",
             params![testo(d, "chiave")?, testo(d, "nome")?, mime, byte],
+        )?;
+        Ok(())
+    }
+    /// Impostazione dello studio ({chiave, valore}), es. dopo quanti mesi richiamare un cliente.
+    fn salva_impostazione(&self, d: &Value) -> Ris<()> {
+        let valore = d.get("valore").cloned().unwrap_or(Value::Null);
+        self.c.execute(
+            "INSERT INTO impostazioni(chiave, valore) VALUES (?1, ?2) ON CONFLICT(chiave) DO UPDATE SET valore = excluded.valore",
+            params![testo(d, "chiave")?, valore.to_string()],
         )?;
         Ok(())
     }
@@ -595,6 +615,11 @@ mod test {
         assert_eq!(db.conta("immagini").unwrap(), 0);
         assert!(db.carica_tutto().unwrap()["appuntamenti"].as_array().unwrap().iter().all(|a| a["id"] != "ap10"));
         assert!(db.salva("sconosciuto", &json!({})).is_err());
+        // impostazioni dello studio: salvate, rilette, cambiate
+        db.salva("impostazione", &json!({ "chiave": "mesiRichiamo", "valore": 3 })).unwrap();
+        assert_eq!(db.carica_tutto().unwrap()["impostazioni"]["mesiRichiamo"], 3);
+        db.salva("impostazione", &json!({ "chiave": "mesiRichiamo", "valore": 4 })).unwrap();
+        assert_eq!(db.carica_tutto().unwrap()["impostazioni"]["mesiRichiamo"], 4);
         drop(db);
         let _ = std::fs::remove_file(&p);
     }
