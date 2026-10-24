@@ -8,6 +8,7 @@ import { ImportaBia } from "./ImportaBia";
 import { PrimaVisita } from "./PrimaVisita";
 import { Allegati } from "../components/Allegati";
 import { FRASE_CONFERMA, fraseGiusta } from "../conferme";
+import { apriStampa } from "../stampa";
 
 const TABS = [
   ["panoramica", "Panoramica"],
@@ -392,7 +393,7 @@ function Privacy({ c, aggiorna }: { c: Cliente; aggiorna: (f: (c: Cliente) => Cl
             </dl>
             <p className="small muted">La copia cartacea firmata è conservata dallo studio.</p>
             <div className="row" style={{ flexWrap: "wrap" }}>
-              <button className="btn sm" onClick={() => window.print()}><Icon.print /> Ristampa il modulo</button>
+              <button className="btn sm" onClick={() => void apriStampa({ tipo: "privacy", id: c.id, titolo: `Modulo privacy – ${c.nome} ${c.cognome}` })}><Icon.print /> Ristampa il modulo</button>
               <button className="btn sm danger" onClick={annulla}>Annulla la registrazione</button>
             </div>
           </>
@@ -402,7 +403,7 @@ function Privacy({ c, aggiorna }: { c: Cliente; aggiorna: (f: (c: Cliente) => Cl
               <div className="row"><span className="badge warn">Da firmare</span></div>
               <h3 style={{ margin: "12px 0 4px" }}>1. Stampa il modulo</h3>
               <p className="small muted" style={{ margin: "0 0 8px" }}>Il modulo è già compilato con i dati del cliente. Manca solo la firma.</p>
-              <button className="btn primary" onClick={() => window.print()}><Icon.print /> Stampa modulo</button>
+              <button className="btn primary" onClick={() => void apriStampa({ tipo: "privacy", id: c.id, titolo: `Modulo privacy – ${c.nome} ${c.cognome}` })}><Icon.print /> Stampa modulo</button>
             </div>
             <div style={{ borderTop: "1px solid var(--line)", paddingTop: 14 }}>
               <h3 style={{ marginBottom: 8 }}>2. Dopo la firma</h3>
@@ -443,7 +444,7 @@ function Privacy({ c, aggiorna }: { c: Cliente; aggiorna: (f: (c: Cliente) => Cl
 }
 
 /** Modulo stampabile: compare solo in stampa. Il testo è un SEGNAPOSTO. */
-function ModuloPrivacy({ c }: { c: Cliente }) {
+export function ModuloPrivacy({ c }: { c: Cliente }) {
   return (
     <div className="print-only print-sheet modulo">
       <div className="modulo-head">La Loggia · Benessere Naturale — Malo (VI)</div>

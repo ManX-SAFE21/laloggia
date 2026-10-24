@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { alimentoById, fmtData, iconaDi, nuovoId, totali } from "../data";
 import { useStore } from "../store";
 import { Icon } from "../components/ui";
+import { apriStampa } from "../stampa";
 import { Alimento, Dieta, GIORNI, PASTI, Pasto, VoceDieta } from "../types";
 
 const r0 = (n: number) => Math.round(n);
@@ -45,7 +46,7 @@ export function DietaEditor({ id }: { id: string }) {
           </div>
           <div className="row">
             <button className="btn" onClick={copiaSuTutti}>Copia {GIORNI[giorno].toLowerCase()} su tutta la settimana</button>
-            <button className="btn primary" onClick={() => window.print()}><Icon.print /> Stampa / PDF</button>
+            <button className="btn primary" onClick={() => void apriStampa({ tipo: "dieta", id: dieta.id, titolo: `Dieta di ${cliente.nome} ${cliente.cognome}` })}><Icon.print /> Stampa / PDF</button>
           </div>
         </div>
 
@@ -150,7 +151,7 @@ function PastoBox({ pasto, voci, set }: { pasto: Pasto; voci: VoceDieta[]; set: 
   );
 }
 
-function StampaDieta({ dieta, nomeCliente, alimenti }: { dieta: Dieta; nomeCliente: string; alimenti: Alimento[] }) {
+export function StampaDieta({ dieta, nomeCliente, alimenti }: { dieta: Dieta; nomeCliente: string; alimenti: Alimento[] }) {
   return (
     <div className="print-only print-sheet">
       <div style={{ borderBottom: "2px solid #6c7559", paddingBottom: 8, marginBottom: 8 }}>

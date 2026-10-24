@@ -376,3 +376,17 @@ h3 { font-size: 15px; font-family: var(--font); font-weight: 600; }
 .cliente-archiviato .card svg { opacity: 0.5; }
 .cliente-archiviato .page-head h1, .cliente-archiviato .page-head p { color: var(--ink-2); }
 @media print { .cliente-archiviato .card { filter: none; opacity: 1; } }
+/* Finestra «Stampa»: solo il documento; i moduli "solo stampa" qui si vedono anche a schermo */
+.finestra-stampa { padding: 16px; background: #fff; min-height: 100vh; }
+.finestra-stampa .print-only { display: block; }
+.finestra-stampa .piano-doc { margin: 0 auto; }
+.finestra-stampa-avviso { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; color: var(--ink-2); font-size: 14px; }
+@media print { .finestra-stampa { padding: 0; min-height: 0; } }
+/* Pagine senza le intestazioni del browser (data, ora, titolo, indirizzo): se ne occupano i margini di pagina */
+@page {
+  margin: 14mm 15mm 16mm;
+  @top-left { content: ""; } @top-center { content: ""; } @top-right { content: ""; }
+  @bottom-left { content: "La Loggia · Benessere Naturale · Malo (VI)"; font: 8pt "Source Sans 3", sans-serif; color: #8a8f7c; }
+  @bottom-center { content: ""; }
+  @bottom-right { content: "pagina " counter(page) " di " counter(pages); font: 8pt "Source Sans 3", sans-serif; color: #8a8f7c; }
+}

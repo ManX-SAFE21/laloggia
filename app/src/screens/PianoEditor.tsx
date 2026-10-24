@@ -1,5 +1,6 @@
 import { ReactNode, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { prossimoZoom } from "../zoomFoglio";
+import { DaStampare, apriStampa } from "../stampa";
 import { useStore } from "../store";
 import { Icon, Modal } from "../components/ui";
 import { PianoStampa } from "../components/PianoStampa";
@@ -15,7 +16,7 @@ export function PianoEditor({ id }: { id: string }) {
   if (!piano || !cliente) return <div className="page">Piano non trovato</div>;
   const aggiorna = (f: (p: PianoAlimentare) => PianoAlimentare) => setPiani((l) => l.map((x) => (x.id === id ? f(x) : x)));
   return (
-    <EditorPiano piano={piano} cliente={cliente} aggiorna={aggiorna}
+    <EditorPiano piano={piano} cliente={cliente} stampa={{ tipo: "piano", id: piano.id, titolo: `Piano di ${cliente.nome} ${cliente.cognome}` }} aggiorna={aggiorna}
       intestazione={<>
         <button className="btn ghost sm" style={{ marginBottom: 8, paddingLeft: 0 }} onClick={() => vai({ nome: "cliente", id: cliente.id, tab: "diete" })}><Icon.back /> {cliente.nome} {cliente.cognome}</button>
         <div>
@@ -34,11 +35,12 @@ export function PianoEditor({ id }: { id: string }) {
 }
 
 /** Editor comune di piani e modelli: sezioni a sinistra, foglio A4 a destra, collegati nei due sensi. */
-export function EditorPiano({ piano, cliente, aggiorna: aggiornaEsterno, intestazione, campiInPiu, riassunto, azioniInPiu }: {
+export function EditorPiano({ piano, cliente, aggiorna: aggiornaEsterno, intestazione, campiInPiu, riassunto, azioniInPiu, stampa }: {
   piano: PianoAlimentare;
   cliente: Cliente;
   aggiorna: (f: (p: PianoAlimentare) => PianoAlimentare) => void;
   intestazione: ReactNode; // a sinistra del pulsante di stampa
+  stampa: DaStampare; // cosa apre la finestra «Stampa»
   campiInPiu?: ReactNode; // in cima al riquadro dei dati
   riassunto?: string; // riga dei dati principali, col riquadro chiuso
   azioniInPiu?: ReactNode; // pulsanti accanto a «Stampa / Salva PDF»
@@ -230,7 +232,7 @@ export function EditorPiano({ piano, cliente, aggiorna: aggiornaEsterno, intesta
           <div>{intestazione}</div>
           <div className="row" style={{ gap: 8 }}>
             {azioniInPiu}
-            <button className="btn primary" onClick={() => window.print()}><Icon.print /> Stampa / Salva PDF</button>
+            <button className="btn primary" onClick={() => void apriStampa(stampa)}><Icon.print /> Stampa / Salva PDF</button>
           </div>
         </div>
       </div>

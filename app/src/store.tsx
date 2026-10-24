@@ -68,6 +68,19 @@ interface Store {
 const Ctx = createContext<Store | null>(null);
 export const useStore = () => useContext(Ctx)!;
 
+/** Dati di sola lettura (finestra «Stampa»): niente salvataggio, niente modifiche. */
+export function StoreSoloLettura({ dati, children }: { dati: DatiArchivio; children: ReactNode }) {
+  const niente = () => {};
+  const valore: Store = {
+    ...dati, setClienti: niente, setAlimenti: niente, setDiete: niente, setPiani: niente, setModelli: niente, setImmagini: niente,
+    setImpostazioni: niente, setAppuntamenti: niente, vista: { nome: "oggi" }, vai: niente, toast: niente,
+    backup: { ultimo: "", ok: true, dropbox: "", disco: "", discoCollegato: false }, setBackup: niente, bloccaOra: niente,
+    salvataggio: { stato: "salvato" }, salvaOra: async () => {}, chiusura: false, confermaChiusura: niente,
+    annulla: niente, ripeti: niente, passiAnnulla: { indietro: 0, avanti: 0 },
+  };
+  return <Ctx.Provider value={valore}>{children}</Ctx.Provider>;
+}
+
 /** Il programma gira dentro Tauri (con il database) o nell'anteprima del browser (senza). */
 export const inTauri = typeof window !== "undefined" && "__TAURI_INTERNALS__" in window;
 const ATTESA_MS = 400; // dopo l'ultima modifica, si salva entro questo tempo

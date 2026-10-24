@@ -83,7 +83,7 @@ export function Modelli() {
 }
 
 // Cliente di esempio per la copertina dell'anteprima di un modello.
-const CLIENTE_ESEMPIO = { id: "", nome: "Nome", cognome: "Cognome", obiettivo: "Obiettivo del cliente" } as Cliente;
+export const CLIENTE_ESEMPIO = { id: "", nome: "Nome", cognome: "Cognome", obiettivo: "Obiettivo del cliente" } as Cliente;
 
 /** Modifica di un modello: stesso editor dei piani, più nome, tipo e nota. */
 export function ModelloEditor({ id }: { id: string }) {
@@ -101,7 +101,7 @@ export function ModelloEditor({ id }: { id: string }) {
   const usato = piani.filter((p) => p.modelloId === m.id).length;
 
   return (
-    <EditorPiano piano={comePiano} cliente={CLIENTE_ESEMPIO} aggiorna={aggiorna} riassunto={m.tipo}
+    <EditorPiano piano={comePiano} cliente={CLIENTE_ESEMPIO} aggiorna={aggiorna} riassunto={m.tipo} stampa={{ tipo: "modello", id: m.id, titolo: `Modello «${m.nome}»` }}
       azioniInPiu={<button className="btn" title="Crea in Piani alimentari un altro modello uguale a questo; tu resti qui" onClick={() => {
         const copia = duplicaModello(m, OGGI);
         setModelli((l) => [...l, copia]);

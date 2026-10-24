@@ -3,11 +3,13 @@
   "identifier": "default",
   "description": "Capability for the main window",
   "windows": [
-    "main"
+    "main",
+    "stampa"
   ],
   "permissions": [
     "core:default",
     "core:window:allow-destroy",
+    "core:webview:allow-create-webview-window",
     "opener:default",
     "dialog:default"
   ]

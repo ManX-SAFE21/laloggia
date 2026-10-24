@@ -95,6 +95,7 @@
 @page piano {
   size: A4;
   margin: 14mm 15mm 16mm;
+  @top-left { content: ""; } @top-center { content: ""; } @top-right { content: ""; } @bottom-center { content: ""; }
   @bottom-left { content: "La Loggia · Benessere Naturale · Malo (VI)"; font: 8pt "Source Sans 3", sans-serif; color: #8a8f7c; }
   @bottom-right { content: "pagina " counter(page) " di " counter(pages); font: 8pt "Source Sans 3", sans-serif; color: #8a8f7c; }
 }
