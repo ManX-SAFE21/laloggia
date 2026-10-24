@@ -40,7 +40,8 @@
       "nsis": {
         "languages": [
           "Italian"
-        ]
+        ],
+        "installerIcon": "icons/icon.ico"
       }
     }
   }
