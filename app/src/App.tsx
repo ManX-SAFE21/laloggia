@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { inTauri, StoreProvider, useStore, Vista } from "./store";
 import { Icon, Modal } from "./components/ui";
+import { AvvisoDisco } from "./discoCifrato";
 import { Leaf, PinScreen } from "./screens/Lock";
 import { Oggi } from "./screens/Oggi";
 import { Clienti } from "./screens/Clienti";
@@ -90,6 +91,7 @@ function Shell() {
       </aside>
       <main className="main">
         {!inTauri && <div className="demo-banner">Anteprima nel browser: dati di esempio, nessun salvataggio. Le modifiche si perdono ricaricando la pagina.</div>}
+        <AvvisoDisco />
         {inTauri && <div className="demo-banner">Versione di prova: dati di esempio. Non inserire ancora dati veri (il backup automatico non c'è ancora).</div>}
         {vista.nome === "oggi" && <Oggi />}
         {vista.nome === "clienti" && <Clienti />}

@@ -57,6 +57,9 @@ La nutrizionista è l'unica utente. Il software non è pensato per essere vendut
 - **Rotazione ovunque: 7 giornaliere, 4 settimanali, 12 mensili (1 anno)**. Scelta anche per il GDPR
   (conservare solo il necessario). Avviso sullo spazio occupato in Dropbox.
 - Ordine dei lavori: passo 1 archivio in chiaro + PIN solo blocco → passo 3 avviso disco → passo 4 backup.
+  Fatti: passo 1 (2026-10-25, archivio in chiaro + conversione), passo 3 (2026-10-25: comando Rust
+  `stato_cifratura_disco` via PowerShell senza finestra; striscia gialla «Il disco di questo PC non è cifrato»
+  con «Come proteggerlo» / «Più tardi», riga in Impostazioni → Sicurezza; `src/discoCifrato.tsx`). Resta il passo 4.
 
 ### Sicurezza (scelta "C") — SUPERATA per la parte "database cifrato" (vedi sopra)
 - **Nessuna dipendenza dal portachiavi del sistema operativo** (no Gestione credenziali di Windows):

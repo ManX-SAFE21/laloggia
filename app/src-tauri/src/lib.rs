@@ -96,13 +96,53 @@ fn allegato_esporta(archivio: tauri::State<Archivio>, id: String, percorso: Stri
     std::fs::write(&percorso, byte).map_err(|e| format!("copia non salvata: {e}"))
 }
 
+/// Il disco dove sta l'archivio è cifrato da Windows (Crittografia dispositivo / BitLocker)?
+/// Si legge la proprietà di Windows `System.Volume.BitLockerProtection`, che non richiede permessi di
+/// amministratore. Valori: 1 e 6 = protetto, 3 = cifratura in corso, 4 = decifratura in corso,
+/// 5 = protezione sospesa, 2 e 0 = non protetto (0 su Windows 11 Home senza cifratura, provato il 2026-10-25).
+/// ATTENZIONE: sul PC cifrato i valori vanno ancora verificati; nel dubbio si risponde "non verificabile".
+#[tauri::command]
+async fn stato_cifratura_disco(app: tauri::AppHandle) -> Result<Value, String> {
+    let cartella = cartella_dati(&app)?;
+    let unita: String = cartella.display().to_string().chars().take(2).collect(); // es. "C:"
+    if !unita.ends_with(':') {
+        return Ok(serde_json::json!({ "stato": "non-verificabile", "unita": unita }));
+    }
+    let comando = format!("(New-Object -ComObject Shell.Application).NameSpace('{unita}').Self.ExtendedProperty('System.Volume.BitLockerProtection')");
+    let uscita = tauri::async_runtime::spawn_blocking(move || {
+        let mut c = std::process::Command::new("powershell");
+        c.args(["-NoProfile", "-NonInteractive", "-Command", &comando]);
+        #[cfg(windows)]
+        {
+            use std::os::windows::process::CommandExt;
+            c.creation_flags(0x0800_0000); // CREATE_NO_WINDOW: nessuna finestra nera che lampeggia
+        }
+        c.output()
+    })
+    .await
+    .map_err(|e| e.to_string())?;
+    let valore = match uscita {
+        Ok(o) if o.status.success() => String::from_utf8_lossy(&o.stdout).trim().to_string(),
+        _ => String::new(),
+    };
+    let stato = match valore.as_str() {
+        "1" | "6" => "cifrato",
+        "3" => "in-corso",
+        "4" => "decifratura",
+        "5" => "sospeso",
+        "0" | "2" => "non-cifrato",
+        _ => "non-verificabile",
+    };
+    Ok(serde_json::json!({ "stato": stato, "valore": valore, "unita": unita }))
+}
+
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
         .plugin(tauri_plugin_opener::init())
         .plugin(tauri_plugin_dialog::init())
         .manage(Archivio(Mutex::new(None)))
-        .invoke_handler(tauri::generate_handler![db_apri, db_salva, db_elimina, allegato_salva_file, allegato_leggi, allegato_esporta])
+        .invoke_handler(tauri::generate_handler![db_apri, db_salva, db_elimina, allegato_salva_file, allegato_leggi, allegato_esporta, stato_cifratura_disco])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useStore } from "../store";
 import { Modal } from "../components/ui";
+import { ComeCifrare, DA_AVVISARE, DESCRIZIONE, useStatoDisco } from "../discoCifrato";
 import { VERSIONE_INFORMATIVA } from "../data";
 import { cambiaPin, LUNGHEZZA_PIN, TENTATIVI_PIN } from "../pin";
 
@@ -10,6 +11,8 @@ export function Impostazioni() {
   const [inCorso, setInCorso] = useState(false);
   const [ripristino, setRipristino] = useState(false);
   const [cambioPin, setCambioPin] = useState(false);
+  const [comeCifrare, setComeCifrare] = useState(false);
+  const disco = useStatoDisco();
 
   const eseguiBackup = () => {
     setInCorso(true);
@@ -57,6 +60,11 @@ export function Impostazioni() {
             <div className="card-pad">
               <dl className="kv">
                 <dt>Archivio</dt><dd>Sul disco di questo PC, non cifrato dal programma: lo protegge la cifratura del disco di Windows</dd>
+                <dt>Disco del PC{disco.info.unita ? ` (${disco.info.unita})` : ""}</dt>
+                <dd>
+                  <span className={DA_AVVISARE.includes(disco.info.stato) ? "testo-avviso" : ""}>{DESCRIZIONE[disco.info.stato]}</span>
+                  {disco.info.stato !== "cifrato" && disco.info.stato !== "controllo" && <button className="btn sm ghost" style={{ marginLeft: 8 }} onClick={() => setComeCifrare(true)}>Come proteggerlo</button>}
+                </dd>
                 <dt>All'avvio</dt><dd>PIN di {LUNGHEZZA_PIN} cifre</dd>
                 <dt>Blocco automatico</dt><dd>Dopo 10 minuti di inattività</dd>
                 <dt>Sblocco</dt><dd>Stesso PIN di {LUNGHEZZA_PIN} cifre</dd>
@@ -92,6 +100,7 @@ export function Impostazioni() {
         </div>
       </div>
 
+      {comeCifrare && <ComeCifrare onClose={() => setComeCifrare(false)} onRicontrolla={disco.ricontrolla} />}
       {cambioPin && <CambiaPin onClose={() => setCambioPin(false)} onFatto={() => { setCambioPin(false); toast("PIN cambiato"); }} />}
       {ripristino && (
         <Modal title="Ripristina da backup" onClose={() => setRipristino(false)}

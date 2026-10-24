@@ -390,3 +390,9 @@ h3 { font-size: 15px; font-family: var(--font); font-weight: 600; }
   @bottom-center { content: ""; }
   @bottom-right { content: "pagina " counter(page) " di " counter(pages); font: 8pt "Source Sans 3", sans-serif; color: #8a8f7c; }
 }
+/* Avviso: disco del PC non cifrato */
+.avviso-disco { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; background: #fbe3c4; color: #6b3d00; font-size: 13px; padding: 7px 32px; border-bottom: 1px solid #efc68f; }
+.avviso-disco > span { flex: 1; min-width: 280px; }
+.testo-avviso { color: #a35a00; font-weight: 600; }
+.come-cifrare { padding-left: 20px; margin: 8px 0 12px; }
+.come-cifrare li { margin-bottom: 8px; }
