@@ -1,5 +1,6 @@
 // Archivio SQLite in chiaro (decisione 2026-10-25) collegato al programma con i comandi apri, salva, elimina
 // e quelli degli allegati. La protezione del PC rubato è la cifratura del disco di Windows.
+mod backup;
 mod db;
 
 use serde_json::Value;
@@ -136,13 +137,156 @@ async fn stato_cifratura_disco(app: tauri::AppHandle) -> Result<Value, String> {
     Ok(serde_json::json!({ "stato": stato, "valore": valore, "unita": unita }))
 }
 
+// ---------------------------------------------------------------- backup (src/backup.rs)
+
+fn file_stato_backup(cartella: &Path) -> PathBuf {
+    cartella.join("stato-backup.json")
+}
+
+fn leggi_stato_backup(cartella: &Path) -> Value {
+    std::fs::read_to_string(file_stato_backup(cartella)).ok()
+        .and_then(|s| serde_json::from_str(&s).ok())
+        .unwrap_or_else(|| serde_json::json!({}))
+}
+
+/// Fotografia controllata dell'archivio in dati/backup-temp: si apre, è integra, quanti clienti contiene.
+fn fotografia_controllata(archivio: &Archivio, cartella: &Path, nome: &str) -> Result<(PathBuf, i64), String> {
+    let temp = cartella.join("backup-temp");
+    std::fs::create_dir_all(&temp).map_err(|e| e.to_string())?;
+    let foto = temp.join(nome);
+    {
+        let g = archivio.0.lock().map_err(|_| "database bloccato".to_string())?;
+        g.as_ref().ok_or("database non aperto")?.fotografia(&foto).map_err(|e| format!("copia dell'archivio: {e}"))?;
+    }
+    let copia = db::Db::apri(&foto, None).map_err(|e| format!("la copia non si apre: {e}"))?;
+    if copia.integrita().map_err(|e| e.to_string())? != "ok" {
+        return Err("la copia non è integra".into());
+    }
+    let clienti = copia.conta("clienti").map_err(|e| e.to_string())?;
+    Ok((foto, clienti))
+}
+
+/// Esegue il backup su disco esterno (in chiaro) e/o cloud (.7z cifrato). momento = "2026-10-25_1430" (ora locale).
+/// Scrive l'esito in dati/stato-backup.json (fuori dall'archivio: Annulla non lo tocca).
+#[tauri::command]
+async fn backup_esegui(app: tauri::AppHandle, archivio: tauri::State<'_, Archivio>, momento: String,
+                       cartella_disco: Option<String>, cartella_cloud: Option<String>) -> Result<Value, String> {
+    let cartella = cartella_dati(&app)?;
+    let (foto, clienti) = fotografia_controllata(&archivio, &cartella, &format!("{}{momento}.db", backup::PREFISSO))?;
+    let password = backup::leggi_password(&cartella);
+    let m = momento.clone();
+    let (disco, cloud) = tauri::async_runtime::spawn_blocking(move || {
+        let scelta = |c: &Option<String>| c.as_deref().map(str::trim).filter(|c| !c.is_empty()).map(PathBuf::from);
+        let disco = scelta(&cartella_disco).map(|c| backup::su_destinazione(&foto, &c, &m, None));
+        let cloud = scelta(&cartella_cloud).map(|c| match &password {
+            Some(p) => backup::su_destinazione(&foto, &c, &m, Some(p)),
+            None => serde_json::json!({ "esito": "errore", "messaggio": "manca la password del backup cloud (Impostazioni)" }),
+        });
+        let _ = std::fs::remove_file(&foto);
+        (disco, cloud)
+    })
+    .await
+    .map_err(|e| e.to_string())?;
+    // si tiene anche l'ultimo backup RIUSCITO di ogni destinazione
+    let mut stato = leggi_stato_backup(&cartella);
+    for (chiave, r) in [("disco", &disco), ("cloud", &cloud)] {
+        if let Some(r) = r {
+            stato[chiave] = r.clone();
+            stato[chiave]["quando"] = Value::String(momento.clone());
+            if r["esito"] == "ok" {
+                stato[format!("{chiave}UltimoOk")] = Value::String(momento.clone());
+            }
+        }
+    }
+    stato["ultimoTentativo"] = Value::String(momento);
+    stato["clienti"] = Value::from(clienti);
+    std::fs::write(file_stato_backup(&cartella), stato.to_string()).map_err(|e| e.to_string())?;
+    Ok(stato)
+}
+
+/// Stato dei backup per l'indicatore e le Impostazioni.
+#[tauri::command]
+fn backup_stato(app: tauri::AppHandle) -> Result<Value, String> {
+    let cartella = cartella_dati(&app)?;
+    let mut stato = leggi_stato_backup(&cartella);
+    stato["passwordPresente"] = Value::Bool(backup::leggi_password(&cartella).is_some());
+    stato["setteZip"] = Value::Bool(backup::trova_7zip().is_some());
+    Ok(stato)
+}
+
+/// La password del backup cloud (crea = true la genera se non c'è). Per mostrarla e stamparla.
+#[tauri::command]
+fn backup_password(app: tauri::AppHandle, crea: bool) -> Result<Option<String>, String> {
+    let cartella = cartella_dati(&app)?;
+    if crea { backup::crea_password(&cartella).map(Some) } else { Ok(backup::leggi_password(&cartella)) }
+}
+
+/// Vero se la cartella esiste (es. disco esterno collegato).
+#[tauri::command]
+fn cartella_esiste(percorso: String) -> bool {
+    !percorso.trim().is_empty() && Path::new(percorso.trim()).is_dir()
+}
+
+/// Ripristina l'archivio da un backup (.db del disco o .7z del cloud). Prima salva lo stato attuale in
+/// dati/prima-del-ripristino_<momento>.db, così si può sempre tornare indietro.
+#[tauri::command]
+async fn backup_ripristina(app: tauri::AppHandle, archivio: tauri::State<'_, Archivio>, file: String,
+                           password: Option<String>, momento: String) -> Result<Value, String> {
+    let cartella = cartella_dati(&app)?;
+    let sorgente = PathBuf::from(&file);
+    let lavoro = cartella.join("ripristino-temp");
+    let _ = std::fs::remove_dir_all(&lavoro);
+    std::fs::create_dir_all(&lavoro).map_err(|e| e.to_string())?;
+    let candidato = if file.to_lowercase().ends_with(".7z") {
+        let pw = password.filter(|p| !p.trim().is_empty()).or_else(|| backup::leggi_password(&cartella))
+            .ok_or("serve la password del backup")?;
+        let (s, l) = (sorgente.clone(), lavoro.clone());
+        tauri::async_runtime::spawn_blocking(move || backup::estrai_7z(&s, &l, pw.trim()))
+            .await.map_err(|e| e.to_string())??
+    } else {
+        let c = lavoro.join("candidato.db");
+        std::fs::copy(&sorgente, &c).map_err(|e| format!("file non leggibile: {e}"))?;
+        c
+    };
+    let clienti = {
+        let prova = db::Db::apri(&candidato, None).map_err(|e| format!("il backup non si apre: {e}"))?;
+        if prova.integrita().map_err(|e| e.to_string())? != "ok" {
+            return Err("il backup non è integro: ripristino annullato".into());
+        }
+        prova.conta("clienti").map_err(|e| e.to_string())?
+    };
+    let sicurezza = cartella.join(format!("prima-del-ripristino_{momento}.db"));
+    let mut g = archivio.0.lock().map_err(|_| "database bloccato".to_string())?;
+    if let Some(d) = g.as_ref() {
+        d.fotografia(&sicurezza).map_err(|e| format!("copia di sicurezza non riuscita: ripristino annullato ({e})"))?;
+    }
+    *g = None; // chiude l'archivio attuale
+    let principale = cartella.join("gestionale.db");
+    let copiato = std::fs::copy(&candidato, &principale);
+    let riaperto = db::Db::apri(&principale, None);
+    match (copiato, riaperto) {
+        (Ok(_), Ok(d)) => *g = Some(d),
+        (c, r) => {
+            // qualcosa è andato storto: si rimette la copia di sicurezza
+            let _ = std::fs::copy(&sicurezza, &principale);
+            *g = db::Db::apri(&principale, None).ok();
+            return Err(format!("ripristino non riuscito, archivio rimesso com'era ({:?} {:?})",
+                c.err().map(|e| e.to_string()), r.err().map(|e| e.to_string())));
+        }
+    }
+    drop(g);
+    let _ = std::fs::remove_dir_all(&lavoro);
+    Ok(serde_json::json!({ "clienti": clienti, "copiaDiSicurezza": sicurezza.display().to_string() }))
+}
+
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
         .plugin(tauri_plugin_opener::init())
         .plugin(tauri_plugin_dialog::init())
         .manage(Archivio(Mutex::new(None)))
-        .invoke_handler(tauri::generate_handler![db_apri, db_salva, db_elimina, allegato_salva_file, allegato_leggi, allegato_esporta, stato_cifratura_disco])
+        .invoke_handler(tauri::generate_handler![db_apri, db_salva, db_elimina, allegato_salva_file, allegato_leggi, allegato_esporta, stato_cifratura_disco,
+            backup_esegui, backup_stato, backup_password, backup_ripristina, cartella_esiste])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

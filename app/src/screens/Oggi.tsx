@@ -1,9 +1,11 @@
 import { OGGI, fmtData } from "../data";
+import { riassuntoBackup } from "../backup";
 import { useStore } from "../store";
 import { iniziali } from "../components/ui";
 
 export function Oggi() {
-  const { clienti, appuntamenti, vai, backup } = useStore();
+  const { clienti, appuntamenti, vai, backup, backupInCorso, impostazioni } = useStore();
+  const statoBackup = riassuntoBackup(backup, impostazioni, backupInCorso);
   const diOggi = appuntamenti.filter((a) => a.data === OGGI).sort((a, b) => a.ora.localeCompare(b.ora));
   const prossimi = appuntamenti.filter((a) => a.data > OGGI).sort((a, b) => (a.data + a.ora).localeCompare(b.data + b.ora)).slice(0, 4);
   const senzaConsenso = clienti.filter((c) => c.attivo && !c.consenso.firmato);
@@ -26,7 +28,7 @@ export function Oggi() {
         <div className="card stat"><div className="stat-label">Consensi privacy mancanti</div><div className="stat-value" style={{ color: senzaConsenso.length ? "var(--warn)" : undefined }}>{senzaConsenso.length}</div></div>
         <div className="card stat">
           <div className="stat-label">Ultimo backup</div>
-          <div className="stat-value" style={{ fontSize: 17, marginTop: 6 }}>{backup.ok ? "✓ " : "⚠ "}{backup.ultimo}</div>
+          <div className="stat-value" style={{ fontSize: 17, marginTop: 6 }}>{statoBackup.ok ? "✓ " : "⚠ "}{statoBackup.testo}</div>
         </div>
       </div>
 

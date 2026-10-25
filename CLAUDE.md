@@ -59,7 +59,14 @@ La nutrizionista è l'unica utente. Il software non è pensato per essere vendut
 - Ordine dei lavori: passo 1 archivio in chiaro + PIN solo blocco → passo 3 avviso disco → passo 4 backup.
   Fatti: passo 1 (2026-10-25, archivio in chiaro + conversione), passo 3 (2026-10-25: comando Rust
   `stato_cifratura_disco` via PowerShell senza finestra; striscia gialla «Il disco di questo PC non è cifrato»
-  con «Come proteggerlo» / «Più tardi», riga in Impostazioni → Sicurezza; `src/discoCifrato.tsx`). Resta il passo 4.
+  con «Come proteggerlo» / «Più tardi», riga in Impostazioni → Sicurezza; `src/discoCifrato.tsx`), passo 4
+  (2026-10-25, backup: `src-tauri/src/backup.rs` + `src/backup.ts` + `src/components/Backup.tsx`). File in `dati\`:
+  `password-backup-cloud.txt` (fuori dai backup), `stato-backup.json` (esiti, fuori dall'archivio: Annulla non lo tocca),
+  `prima-del-ripristino_*.db` (copia di sicurezza a ogni ripristino). Nomi dei backup `LaLoggia_AAAA-MM-GG_HHMM.db/.7z`.
+  Cartelle disco/cloud nelle impostazioni dell'archivio (`cartellaDisco`, `cartellaCloud`). Backup all'avvio se serve,
+  ogni 5 min si ricontrolla (una volta al giorno per destinazione; dopo un tentativo si aspetta un'ora), e alla chiusura.
+  Manca: 7za incluso nel programma (oggi serve 7-Zip installato) e la prova di ripristino mensile automatica.
+  **La password di backup attuale sul PC di Manuxxx è di prova** (mostrata nelle prove): rigenerarla alla «partenza pulita».
 
 ### Sicurezza (scelta "C") — SUPERATA per la parte "database cifrato" (vedi sopra)
 - **Nessuna dipendenza dal portachiavi del sistema operativo** (no Gestione credenziali di Windows):

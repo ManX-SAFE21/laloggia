@@ -53,7 +53,9 @@ h3 { font-size: 15px; font-family: var(--font); font-weight: 600; }
 .annulla-btn { flex: 1; font: inherit; font-size: 13px; padding: 7px 8px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.18); background: rgba(255,255,255,0.06); color: #fff; cursor: pointer; }
 .annulla-btn:hover:not(:disabled) { background: rgba(255,255,255,0.14); }
 .annulla-btn:disabled { opacity: 0.4; cursor: default; }
-.backup-pill { font-size: 12px; color: #e6dfd2; padding: 8px 10px; border-radius: 8px; background: rgba(255,255,255,0.05); }
+.backup-pill { font: inherit; font-size: 12px; color: #e6dfd2; padding: 8px 10px; border-radius: 8px; background: rgba(255,255,255,0.05); border: 0; text-align: left; cursor: pointer; }
+.backup-pill.avviso { color: #f5d9a0; }
+.backup-pill:hover { background: rgba(255,255,255,0.12); }
 .backup-pill b { color: #fff; font-weight: 600; }
 .salva-pill { font-size: 12px; color: #e6dfd2; padding: 8px 10px; border-radius: 8px; background: rgba(255,255,255,0.05); margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
 .salva-pill.ok { color: #c9ecc9; }
@@ -396,3 +398,11 @@ h3 { font-size: 15px; font-family: var(--font); font-weight: 600; }
 .testo-avviso { color: #a35a00; font-weight: 600; }
 .come-cifrare { padding-left: 20px; margin: 8px 0 12px; }
 .come-cifrare li { margin-bottom: 8px; }
+/* Backup */
+.dest-backup { border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; display: grid; gap: 6px; }
+.dest-backup h3 { margin: 0; font-size: 14px; }
+.dest-stato { font-size: 13px; color: var(--ink-2); }
+.dest-stato.ok { color: #3c6e3c; }
+.dest-stato.errore { color: #a3392a; }
+.password-grande { font-family: Consolas, "Courier New", monospace; font-size: 26px; letter-spacing: 1px; padding: 14px; margin: 12px 0; border: 2px dashed #6c7559; border-radius: 10px; text-align: center; word-break: break-all; }
+.foglio-password ol { padding-left: 20px; }

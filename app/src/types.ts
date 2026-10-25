@@ -219,6 +219,8 @@ export interface PianoAlimentare {
 /** Impostazioni dello studio, salvate nell'archivio (tabella impostazioni). */
 export interface Impostazioni {
   mesiRichiamo: number; // lista clienti, filtro "Da richiamare": ultima visita più vecchia di così, senza appuntamento
+  cartellaDisco: string; // backup in chiaro sul disco esterno ("" = non impostato)
+  cartellaCloud: string; // backup .7z cifrato nella cartella di Dropbox ("" = non impostato)
 }
 
 export interface Appuntamento {

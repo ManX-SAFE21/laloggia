@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { inTauri, StoreProvider, useStore, Vista } from "./store";
 import { Icon, Modal } from "./components/ui";
 import { AvvisoDisco } from "./discoCifrato";
+import { riassuntoBackup } from "./backup";
 import { Leaf, PinScreen } from "./screens/Lock";
 import { Oggi } from "./screens/Oggi";
 import { Clienti } from "./screens/Clienti";
@@ -61,7 +62,8 @@ const NAV: { key: Vista["nome"]; label: string; icon: keyof typeof Icon }[] = [
 ];
 
 function Shell() {
-  const { vista, vai, backup, bloccaOra } = useStore();
+  const { vista, vai, backup, backupInCorso, impostazioni, bloccaOra } = useStore();
+  const statoBackup = riassuntoBackup(backup, impostazioni, backupInCorso);
   const sezione = vista.nome === "cliente" || vista.nome === "dieta" || vista.nome === "piano" ? "clienti" : vista.nome === "modello" ? "modelli" : vista.nome;
   return (
     <div className="app">
@@ -85,14 +87,16 @@ function Shell() {
           </button>
           {vista.nome !== "piano" && vista.nome !== "modello" && <AnnullaRipeti />}
           <IndicatoreSalvataggio />
-          <div className="backup-pill">{backup.ok ? "✓" : "⚠"} Backup: <b>{backup.ultimo}</b></div>
+          <button className={"backup-pill" + (statoBackup.ok ? "" : " avviso")} title="Apri le impostazioni dei backup" onClick={() => vai({ nome: "impostazioni" })}>
+            {statoBackup.ok ? "✓" : "⚠"} Backup: <b>{statoBackup.testo}</b>
+          </button>
           <button className="nav-btn" onClick={bloccaOra}><Icon.lock /> Blocca ora</button>
         </div>
       </aside>
       <main className="main">
         {!inTauri && <div className="demo-banner">Anteprima nel browser: dati di esempio, nessun salvataggio. Le modifiche si perdono ricaricando la pagina.</div>}
         <AvvisoDisco />
-        {inTauri && <div className="demo-banner">Versione di prova: dati di esempio. Non inserire ancora dati veri (il backup automatico non c'è ancora).</div>}
+        {inTauri && <div className="demo-banner">Versione di prova: dati di esempio. Non inserire ancora dati veri.</div>}
         {vista.nome === "oggi" && <Oggi />}
         {vista.nome === "clienti" && <Clienti />}
         {vista.nome === "cliente" && <ClienteScheda key={vista.id + (vista.tab ?? "")} id={vista.id} tab={vista.tab} />}
@@ -125,7 +129,7 @@ function IndicatoreSalvataggio() {
 
 /** Cliccata la X della finestra: chiudere davvero? (selezionato «No, resta»: Invio o Esc lasciano aperto; per chiudere si clicca «Sì, chiudi») */
 function ConfermaChiusura() {
-  const { chiusura, confermaChiusura, salvataggio } = useStore();
+  const { chiusura, confermaChiusura, salvataggio, chiudendo } = useStore();
   useEffect(() => {
     if (!chiusura) return;
     const tasti = (e: KeyboardEvent) => {
@@ -134,6 +138,7 @@ function ConfermaChiusura() {
     window.addEventListener("keydown", tasti);
     return () => window.removeEventListener("keydown", tasti);
   }, [chiusura, confermaChiusura]);
+  if (chiudendo) return <Modal title="Chiusura in corso" onClose={() => {}} footer={<span />}><p style={{ margin: 0 }}>Salvataggio e backup, poi il programma si chiude da solo…</p></Modal>;
   if (!chiusura) return null;
   return (
     <Modal title="Chiudere il programma?" onClose={() => confermaChiusura(false)}

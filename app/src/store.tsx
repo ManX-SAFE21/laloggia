@@ -4,6 +4,7 @@ import { Alimento, Appuntamento, Cliente, Dieta, Impostazioni, ModelloPiano, Pia
 import { ImmaginiCaricate } from "./immaginiPiano";
 import { DatiArchivio, differenze, fotografa, Fotografia } from "./sincronizza";
 import { PASSI_ANNULLA, UNISCI_MS, conAllegatiDiOggi, descriviPassaggio } from "./annulla";
+import { StatoBackup, momentoAdesso, serveBackup } from "./backup";
 
 export type Vista =
   | { nome: "oggi" }
@@ -16,14 +17,6 @@ export type Vista =
   | { nome: "alimenti" }
   | { nome: "agenda" }
   | { nome: "impostazioni" };
-
-export interface Backup {
-  ultimo: string; // testo leggibile
-  ok: boolean;
-  dropbox: string;
-  disco: string;
-  discoCollegato: boolean;
-}
 
 /** Stato del salvataggio automatico, mostrato dall'indicatore. "browser" = anteprima senza database. */
 export interface StatoSalvataggio {
@@ -53,8 +46,11 @@ interface Store {
   vista: Vista;
   vai: (v: Vista) => void;
   toast: (msg: string) => void;
-  backup: Backup;
-  setBackup: (b: Backup) => void;
+  backup: StatoBackup; // ultimi backup (letti da dati/stato-backup.json)
+  backupInCorso: boolean;
+  eseguiBackup: () => Promise<StatoBackup | null>;
+  aggiornaStatoBackup: () => Promise<void>;
+  chiudendo: boolean; // dopo «Sì, chiudi»: ultimo backup in corso, poi la finestra si chiude
   bloccaOra: () => void;
   salvataggio: StatoSalvataggio;
   salvaOra: () => Promise<void>;
@@ -74,7 +70,7 @@ export function StoreSoloLettura({ dati, children }: { dati: DatiArchivio; child
   const valore: Store = {
     ...dati, setClienti: niente, setAlimenti: niente, setDiete: niente, setPiani: niente, setModelli: niente, setImmagini: niente,
     setImpostazioni: niente, setAppuntamenti: niente, vista: { nome: "oggi" }, vai: niente, toast: niente,
-    backup: { ultimo: "", ok: true, dropbox: "", disco: "", discoCollegato: false }, setBackup: niente, bloccaOra: niente,
+    backup: {}, backupInCorso: false, eseguiBackup: async () => null, aggiornaStatoBackup: async () => {}, chiudendo: false, bloccaOra: niente,
     salvataggio: { stato: "salvato" }, salvaOra: async () => {}, chiusura: false, confermaChiusura: niente,
     annulla: niente, ripeti: niente, passiAnnulla: { indietro: 0, avanti: 0 },
   };
@@ -102,13 +98,9 @@ export function StoreProvider({ children, toast, bloccaOra }: { children: ReactN
   const [impostazioni, setImp] = useState<Impostazioni>(IMPOSTAZIONI_PREDEFINITE);
   const [appuntamenti, setA] = useState<Appuntamento[]>(() => structuredClone(APPUNTAMENTI));
   const [vista, setVista] = useState<Vista>({ nome: "oggi" });
-  const [backup, setBackup] = useState<Backup>({
-    ultimo: "ieri alle 19:02",
-    ok: true,
-    dropbox: "C:\\Users\\LaLoggia\\Dropbox\\Backup gestionale",
-    disco: "E:\\Backup La Loggia",
-    discoCollegato: false,
-  });
+  const [backup, setBackup] = useState<StatoBackup>({});
+  const [backupInCorso, setBackupInCorso] = useState(false);
+  const [chiudendo, setChiudendo] = useState(false);
   const vai = (v: Vista) => { setVista(v); document.querySelector(".main")?.scrollTo(0, 0); };
 
   // --- Salvataggio automatico ---
@@ -270,18 +262,65 @@ export function StoreProvider({ children, toast, bloccaOra }: { children: ReactN
     });
     return () => smetti?.();
   }, []);
+  // --- Backup (src-tauri/src/backup.rs): disco esterno in chiaro, cloud .7z cifrato, rotazione 7/4/12 ---
+  const impRef = useRef(impostazioni);
+  impRef.current = impostazioni;
+  const backupRef = useRef(backup);
+  backupRef.current = backup;
+  const backupAttivo = useRef(false);
+  const aggiornaStatoBackup = useCallback(async () => {
+    if (inTauri) setBackup(await comando<StatoBackup>("backup_stato"));
+  }, []);
+  const eseguiBackup = useCallback(async (): Promise<StatoBackup | null> => {
+    const imp = impRef.current;
+    if (!inTauri || backupAttivo.current || (!imp.cartellaDisco && !imp.cartellaCloud)) return null;
+    backupAttivo.current = true;
+    setBackupInCorso(true);
+    try {
+      await salvaOra(); // dentro anche l'ultima modifica
+      await comando("backup_esegui", { momento: momentoAdesso(), cartellaDisco: imp.cartellaDisco || null, cartellaCloud: imp.cartellaCloud || null });
+      const s = await comando<StatoBackup>("backup_stato");
+      setBackup(s);
+      return s;
+    } catch (e) {
+      toast(`Backup non riuscito: ${e}`);
+      await aggiornaStatoBackup();
+      return null;
+    } finally {
+      backupAttivo.current = false;
+      setBackupInCorso(false);
+    }
+  }, [salvaOra, toast, aggiornaStatoBackup]);
+  // Una volta al giorno (e il disco esterno appena lo si collega): si controlla all'avvio e ogni 5 minuti
+  const caricato = salvataggio.stato !== "caricamento" && salvataggio.stato !== "browser";
+  useEffect(() => {
+    if (!caricato) return;
+    const controlla = async () => {
+      const imp = impRef.current;
+      const s = await comando<StatoBackup>("backup_stato").catch(() => backupRef.current);
+      setBackup(s);
+      const collegato = !!imp.cartellaDisco && await comando<boolean>("cartella_esiste", { percorso: imp.cartellaDisco }).catch(() => false);
+      if (serveBackup(s, imp, collegato)) await eseguiBackup();
+    };
+    void controlla();
+    const t = window.setInterval(() => void controlla(), 5 * 60 * 1000);
+    return () => window.clearInterval(t);
+  }, [caricato, eseguiBackup]);
+
   const confermaChiusura = useCallback((si: boolean) => {
     setChiusura(false);
     if (!si || !inTauri) return;
     void (async () => {
+      setChiudendo(true);
       await salvaOra();
+      await eseguiBackup(); // alla chiusura un backup (se le cartelle sono impostate)
       const { getCurrentWindow } = await import("@tauri-apps/api/window");
       await getCurrentWindow().destroy();
     })();
-  }, [salvaOra]);
+  }, [salvaOra, eseguiBackup]);
 
   return (
-    <Ctx.Provider value={{ alimenti, setAlimenti: setAl, clienti, setClienti: setC, diete, setDiete: setD, piani, setPiani: setP, modelli, setModelli: setM, immagini, setImmagini: setI, impostazioni, setImpostazioni: setImp, appuntamenti, setAppuntamenti: setA, vista, vai, toast, backup, setBackup, bloccaOra, salvataggio, salvaOra, chiusura, confermaChiusura, annulla, ripeti, passiAnnulla }}>
+    <Ctx.Provider value={{ alimenti, setAlimenti: setAl, clienti, setClienti: setC, diete, setDiete: setD, piani, setPiani: setP, modelli, setModelli: setM, immagini, setImmagini: setI, impostazioni, setImpostazioni: setImp, appuntamenti, setAppuntamenti: setA, vista, vai, toast, backup, backupInCorso, eseguiBackup, aggiornaStatoBackup, chiudendo, bloccaOra, salvataggio, salvaOra, chiusura, confermaChiusura, annulla, ripeti, passiAnnulla }}>
       {children}
     </Ctx.Provider>
   );

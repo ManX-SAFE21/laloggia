@@ -2,7 +2,7 @@
 // la sua X chiude la stampa e non il programma. Nell'anteprima del browser si stampa la pagina com'è.
 import { inTauri } from "./store";
 
-export type TipoStampa = "piano" | "modello" | "dieta" | "privacy";
+export type TipoStampa = "piano" | "modello" | "dieta" | "privacy" | "password";
 export interface DaStampare { tipo: TipoStampa; id: string; titolo: string }
 
 export const ETICHETTA_STAMPA = "stampa";

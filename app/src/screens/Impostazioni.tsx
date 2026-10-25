@@ -4,55 +4,21 @@ import { Modal } from "../components/ui";
 import { ComeCifrare, DA_AVVISARE, DESCRIZIONE, useStatoDisco } from "../discoCifrato";
 import { VERSIONE_INFORMATIVA } from "../data";
 import { cambiaPin, LUNGHEZZA_PIN, TENTATIVI_PIN } from "../pin";
+import { RiquadroBackup } from "../components/Backup";
 
 
 export function Impostazioni() {
-  const { backup, setBackup, toast, impostazioni, setImpostazioni } = useStore();
-  const [inCorso, setInCorso] = useState(false);
-  const [ripristino, setRipristino] = useState(false);
+  const { toast, impostazioni, setImpostazioni } = useStore();
   const [cambioPin, setCambioPin] = useState(false);
   const [comeCifrare, setComeCifrare] = useState(false);
   const disco = useStatoDisco();
-
-  const eseguiBackup = () => {
-    setInCorso(true);
-    setTimeout(() => {
-      const ora = new Date().toLocaleTimeString("it-IT", { hour: "2-digit", minute: "2-digit" });
-      setBackup({ ...backup, ultimo: `oggi alle ${ora}`, ok: true });
-      setInCorso(false);
-      toast(backup.discoCollegato ? "Backup completato e verificato (Dropbox + disco esterno)" : "Backup completato e verificato (Dropbox). Disco esterno non collegato.");
-    }, 1400);
-  };
 
   return (
     <div className="page">
       <div className="page-head"><div><h1>Impostazioni</h1><p>Backup, sicurezza e dati dello studio</p></div></div>
 
       <div className="grid g2" style={{ alignItems: "start" }}>
-        <div className="card">
-          <div className="card-head"><h2>Backup</h2>{backup.ok ? <span className="badge ok">✓ Ultimo backup {backup.ultimo}</span> : <span className="badge danger">Backup non riuscito</span>}</div>
-          <div className="card-pad grid" style={{ gap: 14 }}>
-            <p className="small muted" style={{ margin: 0 }}>Il backup è automatico: alla chiusura del programma e una volta al giorno. Ogni copia è cifrata e viene verificata subito dopo.</p>
-            <div className="field"><label>Cartella Dropbox</label>
-              <div className="row"><input className="input" value={backup.dropbox} readOnly /><button className="btn sm" onClick={() => toast("Selezione cartella (simulata)")}>Cambia…</button></div>
-            </div>
-            <div className="field"><label>Disco esterno o chiavetta</label>
-              <div className="row"><input className="input" value={backup.disco} readOnly /><button className="btn sm" onClick={() => toast("Selezione cartella (simulata)")}>Cambia…</button></div>
-              <label className="row small" style={{ fontWeight: 400, color: "var(--ink-2)", marginTop: 4 }}>
-                <input type="checkbox" checked={backup.discoCollegato} onChange={(e) => setBackup({ ...backup, discoCollegato: e.target.checked })} />
-                Simula disco collegato
-              </label>
-              {!backup.discoCollegato && <span className="small" style={{ color: "var(--warn)" }}>Disco non collegato: la copia verrà fatta appena lo colleghi.</span>}
-            </div>
-            <div className="field"><label>Copie conservate</label>
-              <div className="small">Ultimi <b>7</b> giorni · <b>4</b> settimane · <b>12</b> mesi</div>
-            </div>
-            <div className="row">
-              <button className="btn primary" disabled={inCorso} onClick={eseguiBackup}>{inCorso ? "Backup in corso…" : "Esegui backup ora"}</button>
-              <button className="btn" onClick={() => setRipristino(true)}>Ripristina da backup…</button>
-            </div>
-          </div>
-        </div>
+        <RiquadroBackup />
 
         <div className="grid">
           <div className="card">
@@ -102,17 +68,6 @@ export function Impostazioni() {
 
       {comeCifrare && <ComeCifrare onClose={() => setComeCifrare(false)} onRicontrolla={disco.ricontrolla} />}
       {cambioPin && <CambiaPin onClose={() => setCambioPin(false)} onFatto={() => { setCambioPin(false); toast("PIN cambiato"); }} />}
-      {ripristino && (
-        <Modal title="Ripristina da backup" onClose={() => setRipristino(false)}
-          footer={<><button className="btn" onClick={() => setRipristino(false)}>Annulla</button><button className="btn primary" onClick={() => { setRipristino(false); toast("Ripristino simulato: nessun dato modificato"); }}>Ripristina</button></>}>
-          <div className="field"><label>Scegli la copia</label>
-            <select className="select">
-              <option>Ieri, 19:02 — Dropbox</option><option>18/10/2026, 18:47 — Dropbox</option><option>17/10/2026, 19:10 — Disco esterno</option><option>Settembre 2026 (mensile) — Dropbox</option>
-            </select>
-          </div>
-          <p className="small muted">Prima del ripristino viene salvata una copia dello stato attuale, così si può sempre tornare indietro.</p>
-        </Modal>
-      )}
     </div>
   );
 }

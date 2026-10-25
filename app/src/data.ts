@@ -6,7 +6,7 @@ import { MODELLO_1450 } from "./modelli/piano1450";
 
 export const OGGI = "2026-10-20";
 
-export const IMPOSTAZIONI_PREDEFINITE: Impostazioni = { mesiRichiamo: 2 };
+export const IMPOSTAZIONI_PREDEFINITE: Impostazioni = { mesiRichiamo: 2, cartellaDisco: "", cartellaCloud: "" };
 
 // Versione dell'informativa: SEGNAPOSTO finché non arriva il modulo ufficiale dello studio.
 export const VERSIONE_INFORMATIVA = "v0 (segnaposto)";
