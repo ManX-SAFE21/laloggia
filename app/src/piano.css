@@ -73,7 +73,7 @@
 .pd-nota { margin-top: 4px; font-size: 9.5pt; font-style: italic; color: var(--pd-tenue); }
 .pd-nota em { font-style: normal; } /* la nota è già in corsivo: il corsivo qui la raddrizza */
 
-.pd-alimenti { margin: 0 0 1px; padding: 0; list-style: none; }
+.pd-alimenti { margin: 0 0 2px; padding: 0; list-style: none; font-size: 12pt; line-height: 1.35; }
 .pd-elenco ul { margin: 0 0 3mm; padding-left: 0; list-style: none; }
 .pd-elenco li { position: relative; padding: 2px 0 2px 16px; break-inside: avoid; }
 .pd-elenco li::before { content: ""; position: absolute; left: 3px; top: 0.62em; width: 6px; height: 6px; border-radius: 50%; background: var(--pd-salvia); }
@@ -132,8 +132,10 @@
   .pd-alimento-errore { background: #fdf3e0; color: #8a5a12; }
   .pd-alimento-via { display: none; margin-left: 4px; padding: 0 3px; border: 0; background: none; color: #a33; cursor: pointer; line-height: 1; }
   .pd-alimento-riga:hover .pd-alimento-via { display: inline-flex; }
-  .pd-alimento-piu { margin: 3px 0; }
-  .pd-alimento-form { display: grid; gap: 6px; justify-items: start; margin: 4px 0; padding: 7px; background: var(--pd-crema-chiaro); border-radius: 8px; font-size: 13px; }
+  /* «+ alimento» in alto a destra, fuori dalle righe: il foglio resta impaginato come in stampa */
+  .pd-opz-corpo { display: flow-root; }
+  .pd-alimento-agg { float: right; position: relative; margin: 0 0 2px 10px; }
+  .pd-alimento-form { position: absolute; top: 0; right: 0; z-index: 6; width: 340px; display: grid; gap: 6px; justify-items: start; padding: 9px; background: var(--pd-crema-chiaro); border: 1px solid #cfc7b6; border-radius: 8px; box-shadow: 0 3px 10px rgba(30, 35, 25, 0.18); font-size: 13px; }
   .pd-alimento-lista { display: grid; width: 100%; max-height: 190px; overflow-y: auto; background: #fff; border: 1px solid #e3dccd; border-radius: 6px; }
   .pd-alimento-lista button { border: 0; background: none; padding: 4px 8px; font: inherit; text-align: left; cursor: pointer; }
   .pd-alimento-lista button:hover { background: var(--pd-crema); }

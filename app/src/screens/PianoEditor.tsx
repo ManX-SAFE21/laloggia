@@ -112,6 +112,7 @@ export function EditorPiano({ piano, cliente, aggiorna: aggiornaEsterno, intesta
   const [zoom, setZoom] = useState<number>(() => leggi("laloggia.foglio.zoom", 0.82));
   const [adatta, setAdatta] = useState<boolean>(() => leggi("laloggia.foglio.adatta", false));
   const [senzaPannello, setSenzaPannello] = useState<boolean>(() => leggi("laloggia.foglio.senzaPannello", false));
+  const [vistaStampa, setVistaStampa] = useState(false); // il foglio come uscirà su carta, senza tasti
   const [senzaValori, setSenzaValori] = useState<boolean>(() => leggi("laloggia.foglio.senzaValori", false));
   const [larghezzaPannello, setLarghezzaPannello] = useState<number>(() => leggi("laloggia.foglio.pannello", PANNELLO_NORMALE));
   useEffect(() => { try { localStorage.setItem("laloggia.foglio.pannello", JSON.stringify(larghezzaPannello)); } catch { /* vale solo finché è aperto */ } }, [larghezzaPannello]);
@@ -235,7 +236,6 @@ export function EditorPiano({ piano, cliente, aggiorna: aggiornaEsterno, intesta
           <div>{intestazione}</div>
           <div className="row" style={{ gap: 8 }}>
             {azioniInPiu}
-            <button className="btn primary" onClick={() => void apriStampa(stampa)}><Icon.print /> Stampa / Salva PDF</button>
           </div>
         </div>
       </div>
@@ -304,8 +304,8 @@ export function EditorPiano({ piano, cliente, aggiorna: aggiornaEsterno, intesta
 
         <div className="piano-destra">
         <div className="foglio-barra no-print">
-          <button className={"btn sm " + (senzaPannello ? "tenue-salvia" : "tenue-sabbia")} onClick={() => setSenzaPannello((v) => !v)} title={senzaPannello ? "Riapri l'elenco delle sezioni" : "Nasconde l'elenco delle sezioni e allarga il foglio"}>
-            <Icon.pannello /> {senzaPannello ? "Mostra pannello" : "Nascondi pannello"}
+          <button className={"btn sm " + (senzaPannello ? "tenue-salvia" : "tenue-sabbia")} onClick={() => setSenzaPannello((v) => !v)} aria-label={senzaPannello ? "Mostra pannello" : "Nascondi pannello"} title={senzaPannello ? "Riapri l'elenco delle sezioni" : "Nasconde l'elenco delle sezioni e allarga il foglio"}>
+            <Icon.pannello />
           </button>
           <div className="row" style={{ gap: 4 }}>
             <button className="btn sm tenue-cielo" onClick={annulla} title={passato.length ? `Annulla l'ultima modifica (Ctrl+Z) · ${passato.length} passi disponibili` : "Niente da annullare"} style={{ opacity: passato.length ? 1 : 0.45 }}><Icon.annullaMod /> Annulla</button>
@@ -315,17 +315,25 @@ export function EditorPiano({ piano, cliente, aggiorna: aggiornaEsterno, intesta
             <button className="btn sm tenue-salvia" title="Rimpicciolisci il foglio" onClick={() => cambiaZoom(-1)}><Icon.zoomMeno /></button>
             <span className="num foglio-zoom" title="Ingrandimento del foglio a schermo (la stampa resta A4). Clic: torna a 100%" onClick={() => { setAdatta(false); setZoom(1); }}>{Math.round(zoomFoglio * 100)}%</span>
             <button className="btn sm tenue-salvia" title="Ingrandisci il foglio" onClick={() => cambiaZoom(1)}><Icon.zoomPiu /></button>
-            <button className={"btn sm " + (adatta ? "primary" : "tenue-salvia")} title="Il foglio occupa tutta la larghezza libera" onClick={() => setAdatta((a) => !a)}><Icon.espandi /> Adatta alla larghezza</button>
+            <button className={"btn sm " + (adatta ? "primary" : "tenue-salvia")} aria-label="Adatta alla larghezza" title="Adatta alla larghezza: il foglio occupa tutto lo spazio libero" onClick={() => setAdatta((a) => !a)}><Icon.espandi /></button>
           </div>
-          <button className={"btn sm " + (senzaValori ? "tenue-salvia" : "tenue-sabbia")} onClick={() => setSenzaValori((v) => !v)} title={senzaValori ? "Mostra calorie e nutrienti accanto al foglio" : "Nasconde calorie e nutrienti e allarga il foglio"}>
-            {senzaValori ? <><Icon.occhio /> Mostra valori</> : <><Icon.occhioChiuso /> Nascondi valori</>}
+          <button className={"btn sm " + (senzaValori ? "tenue-salvia" : "tenue-sabbia")} onClick={() => setSenzaValori((v) => !v)} aria-label={senzaValori ? "Mostra valori" : "Nascondi valori"} title={senzaValori ? "Mostra calorie e nutrienti accanto al foglio" : "Nasconde calorie e nutrienti e allarga il foglio"}>
+            {senzaValori ? <Icon.occhio /> : <Icon.occhioChiuso />}
           </button>
+          <div className="row" style={{ gap: 4 }}>
+            <button className={"btn sm " + (vistaStampa ? "tenue-sabbia" : "tenue-salvia")} onClick={() => setVistaStampa((v) => !v)} title={vistaStampa ? "Riprendi a modificare il foglio" : "Mostra il foglio come uscirà su carta, senza tasti"}>
+              {vistaStampa ? <><Icon.matita /> Torna a modificare</> : <><Icon.file /> Vista stampa</>}
+            </button>
+            <button className="btn sm primary" onClick={() => void apriStampa(stampa)}><Icon.print /> Stampa / PDF</button>
+          </div>
         </div>
         <div className={"foglio-e-valori" + (senzaValori ? " senza-valori" : "")}>
         <div className="piano-anteprima" ref={foglioRef} style={{ ["--zoom-foglio" as string]: zoomFoglio }}>
-          <PianoStampa piano={piano} cliente={cliente} onApri={selezionaDalFoglio} aperta={selezionata}
-            onCambiaSezione={aggSezione} onCambiaPiano={(patch) => aggiorna((p) => ({ ...p, ...patch }))}
-            onSezioni={(f) => aggiorna((p) => ({ ...p, sezioni: f(p.sezioni) }))} />
+          {vistaStampa ? <PianoStampa piano={piano} cliente={cliente} /> : (
+            <PianoStampa piano={piano} cliente={cliente} onApri={selezionaDalFoglio} aperta={selezionata}
+              onCambiaSezione={aggSezione} onCambiaPiano={(patch) => aggiorna((p) => ({ ...p, ...patch }))}
+              onSezioni={(f) => aggiorna((p) => ({ ...p, sezioni: f(p.sezioni) }))} />
+          )}
         </div>
         {!senzaValori && <PannelloValori piano={piano} onVolte={(sid, volte) => aggSezione(sid, (s) => ({ ...s, volte: volte === 1 ? undefined : volte }))} />}
         </div>

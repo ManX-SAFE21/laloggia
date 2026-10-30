@@ -244,13 +244,13 @@ function AlimentiAlternativa({ righe, cambia }: { righe: RigaAlimento[]; cambia?
           })}
         </ul>
       )}
-      {cambia && <AggiungiAlimento alimenti={alimenti} onAggiungi={(r) => cambia([...righe, r])} />}
     </>
   );
 }
 
 /** «+ alimento»: cerca nella lista, poi i grammi (Invio per confermare, Esc per chiudere). */
-function AggiungiAlimento({ alimenti, onAggiungi }: { alimenti: Alimento[]; onAggiungi: (r: RigaAlimento) => void }) {
+function AggiungiAlimento({ onAggiungi }: { onAggiungi: (r: RigaAlimento) => void }) {
+  const { alimenti } = useStore();
   const [aperto, setAperto] = useState(false);
   const [cerca, setCerca] = useState("");
   const [scelto, setScelto] = useState<Alimento | null>(null);
@@ -270,9 +270,10 @@ function AggiungiAlimento({ alimenti, onAggiungi }: { alimenti: Alimento[]; onAg
     chiudi();
   };
   const esc = (e: KeyboardEvent) => { if (e.key === "Escape") { e.preventDefault(); chiudi(); } };
-  if (!aperto) return <button className="btn sm tenue-salvia pd-solo-schermo pd-alimento-piu" onClick={(e) => { e.stopPropagation(); setAperto(true); }}><Icon.plus /> alimento</button>;
+  if (!aperto) return <div className="pd-alimento-agg pd-solo-schermo"><button className="btn sm tenue-salvia pd-alimento-piu" onClick={(e) => { e.stopPropagation(); setAperto(true); }}><Icon.plus /> alimento</button></div>;
   return (
-    <div className="pd-alimento-form pd-solo-schermo" onClick={ferma} onKeyDown={esc}>
+    <div className="pd-alimento-agg pd-solo-schermo">
+    <div className="pd-alimento-form" onClick={ferma} onKeyDown={esc}>
       {!scelto ? (
         <>
           <input className="input" autoFocus placeholder="Cerca un alimento…" value={cerca} onChange={(e) => setCerca(e.target.value)} />
@@ -287,6 +288,7 @@ function AggiungiAlimento({ alimenti, onAggiungi }: { alimenti: Alimento[]; onAg
         </div>
       )}
       <button className="btn sm tenue-sabbia" onClick={chiudi}><Icon.x /> Annulla</button>
+    </div>
     </div>
   );
 }
@@ -351,6 +353,7 @@ function Elemento({ e, sid, el, cambia }: { e: ElementoPiano; sid: string; el: n
                 } : undefined}
                 onDragEnd={tr ? () => tr.fine() : undefined}>{i + 1}</div>
               <div className="pd-opz-corpo">
+                {cambia && <AggiungiAlimento onAggiungi={(r) => cambia(voce(i, { alimenti: [...(o.alimenti ?? []), r] }))} />}
                 {(o.titolo !== undefined || o.frequenza) && (
                   <div className="pd-opz-testa">
                     {o.titolo !== undefined && <span className="pd-opz-titolo">{M(o.titolo, (titolo) => voce(i, { titolo: titolo || undefined }), true)}</span>}
