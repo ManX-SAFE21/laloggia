@@ -1,7 +1,8 @@
 // Pannello a destra del foglio: valori di ogni alternativa, per pasto, e totale della giornata, in tempo reale.
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
+import { createPortal } from "react-dom";
 import { useStore } from "../store";
-import { Icon } from "./ui";
+import { Icon, Modal } from "./ui";
 import { Valori, percentualiMacro, riepilogoPiano } from "../nutrienti";
 import { PianoAlimentare } from "../types";
 
@@ -23,6 +24,7 @@ export function PannelloValori({ piano, onVolte }: { piano: PianoAlimentare; onV
   const { alimenti } = useStore();
   const r = useMemo(() => riepilogoPiano(piano, alimenti), [piano, alimenti]);
   const quote = percentualiMacro(r.min, r.max);
+  const [info, setInfo] = useState(false);
   return (
     <aside className="valori-pannello no-print">
       <div className="valori-titolo"><Icon.valori /> Valori del piano</div>
@@ -63,6 +65,40 @@ export function PannelloValori({ piano, onVolte }: { piano: PianoAlimentare; onV
         </>}
         {r.pastiSenzaValori > 0 && <p className="small valori-nota">{r.pastiSenzaValori === 1 ? "1 pasto ancora senza alimenti non è nel totale." : `${r.pastiSenzaValori} pasti ancora senza alimenti non sono nel totale.`}</p>}
       </div>
+      <button className="btn sm tenue-salvia valori-info" onClick={() => setInfo(true)}><Icon.info /> Come si calcola</button>
+      {info && createPortal(<ComeSiCalcola onClose={() => setInfo(false)} />, document.body)}
     </aside>
+  );
+}
+
+/** Le regole del calcolo in nutrienti.ts, spiegate a chi usa il programma. Se cambiano, va cambiato anche questo testo. */
+function ComeSiCalcola({ onClose }: { onClose: () => void }) {
+  return (
+    <Modal title="Come si calcolano i valori" onClose={onClose}
+      footer={<button className="btn tenue-salvia" onClick={onClose}><Icon.x /> Chiudi</button>}>
+      <div className="valori-regole">
+        <h3>Ogni alimento</h3>
+        <p>Valori per 100 g di parte edibile (CREA o scheda dello studio), in proporzione ai grammi scritti. Con «40-50» si stampa 40-50 e si calcola 45.</p>
+        <h3>Ogni alternativa</h3>
+        <p>La somma dei suoi alimenti. Il testo libero non si calcola: un'alternativa di solo testo è «non calcolata».</p>
+        <h3>Totale giornata: non è una media</h3>
+        <p>Va dalla scelta più leggera alla più ricca: il minimo somma l'alternativa più leggera di ogni pasto, il massimo la più ricca.</p>
+        <p className="valori-esempio">Colazione 380 o 410 · Pranzo 480 o 520 · Cena 430 o 470<br />Minimo 380 + 480 + 430 = 1290 · Massimo 410 + 520 + 470 = 1400 kcal</p>
+        <h3>Cosa non entra nel conto</h3>
+        <p>Le frequenze («3 volte a settimana»), gli elenchi «Aggiungere…», i pasti senza alimenti e le alternative «non calcolate».</p>
+        <h3>Altre regole</h3>
+        <p>x2 conta il pasto due volte nel totale. Proteine, carboidrati, grassi e fibra hanno ciascuno la propria forbice. Le % usano il centro della forbice, con 4, 4 e 9 kcal per grammo. Il confronto usa le «Kcal indicative» dei dati del piano.</p>
+        <div className="valori-sospeso">
+          <h3>Domande in sospeso, da decidere con Valentina</h3>
+          <ul>
+            <li><b>Frequenze:</b> se un'alternativa va mangiata 3 volte a settimana e un'altra 1, il totale deve tenerne conto?</li>
+            <li><b>Elenchi «Aggiungere…»:</b> le aggiunte a pranzo e cena devono entrare nel calcolo? Oggi il totale può risultare più basso del reale.</li>
+            <li><b>Spuntino mattino – pomeriggio:</b> si mangia una o due volte al giorno? Oggi parte da x1.</li>
+            <li><b>Grammi:</b> sono della parte che si mangia o dell'alimento intero (la mela con il torsolo)? Oggi contano come parte che si mangia.</li>
+            <li><b>Giorni della settimana:</b> il piano cambia da un giorno all'altro? Se sì, servono schede per giorno.</li>
+          </ul>
+        </div>
+      </div>
+    </Modal>
   );
 }

@@ -29,6 +29,7 @@ export const Icon = {
   destra: () => (<svg viewBox="0 0 24 24" {...P} width="16" height="16"><path d="M9 6l6 6-6 6" /></svg>),
   apri: () => (<svg viewBox="0 0 24 24" {...P} width="16" height="16"><path d="M14 4h6v6M20 4l-9 9M18 14v6H4V6h6" /></svg>),
   aggiorna: () => (<svg viewBox="0 0 24 24" {...P} width="16" height="16"><path d="M20 11a8 8 0 0 0-14-4L4 9M4 4v5h5M4 13a8 8 0 0 0 14 4l2-2M20 20v-5h-5" /></svg>),
+  info: () => (<svg viewBox="0 0 24 24" {...P} width="16" height="16"><circle cx="12" cy="12" r="9" /><path d="M12 11v5M12 8h.01" /></svg>),
   plus: () => (<svg viewBox="0 0 24 24" {...P} width="16" height="16"><path d="M12 5v14M5 12h14" /></svg>),
   x: () => (<svg viewBox="0 0 24 24" {...P} width="16" height="16"><path d="M6 6l12 12M18 6L6 18" /></svg>),
   file: () => (<svg viewBox="0 0 24 24" {...P} width="18" height="18"><path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8z" /><path d="M14 3v5h5" /></svg>),

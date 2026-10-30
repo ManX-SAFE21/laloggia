@@ -465,3 +465,14 @@ h3 { font-size: 15px; font-family: var(--font); font-weight: 600; }
 .piano-sez-nome { min-width: 0; }
 .piano-dati .btn.sm { flex: none; white-space: nowrap; padding: 5px 8px; }
 .piano-editor { grid-template-columns: minmax(0, 1fr); overflow-x: hidden; }
+/* Pannello dei valori: tasto e finestra «Come si calcola» */
+.valori-info { width: 100%; justify-content: center; margin-top: 8px; }
+.valori-regole { font-size: 14px; }
+.valori-regole h3 { margin: 12px 0 2px; font-family: inherit; font-size: 14px; font-weight: 600; color: var(--olive-dark); }
+.valori-regole h3:first-child { margin-top: 0; }
+.valori-regole p { margin: 0; }
+.valori-esempio { margin-top: 5px !important; padding: 7px 9px; background: var(--surface-2); border-radius: 7px; font-size: 13px; }
+.valori-sospeso { margin-top: 14px; padding: 10px 12px; background: var(--warn-bg); border: 1px solid #ecd3a8; border-radius: 8px; color: #6e4a10; }
+.valori-sospeso h3 { margin: 0 0 4px; color: #8a5a12; }
+.valori-sospeso ul { margin: 0; padding-left: 18px; }
+.valori-sospeso li { margin-bottom: 4px; }
