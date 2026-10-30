@@ -72,6 +72,7 @@
 .pd-freq { background: var(--pd-salvia); color: #fff; border-radius: 999px; padding: 1px 9px; font-size: 8.5pt; font-weight: 700; white-space: nowrap; }
 .pd-nota { margin-top: 4px; font-size: 9.5pt; font-style: italic; color: var(--pd-tenue); }
 
+.pd-alimenti { margin: 0 0 1px; padding: 0; list-style: none; }
 .pd-elenco ul { margin: 0 0 3mm; padding-left: 0; list-style: none; }
 .pd-elenco li { position: relative; padding: 2px 0 2px 16px; break-inside: avoid; }
 .pd-elenco li::before { content: ""; position: absolute; left: 3px; top: 0.62em; width: 6px; height: 6px; border-radius: 50%; background: var(--pd-salvia); }
@@ -122,6 +123,16 @@
   .pd-barra button:hover, .pd-barra button.on { background: var(--pd-crema); color: var(--pd-oliva-scuro); }
   .pd-barra .pd-via:hover { background: #fbebeb; color: #b42318; }
   .pd-con-barra:hover { box-shadow: 0 0 0 2px var(--pd-salvia); }
+  .pd-alimento-riga { display: flex; align-items: center; flex-wrap: wrap; gap: 0 4px; border-radius: 4px; }
+  .pd-alimento-riga .pd-input.riga { min-width: 5em; }
+  .pd-alimento-errore { background: #fdf3e0; color: #8a5a12; }
+  .pd-alimento-via { display: none; margin-left: 4px; padding: 0 3px; border: 0; background: none; color: #a33; cursor: pointer; line-height: 1; }
+  .pd-alimento-riga:hover .pd-alimento-via { display: inline-flex; }
+  .pd-alimento-piu { margin: 3px 0; }
+  .pd-alimento-form { display: grid; gap: 6px; justify-items: start; margin: 4px 0; padding: 7px; background: var(--pd-crema-chiaro); border-radius: 8px; font-size: 13px; }
+  .pd-alimento-lista { display: grid; width: 100%; max-height: 190px; overflow-y: auto; background: #fff; border: 1px solid #e3dccd; border-radius: 6px; }
+  .pd-alimento-lista button { border: 0; background: none; padding: 4px 8px; font: inherit; text-align: left; cursor: pointer; }
+  .pd-alimento-lista button:hover { background: var(--pd-crema); }
   .pd-aggiungi-riga { margin: 1mm 0 3mm; }
   .pd-aggiungi { width: 100%; border: 1.5px dashed #cfc7b6; background: none; border-radius: 10px; padding: 5px; color: var(--pd-tenue); font: inherit; font-size: 9.5pt; cursor: pointer; }
   .pd-aggiungi:hover { border-color: var(--pd-oliva); color: var(--pd-oliva-scuro); background: var(--pd-crema-chiaro); }

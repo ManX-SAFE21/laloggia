@@ -1,16 +1,19 @@
 // Impaginazione del piano alimentare: la stessa per l'anteprima a schermo e per la stampa/PDF (A4).
 // Nell'editor il foglio è modificabile: testi (clic), pulsanti passando il mouse, trascinamento di
 // immagini e alternative. Sezioni incluse e ordine si cambiano nel pannello di sinistra.
-import { DragEvent, Fragment, KeyboardEvent, ReactNode, createContext, useContext, useRef, useState } from "react";
+import { DragEvent, Fragment, KeyboardEvent, ReactNode, createContext, useContext, useMemo, useRef, useState } from "react";
 import "../piano.css";
 import { STUDIO, fmtData, nuovoId } from "../data";
 import { useStore } from "../store";
 import { LibreriaImmagini } from "./LibreriaImmagini";
 import { DIMENSIONI_IMMAGINE, IMMAGINI_PIANO, srcImmagine } from "../immaginiPiano";
-import { Cliente, ElementoPiano, OpzionePiano, PianoAlimentare, SezionePiano } from "../types";
+import { Alimento, Cliente, ElementoPiano, OpzionePiano, PianoAlimentare, RigaAlimento, SezionePiano } from "../types";
 import { Leaf } from "../screens/Lock";
 import { Destinazione, Posizione, inserisciImmagine, spostaAlternativa, spostaImmagine } from "../spostamenti";
 import { FONTE_CREA } from "../alimenti";
+import { grammiCalcolo, testoRiga } from "../nutrienti";
+import { normalizza } from "../listaClienti";
+import { Icon } from "./ui";
 
 /** Testo con **grassetto**. */
 export function Testo({ t }: { t: string }) {
@@ -214,6 +217,74 @@ function Sezione({ s, onApri, aperta, onCambiaSezione }: { s: SezionePiano; onAp
   );
 }
 
+/** Gli alimenti di un'alternativa, nello stile del foglio; nell'editor si aggiungono, si correggono e si tolgono. */
+function AlimentiAlternativa({ righe, cambia }: { righe: RigaAlimento[]; cambia?: (r: RigaAlimento[]) => void }) {
+  const { alimenti } = useStore();
+  return (
+    <>
+      {righe.length > 0 && (
+        <ul className="pd-alimenti">
+          {righe.map((r, i) => {
+            const a = alimenti.find((x) => x.id === r.alimentoId);
+            const buona = !!a && grammiCalcolo(r.quantita) !== null;
+            if (!cambia) return <li key={i}>{testoRiga(r, a)}</li>;
+            return (
+              <li key={i} className={"pd-alimento-riga" + (buona ? "" : " pd-alimento-errore")} title={buona ? undefined : "Questa riga non entra nel calcolo: controlla quantità e alimento"} onClick={ferma}>
+                <Modificabile t={r.quantita} riga salva={(q) => { if (q.trim()) cambia(righe.map((x, k) => (k === i ? { ...x, quantita: q.trim() } : x))); }} />
+                {" "}{testoRiga({ ...r, quantita: "§" }, a).replace(/^§( g)? /, /\d$/.test(r.quantita.trim()) ? "g " : "")}
+                <button className="pd-alimento-via" title="Togli questo alimento" aria-label="Togli questo alimento" onClick={() => cambia(righe.filter((_, k) => k !== i))}><Icon.x /></button>
+              </li>
+            );
+          })}
+        </ul>
+      )}
+      {cambia && <AggiungiAlimento alimenti={alimenti} onAggiungi={(r) => cambia([...righe, r])} />}
+    </>
+  );
+}
+
+/** «+ alimento»: cerca nella lista, poi i grammi (Invio per confermare, Esc per chiudere). */
+function AggiungiAlimento({ alimenti, onAggiungi }: { alimenti: Alimento[]; onAggiungi: (r: RigaAlimento) => void }) {
+  const [aperto, setAperto] = useState(false);
+  const [cerca, setCerca] = useState("");
+  const [scelto, setScelto] = useState<Alimento | null>(null);
+  const [quantita, setQuantita] = useState("");
+  const trovati = useMemo(() => {
+    const q = normalizza(cerca.trim());
+    if (q.length < 2) return [];
+    const trovati = alimenti.filter((a) => !a.nascosto && normalizza(a.nome).includes(q));
+    // Prima i nomi che iniziano con ciò che si cerca: «noci» trova Noci prima di Peschenoci.
+    return [...trovati.filter((a) => normalizza(a.nome).startsWith(q)), ...trovati.filter((a) => !normalizza(a.nome).startsWith(q))].slice(0, 8);
+  }, [cerca, alimenti]);
+  const chiudi = () => { setAperto(false); setCerca(""); setScelto(null); setQuantita(""); };
+  const valida = grammiCalcolo(quantita) !== null;
+  const conferma = () => {
+    if (!scelto || !valida) return;
+    onAggiungi({ alimentoId: scelto.id, nome: scelto.nome, quantita: quantita.trim() });
+    chiudi();
+  };
+  const esc = (e: KeyboardEvent) => { if (e.key === "Escape") { e.preventDefault(); chiudi(); } };
+  if (!aperto) return <button className="btn sm tenue-salvia pd-solo-schermo pd-alimento-piu" onClick={(e) => { e.stopPropagation(); setAperto(true); }}><Icon.plus /> alimento</button>;
+  return (
+    <div className="pd-alimento-form pd-solo-schermo" onClick={ferma} onKeyDown={esc}>
+      {!scelto ? (
+        <>
+          <input className="input" autoFocus placeholder="Cerca un alimento…" value={cerca} onChange={(e) => setCerca(e.target.value)} />
+          {trovati.length > 0 && <div className="pd-alimento-lista">{trovati.map((a) => <button key={a.id} onClick={() => setScelto(a)}>{a.nome}</button>)}</div>}
+          {cerca.trim().length >= 2 && trovati.length === 0 && <div className="small muted">Nessun alimento trovato</div>}
+        </>
+      ) : (
+        <div className="row" style={{ gap: 6 }}>
+          <input className="input" style={{ width: 80 }} autoFocus placeholder="45 o 40-50" value={quantita} onChange={(e) => setQuantita(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); conferma(); } }} />
+          <span>g di {scelto.nome}</span>
+          <button className="btn sm primary" disabled={!valida} onClick={conferma}><Icon.plus /> Aggiungi</button>
+        </div>
+      )}
+      <button className="btn sm tenue-sabbia" onClick={chiudi}><Icon.x /> Annulla</button>
+    </div>
+  );
+}
+
 const FREQUENZE = ["1 volta", "1-2 volte", "2 volte", "2-3 volte", "3 volte", "4 volte", "5 volte"];
 
 /** Pulsante (solo a schermo) che apre la libreria e aggiunge un'immagine in fondo alla sezione. */
@@ -280,7 +351,8 @@ function Elemento({ e, sid, el, cambia }: { e: ElementoPiano; sid: string; el: n
                     {o.frequenza && <span className="pd-freq">{o.frequenza} a settimana</span>}
                   </div>
                 )}
-                <div>{M(o.testo, (testo) => voce(i, { testo }))}</div>
+                <AlimentiAlternativa righe={o.alimenti ?? []} cambia={cambia && ((alimenti) => cambia(voce(i, { alimenti: alimenti.length ? alimenti : undefined })))} />
+                {(o.testo || !o.alimenti?.length || cambia) && <div className={o.testo || !o.alimenti?.length ? "" : "pd-solo-schermo"}>{M(o.testo, (testo) => voce(i, { testo }))}</div>}
                 {o.nota !== undefined && <div className="pd-nota">{M(o.nota, (nota) => voce(i, { nota: nota || undefined }))}</div>}
               </div>
               {cambia && (

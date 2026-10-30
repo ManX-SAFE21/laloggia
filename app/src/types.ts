@@ -184,6 +184,15 @@ export interface OpzionePiano {
   titolo?: string; // es. "Pancake"
   testo: string;
   nota?: string; // es. preparazione, esempi
+  alimenti?: RigaAlimento[]; // alimenti dalla lista, con i grammi: sono ciò che entra nel calcolo dei valori
+}
+
+/** Un alimento in un'alternativa. quantita è come si stampa: «45» oppure «40-50» (il calcolo usa il centro).
+ *  nome: copia, perché la stampa resti leggibile anche se l'alimento viene poi eliminato. */
+export interface RigaAlimento {
+  alimentoId: string;
+  nome: string;
+  quantita: string;
 }
 
 export type ElementoPiano =
@@ -208,6 +217,7 @@ export interface SezionePiano {
   inclusa: boolean; // si stampa?
   informativa?: boolean; // pagine di consigli uguali per tutti (ma modificabili)
   nuovaPagina?: boolean; // in stampa inizia su una pagina nuova
+  volte?: number; // pasti: quante volte al giorno conta nel totale dei valori (se manca, 1)
   elementi: ElementoPiano[];
 }
 

@@ -424,3 +424,31 @@ h3 { font-size: 15px; font-family: var(--font); font-weight: 600; }
 .btn.tenue-sabbia:hover { background: #fdeccd; border-color: #e0bd82; }
 .btn.tenue-cielo { background: #eaf0f1; border-color: #c9d7da; color: #3f5d66; }
 .btn.tenue-cielo:hover { background: #dde8ea; border-color: #a9c0c5; }
+/* Editor del piano: pannello dei valori a destra del foglio */
+.foglio-e-valori { display: grid; grid-template-columns: minmax(0, 1fr) 256px; gap: 10px; align-items: start; }
+.foglio-e-valori.senza-valori { grid-template-columns: minmax(0, 1fr); }
+.valori-pannello { position: sticky; top: 56px; max-height: calc(100vh - 76px); overflow-y: auto; padding: 12px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; font-size: 13px; }
+.valori-titolo { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; font-weight: 600; color: var(--olive-dark); }
+.valori-pasto { padding: 8px 0; border-top: 1px solid var(--line); }
+.valori-pasto-testa { display: flex; align-items: center; justify-content: space-between; gap: 6px; margin-bottom: 3px; font-weight: 600; color: var(--olive-dark); }
+.valori-volte { display: inline-flex; flex: none; overflow: hidden; border: 1px solid #cdd6bf; border-radius: 6px; }
+.valori-volte button { padding: 0 6px; border: 0; background: none; color: var(--ink-2); font: inherit; font-size: 11px; font-weight: 400; cursor: pointer; }
+.valori-volte button.on { background: var(--accent-2); color: var(--olive-dark); font-weight: 600; }
+.valori-riga { display: grid; grid-template-columns: 16px auto minmax(0, 1fr); gap: 4px; align-items: baseline; padding: 1px 0; }
+.valori-riga b { font-weight: 600; }
+.valori-riga.vuota { color: var(--ink-3); }
+.valori-n { color: var(--ink-3); font-size: 12px; }
+.valori-macro { color: var(--ink-2); font-size: 12px; text-align: right; white-space: nowrap; }
+.valori-attenzione { grid-column: 2 / -1; color: #8a5a12; font-size: 12px; }
+.valori-totale { margin-top: 4px; padding: 10px; background: var(--accent-2); border-radius: 8px; color: var(--olive-dark); }
+.valori-totale-titolo { font-weight: 600; }
+.valori-kcal { font-size: 18px; font-weight: 600; line-height: 1.3; }
+.valori-totale dl { margin: 6px 0 0; }
+.valori-totale dl div { display: flex; justify-content: space-between; gap: 8px; }
+.valori-totale dt { font-weight: 400; }
+.valori-totale dd { margin: 0; }
+.valori-barra { display: flex; height: 8px; margin: 8px 0 3px; overflow: hidden; border-radius: 4px; }
+.valori-barra .p { background: var(--olive-dark); }
+.valori-barra .c { background: #a9ba98; }
+.valori-barra .g { background: #d9b777; }
+.valori-nota { margin: 6px 0 0; color: #8a5a12; }

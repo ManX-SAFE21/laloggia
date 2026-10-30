@@ -314,7 +314,15 @@ salvia (`#a9ba98`), titoli con grazie. Vedi le variabili in `mockup/src/styles.c
     a mano (`src/alimenti.ts`, `cambiaValore`), «Ripristina ai dati originali» per alimento intero; i CREA si
     nascondono (non si cancellano), quelli «dello studio» si eliminano se non usati. Chiavi stabili per le formule
     (`energia_kcal`, `proteine`, `ferro`…; `valore(alimento, chiave)`). Crediti CREA in fondo a piano e dieta stampati.
-    Prossimo: pagina «Formule» in Impostazioni (le formule le darà Manuxxx).
+    Prossimo: pagina «Formule» in Impostazioni.
+  - **Formule (idea approvata da Manuxxx il 2026-10-30, IN ATTESA delle formule di Valentina):** non un Excel a celle
+    ma un «elenco di formule con nome» in Impostazioni → Formule, salvate nell'archivio (si cambiano senza ricompilare):
+    nome, formula, unità, risultato su un cliente di prova scelto. Le formule si richiamano tra loro per nome;
+    variabili pronte da un elenco (cliente: età, sesso, altezza; ultima visita e BIA; valori degli alimenti CREA con
+    le chiavi stabili); funzioni se(), min, max, arrotonda, potenze/radice; calcolo con una libreria matematica
+    collaudata (niente eval). Errori mostrati in rosso con spiegazione; formule di base come «originali» con
+    «Ripristina la formula originale»; Annulla e backup come il resto. Da chiedere quando arrivano: dove mostrare i
+    risultati (scheda cliente, piano stampato, accanto alla BIA). Prima del codice: anteprima della pagina.
   - **Data di oggi ancora fissa** (`OGGI` in `src/data.ts`, viene dal mockup): da mettere reale prima dell'uso vero.
   - `npm test`: test automatici (vitest) di `src/bia.test.ts`, `src/misure.test.ts` e `src/modelli.test.ts`
     (quest'ultimo controlla le regole modelli/piani). Solo dati inventati.

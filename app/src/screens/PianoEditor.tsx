@@ -4,6 +4,7 @@ import { DaStampare, apriStampa } from "../stampa";
 import { useStore } from "../store";
 import { Icon, Modal } from "../components/ui";
 import { PianoStampa } from "../components/PianoStampa";
+import { PannelloValori } from "../components/PannelloValori";
 import { OGGI, fmtData, modelloDaPiano } from "../data";
 import { Cliente, ElementoPiano, OpzionePiano, PianoAlimentare, SezionePiano, TIPI_MODELLO, TipoModello } from "../types";
 
@@ -111,6 +112,7 @@ export function EditorPiano({ piano, cliente, aggiorna: aggiornaEsterno, intesta
   const [zoom, setZoom] = useState<number>(() => leggi("laloggia.foglio.zoom", 0.82));
   const [adatta, setAdatta] = useState<boolean>(() => leggi("laloggia.foglio.adatta", false));
   const [senzaPannello, setSenzaPannello] = useState<boolean>(() => leggi("laloggia.foglio.senzaPannello", false));
+  const [senzaValori, setSenzaValori] = useState<boolean>(() => leggi("laloggia.foglio.senzaValori", false));
   const [larghezzaPannello, setLarghezzaPannello] = useState<number>(() => leggi("laloggia.foglio.pannello", PANNELLO_NORMALE));
   useEffect(() => { try { localStorage.setItem("laloggia.foglio.pannello", JSON.stringify(larghezzaPannello)); } catch { /* vale solo finché è aperto */ } }, [larghezzaPannello]);
   // Divisore: trascinandolo cambia la larghezza del pannello (PANNELLO_MIN..PANNELLO_MAX); doppio clic = normale.
@@ -133,8 +135,9 @@ export function EditorPiano({ piano, cliente, aggiorna: aggiornaEsterno, intesta
       localStorage.setItem("laloggia.foglio.zoom", JSON.stringify(zoom));
       localStorage.setItem("laloggia.foglio.adatta", JSON.stringify(adatta));
       localStorage.setItem("laloggia.foglio.senzaPannello", JSON.stringify(senzaPannello));
+      localStorage.setItem("laloggia.foglio.senzaValori", JSON.stringify(senzaValori));
     } catch { /* memoria non disponibile: vale solo finché il programma è aperto */ }
-  }, [zoom, adatta, senzaPannello]);
+  }, [zoom, adatta, senzaPannello, senzaValori]);
   // Spazio libero per il foglio: misurato subito (adatta, pannello) e a ogni cambio di dimensione della finestra.
   useLayoutEffect(() => {
     const el = foglioRef.current;
@@ -145,7 +148,7 @@ export function EditorPiano({ piano, cliente, aggiorna: aggiornaEsterno, intesta
     ro.observe(el);
     window.addEventListener("resize", misura);
     return () => { ro.disconnect(); window.removeEventListener("resize", misura); };
-  }, [adatta, senzaPannello, larghezzaPannello]);
+  }, [adatta, senzaPannello, senzaValori, larghezzaPannello]);
   const LARGHEZZA_A4 = (210 * 96) / 25.4; // 210 mm in pixel
   const zoomFoglio = adatta && larghezza ? Math.max(0.4, Math.min(2.5, (larghezza - 24) / LARGHEZZA_A4)) : zoom;
   const cambiaZoom = (verso: 1 | -1) => {
@@ -314,11 +317,17 @@ export function EditorPiano({ piano, cliente, aggiorna: aggiornaEsterno, intesta
             <button className="btn sm" title="Ingrandisci il foglio" onClick={() => cambiaZoom(1)}>+</button>
             <button className={"btn sm" + (adatta ? " primary" : "")} title="Il foglio occupa tutta la larghezza libera" onClick={() => setAdatta((a) => !a)}>Adatta alla larghezza</button>
           </div>
+          <button className={"btn sm " + (senzaValori ? "tenue-salvia" : "tenue-sabbia")} onClick={() => setSenzaValori((v) => !v)} title={senzaValori ? "Mostra calorie e nutrienti accanto al foglio" : "Nasconde calorie e nutrienti e allarga il foglio"}>
+            {senzaValori ? <><Icon.occhio /> Mostra valori</> : <><Icon.occhioChiuso /> Nascondi valori</>}
+          </button>
         </div>
+        <div className={"foglio-e-valori" + (senzaValori ? " senza-valori" : "")}>
         <div className="piano-anteprima" ref={foglioRef} style={{ ["--zoom-foglio" as string]: zoomFoglio }}>
           <PianoStampa piano={piano} cliente={cliente} onApri={selezionaDalFoglio} aperta={selezionata}
             onCambiaSezione={aggSezione} onCambiaPiano={(patch) => aggiorna((p) => ({ ...p, ...patch }))}
             onSezioni={(f) => aggiorna((p) => ({ ...p, sezioni: f(p.sezioni) }))} />
+        </div>
+        {!senzaValori && <PannelloValori piano={piano} onVolte={(sid, volte) => aggSezione(sid, (s) => ({ ...s, volte: volte === 1 ? undefined : volte }))} />}
         </div>
         </div>
       </div>
