@@ -464,4 +464,4 @@ h3 { font-size: 15px; font-family: var(--font); font-weight: 600; }
 .piano-sez-testa .btn.sm { padding: 4px; flex: none; }
 .piano-sez-nome { min-width: 0; }
 .piano-dati .btn.sm { flex: none; white-space: nowrap; padding: 5px 8px; }
-.piano-editor { overflow-x: hidden; }
+.piano-editor { grid-template-columns: minmax(0, 1fr); overflow-x: hidden; }
