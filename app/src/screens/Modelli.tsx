@@ -107,17 +107,17 @@ export function ModelloEditor({ id }: { id: string }) {
         setModelli((l) => [...l, copia]);
         toast(`Copia creata in Piani alimentari: «${copia.nome}». Stai ancora modificando «${m.nome}»`);
       }}><Icon.copia /> Salva come copia</button>}
-      intestazione={<>
+      intestazione={(apriDati) => <>
         <button className="btn ghost sm" style={{ marginBottom: 8, paddingLeft: 0 }} onClick={() => vai({ nome: "modelli" })}><Icon.back /> Piani alimentari</button>
         <div>
-          <h1>Modello «{m.nome}»</h1>
-          <p>{m.tipo}{m.kcal ? ` · ${m.kcal} kcal` : ""} · modificato il {fmtData(m.modificato)}
-            {usato > 0 && ` · usato in ${usato} piano/i: quei piani NON cambiano modificando il modello`}</p>
+          <h1><button className="titolo-modifica" title="Modifica il nome del modello" onClick={() => apriDati(true)}>Modello «{m.nome}» <Icon.matita /></button></h1>
+          <p><button className="titolo-modifica" title="Modifica i dati del modello" onClick={() => apriDati()}>{m.tipo}{m.kcal ? ` · ${m.kcal} kcal` : ""} · modificato il {fmtData(m.modificato)}
+            {usato > 0 && ` · usato in ${usato} piano/i: quei piani NON cambiano modificando il modello`} <Icon.matita /></button></p>
         </div>
       </>}
       campiInPiu={<>
         <div className="grid g2">
-          <div className="field"><label>Nome del modello</label><input className="input" value={m.nome} onChange={(e) => aggModello((x) => ({ ...x, nome: e.target.value }))} /></div>
+          <div className="field"><label>Nome del modello</label><input className="input" data-campo-nome value={m.nome} onChange={(e) => aggModello((x) => ({ ...x, nome: e.target.value }))} /></div>
           <div className="field"><label>Tipo</label>
             <select className="select" value={m.tipo} onChange={(e) => aggModello((x) => ({ ...x, tipo: e.target.value as TipoModello }))}>
               {TIPI_MODELLO.map((t) => <option key={t}>{t}</option>)}

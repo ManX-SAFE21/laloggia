@@ -40,7 +40,7 @@ export function EditorPiano({ piano, cliente, aggiorna: aggiornaEsterno, intesta
   piano: PianoAlimentare;
   cliente: Cliente;
   aggiorna: (f: (p: PianoAlimentare) => PianoAlimentare) => void;
-  intestazione: ReactNode; // a sinistra del pulsante di stampa
+  intestazione: ReactNode | ((apriDati: (selezionaNome?: boolean) => void) => ReactNode); // in cima; apriDati: apre il pannello e il riquadro dei dati
   stampa: DaStampare; // cosa apre la finestra «Stampa»
   campiInPiu?: ReactNode; // in cima al riquadro dei dati
   riassunto?: string; // riga dei dati principali, col riquadro chiuso
@@ -105,6 +105,17 @@ export function EditorPiano({ piano, cliente, aggiorna: aggiornaEsterno, intesta
   const [datiAperti, setDatiAperti] = useState(false);
   const [attiva, setAttiva] = useState<string | null>(null); // sezione visibile ora nel foglio
   const editorRef = useRef<HTMLElement>(null);
+  // Dal titolo in cima: riapre il pannello e il riquadro dei dati; se richiesto, il nome è pronto da riscrivere.
+  const apriDati = (selezionaNome = false) => {
+    setSenzaPannello(false);
+    setDatiAperti(true);
+    window.setTimeout(() => {
+      const ed = editorRef.current;
+      if (!ed) return;
+      ed.scrollTop = 0;
+      if (selezionaNome) ed.querySelector<HTMLInputElement>("[data-campo-nome]")?.select();
+    }, 0);
+  };
   const foglioRef = useRef<HTMLDivElement>(null);
 
   // Zoom del foglio a schermo (la stampa resta sempre A4 al 100%). La scelta si ricorda (solo su questo PC).
@@ -233,7 +244,7 @@ export function EditorPiano({ piano, cliente, aggiorna: aggiornaEsterno, intesta
     <div className="page piano-pagina">
       <div className="no-print">
         <div className="page-head">
-          <div>{intestazione}</div>
+          <div>{typeof intestazione === "function" ? intestazione(apriDati) : intestazione}</div>
           <div className="row" style={{ gap: 8 }}>
             {azioniInPiu}
           </div>

@@ -476,3 +476,8 @@ h3 { font-size: 15px; font-family: var(--font); font-weight: 600; }
 .valori-sospeso h3 { margin: 0 0 4px; color: #8a5a12; }
 .valori-sospeso ul { margin: 0; padding-left: 18px; }
 .valori-sospeso li { margin-bottom: 4px; }
+/* Titolo del modello: un clic apre i dati a sinistra, la matita compare col mouse */
+.titolo-modifica { padding: 0 6px; margin-left: -6px; border: 0; border-radius: 7px; background: none; color: inherit; font: inherit; letter-spacing: inherit; text-align: left; cursor: pointer; }
+.titolo-modifica:hover { background: var(--accent-2); }
+.titolo-modifica svg { width: 0.75em; height: 0.75em; min-width: 14px; min-height: 14px; vertical-align: -0.05em; color: var(--olive-dark); visibility: hidden; }
+.titolo-modifica:hover svg, .titolo-modifica:focus-visible svg { visibility: visible; }
