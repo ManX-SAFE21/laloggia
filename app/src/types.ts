@@ -176,7 +176,7 @@ export interface Dieta {
 }
 
 // --- Piano alimentare stampabile (sul modello dei piani Word di Valentina, es. "1450 - Piatto completo") ---
-// Nel testo, **parola** si stampa in grassetto.
+// Nel testo, **parola** si stampa in grassetto e *parola* in corsivo (vedi testoRicco.ts).
 
 /** Una delle alternative di un pasto ("Scegliere tra"), con frequenza settimanale facoltativa. */
 export interface OpzionePiano {

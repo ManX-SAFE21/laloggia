@@ -14,17 +14,23 @@ import { FONTE_CREA } from "../alimenti";
 import { grammiCalcolo, testoRiga } from "../nutrienti";
 import { normalizza } from "../listaClienti";
 import { Icon } from "./ui";
+import { TestoModificabile } from "./TestoModificabile";
+import { analizza } from "../testoRicco";
 
-/** Testo con **grassetto**. */
+/** Testo con **grassetto** e *corsivo*. */
 export function Testo({ t }: { t: string }) {
-  return <>{t.split("**").map((p, i) => (i % 2 ? <strong key={i}>{p}</strong> : <Fragment key={i}>{p}</Fragment>))}</>;
+  return <>{analizza(t).map((p, i) => {
+    const c = p.c ? <em>{p.testo}</em> : p.testo;
+    return <Fragment key={i}>{p.g ? <strong>{c}</strong> : c}</Fragment>;
+  })}</>;
 }
 
-/** Testo che, se c'è salva, diventa modificabile sul posto con un clic. Esc annulla, clic fuori salva,
- *  Ctrl+B mette in grassetto (**…**) la parte selezionata; riga=true: Invio conferma. */
+/** Testo che, se c'è salva, è modificabile sul posto. I testi lunghi si vedono già formattati (mini menu
+ *  con grassetto e corsivo); riga=true, per titoli e quantità: testo semplice, Invio conferma, Esc annulla. */
 function Modificabile({ t, salva, riga, vuoto = "clic per scrivere" }: { t: string; salva?: (v: string) => void; riga?: boolean; vuoto?: string }) {
   const [attivo, setAttivo] = useState(false);
   if (!salva) return <Testo t={t} />;
+  if (!riga) return <TestoModificabile t={t} salva={salva} vuoto={vuoto} />;
   if (attivo) {
     // Chiude la casella e salva solo se il testo è cambiato (Esc chiude senza salvare).
     const chiudi = (v: string) => { setAttivo(false); if (v !== t) salva(v); };

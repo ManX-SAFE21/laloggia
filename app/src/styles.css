@@ -455,3 +455,8 @@ h3 { font-size: 15px; font-family: var(--font); font-weight: 600; }
 .valori-barra .c { background: #a9ba98; }
 .valori-barra .g { background: #d9b777; }
 .valori-nota { margin: 6px 0 0; color: #8a5a12; }
+/* Mini menu di formato sopra le parole selezionate nel foglio */
+.menu-formato { position: fixed; z-index: 1000; display: flex; gap: 2px; padding: 3px; transform: translateX(-50%); background: var(--surface); border: 1px solid #cfc7b6; border-radius: 8px; box-shadow: 0 2px 8px rgba(30, 35, 25, 0.18); }
+.menu-formato button { width: 30px; height: 28px; border: 0; border-radius: 6px; background: none; color: var(--ink-2); font-size: 14px; cursor: pointer; }
+.menu-formato button:hover { background: var(--surface-2); }
+.menu-formato button.on { background: var(--accent-2); color: var(--olive-dark); }

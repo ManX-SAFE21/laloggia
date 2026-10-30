@@ -258,7 +258,7 @@ export function EditorPiano({ piano, cliente, aggiorna: aggiornaEsterno, intesta
               <div className="field"><label>Kcal indicative</label><input className="input" value={piano.kcal ?? ""} onChange={(e) => { const v = Number(e.target.value); aggiorna((p) => ({ ...p, kcal: e.target.value.trim() && !isNaN(v) ? v : undefined })); }} /></div>
             </div>
             <div className="field" style={{ marginTop: 8 }}><label>Messaggio personale in copertina</label><textarea className="textarea" rows={2} value={piano.messaggio ?? ""} onChange={(e) => aggiorna((p) => ({ ...p, messaggio: e.target.value || undefined }))} /></div>
-            <p className="small muted" style={{ margin: "8px 0 0" }}>Nel testo, <b>**parola**</b> si stampa in grassetto.</p>
+            <p className="small muted" style={{ margin: "8px 0 0" }}>Grassetto e corsivo si mettono sul foglio: seleziona le parole e usa il mini menu. Qui i segni ** e * sono quel formato.</p>
             </div>}
           </div>
 

@@ -71,6 +71,7 @@
 .pd-opz-titolo { font-family: "Playfair Display", Georgia, serif; font-weight: 700; font-size: 11.5pt; color: var(--pd-oliva-scuro); }
 .pd-freq { background: var(--pd-salvia); color: #fff; border-radius: 999px; padding: 1px 9px; font-size: 8.5pt; font-weight: 700; white-space: nowrap; }
 .pd-nota { margin-top: 4px; font-size: 9.5pt; font-style: italic; color: var(--pd-tenue); }
+.pd-nota em { font-style: normal; } /* la nota è già in corsivo: il corsivo qui la raddrizza */
 
 .pd-alimenti { margin: 0 0 1px; padding: 0; list-style: none; }
 .pd-elenco ul { margin: 0 0 3mm; padding-left: 0; list-style: none; }
@@ -112,6 +113,9 @@
   .pd-mod { cursor: text; border-radius: 3px; }
   .pd-mod:hover { background: rgba(236, 227, 214, 0.9); box-shadow: 0 0 0 2px rgba(236, 227, 214, 0.9); }
   .pd-vuoto { color: #a19a88; }
+  .pd-mod[contenteditable] { outline: none; }
+  .pd-mod[contenteditable]:empty::before { content: attr(data-vuoto); color: #a19a88; font-style: italic; }
+  .pd-mod[contenteditable]:focus { background: #fffdf6; box-shadow: 0 0 0 2px var(--pd-oliva), 0 0 0 5px rgba(169, 186, 152, 0.35); }
   .pd-input { display: block; width: 100%; field-sizing: content; min-height: 1.5em; resize: none; font: inherit; color: inherit; letter-spacing: inherit; text-transform: none; line-height: inherit; background: #fffdf6; border: 2px solid var(--pd-oliva); border-radius: 6px; padding: 2px 6px; outline: none; box-shadow: 0 0 0 4px rgba(169, 186, 152, 0.35); }
   .pd-input.riga { display: inline-block; width: auto; min-width: 12em; }
   /* Barre dei pulsanti sul foglio (alternative e immagini): compaiono passando il mouse */
