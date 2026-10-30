@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { inTauri, useStore } from "../store";
-import { Modal } from "./ui";
+import { Icon, Modal } from "./ui";
 import { EsitoDestinazione, mb, momentoAdesso, quandoLeggibile, riassuntoBackup } from "../backup";
 import { apriStampa } from "../stampa";
 
@@ -73,17 +73,17 @@ export function RiquadroBackup() {
           onTogli={() => setImpostazioni((i) => ({ ...i, cartellaCloud: "" }))}>
           <div className="row" style={{ gap: 8, flexWrap: "wrap" }}>
             {backup.passwordPresente
-              ? <button className="btn sm" onClick={() => void mostraPassword(false)}>Mostra / stampa la password</button>
-              : <button className="btn sm primary" onClick={() => void mostraPassword(true)}>Crea la password del backup</button>}
+              ? <button className="btn sm tenue-salvia" onClick={() => void mostraPassword(false)}><Icon.occhio /> Mostra / stampa la password</button>
+              : <button className="btn sm primary" onClick={() => void mostraPassword(true)}><Icon.lock /> Crea la password del backup</button>}
           </div>
         </Destinazione>
 
         <div className="small">Copie conservate su ogni destinazione: ultimi <b>7</b> giorni · <b>4</b> settimane · <b>12</b> mesi</div>
         <div className="row">
           <button className="btn primary" disabled={backupInCorso || (!impostazioni.cartellaDisco && !impostazioni.cartellaCloud)} onClick={() => void oraSubito()}>
-            {backupInCorso ? "Backup in corso…" : "Esegui backup ora"}
+            <Icon.salva /> {backupInCorso ? "Backup in corso…" : "Esegui backup ora"}
           </button>
-          <button className="btn" onClick={() => setRipristino(true)}>Ripristina da backup…</button>
+          <button className="btn tenue-cielo" onClick={() => setRipristino(true)}><Icon.ripristina /> Ripristina da backup…</button>
         </div>
       </div>
       {password && <FinestraPassword password={password} onClose={() => setPassword(null)} />}
@@ -101,8 +101,8 @@ function Destinazione({ titolo, cartella, esito, ultimoOk, nota, onScegli, onTog
       <h3>{titolo}</h3>
       <div className="row" style={{ gap: 8 }}>
         <input className="input" readOnly value={cartella} placeholder="non impostata" />
-        <button className="btn sm" onClick={onScegli}>Scegli cartella…</button>
-        {cartella && <button className="btn sm ghost" onClick={onTogli}>Togli</button>}
+        <button className="btn sm" onClick={onScegli}><Icon.cartella /> Scegli cartella…</button>
+        {cartella && <button className="btn sm tenue-sabbia" onClick={onTogli}><Icon.x /> Togli</button>}
       </div>
       {cartella && (
         <div className={"dest-stato " + (esito?.esito === "errore" ? "errore" : ultimoOk ? "ok" : "")}>
@@ -119,7 +119,7 @@ function Destinazione({ titolo, cartella, esito, ultimoOk, nota, onScegli, onTog
 function FinestraPassword({ password, onClose }: { password: string; onClose: () => void }) {
   return createPortal(
     <Modal title="Password dei backup cifrati" onClose={onClose}
-      footer={<><button className="btn" onClick={() => void apriStampa({ tipo: "password", id: "", titolo: "Password dei backup" })}>Stampa il foglio</button><button className="btn primary" onClick={onClose}>Fatto</button></>}>
+      footer={<><button className="btn" onClick={() => void apriStampa({ tipo: "password", id: "", titolo: "Password dei backup" })}><Icon.print /> Stampa il foglio</button><button className="btn primary" onClick={onClose}><Icon.salva /> Fatto</button></>}>
       <p style={{ marginTop: 0 }}>Serve per aprire i backup del cloud, anche senza il programma (con 7-Zip). Stampa il foglio e conservalo lontano dal computer.</p>
       <div className="password-grande">{password}</div>
       <p className="small muted" style={{ marginBottom: 0 }}>Il programma la tiene su questo PC per fare i backup da solo. Non cambia mai: le copie vecchie si aprono con la stessa.</p>
@@ -159,13 +159,13 @@ function Ripristino({ onClose }: { onClose: () => void }) {
 
   return createPortal(
     <Modal title="Ripristina da backup" onClose={inCorso ? () => {} : onClose}
-      footer={<><button className="btn" disabled={inCorso} onClick={onClose}>Annulla</button>
-        <button className="btn primary" style={{ background: "var(--danger)", borderColor: "var(--danger)" }} disabled={!file || inCorso} onClick={() => void ripristina()}>{inCorso ? "Ripristino in corso…" : "Ripristina"}</button></>}>
+      footer={<><button className="btn tenue-sabbia" disabled={inCorso} onClick={onClose}><Icon.x /> Annulla</button>
+        <button className="btn tenue-cielo" disabled={!file || inCorso} onClick={() => void ripristina()}><Icon.ripristina /> {inCorso ? "Ripristino in corso…" : "Ripristina"}</button></>}>
       <div className="field">
         <label>Copia da ripristinare</label>
         <div className="row" style={{ gap: 8 }}>
           <input className="input" readOnly value={file ?? ""} placeholder="nessun file scelto" />
-          <button className="btn sm" onClick={() => void scegli()}>Scegli…</button>
+          <button className="btn sm" onClick={() => void scegli()}><Icon.cartella /> Scegli…</button>
         </div>
       </div>
       {cifrato && (

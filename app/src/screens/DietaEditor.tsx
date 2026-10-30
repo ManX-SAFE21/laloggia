@@ -47,7 +47,7 @@ export function DietaEditor({ id }: { id: string }) {
             <p>Per {cliente.nome} {cliente.cognome} · creata il {fmtData(dieta.creata)}</p>
           </div>
           <div className="row">
-            <button className="btn" onClick={copiaSuTutti}>Copia {GIORNI[giorno].toLowerCase()} su tutta la settimana</button>
+            <button className="btn" onClick={copiaSuTutti}><Icon.copia /> Copia {GIORNI[giorno].toLowerCase()} su tutta la settimana</button>
             <button className="btn primary" onClick={() => void apriStampa({ tipo: "dieta", id: dieta.id, titolo: `Dieta di ${cliente.nome} ${cliente.cognome}` })}><Icon.print /> Stampa / PDF</button>
           </div>
         </div>

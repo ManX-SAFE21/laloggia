@@ -4,7 +4,7 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { inTauri } from "./store";
-import { Modal } from "./components/ui";
+import { Icon, Modal } from "./components/ui";
 
 export type StatoDisco = "cifrato" | "in-corso" | "decifratura" | "sospeso" | "non-cifrato" | "non-verificabile" | "browser" | "controllo";
 export interface InfoDisco { stato: StatoDisco; unita?: string }
@@ -47,7 +47,7 @@ export function ComeCifrare({ onClose, onRicontrolla }: { onClose: () => void; o
   // fuori dalla striscia gialla (document.body): così non ne eredita colori e dimensioni
   return createPortal(
     <Modal title="Proteggere i dati se il computer viene rubato" onClose={onClose}
-      footer={<>{onRicontrolla && <button className="btn" onClick={() => { onRicontrolla(); onClose(); }}>Controlla di nuovo</button>}<button className="btn primary" onClick={onClose}>Chiudi</button></>}>
+      footer={<>{onRicontrolla && <button className="btn tenue-salvia" onClick={() => { onRicontrolla(); onClose(); }}><Icon.aggiorna /> Controlla di nuovo</button>}<button className="btn tenue-salvia" onClick={onClose}><Icon.x /> Chiudi</button></>}>
       <p style={{ marginTop: 0 }}>L'archivio dei clienti è sul disco di questo PC. Per renderlo illeggibile a chi ruba o trova il computer, si attiva la <b>cifratura del disco di Windows</b>:</p>
       <ol className="come-cifrare">
         <li>Apri <b>Start → Impostazioni → Privacy e sicurezza → Crittografia dispositivo</b> e attivala.</li>
@@ -70,8 +70,8 @@ export function AvvisoDisco() {
   return (
     <div className="avviso-disco no-print">
       <span>⚠ <b>Il disco di questo PC {info.stato === "non-cifrato" ? "non è cifrato" : "non è protetto"}</b>{info.unita ? ` (${info.unita})` : ""}: se il computer viene rubato, i dati dei clienti si possono leggere.</span>
-      <button className="btn sm" onClick={() => setAiuto(true)}>Come proteggerlo</button>
-      <button className="btn sm ghost" onClick={() => setNascosto(true)}>Più tardi</button>
+      <button className="btn sm tenue-salvia" onClick={() => setAiuto(true)}><Icon.lock /> Come proteggerlo</button>
+      <button className="btn sm tenue-sabbia" onClick={() => setNascosto(true)}><Icon.orologio /> Più tardi</button>
       {aiuto && <ComeCifrare onClose={() => setAiuto(false)} onRicontrolla={ricontrolla} />}
     </div>
   );

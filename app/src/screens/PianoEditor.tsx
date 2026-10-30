@@ -27,7 +27,7 @@ export function PianoEditor({ id }: { id: string }) {
       </>}
       riassunto={`consegna ${fmtData(piano.creato)}`}
       azioniInPiu={<>
-        <button className="btn" onClick={() => setSalvaModello(true)} title="Crea un modello nuovo da questo piano, da usare con altri clienti">Salva come nuovo modello</button>
+        <button className="btn" onClick={() => setSalvaModello(true)} title="Crea un modello nuovo da questo piano, da usare con altri clienti"><Icon.copia /> Salva come nuovo modello</button>
         {salvaModello && <SalvaComeModello piano={piano} cliente={cliente} onClose={() => setSalvaModello(false)} />}
       </>}
       campiInPiu={<div className="field"><label>Data di consegna</label><input className="input" type="date" value={piano.creato} onChange={(e) => aggiorna((p) => ({ ...p, creato: e.target.value }))} /></div>}
@@ -249,7 +249,7 @@ export function EditorPiano({ piano, cliente, aggiorna: aggiornaEsterno, intesta
                 <div className="small muted">Dati del piano</div>
                 <div className="piano-dati-riassunto">{[piano.kcal ? `${piano.kcal} kcal` : null, riassunto].filter(Boolean).join(" · ") || "—"}</div>
               </div>
-              <button className="btn sm" onClick={() => setDatiAperti((v) => !v)}>{datiAperti ? "Chiudi" : "Modifica dati"}</button>
+              <button className="btn sm tenue-salvia" onClick={() => setDatiAperti((v) => !v)}>{datiAperti ? <><Icon.x /> Chiudi</> : <><Icon.matita /> Modifica dati</>}</button>
             </div>
             {datiAperti && <div style={{ marginTop: 10 }}>
             {campiInPiu && <div style={{ marginBottom: 8 }}>{campiInPiu}</div>}
@@ -277,8 +277,8 @@ export function EditorPiano({ piano, cliente, aggiorna: aggiornaEsterno, intesta
                   <button className="piano-sez-nome" title="Mostra nel foglio" onClick={() => mostraNelFoglio(s)}>
                     <span className="ico">{s.icona}</span>{s.titolo}{s.informativa && <span className="badge" style={{ marginLeft: 6 }}>consigli</span>}
                   </button>
-                  <button className="btn ghost sm" title="Sposta su" onClick={() => sposta(i, -1)}>↑</button>
-                  <button className="btn ghost sm" title="Sposta giù" onClick={() => sposta(i, 1)}>↓</button>
+                  <button className="btn ghost sm" title="Sposta su" onClick={() => sposta(i, -1)}><Icon.su /></button>
+                  <button className="btn ghost sm" title="Sposta giù" onClick={() => sposta(i, 1)}><Icon.giu /></button>
                 </div>
                 {aperta === s.id && (
                   <div className="piano-sez-corpo">
@@ -304,18 +304,18 @@ export function EditorPiano({ piano, cliente, aggiorna: aggiornaEsterno, intesta
 
         <div className="piano-destra">
         <div className="foglio-barra no-print">
-          <button className="btn sm" onClick={() => setSenzaPannello((v) => !v)} title={senzaPannello ? "Riapri l'elenco delle sezioni" : "Nasconde l'elenco delle sezioni e allarga il foglio"}>
-            {senzaPannello ? "» Mostra pannello" : "« Nascondi pannello"}
+          <button className={"btn sm " + (senzaPannello ? "tenue-salvia" : "tenue-sabbia")} onClick={() => setSenzaPannello((v) => !v)} title={senzaPannello ? "Riapri l'elenco delle sezioni" : "Nasconde l'elenco delle sezioni e allarga il foglio"}>
+            <Icon.pannello /> {senzaPannello ? "Mostra pannello" : "Nascondi pannello"}
           </button>
           <div className="row" style={{ gap: 4 }}>
-            <button className="btn sm" onClick={annulla} title={passato.length ? `Annulla l'ultima modifica (Ctrl+Z) · ${passato.length} passi disponibili` : "Niente da annullare"} style={{ opacity: passato.length ? 1 : 0.45 }}>↶ Annulla</button>
-            <button className="btn sm" onClick={ripeti} title={futuro.length ? `Ripeti (Ctrl+Y) · ${futuro.length} passi` : "Niente da ripetere"} style={{ opacity: futuro.length ? 1 : 0.45 }}>↷ Ripeti</button>
+            <button className="btn sm tenue-cielo" onClick={annulla} title={passato.length ? `Annulla l'ultima modifica (Ctrl+Z) · ${passato.length} passi disponibili` : "Niente da annullare"} style={{ opacity: passato.length ? 1 : 0.45 }}><Icon.annullaMod /> Annulla</button>
+            <button className="btn sm tenue-cielo" onClick={ripeti} title={futuro.length ? `Ripeti (Ctrl+Y) · ${futuro.length} passi` : "Niente da ripetere"} style={{ opacity: futuro.length ? 1 : 0.45 }}><Icon.ripetiMod /> Ripeti</button>
           </div>
           <div className="row" style={{ gap: 4 }}>
-            <button className="btn sm" title="Rimpicciolisci il foglio" onClick={() => cambiaZoom(-1)}>−</button>
+            <button className="btn sm tenue-salvia" title="Rimpicciolisci il foglio" onClick={() => cambiaZoom(-1)}><Icon.zoomMeno /></button>
             <span className="num foglio-zoom" title="Ingrandimento del foglio a schermo (la stampa resta A4). Clic: torna a 100%" onClick={() => { setAdatta(false); setZoom(1); }}>{Math.round(zoomFoglio * 100)}%</span>
-            <button className="btn sm" title="Ingrandisci il foglio" onClick={() => cambiaZoom(1)}>+</button>
-            <button className={"btn sm" + (adatta ? " primary" : "")} title="Il foglio occupa tutta la larghezza libera" onClick={() => setAdatta((a) => !a)}>Adatta alla larghezza</button>
+            <button className="btn sm tenue-salvia" title="Ingrandisci il foglio" onClick={() => cambiaZoom(1)}><Icon.zoomPiu /></button>
+            <button className={"btn sm " + (adatta ? "primary" : "tenue-salvia")} title="Il foglio occupa tutta la larghezza libera" onClick={() => setAdatta((a) => !a)}><Icon.espandi /> Adatta alla larghezza</button>
           </div>
           <button className={"btn sm " + (senzaValori ? "tenue-salvia" : "tenue-sabbia")} onClick={() => setSenzaValori((v) => !v)} title={senzaValori ? "Mostra calorie e nutrienti accanto al foglio" : "Nasconde calorie e nutrienti e allarga il foglio"}>
             {senzaValori ? <><Icon.occhio /> Mostra valori</> : <><Icon.occhioChiuso /> Nascondi valori</>}
@@ -383,8 +383,8 @@ function EditorElemento({ el, onChange }: { el: ElementoPiano; onChange: (e: Ele
             </div>
           ))}
           <div className="row">
-            <button className="btn ghost sm" onClick={() => onChange({ ...el, righe: [...el.righe, ["", ""]] })}><Icon.plus /> Riga</button>
-            {el.righe.length > 0 && <button className="btn ghost sm" onClick={() => onChange({ ...el, righe: el.righe.slice(0, -1) })}>Togli l'ultima</button>}
+            <button className="btn sm tenue-salvia" onClick={() => onChange({ ...el, righe: [...el.righe, ["", ""]] })}><Icon.plus /> Riga</button>
+            {el.righe.length > 0 && <button className="btn sm tenue-sabbia" onClick={() => onChange({ ...el, righe: el.righe.slice(0, -1) })}><Icon.x /> Togli l'ultima</button>}
           </div>
         </div>
       );
@@ -424,7 +424,7 @@ function EditorOpzioni({ el, onChange }: { el: Extract<ElementoPiano, { k: "opzi
           <input className="input" placeholder="Nota (facoltativa)" value={o.nota ?? ""} onChange={(e) => set(i, { ...o, nota: e.target.value || undefined })} />
         </div>
       ))}
-      <button className="btn ghost sm" onClick={() => onChange({ ...el, voci: [...el.voci, { testo: "" }] })}><Icon.plus /> Aggiungi alternativa</button>
+      <button className="btn sm tenue-salvia" onClick={() => onChange({ ...el, voci: [...el.voci, { testo: "" }] })}><Icon.plus /> Aggiungi alternativa</button>
     </div>
   );
 }
@@ -449,9 +449,9 @@ function SalvaComeModello({ piano, cliente, onClose }: { piano: PianoAlimentare;
   return (
     <Modal title="Salva come nuovo modello" onClose={onClose}
       footer={<>
-        <button className="btn" onClick={onClose}>Annulla</button>
-        <button className="btn" disabled={!nomeOk} onClick={() => salva(true)}>Salva e apri il modello</button>
-        <button className="btn primary" disabled={!nomeOk} onClick={() => salva(false)}>Salva</button>
+        <button className="btn tenue-sabbia" onClick={onClose}><Icon.x /> Annulla</button>
+        <button className="btn tenue-salvia" disabled={!nomeOk} onClick={() => salva(true)}><Icon.apri /> Salva e apri il modello</button>
+        <button className="btn primary" disabled={!nomeOk} onClick={() => salva(false)}><Icon.salva /> Salva</button>
       </>}>
       <p className="small muted" style={{ marginTop: 0 }}>
         Il modello nasce come copia di questo piano (sezioni, testi, alternative, immagini) ed è indipendente:

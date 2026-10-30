@@ -28,9 +28,9 @@ export function Agenda() {
       <div className="page-head">
         <div><h1>Agenda</h1><p>{SETTIMANE[sett].label}</p></div>
         <div className="row">
-          <button className="btn" disabled={sett === 0} onClick={() => setSett(sett - 1)}>‹</button>
-          <button className="btn" onClick={() => setSett(1)}>Oggi</button>
-          <button className="btn" disabled={sett === SETTIMANE.length - 1} onClick={() => setSett(sett + 1)}>›</button>
+          <button className="btn tenue-salvia" disabled={sett === 0} onClick={() => setSett(sett - 1)}><Icon.sinistra /></button>
+          <button className="btn tenue-salvia" onClick={() => setSett(1)}><Icon.calendar /> Oggi</button>
+          <button className="btn tenue-salvia" disabled={sett === SETTIMANE.length - 1} onClick={() => setSett(sett + 1)}><Icon.destra /></button>
           <button className="btn primary" onClick={() => setNuovo({ data: OGGI, ora: "09:00" })}><Icon.plus /> Nuovo appuntamento</button>
         </div>
       </div>
@@ -68,10 +68,10 @@ export function Agenda() {
         return (
           <Modal title={c ? `${c.nome} ${c.cognome}` : "Appuntamento"} onClose={() => setSel(null)}
             footer={<>
-              <button className="btn danger" onClick={() => { setAppuntamenti((l) => l.filter((x) => x.id !== sel.id)); setSel(null); toast("Appuntamento eliminato"); }}>Elimina</button>
+              <button className="btn danger" onClick={() => { setAppuntamenti((l) => l.filter((x) => x.id !== sel.id)); setSel(null); toast("Appuntamento eliminato"); }}><Icon.cestino /> Elimina</button>
               <span className="spacer" />
-              <button className="btn" onClick={() => setSel(null)}>Chiudi</button>
-              {c && <button className="btn primary" onClick={() => vai({ nome: "cliente", id: c.id })}>Apri scheda</button>}
+              <button className="btn tenue-salvia" onClick={() => setSel(null)}><Icon.x /> Chiudi</button>
+              {c && <button className="btn primary" onClick={() => vai({ nome: "cliente", id: c.id })}><Icon.users /> Apri scheda</button>}
             </>}>
             <dl className="kv">
               <dt>Data</dt><dd>{sel.data.split("-").reverse().join("/")} alle {sel.ora}</dd>
@@ -91,7 +91,7 @@ function NuovoAppuntamento({ iniziale, onClose, onSave }: { iniziale: { data: st
   const [f, setF] = useState({ clienteId: attivi[0]?.id ?? "", data: iniziale.data, ora: iniziale.ora, durata: "45", tipo: "Controllo" as Appuntamento["tipo"] });
   return (
     <Modal title="Nuovo appuntamento" onClose={onClose}
-      footer={<><button className="btn" onClick={onClose}>Annulla</button><button className="btn primary" onClick={() => onSave({ id: nuovoId("ap"), clienteId: f.clienteId, data: f.data, ora: f.ora, durata: Number(f.durata), tipo: f.tipo })}>Salva</button></>}>
+      footer={<><button className="btn tenue-sabbia" onClick={onClose}><Icon.x /> Annulla</button><button className="btn primary" onClick={() => onSave({ id: nuovoId("ap"), clienteId: f.clienteId, data: f.data, ora: f.ora, durata: Number(f.durata), tipo: f.tipo })}><Icon.salva /> Salva</button></>}>
       <div className="grid g2">
         <div className="field" style={{ gridColumn: "1 / -1" }}><label>Cliente</label>
           <select className="select" value={f.clienteId} onChange={(e) => setF({ ...f, clienteId: e.target.value })}>

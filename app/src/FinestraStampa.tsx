@@ -9,6 +9,7 @@ import { PianoStampa } from "./components/PianoStampa";
 import { StampaDieta } from "./screens/DietaEditor";
 import { ModuloPrivacy } from "./screens/ClienteScheda";
 import { CLIENTE_ESEMPIO } from "./screens/Modelli";
+import { Icon } from "./components/ui";
 
 async function chiudi() {
   const { getCurrentWindow } = await import("@tauri-apps/api/window");
@@ -59,7 +60,7 @@ export function FinestraStampa({ tipo, id }: { tipo: TipoStampa; id: string }) {
     <div className="finestra-stampa">
       <div className="no-print finestra-stampa-avviso">
         {errore || (dati && !documento ? "Documento non trovato." : "Apertura dell'anteprima di stampa…")}
-        {(errore || (dati && !documento)) && <button className="btn sm" onClick={() => void chiudi()}>Chiudi</button>}
+        {(errore || (dati && !documento)) && <button className="btn sm tenue-salvia" onClick={() => void chiudi()}><Icon.x /> Chiudi</button>}
       </div>
       {tipo === "password" && documento}
       {dati && documento && <StoreSoloLettura dati={dati}>{documento}</StoreSoloLettura>}

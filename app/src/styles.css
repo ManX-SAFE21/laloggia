@@ -86,7 +86,10 @@ h3 { font-size: 15px; font-family: var(--font); font-weight: 600; }
 .btn:hover { border-color: #cfc9bb; background: var(--surface-2); }
 .btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
 .btn.primary:hover { background: var(--olive-dark); }
-.btn.danger { color: var(--danger); }
+.btn.danger { background: #fbeaea; border-color: #eec4c4; color: #a32d2d; }
+.btn.danger:hover { background: #f7dcdc; border-color: #e0a5a5; }
+.btn svg { width: 16px; height: 16px; flex: none; }
+.modal-foot .btn.danger { margin-left: auto; }
 .btn.ghost { border-color: transparent; background: transparent; }
 .btn.sm { padding: 5px 10px; font-size: 13px; }
 .btn:disabled { opacity: 0.5; cursor: not-allowed; }

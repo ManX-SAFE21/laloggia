@@ -54,7 +54,7 @@ export function ClienteScheda({ id, tab: tabIniziale }: { id: string; tab?: stri
         </div>
         <div className="row">
           {!c.consenso.firmato && <span className="badge warn">Privacy da firmare</span>}
-          {c.attivo && <button className="btn" title="Il cliente ha finito il percorso: esce dagli attivi (si può riattivare)" onClick={archivia}>Archivia</button>}
+          {c.attivo && <button className="btn tenue-sabbia" title="Il cliente ha finito il percorso: esce dagli attivi (si può riattivare)" onClick={archivia}><Icon.archivio /> Archivia</button>}
           <button className="btn" onClick={() => setImporta(true)}><Icon.file /> Importa BIA (PDF)</button>
           <NuovaVisitaBtn prima={c.visite.length === 0} ultima={ult} onPianifica={pianifica}
             onSave={(v) => { aggiorna((x) => ({ ...x, visite: [...x.visite, v].sort((a, b) => a.data.localeCompare(b.data)) })); setTab("visite"); }} />
@@ -64,7 +64,7 @@ export function ClienteScheda({ id, tab: tabIniziale }: { id: string; tab?: stri
       {!c.attivo && (
         <div className="striscia-archiviato">
           <span><b>Cliente archiviato.</b> Non compare tra gli attivi; i dati restano tutti qui.</span>
-          <button className="btn sm" onClick={archivia}>Riattiva</button>
+          <button className="btn sm tenue-cielo" onClick={archivia}><Icon.ripristina /> Riattiva</button>
         </div>
       )}
 
@@ -255,7 +255,7 @@ function NuovaVisitaBtn({ onSave, onPianifica, ultima, prima }: {
       <button className="btn primary" onClick={apri}><Icon.plus /> Nuova visita</button>
       {passo === "visita" && (
         <Modal title="Nuova visita" onClose={() => setPasso("chiuso")}
-          footer={<><button className="btn" onClick={() => setPasso("chiuso")}>Annulla</button><button className="btn primary" disabled={!n(f.peso)} onClick={salva}>Salva visita</button></>}>
+          footer={<><button className="btn tenue-sabbia" onClick={() => setPasso("chiuso")}><Icon.x /> Annulla</button><button className="btn primary" disabled={!n(f.peso)} onClick={salva}><Icon.salva /> Salva visita</button></>}>
           <div className="grid g2">
             <div className="field"><label>Data</label><input className="input" type="date" value={f.data} onChange={set("data")} /></div>
             <div className="field"><label>Tipo</label>
@@ -280,7 +280,7 @@ function NuovaVisitaBtn({ onSave, onPianifica, ultima, prima }: {
       )}
       {passo === "prossimo" && (
         <Modal title="Prossimo controllo" onClose={() => setPasso("chiuso")}
-          footer={<><button className="btn" onClick={() => setPasso("chiuso")}>Non ora</button><button className="btn primary" onClick={() => { onPianifica(prox.data, prox.ora); setPasso("chiuso"); }}>Aggiungi in agenda</button></>}>
+          footer={<><button className="btn tenue-sabbia" onClick={() => setPasso("chiuso")}><Icon.orologio /> Non ora</button><button className="btn primary" onClick={() => { onPianifica(prox.data, prox.ora); setPasso("chiuso"); }}><Icon.calendar /> Aggiungi in agenda</button></>}>
           <p className="small muted" style={{ marginTop: 0 }}>Visita salvata. Proposta: controllo tra {INTERVALLO_CONTROLLO_MESI} mesi. Puoi cambiare data e ora.</p>
           <div className="grid g2">
             <div className="field"><label>Data</label><input className="input" type="date" value={prox.data} onChange={(e) => setProx({ ...prox, data: e.target.value })} /></div>
@@ -344,7 +344,7 @@ function Diete({ c, aggiorna }: { c: Cliente; aggiorna: (f: (c: Cliente) => Clie
       </div>
 
       <div className="card">
-        <div className="card-head"><h2>Diete a griglia (giorni × pasti)</h2><button className="btn sm" onClick={crea}><Icon.plus /> Nuova dieta</button></div>
+        <div className="card-head"><h2>Diete a griglia (giorni × pasti)</h2><button className="btn sm tenue-salvia" onClick={crea}><Icon.plus /> Nuova dieta</button></div>
         <table className="table">
           <tbody>
             {sue.map((d) => (
@@ -393,8 +393,8 @@ function Privacy({ c, aggiorna }: { c: Cliente; aggiorna: (f: (c: Cliente) => Cl
             </dl>
             <p className="small muted">La copia cartacea firmata è conservata dallo studio.</p>
             <div className="row" style={{ flexWrap: "wrap" }}>
-              <button className="btn sm" onClick={() => void apriStampa({ tipo: "privacy", id: c.id, titolo: `Modulo privacy – ${c.nome} ${c.cognome}` })}><Icon.print /> Ristampa il modulo</button>
-              <button className="btn sm danger" onClick={annulla}>Annulla la registrazione</button>
+              <button className="btn sm tenue-salvia" onClick={() => void apriStampa({ tipo: "privacy", id: c.id, titolo: `Modulo privacy – ${c.nome} ${c.cognome}` })}><Icon.print /> Ristampa il modulo</button>
+              <button className="btn sm danger" onClick={annulla}><Icon.x /> Annulla la registrazione</button>
             </div>
           </>
         ) : (
@@ -415,7 +415,7 @@ function Privacy({ c, aggiorna }: { c: Cliente; aggiorna: (f: (c: Cliente) => Cl
                 <label>Data della firma</label>
                 <input className="input" type="date" max={OGGI} value={dataFirma} onChange={(e) => setDataFirma(e.target.value)} />
               </div>
-              <button className="btn primary" style={{ marginTop: 12 }} disabled={!spunta || !dataFirma} onClick={registra}>Registra il consenso</button>
+              <button className="btn primary" style={{ marginTop: 12 }} disabled={!spunta || !dataFirma} onClick={registra}><Icon.salva /> Registra il consenso</button>
             </div>
           </div>
         )}
@@ -424,9 +424,9 @@ function Privacy({ c, aggiorna }: { c: Cliente; aggiorna: (f: (c: Cliente) => Cl
         <h2 style={{ marginBottom: 12 }}>Diritti del cliente</h2>
         <p className="small muted" style={{ marginTop: 0 }}>Strumenti per rispondere alle richieste previste dal GDPR.</p>
         <div className="grid" style={{ gap: 8 }}>
-          <button className="btn" onClick={() => toast("Esportazione dati del cliente in PDF e JSON (simulato)")}>Esporta tutti i dati del cliente</button>
-          <button className="btn" onClick={() => { aggiorna((x) => ({ ...x, attivo: !x.attivo })); toast(c.attivo ? "Cliente archiviato" : "Cliente riattivato"); }}>{c.attivo ? "Archivia cliente" : "Riattiva cliente"}</button>
-          <button className="btn danger" onClick={() => setConferma(true)}>Cancella definitivamente il cliente</button>
+          <button className="btn" onClick={() => toast("Esportazione dati del cliente in PDF e JSON (simulato)")}><Icon.scarica /> Esporta tutti i dati del cliente</button>
+          <button className={"btn " + (c.attivo ? "tenue-sabbia" : "tenue-cielo")} onClick={() => { aggiorna((x) => ({ ...x, attivo: !x.attivo })); toast(c.attivo ? "Cliente archiviato" : "Cliente riattivato"); }}>{c.attivo ? <><Icon.archivio /> Archivia cliente</> : <><Icon.ripristina /> Riattiva cliente</>}</button>
+          <button className="btn danger" onClick={() => setConferma(true)}><Icon.cestino /> Cancella definitivamente il cliente</button>
         </div>
       </div>
       {conferma && (
@@ -480,11 +480,10 @@ export function ModuloPrivacy({ c }: { c: Cliente }) {
 function ConfermaCancellazione({ c, onClose, onCancella }: { c: Cliente; onClose: () => void; onCancella: () => void }) {
   const [passo, setPasso] = useState<1 | 2>(1);
   const [frase, setFrase] = useState("");
-  const rosso = { background: "var(--danger)", borderColor: "var(--danger)" };
   if (passo === 1)
     return (
       <Modal title="Cancellare il cliente?" onClose={onClose}
-        footer={<><button className="btn" onClick={onClose}>Annulla</button><button className="btn primary" style={rosso} onClick={() => setPasso(2)}>Cancella</button></>}>
+        footer={<><button className="btn primary" onClick={onClose}><Icon.back /> No, tienilo</button><button className="btn danger" onClick={() => setPasso(2)}><Icon.cestino /> Cancella</button></>}>
         <p>Verranno cancellati anagrafica, visite, diete e allegati di <b>{c.nome} {c.cognome}</b>.</p>
         <p className="small muted">Subito dopo, «Annulla» può ancora recuperare anagrafica, visite e diete, ma <b>non i file degli allegati</b>, che vengono tolti dall'archivio. Se vuoi solo toglierlo dalla lista, usa «Archivia».</p>
       </Modal>
@@ -492,7 +491,7 @@ function ConfermaCancellazione({ c, onClose, onCancella }: { c: Cliente; onClose
   const ok = fraseGiusta(frase);
   return (
     <Modal title="Ultima conferma" onClose={onClose}
-      footer={<><button className="btn" onClick={onClose}>Annulla</button><button className="btn primary" style={rosso} disabled={!ok} onClick={onCancella}>Cancella definitivamente</button></>}>
+      footer={<><button className="btn primary" onClick={onClose}><Icon.back /> No, tienilo</button><button className="btn danger" disabled={!ok} onClick={onCancella}><Icon.cestino /> Cancella definitivamente</button></>}>
       <p style={{ marginTop: 0 }}>Per cancellare <b>{c.nome} {c.cognome}</b> scrivi qui sotto: <b>{FRASE_CONFERMA}</b></p>
       <input className="input" autoFocus value={frase} placeholder={FRASE_CONFERMA} onChange={(e) => setFrase(e.target.value)}
         onKeyDown={(e) => { if (e.key === "Enter" && ok) onCancella(); }} />

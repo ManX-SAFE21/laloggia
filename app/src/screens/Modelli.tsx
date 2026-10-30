@@ -56,9 +56,9 @@ export function Modelli() {
                 <td className="num">{clientiCon(m) || "—"}</td>
                 <td className="num muted">{fmtData(m.modificato)}</td>
                 <td style={{ textAlign: "right", whiteSpace: "nowrap" }} onClick={(e) => e.stopPropagation()}>
-                  <button className="btn sm" onClick={() => vai({ nome: "modello", id: m.id })}>Modifica</button>{" "}
-                  <button className="btn sm" title="Crea una copia del modello in questo elenco" onClick={() => duplica(m)}>Duplica</button>{" "}
-                  <button className="btn sm danger" onClick={() => setElimina(m)}>Elimina</button>
+                  <button className="btn sm tenue-salvia" onClick={() => vai({ nome: "modello", id: m.id })}><Icon.matita /> Modifica</button>{" "}
+                  <button className="btn sm" title="Crea una copia del modello in questo elenco" onClick={() => duplica(m)}><Icon.copia /> Duplica</button>{" "}
+                  <button className="btn sm danger" onClick={() => setElimina(m)}><Icon.cestino /> Elimina</button>
                 </td>
               </tr>
             ))}
@@ -69,7 +69,7 @@ export function Modelli() {
 
       {elimina && (
         <Modal title="Eliminare il modello?" onClose={() => setElimina(null)}
-          footer={<><button className="btn" onClick={() => setElimina(null)}>Annulla</button><button className="btn primary" onClick={() => { setModelli((l) => l.filter((m) => m.id !== elimina.id)); toast(`Modello «${elimina.nome}» eliminato`); setElimina(null); }}>Elimina il modello</button></>}>
+          footer={<><button className="btn primary" onClick={() => setElimina(null)}><Icon.back /> No, tienilo</button><button className="btn danger" onClick={() => { setModelli((l) => l.filter((m) => m.id !== elimina.id)); toast(`Modello «${elimina.nome}» eliminato`); setElimina(null); }}><Icon.cestino /> Elimina il modello</button></>}>
           <p style={{ marginTop: 0 }}>Il modello <b>«{elimina.nome}»</b> sparirà dall'elenco.</p>
           <p className="small muted" style={{ marginBottom: 0 }}>
             {clientiCon(elimina) > 0
@@ -106,7 +106,7 @@ export function ModelloEditor({ id }: { id: string }) {
         const copia = duplicaModello(m, OGGI);
         setModelli((l) => [...l, copia]);
         toast(`Copia creata in Piani alimentari: «${copia.nome}». Stai ancora modificando «${m.nome}»`);
-      }}>Salva come copia</button>}
+      }}><Icon.copia /> Salva come copia</button>}
       intestazione={<>
         <button className="btn ghost sm" style={{ marginBottom: 8, paddingLeft: 0 }} onClick={() => vai({ nome: "modelli" })}><Icon.back /> Piani alimentari</button>
         <div>

@@ -6,7 +6,7 @@ import { createPortal } from "react-dom";
 import { useStore } from "../store";
 import { nuovoId } from "../data";
 import { IMMAGINI_PIANO, LIBRERIA_INCLUSA, doveUsata } from "../immaginiPiano";
-import { Modal } from "./ui";
+import { Icon, Modal } from "./ui";
 
 const MAX_MB = 5;
 
@@ -45,8 +45,8 @@ export function LibreriaImmagini({ titolo, onScegli, onClose }: { titolo: string
     <Modal title={titolo} onClose={onClose} largo>
       <div className="row" style={{ justifyContent: "space-between", marginBottom: 8 }}>
         <span className="small muted">Clic su un'immagine per sceglierla.</span>
-        <label className="btn sm">
-          Carica immagine…
+        <label className="btn sm tenue-salvia">
+          <Icon.plus /> Carica immagine…
           <input type="file" accept="image/png,image/jpeg,image/webp" style={{ display: "none" }} onChange={(e) => { carica(e.target.files?.[0]); e.target.value = ""; }} />
         </label>
       </div>
@@ -54,8 +54,8 @@ export function LibreriaImmagini({ titolo, onScegli, onClose }: { titolo: string
       {daEliminare && (daEliminare.dove.length === 0 ? (
         <div className="lib-avviso">
           <span>Eliminare l'immagine «<b>{daEliminare.nome}</b>»? Non si può annullare.</span>
-          <button className="btn sm danger" onClick={() => elimina(daEliminare.chiave, daEliminare.nome)}>Elimina</button>
-          <button className="btn sm" onClick={() => setDaEliminare(null)}>Annulla</button>
+          <button className="btn sm danger" onClick={() => elimina(daEliminare.chiave, daEliminare.nome)}><Icon.cestino /> Elimina</button>
+          <button className="btn sm primary" onClick={() => setDaEliminare(null)}><Icon.back /> No, tienilo</button>
         </div>
       ) : (
         <div className="lib-avviso">
@@ -64,7 +64,7 @@ export function LibreriaImmagini({ titolo, onScegli, onClose }: { titolo: string
             <ul>{daEliminare.dove.map((d) => <li key={d}>{d}</li>)}</ul>
             Toglila prima da lì, poi potrai eliminarla.
           </div>
-          <button className="btn sm" onClick={() => setDaEliminare(null)}>Ho capito</button>
+          <button className="btn sm tenue-salvia" onClick={() => setDaEliminare(null)}><Icon.salva /> Ho capito</button>
         </div>
       ))}
       <div className="lib-griglia">

@@ -54,7 +54,7 @@ export function Clienti() {
       <div className="row" style={{ marginBottom: 10 }}>
         <input ref={cerca} className="input" style={{ maxWidth: 360 }} placeholder="Cerca per nome, email o telefono…" value={q}
           onChange={(e) => setQ(e.target.value)} onKeyDown={(e) => { if (e.key === "Escape") setQ(""); }} />
-        {q && <button className="btn sm ghost" onClick={() => setQ("")}>Cancella ricerca</button>}
+        {q && <button className="btn sm tenue-sabbia" onClick={() => setQ("")}><Icon.x /> Cancella ricerca</button>}
       </div>
       <div className="filtri-rapidi">
         {FILTRI.map(([f, nome]) => (
@@ -113,7 +113,7 @@ function NuovoCliente({ onClose, onSave }: { onClose: () => void; onSave: (c: Cl
     visite: [], allegati: [], consenso: { firmato: false }, attivo: true,
   });
   return (
-    <Modal title="Nuovo cliente" onClose={onClose} footer={<><button className="btn" onClick={onClose}>Annulla</button><button className="btn primary" disabled={!valido} onClick={salva}>Crea cliente</button></>}>
+    <Modal title="Nuovo cliente" onClose={onClose} footer={<><button className="btn tenue-sabbia" onClick={onClose}><Icon.x /> Annulla</button><button className="btn primary" disabled={!valido} onClick={salva}><Icon.plus /> Crea cliente</button></>}>
       <div className="grid g2">
         <div className="field"><label>Nome</label><input className="input" autoFocus value={f.nome} onChange={set("nome")} /></div>
         <div className="field"><label>Cognome</label><input className="input" value={f.cognome} onChange={set("cognome")} /></div>

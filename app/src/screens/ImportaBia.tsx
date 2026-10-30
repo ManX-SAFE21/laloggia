@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ChiaveBia, RisultatoBia, VOCI_BIA, avvisiPaziente } from "../bia";
 import { leggiBiaDaFile } from "../bia-pdf";
-import { Modal } from "../components/ui";
+import { Icon, Modal } from "../components/ui";
 import { fmtData, nuovoId } from "../data";
 import { Bia, Cliente, TipoVisita, Visita } from "../types";
 
@@ -37,7 +37,7 @@ export function ImportaBia({ c, onClose, onConferma }: {
         Prima di salvare vedrai tutti i valori trovati.
       </p>
       <label className="btn primary" style={{ display: "inline-flex" }}>
-        Scegli il PDF…
+        <Icon.file /> Scegli il PDF…
         <input type="file" accept="application/pdf,.pdf" style={{ display: "none" }} onChange={(e) => scegli(e.target.files?.[0])} />
       </label>
       {fase.tipo === "lettura" && <p className="small">Lettura del referto…</p>}
@@ -112,9 +112,9 @@ function Anteprima({ c, r, file, onClose, onConferma, onIndietro }: {
   return (
     <Modal title="Importa analisi BIA: controlla i valori" onClose={onClose} largo
       footer={<>
-        <button className="btn" onClick={onIndietro}>Altro file…</button>
-        <button className="btn" onClick={onClose}>Annulla</button>
-        <button className="btn primary" disabled={!puoSalvare} onClick={conferma}>Salva nella scheda</button>
+        <button className="btn" onClick={onIndietro}><Icon.file /> Altro file…</button>
+        <button className="btn tenue-sabbia" onClick={onClose}><Icon.x /> Annulla</button>
+        <button className="btn primary" disabled={!puoSalvare} onClick={conferma}><Icon.salva /> Salva nella scheda</button>
       </>}>
       <div className="bia-anteprima">
         <p className="small muted" style={{ marginTop: 0 }}>
@@ -160,8 +160,8 @@ function Anteprima({ c, r, file, onClose, onConferma, onIndietro }: {
           </tbody>
         </table>
         <div className="row small" style={{ gap: 12, margin: "6px 0 0" }}>
-          <button className="btn ghost sm" onClick={() => setSel(Object.fromEntries(trovate.map((v) => [v.key, true])))}>Spunta tutti</button>
-          <button className="btn ghost sm" onClick={() => setSel(Object.fromEntries(trovate.map((v) => [v.key, v.scheda])))}>Solo quelli della scheda</button>
+          <button className="btn sm tenue-salvia" onClick={() => setSel(Object.fromEntries(trovate.map((v) => [v.key, true])))}><Icon.salva /> Spunta tutti</button>
+          <button className="btn sm tenue-salvia" onClick={() => setSel(Object.fromEntries(trovate.map((v) => [v.key, v.scheda])))}><Icon.salva /> Solo quelli della scheda</button>
         </div>
         {mancanti.length > 0 && <p className="small" style={{ color: "var(--warn)" }}>Non trovati nel referto: {mancanti.map((v) => `${v.label} (${v.unit})`).join(", ")}. Si possono aggiungere a mano nella visita.</p>}
 

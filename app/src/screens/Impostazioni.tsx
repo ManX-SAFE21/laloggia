@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useStore } from "../store";
-import { Modal } from "../components/ui";
+import { Icon, Modal } from "../components/ui";
 import { ComeCifrare, DA_AVVISARE, DESCRIZIONE, useStatoDisco } from "../discoCifrato";
 import { VERSIONE_INFORMATIVA } from "../data";
 import { cambiaPin, LUNGHEZZA_PIN, TENTATIVI_PIN } from "../pin";
@@ -30,7 +30,7 @@ export function Impostazioni() {
                 <dt>Disco del PC{disco.info.unita ? ` (${disco.info.unita})` : ""}</dt>
                 <dd>
                   <span className={DA_AVVISARE.includes(disco.info.stato) ? "testo-avviso" : ""}>{DESCRIZIONE[disco.info.stato]}</span>
-                  {disco.info.stato !== "cifrato" && disco.info.stato !== "controllo" && <button className="btn sm ghost" style={{ marginLeft: 8 }} onClick={() => setComeCifrare(true)}>Come proteggerlo</button>}
+                  {disco.info.stato !== "cifrato" && disco.info.stato !== "controllo" && <button className="btn sm tenue-salvia" style={{ marginLeft: 8 }} onClick={() => setComeCifrare(true)}><Icon.lock /> Come proteggerlo</button>}
                 </dd>
                 <dt>All'avvio</dt><dd>PIN di {LUNGHEZZA_PIN} cifre</dd>
                 <dt>Blocco automatico</dt><dd>Dopo 10 minuti di inattività</dd>
@@ -39,7 +39,7 @@ export function Impostazioni() {
               </dl>
               <p className="small muted" style={{ marginBottom: 0 }}>Il PIN blocca lo schermo quando ti allontani: non protegge i file. Se il computer viene rubato, i dati li protegge la cifratura del disco di Windows (Crittografia dispositivo o BitLocker).</p>
               <div className="row" style={{ marginTop: 16, flexWrap: "wrap" }}>
-                <button className="btn" onClick={() => setCambioPin(true)}>Cambia PIN</button>
+                <button className="btn tenue-salvia" onClick={() => setCambioPin(true)}><Icon.lock /> Cambia PIN</button>
               </div>
             </div>
           </div>
@@ -104,7 +104,7 @@ function CambiaPin({ onClose, onFatto }: { onClose: () => void; onFatto: () => v
 
   return (
     <Modal title="Cambia PIN" onClose={onClose}
-      footer={<><button className="btn" onClick={onClose}>Annulla</button><button className="btn primary" disabled={inCorso} onClick={salva}>Salva PIN</button></>}>
+      footer={<><button className="btn tenue-sabbia" onClick={onClose}><Icon.x /> Annulla</button><button className="btn primary" disabled={inCorso} onClick={salva}><Icon.salva /> Salva PIN</button></>}>
       {campo("pin-attuale", "PIN attuale", attuale, setAttuale, true)}
       {campo("pin-nuovo", `Nuovo PIN (${LUNGHEZZA_PIN} cifre)`, nuovo, setNuovo)}
       {campo("pin-conferma", "Conferma nuovo PIN", conferma, setConferma)}

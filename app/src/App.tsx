@@ -142,7 +142,7 @@ function ConfermaChiusura() {
   if (!chiusura) return null;
   return (
     <Modal title="Chiudere il programma?" onClose={() => confermaChiusura(false)}
-      footer={<><button className="btn primary" autoFocus onClick={() => confermaChiusura(false)}>No, resta</button><button className="btn" onClick={() => confermaChiusura(true)}>Sì, chiudi</button></>}>
+      footer={<><button className="btn primary" autoFocus onClick={() => confermaChiusura(false)}><Icon.back /> No, resta</button><button className="btn tenue-sabbia" onClick={() => confermaChiusura(true)}><Icon.x /> Sì, chiudi</button></>}>
       <p style={{ margin: 0 }}>
         {salvataggio.stato === "errore"
           ? "Attenzione: l'ultima modifica non risulta salvata. Chiudendo, il programma riprova a salvarla."

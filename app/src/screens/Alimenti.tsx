@@ -188,7 +188,7 @@ function SchedaAlimento({ a, usatoIn, onClose, onCambia, onElimina }: {
           {a.nascosto
             ? <button className="btn tenue-sabbia" onClick={() => { onCambia((x) => ({ ...x, nascosto: false })); toast("Alimento di nuovo visibile"); }}><Icon.occhio /> Mostra di nuovo</button>
             : <button className="btn tenue-sabbia" title="Toglie l'alimento dalla lista e dalla ricerca nelle diete" onClick={() => setConferma("nascondi")}><Icon.occhioChiuso /> Nascondi alimento…</button>}
-          {!crea && <button className="btn danger" disabled={usatoIn > 0} title={usatoIn > 0 ? "È usato in una dieta: toglilo prima da lì" : undefined} onClick={() => setConferma("elimina")}>Elimina</button>}
+          {!crea && <button className="btn danger" disabled={usatoIn > 0} title={usatoIn > 0 ? "È usato in una dieta: toglilo prima da lì" : undefined} onClick={() => setConferma("elimina")}><Icon.cestino /> Elimina</button>}
         </div>
         <button className="btn primary" onClick={onClose}><Icon.x /> Chiudi la scheda</button>
       </>}>
@@ -270,19 +270,19 @@ function SchedaAlimento({ a, usatoIn, onClose, onCambia, onElimina }: {
 
       {conferma === "ripristina" && createPortal(
         <Modal title="Ripristinare i dati originali?" onClose={() => setConferma(null)}
-          footer={<><button className="btn" onClick={() => setConferma(null)}>Annulla</button><button className="btn primary" onClick={() => void ripristinaOra()}>Ripristina</button></>}>
+          footer={<><button className="btn tenue-sabbia" onClick={() => setConferma(null)}><Icon.x /> Annulla</button><button className="btn tenue-cielo" onClick={() => void ripristinaOra()}><Icon.ripristina /> Ripristina</button></>}>
           <p style={{ margin: 0 }}>Tutti i valori di <b>{a.nome}</b> tornano quelli delle tabelle CREA. Le modifiche fatte a mano si perdono (resta «Annulla» subito dopo).</p>
         </Modal>, document.body)}
       {conferma === "nascondi" && createPortal(
         <Modal title="Nascondere l'alimento?" onClose={() => setConferma(null)}
-          footer={<><button className="btn primary" onClick={() => setConferma(null)}>No, lascialo visibile</button>
-            <button className="btn" onClick={() => { onCambia((x) => ({ ...x, nascosto: true })); setConferma(null); toast("Alimento nascosto: lo ritrovi con «Mostra nascosti»"); }}>Sì, nascondi</button></>}>
+          footer={<><button className="btn primary" onClick={() => setConferma(null)}><Icon.back /> No, lascialo visibile</button>
+            <button className="btn tenue-sabbia" onClick={() => { onCambia((x) => ({ ...x, nascosto: true })); setConferma(null); toast("Alimento nascosto: lo ritrovi con «Mostra nascosti»"); }}><Icon.occhioChiuso /> Sì, nascondi</button></>}>
           <p style={{ marginTop: 0 }}><b>{a.nome}</b> non comparirà più nella lista degli alimenti e nella ricerca delle diete.</p>
           <p className="small muted" style={{ marginBottom: 0 }}>Non si perde niente: si rimette visibile con «Mostra nascosti» nella pagina Alimenti. Le diete che lo usano già restano come sono.</p>
         </Modal>, document.body)}
       {conferma === "elimina" && createPortal(
         <Modal title="Eliminare l'alimento?" onClose={() => setConferma(null)}
-          footer={<><button className="btn" onClick={() => setConferma(null)}>Annulla</button><button className="btn primary" style={{ background: "var(--danger)", borderColor: "var(--danger)" }} onClick={onElimina}>Elimina</button></>}>
+          footer={<><button className="btn primary" onClick={() => setConferma(null)}><Icon.back /> No, tienilo</button><button className="btn danger" onClick={onElimina}><Icon.cestino /> Elimina</button></>}>
           <p style={{ margin: 0 }}>Vuoi eliminare <b>{a.nome}</b>? Non è usato in nessuna dieta.</p>
         </Modal>, document.body)}
     </Modal>,
@@ -311,7 +311,7 @@ function FormAlimento({ iniziale, categorie, esistenti, onClose, onSave }: {
 
   return (
     <Modal title={iniziale ? "Modifica alimento" : "Nuovo alimento"} onClose={onClose} medio
-      footer={<><button className="btn" onClick={onClose}>Annulla</button><button className="btn primary" disabled={!valido} onClick={salva}>Salva</button></>}>
+      footer={<><button className="btn tenue-sabbia" onClick={onClose}><Icon.x /> Annulla</button><button className="btn primary" disabled={!valido} onClick={salva}><Icon.salva /> Salva</button></>}>
       <div className="grid g2">
         <div className="field" style={{ gridColumn: "1 / -1" }}><label>Nome</label>
           <input className="input" autoFocus value={f.nome} onChange={set("nome")} />

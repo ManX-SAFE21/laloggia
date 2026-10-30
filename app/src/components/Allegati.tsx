@@ -88,7 +88,7 @@ export function Allegati({ c, aggiorna }: { c: Cliente; aggiorna: (f: (c: Client
       onDrop={rilascia}>
       <div className="card-head">
         <h2>Allegati</h2>
-        <button className="btn sm" onClick={() => scegli.current?.click()}><Icon.plus /> Aggiungi PDF o foto</button>
+        <button className="btn sm tenue-salvia" onClick={() => scegli.current?.click()}><Icon.plus /> Aggiungi PDF o foto</button>
         <input ref={scegli} type="file" multiple accept=".pdf,image/png,image/jpeg,image/webp" style={{ display: "none" }}
           onChange={(e) => { void aggiungi([...(e.target.files ?? [])]); e.target.value = ""; }} />
       </div>
@@ -111,13 +111,13 @@ export function Allegati({ c, aggiorna }: { c: Cliente; aggiorna: (f: (c: Client
                 {daEliminare === a.id ? (
                   <>
                     <span className="small">Eliminare? </span>
-                    <button className="btn sm danger" onClick={() => elimina(a.id)}>Sì, elimina</button>{" "}
-                    <button className="btn sm" onClick={() => setDaEliminare(null)}>No</button>
+                    <button className="btn sm danger" onClick={() => elimina(a.id)}><Icon.cestino /> Sì, elimina</button>{" "}
+                    <button className="btn sm primary" onClick={() => setDaEliminare(null)}><Icon.back /> No, tienilo</button>
                   </>
                 ) : (
                   <>
-                    {a.conFile && <button className="btn sm ghost" onClick={() => void salvaCopia(a)}>Salva una copia…</button>}{" "}
-                    <button className="btn sm ghost danger" onClick={() => setDaEliminare(a.id)}>Elimina</button>
+                    {a.conFile && <button className="btn sm" onClick={() => void salvaCopia(a)}><Icon.scarica /> Salva una copia…</button>}{" "}
+                    <button className="btn sm danger" onClick={() => setDaEliminare(a.id)}><Icon.cestino /> Elimina</button>
                   </>
                 )}
               </td>
@@ -195,13 +195,13 @@ function VisoreAllegato({ a, onClose, onSalvaCopia }: { a: Allegato; onClose: ()
 
   return createPortal(
     <Modal title={titoloAllegato(a)} onClose={onClose} largo pieno={pieno}
-      footer={<><button className="btn" onClick={onSalvaCopia}>Salva una copia…</button><button className="btn primary" onClick={onClose}>Chiudi</button></>}>
+      footer={<><button className="btn" onClick={onSalvaCopia}><Icon.scarica /> Salva una copia…</button><button className="btn tenue-salvia" onClick={onClose}><Icon.x /> Chiudi</button></>}>
       <div className="visore-barra">
-        <button className="btn sm" title="Rimpicciolisci" onClick={() => setZoom((z) => prossimoZoom(z, -1, ZOOM_VISORE_MIN, ZOOM_VISORE_MAX))}>−</button>
+        <button className="btn sm tenue-salvia" title="Rimpicciolisci" onClick={() => setZoom((z) => prossimoZoom(z, -1, ZOOM_VISORE_MIN, ZOOM_VISORE_MAX))}><Icon.zoomMeno /></button>
         <span className="num foglio-zoom" title="Ingrandimento (100% = larghezza della finestra). Clic: torna a 100%" onClick={() => setZoom(1)}>{Math.round(zoom * 100)}%</span>
-        <button className="btn sm" title="Ingrandisci il documento" onClick={() => setZoom((z) => prossimoZoom(z, 1, ZOOM_VISORE_MIN, ZOOM_VISORE_MAX))}>+</button>
-        <button className="btn sm" style={{ marginLeft: "auto" }} title={pieno ? "Torna alla finestra normale" : "La finestra occupa tutto il programma"} onClick={() => setPieno((p) => !p)}>
-          {pieno ? "⤡ Riduci" : "⤢ Ingrandisci"}
+        <button className="btn sm tenue-salvia" title="Ingrandisci il documento" onClick={() => setZoom((z) => prossimoZoom(z, 1, ZOOM_VISORE_MIN, ZOOM_VISORE_MAX))}><Icon.zoomPiu /></button>
+        <button className="btn sm tenue-salvia" style={{ marginLeft: "auto" }} title={pieno ? "Torna alla finestra normale" : "La finestra occupa tutto il programma"} onClick={() => setPieno((p) => !p)}>
+          {pieno ? <><Icon.riduci /> Riduci</> : <><Icon.espandi /> Ingrandisci</>}
         </button>
       </div>
       {errore && <p className="err">{errore}</p>}

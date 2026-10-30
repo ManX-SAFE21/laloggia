@@ -1,7 +1,7 @@
 import { OGGI, fmtData } from "../data";
 import { riassuntoBackup } from "../backup";
 import { useStore } from "../store";
-import { iniziali } from "../components/ui";
+import { Icon, iniziali } from "../components/ui";
 
 export function Oggi() {
   const { clienti, appuntamenti, vai, backup, backupInCorso, impostazioni } = useStore();
@@ -19,7 +19,7 @@ export function Oggi() {
           <h1>Buongiorno</h1>
           <p>Martedì 20 ottobre 2026 · {diOggi.length} visite in programma oggi</p>
         </div>
-        <button className="btn primary" onClick={() => vai({ nome: "agenda" })}>Apri agenda</button>
+        <button className="btn primary" onClick={() => vai({ nome: "agenda" })}><Icon.calendar /> Apri agenda</button>
       </div>
 
       <div className="grid g4" style={{ marginBottom: 16 }}>
@@ -62,7 +62,7 @@ export function Oggi() {
               <h3>Consenso privacy da raccogliere</h3>
               <p className="small muted" style={{ margin: "4px 0 10px" }}>Questi clienti non hanno ancora un consenso registrato.</p>
               {senzaConsenso.map((c) => (
-                <button key={c.id} className="btn sm" style={{ marginRight: 6 }} onClick={() => vai({ nome: "cliente", id: c.id, tab: "privacy" })}>{c.nome} {c.cognome}</button>
+                <button key={c.id} className="btn sm tenue-salvia" style={{ marginRight: 6 }} onClick={() => vai({ nome: "cliente", id: c.id, tab: "privacy" })}><Icon.users /> {c.nome} {c.cognome}</button>
               ))}
             </div>
           )}
