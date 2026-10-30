@@ -1,8 +1,10 @@
 import { useMemo, useState } from "react";
 import { alimentoById, fmtData, iconaDi, nuovoId, totali } from "../data";
 import { useStore } from "../store";
+import { normalizza } from "../listaClienti";
 import { Icon } from "../components/ui";
 import { apriStampa } from "../stampa";
+import { FONTE_CREA } from "../alimenti";
 import { Alimento, Dieta, GIORNI, PASTI, Pasto, VoceDieta } from "../types";
 
 const r0 = (n: number) => Math.round(n);
@@ -107,7 +109,8 @@ function PastoBox({ pasto, voci, set }: { pasto: Pasto; voci: VoceDieta[]; set: 
   const risultati = useMemo(() => {
     const s = q.trim().toLowerCase();
     if (!s) return [];
-    return alimenti.filter((a) => a.nome.toLowerCase().includes(s) || a.categoria.toLowerCase().includes(s)).slice(0, 8);
+    const parole = normalizza(s).split(/\s+/).filter(Boolean);
+    return alimenti.filter((a) => !a.nascosto && parole.every((p) => normalizza(`${a.nome} ${a.categoria}`).includes(p))).slice(0, 8);
   }, [q, alimenti]);
   const aggiungi = (alimentoId: string) => { set((v) => [...v, { id: nuovoId("v"), alimentoId, grammi: 100 }]); setQ(""); };
 
@@ -184,6 +187,7 @@ export function StampaDieta({ dieta, nomeCliente, alimenti }: { dieta: Dieta; no
         </div>
       ))}
       {dieta.noteGenerali && (<><h3 style={{ marginTop: 16 }}>Indicazioni</h3><p>{dieta.noteGenerali}</p></>)}
+      <p className="fonte-dati">{FONTE_CREA}</p>
     </div>
   );
 }

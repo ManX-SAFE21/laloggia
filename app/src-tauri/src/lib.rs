@@ -47,6 +47,7 @@ fn db_apri(app: tauri::AppHandle, archivio: tauri::State<Archivio>) -> Result<Va
         converti_vecchio_archivio(&cartella)?;
         let mut d = db::Db::apri(&cartella.join("gestionale.db"), None).map_err(|e| e.to_string())?;
         d.semina_se_vuoto(db::DATI_ESEMPIO).map_err(|e| e.to_string())?;
+        d.alimenti_crea_se_mancano(db::ALIMENTI_CREA, db::DATI_ESEMPIO).map_err(|e| e.to_string())?;
         *g = Some(d);
     }
     let d = g.as_ref().unwrap();
@@ -279,6 +280,23 @@ async fn backup_ripristina(app: tauri::AppHandle, archivio: tauri::State<'_, Arc
     Ok(serde_json::json!({ "clienti": clienti, "copiaDiSicurezza": sicurezza.display().to_string() }))
 }
 
+/// Le tabelle CREA lette una volta sola (servono per «Ripristina ai dati originali» e per i dettagli della fonte).
+fn tabelle_crea() -> Result<&'static Value, String> {
+    static TABELLE: std::sync::OnceLock<Result<Value, String>> = std::sync::OnceLock::new();
+    TABELLE.get_or_init(|| serde_json::from_str(db::ALIMENTI_CREA).map_err(|e| e.to_string()))
+        .as_ref().map_err(|e| e.clone())
+}
+
+/// L'alimento CREA originale (con metodo di analisi e referenza bibliografica di ogni valore).
+#[tauri::command]
+fn alimento_originale(codice: String) -> Result<Value, String> {
+    let t = tabelle_crea()?;
+    let a = t["alimenti"].as_array().and_then(|l| l.iter().find(|a| a["codiceCrea"] == codice.as_str()))
+        .ok_or_else(|| format!("alimento CREA {codice} non trovato"))?;
+    let riferimenti = t["riferimenti"].as_array().cloned().unwrap_or_default();
+    Ok(serde_json::json!({ "alimento": a, "riferimenti": riferimenti, "fonte": t["fonte"] }))
+}
+
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
@@ -286,7 +304,7 @@ pub fn run() {
         .plugin(tauri_plugin_dialog::init())
         .manage(Archivio(Mutex::new(None)))
         .invoke_handler(tauri::generate_handler![db_apri, db_salva, db_elimina, allegato_salva_file, allegato_leggi, allegato_esporta, stato_cifratura_disco,
-            backup_esegui, backup_stato, backup_password, backup_ripristina, cartella_esiste])
+            backup_esegui, backup_stato, backup_password, backup_ripristina, cartella_esiste, alimento_originale])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

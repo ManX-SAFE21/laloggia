@@ -115,16 +115,40 @@ export interface Cliente {
   attivo: boolean;
 }
 
+export type GruppoNutriente = "macro" | "minerali" | "vitamine" | "acidiGrassi" | "aminoacidi" | "altri";
+
+/** Un valore nutrizionale per 100 g di parte edibile (acidi grassi in % dei lipidi, aminoacidi in % delle proteine). */
+export interface ValoreNutriente {
+  gruppo: GruppoNutriente;
+  chiave: string; // nome stabile per le formule, es. "energia_kcal", "ferro"
+  nome: string; // come nelle tabelle CREA, es. "Ferro (mg)"
+  unita: string;
+  v?: number; // valore; se manca c'è il testo (t) o il dato non è disponibile
+  t?: string; // "tr" (tracce) o testo (es. aminoacido limitante)
+  min?: number;
+  max?: number;
+  origine?: string; // A analitico, B bibliografico, C calcolato, S stimato
+}
+
 export interface Alimento {
-  id: string;
+  id: string; // "crea-000800" per gli alimenti CREA
   nome: string;
   categoria: string;
   icona?: string; // emoji; se manca si usa quella della categoria
-  // valori per 100 g
+  // valori principali per 100 g (le diete usano questi)
   kcal: number;
   proteine: number;
   carboidrati: number;
   grassi: number;
+  fonte?: "crea" | "studio"; // da dove viene: tabelle CREA o aggiunto a mano dallo studio
+  codiceCrea?: string;
+  nomeInglese?: string;
+  parteEdibile?: number; // %
+  porzione?: number; // g
+  porzioneTesto?: string;
+  valori?: ValoreNutriente[]; // tutti i valori (pulsante «Dettagli»)
+  modificato?: boolean; // un valore CREA è stato cambiato a mano: si può ripristinare
+  nascosto?: boolean; // tolto dalla lista e dalla ricerca nelle diete (gli alimenti CREA non si cancellano)
 }
 
 export interface VoceDieta {

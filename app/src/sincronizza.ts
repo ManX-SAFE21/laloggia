@@ -38,10 +38,20 @@ function elementi(d: DatiArchivio): Record<TipoDato, [string, unknown][]> {
   };
 }
 
+// Solo per gli alimenti (oltre 800, pieni di valori): il testo JSON si ricorda per ogni oggetto, così quelli non
+// toccati non si ritrasformano a ogni modifica. Si cambiano solo creando un oggetto nuovo (src/alimenti.ts).
+const giaFatti = new WeakMap<object, string>();
+const json = (tipo: TipoDato, x: unknown): string => {
+  if (tipo !== "alimento" || typeof x !== "object" || x === null) return JSON.stringify(x);
+  let t = giaFatti.get(x);
+  if (t === undefined) { t = JSON.stringify(x); giaFatti.set(x, t); }
+  return t;
+};
+
 export function fotografa(d: DatiArchivio): Fotografia {
   const e = elementi(d);
   return Object.fromEntries(
-    (Object.keys(e) as TipoDato[]).map((t) => [t, new Map(e[t].map(([id, x]) => [id, JSON.stringify(x)]))]),
+    (Object.keys(e) as TipoDato[]).map((t) => [t, new Map(e[t].map(([id, x]) => [id, json(t, x)]))]),
   ) as Fotografia;
 }
 
@@ -55,7 +65,7 @@ export function differenze(prima: Fotografia, ora: DatiArchivio): Operazione[] {
     const visti = new Set<string>();
     for (const [id, x] of e[tipo]) {
       visti.add(id);
-      if (vecchi.get(id) !== JSON.stringify(x)) salva.push({ azione: "salva", tipo, id, dati: x });
+      if (vecchi.get(id) !== json(tipo, x)) salva.push({ azione: "salva", tipo, id, dati: x });
     }
     for (const id of vecchi.keys()) if (!visti.has(id)) elimina.push({ azione: "elimina", tipo, id });
   }

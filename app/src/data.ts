@@ -1,6 +1,6 @@
 // DATI INVENTATI per il mockup. Nessun cliente reale.
-// I valori nutrizionali sono indicativi: nel programma vero si userà
-// una banca dati ufficiale (es. tabelle CREA), da concordare.
+// I valori nutrizionali sono quelli delle tabelle CREA (aggiornamento 2019), vedi src/alimenti.ts.
+import ALIMENTI_DEMO from "./alimenti-demo.json";
 import { Alimento, Appuntamento, Bia, Cliente, Dieta, ModelloPiano, PASTI, Pasto, PianoAlimentare, SchedaPrimaVisita, SezionePiano, Settimana, Visita, VoceDieta, Impostazioni } from "./types";
 import { MODELLO_1450 } from "./modelli/piano1450";
 
@@ -11,38 +11,9 @@ export const IMPOSTAZIONI_PREDEFINITE: Impostazioni = { mesiRichiamo: 2, cartell
 // Versione dell'informativa: SEGNAPOSTO finché non arriva il modulo ufficiale dello studio.
 export const VERSIONE_INFORMATIVA = "v0 (segnaposto)";
 
-export const ALIMENTI: Alimento[] = [
-  { id: "a1", icona: "🥛", nome: "Latte parzialmente scremato", categoria: "Latte e derivati", kcal: 46, proteine: 3.5, carboidrati: 5.0, grassi: 1.5 },
-  { id: "a2", icona: "🥣", nome: "Yogurt greco 0%", categoria: "Latte e derivati", kcal: 57, proteine: 10.0, carboidrati: 4.0, grassi: 0.2 },
-  { id: "a3", icona: "🧀", nome: "Parmigiano Reggiano", categoria: "Latte e derivati", kcal: 392, proteine: 33.0, carboidrati: 0.0, grassi: 28.0 },
-  { id: "a4", nome: "Ricotta vaccina", categoria: "Latte e derivati", kcal: 146, proteine: 8.8, carboidrati: 3.5, grassi: 10.9 },
-  { id: "a5", icona: "🌾", nome: "Fiocchi d'avena", categoria: "Cereali", kcal: 372, proteine: 13.0, carboidrati: 60.0, grassi: 7.0 },
-  { id: "a6", icona: "🍞", nome: "Pane integrale", categoria: "Cereali", kcal: 224, proteine: 7.5, carboidrati: 41.0, grassi: 1.3 },
-  { id: "a7", icona: "🍝", nome: "Pasta di semola", categoria: "Cereali", kcal: 353, proteine: 12.0, carboidrati: 72.0, grassi: 1.4 },
-  { id: "a8", icona: "🍚", nome: "Riso integrale", categoria: "Cereali", kcal: 337, proteine: 7.5, carboidrati: 74.0, grassi: 1.9 },
-  { id: "a9", nome: "Fette biscottate integrali", categoria: "Cereali", kcal: 390, proteine: 11.0, carboidrati: 70.0, grassi: 6.0 },
-  { id: "a10", icona: "🍗", nome: "Petto di pollo", categoria: "Carne", kcal: 100, proteine: 23.0, carboidrati: 0.0, grassi: 0.8 },
-  { id: "a11", icona: "🦃", nome: "Fesa di tacchino", categoria: "Carne", kcal: 107, proteine: 24.0, carboidrati: 0.0, grassi: 1.2 },
-  { id: "a12", nome: "Bresaola", categoria: "Carne", kcal: 151, proteine: 32.0, carboidrati: 0.0, grassi: 2.6 },
-  { id: "a13", icona: "🐟", nome: "Salmone fresco", categoria: "Pesce", kcal: 185, proteine: 18.4, carboidrati: 0.0, grassi: 12.0 },
-  { id: "a14", icona: "🐟", nome: "Merluzzo", categoria: "Pesce", kcal: 71, proteine: 17.0, carboidrati: 0.0, grassi: 0.3 },
-  { id: "a15", icona: "🐟", nome: "Tonno al naturale", categoria: "Pesce", kcal: 103, proteine: 25.0, carboidrati: 0.0, grassi: 0.3 },
-  { id: "a16", icona: "🥚", nome: "Uovo intero", categoria: "Uova", kcal: 128, proteine: 12.4, carboidrati: 0.0, grassi: 8.7 },
-  { id: "a17", nome: "Ceci secchi", categoria: "Legumi", kcal: 334, proteine: 21.0, carboidrati: 47.0, grassi: 6.3 },
-  { id: "a18", nome: "Lenticchie secche", categoria: "Legumi", kcal: 325, proteine: 23.0, carboidrati: 51.0, grassi: 2.5 },
-  { id: "a19", icona: "🥒", nome: "Zucchine", categoria: "Verdura", kcal: 11, proteine: 1.3, carboidrati: 1.4, grassi: 0.1 },
-  { id: "a20", icona: "🥗", nome: "Insalata mista", categoria: "Verdura", kcal: 19, proteine: 1.5, carboidrati: 2.5, grassi: 0.3 },
-  { id: "a21", icona: "🍅", nome: "Pomodori", categoria: "Verdura", kcal: 17, proteine: 1.0, carboidrati: 3.0, grassi: 0.2 },
-  { id: "a22", icona: "🥦", nome: "Broccoli", categoria: "Verdura", kcal: 27, proteine: 3.0, carboidrati: 3.1, grassi: 0.4 },
-  { id: "a23", icona: "🍎", nome: "Mela", categoria: "Frutta", kcal: 45, proteine: 0.3, carboidrati: 10.5, grassi: 0.1 },
-  { id: "a24", icona: "🍌", nome: "Banana", categoria: "Frutta", kcal: 65, proteine: 1.2, carboidrati: 15.4, grassi: 0.3 },
-  { id: "a25", icona: "🥝", nome: "Kiwi", categoria: "Frutta", kcal: 44, proteine: 1.2, carboidrati: 9.0, grassi: 0.6 },
-  { id: "a26", icona: "🍓", nome: "Frutti di bosco", categoria: "Frutta", kcal: 40, proteine: 0.9, carboidrati: 7.0, grassi: 0.3 },
-  { id: "a27", nome: "Mandorle", categoria: "Frutta secca", kcal: 603, proteine: 22.0, carboidrati: 4.6, grassi: 55.0 },
-  { id: "a28", nome: "Noci", categoria: "Frutta secca", kcal: 689, proteine: 14.3, carboidrati: 5.1, grassi: 68.1 },
-  { id: "a29", icona: "🥄", nome: "Olio extravergine d'oliva", categoria: "Condimenti", kcal: 899, proteine: 0.0, carboidrati: 0.0, grassi: 99.9 },
-  { id: "a30", icona: "🍯", nome: "Miele", categoria: "Condimenti", kcal: 304, proteine: 0.6, carboidrati: 80.3, grassi: 0.0 },
-];
+// Alimenti delle tabelle CREA usati dalla dieta di esempio (src/alimenti-demo.json, scritto da scripts/scarica-crea.py):
+// servono all'anteprima nel browser e ai test. Nel programma l'archivio ha tutte le tabelle CREA.
+export const ALIMENTI: Alimento[] = ALIMENTI_DEMO as Alimento[];
 
 // Codici unici anche fra un avvio e l'altro (col database un codice ripetuto sovrascriverebbe un dato salvato):
 // prefisso + istante + contatore + parte casuale.
@@ -54,11 +25,11 @@ const v = (alimentoId: string, grammi: number): VoceDieta => ({ id: nuovoId("v")
 
 function giornoTipo(): Record<Pasto, VoceDieta[]> {
   return {
-    Colazione: [v("a2", 150), v("a5", 40), v("a26", 80)],
-    Spuntino: [v("a23", 150)],
-    Pranzo: [v("a7", 80), v("a21", 150), v("a3", 10), v("a29", 10)],
-    Merenda: [v("a27", 15)],
-    Cena: [v("a13", 150), v("a22", 200), v("a6", 50), v("a29", 10)],
+    Colazione: [v("crea-150030", 150), v("crea-003030", 40), v("crea-007760", 80)],
+    Spuntino: [v("crea-007120", 150)],
+    Pranzo: [v("crea-000800", 80), v("crea-006610", 150), v("crea-166000", 10), v("crea-009210", 10)],
+    Merenda: [v("crea-008540", 15)],
+    Cena: [v("crea-122400", 150), v("crea-005110", 200), v("crea-000550", 50), v("crea-009210", 10)],
   };
 }
 
@@ -74,9 +45,9 @@ function settimanaDemo(): Settimana {
   const s = settimanaVuota();
   for (let g = 0; g < 7; g++) s[g] = giornoTipo();
   // un po' di varietà
-  s[1].Cena = [v("a10", 150), v("a19", 200), v("a8", 60), v("a29", 10)];
-  s[3].Pranzo = [v("a18", 70), v("a20", 100), v("a6", 40), v("a29", 10)];
-  s[5].Cena = [v("a14", 200), v("a20", 150), v("a6", 60), v("a29", 10)];
+  s[1].Cena = [v("crea-106500", 150), v("crea-005730", 200), v("crea-000110", 60), v("crea-009210", 10)];
+  s[3].Pranzo = [v("crea-004500", 70), v("crea-005410", 100), v("crea-000550", 40), v("crea-009210", 10)];
+  s[5].Cena = [v("crea-121410", 200), v("crea-005410", 150), v("crea-000550", 60), v("crea-009210", 10)];
   return s;
 }
 
@@ -314,8 +285,12 @@ export const APPUNTAMENTI: Appuntamento[] = [
 // --- utilità ---
 // Emoji scelte tra quelle disponibili sia su Windows 10 sia su Windows 11.
 export const ICONE_CATEGORIA: Record<string, string> = {
-  "Latte e derivati": "🥛", Cereali: "🌾", Carne: "🥩", Pesce: "🐟", Uova: "🥚", Legumi: "🌱",
-  Verdura: "🥗", Frutta: "🍎", "Frutta secca": "🥜", Condimenti: "🥄",
+  // categorie delle tabelle CREA
+  "Cereali e derivati": "🌾", Legumi: "🌱", "Verdure e ortaggi": "🥗", Frutta: "🍎",
+  "Frutta secca a guscio e semi oleaginosi": "🥜", "Carni fresche": "🥩", "Carni trasformate e conservate": "🥓",
+  "Fast-food a base di carne": "🍔", Frattaglie: "🍖", "Prodotti della pesca": "🐟", "Latte e yogurt": "🥛",
+  "Formaggi e latticini": "🧀", Uova: "🥚", "Oli e grassi": "🥄", Dolci: "🍰", "Prodotti vari": "🍽",
+  "Bevande alcoliche": "🍷", "Alimenti Etnici": "🍜", "Ricette Italiane": "🍝", "Alimenti Tradizionali": "🍲",
 };
 // Si toglie il selettore di emoji a colori (U+FE0F): il set monocromatico ha il solo simbolo base.
 export const iconaDi = (a: Alimento) => (a.icona || ICONE_CATEGORIA[a.categoria] || "🍽").replace(/\uFE0F/g, "");

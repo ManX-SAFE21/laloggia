@@ -12,7 +12,7 @@ try {
     modelli: d.MODELLI,
     piani: d.PIANI,
     appuntamenti: d.APPUNTAMENTI,
-    alimenti: d.ALIMENTI,
+    alimenti: [], // gli alimenti veri sono le tabelle CREA (src-tauri/alimenti-crea.json), messe dal programma
     diete: d.DIETE,
   };
   writeFileSync(new URL("../src-tauri/dati-esempio.json", import.meta.url), JSON.stringify(dati, null, 1) + "\n");

@@ -292,6 +292,19 @@ salvia (`#a9ba98`), titoli con grazie. Vedi le variabili in `mockup/src/styles.c
     «Da richiamare dopo N mesi» in Impostazioni, salvato nell'archivio (tabella `impostazioni`, tipo «impostazione»).
     Archivia in alto nella scheda; cliente archiviato = scheda grigia. Cancellazione: due conferme + frase «sì, sono sicura».
   - Prove con tanti dati: 150 clienti inventati con id `fx-...` (si tolgono cancellando quei clienti: cascata).
+  - **Alimenti CREA (2026-10-30)**: fonte = CREA Tabelle di composizione degli alimenti, agg. 2019
+    (alimentinutrizione.it: uso anche commerciale citando la fonte; il BDA-IEO è stato scartato perché vieta l'uso
+    commerciale senza autorizzazione scritta). `scripts/scarica-crea.py` le ha scaricate UNA volta (832 alimenti,
+    107 tipi di valori, 7-73 per alimento) in `src-tauri/alimenti-crea.json` = «dati originali» inclusi nel programma
+    (+ `src/alimenti-demo.json`: i 18 della dieta di esempio, per anteprima e test). Nessun aggiornamento automatico:
+    alimenti nuovi o modifiche si fanno a mano dalla pagina Alimenti. Al primo avvio il Rust
+    (`alimenti_crea_se_mancano`) toglie gli alimenti di prova e mette i CREA (id `crea-<codice>`), una volta sola.
+    Pagina Alimenti: vista semplice (kcal, proteine, carboidrati disponibili, lipidi) + «Dettagli» con tutti i valori
+    (origine A/B/C/S; metodo e riferimento nel file originale, comando `alimento_originale`); ogni valore si cambia
+    a mano (`src/alimenti.ts`, `cambiaValore`), «Ripristina ai dati originali» per alimento intero; i CREA si
+    nascondono (non si cancellano), quelli «dello studio» si eliminano se non usati. Chiavi stabili per le formule
+    (`energia_kcal`, `proteine`, `ferro`…; `valore(alimento, chiave)`). Crediti CREA in fondo a piano e dieta stampati.
+    Prossimo: pagina «Formule» in Impostazioni (le formule le darà Manuxxx).
   - **Data di oggi ancora fissa** (`OGGI` in `src/data.ts`, viene dal mockup): da mettere reale prima dell'uso vero.
   - `npm test`: test automatici (vitest) di `src/bia.test.ts`, `src/misure.test.ts` e `src/modelli.test.ts`
     (quest'ultimo controlla le regole modelli/piani). Solo dati inventati.

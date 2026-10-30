@@ -406,3 +406,11 @@ h3 { font-size: 15px; font-family: var(--font); font-weight: 600; }
 .dest-stato.errore { color: #a3392a; }
 .password-grande { font-family: Consolas, "Courier New", monospace; font-size: 26px; letter-spacing: 1px; padding: 14px; margin: 12px 0; border: 2px dashed #6c7559; border-radius: 10px; text-align: center; word-break: break-all; }
 .foglio-password ol { padding-left: 20px; }
+/* Alimenti CREA */
+.riga-nascosta td { opacity: 0.55; }
+.valori-alimento { table-layout: fixed; }
+.valori-alimento td, .valori-alimento th { padding: 5px 12px; }
+.valori-alimento th:first-child { width: 46%; }
+.valori-alimento td:last-child, .valori-alimento th:last-child { white-space: nowrap; }
+.scheda-alimento { max-height: 68vh; overflow-y: auto; }
+.fonte-dati { margin-top: 14px; font-size: 10px; color: #777; }

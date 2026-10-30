@@ -1,84 +1,104 @@
-import { useMemo, useState } from "react";
+// Alimenti: tabelle CREA (aggiornamento 2019, dati originali inclusi nel programma) + alimenti aggiunti dallo studio.
+// Vista semplice (kcal, proteine, carboidrati, grassi); «Dettagli» mostra tutti i valori. Ogni valore si cambia a
+// mano; «Ripristina ai dati originali» rimette quelli CREA. Gli alimenti CREA non si cancellano: si nascondono.
+import { useEffect, useMemo, useState } from "react";
+import { createPortal } from "react-dom";
 import { ELENCO_ICONE, ICONE_CATEGORIA, iconaDi, nuovoId } from "../data";
-import { useStore } from "../store";
+import { inTauri, useStore } from "../store";
 import { Icon, Modal } from "../components/ui";
-import { Alimento } from "../types";
+import { Alimento, ValoreNutriente } from "../types";
+import { normalizza } from "../listaClienti";
+import { AlimentoConFonte, FONTE_CREA, GRUPPI, ORIGINE, cambiaValore, mostra, ripristina, senzaFonte } from "../alimenti";
 
 const num = (s: string) => Number(s.replace(",", "."));
 const ok = (s: string) => s.trim() !== "" && Number.isFinite(num(s)) && num(s) >= 0;
+const MACRO_VISTA: [keyof Alimento & ("kcal" | "proteine" | "carboidrati" | "grassi"), string, string][] = [
+  ["kcal", "Energia", "kcal"], ["proteine", "Proteine", "g"], ["carboidrati", "Carboidrati disponibili", "g"], ["grassi", "Lipidi", "g"],
+];
+const CHIAVE_MACRO: Record<string, string> = { kcal: "energia_kcal", proteine: "proteine", carboidrati: "carboidrati_disponibili", grassi: "lipidi" };
+const cifra = (n: number) => String(Math.round(n * 10) / 10).replace(".", ",");
+
+async function originale(codice: string): Promise<{ alimento: AlimentoConFonte; riferimenti: string[] }> {
+  const { invoke } = await import("@tauri-apps/api/core");
+  return invoke("alimento_originale", { codice });
+}
 
 export function Alimenti() {
   const { alimenti, setAlimenti, diete, toast } = useStore();
   const [q, setQ] = useState("");
   const [cat, setCat] = useState("");
-  const [edit, setEdit] = useState<Alimento | "nuovo" | null>(null);
-  const [elimina, setElimina] = useState<Alimento | null>(null);
+  const [nascosti, setNascosti] = useState(false);
+  const [soloModificati, setSoloModificati] = useState(false);
+  const [aperto, setAperto] = useState<string | null>(null); // id dell'alimento nella scheda
+  const [nuovo, setNuovo] = useState(false);
 
-  const categorie = useMemo(() => [...new Set(alimenti.map((a) => a.categoria))].sort(), [alimenti]);
-  const usi = (id: string) =>
-    diete.reduce((n, d) => n + Object.values(d.settimana).reduce((m, giorno) => m + Object.values(giorno).flat().filter((v) => v.alimentoId === id).length, 0), 0);
+  const categorie = useMemo(() => [...new Set(alimenti.map((a) => a.categoria))].sort((a, b) => a.localeCompare(b)), [alimenti]);
   const dieteConAlimento = (id: string) =>
     diete.filter((d) => Object.values(d.settimana).some((giorno) => Object.values(giorno).flat().some((v) => v.alimentoId === id))).length;
 
   const lista = useMemo(() => {
-    const s = q.trim().toLowerCase();
+    const parole = normalizza(q).split(/\s+/).filter(Boolean);
     return alimenti
+      .filter((a) => nascosti || !a.nascosto)
+      .filter((a) => !soloModificati || a.modificato)
       .filter((a) => !cat || a.categoria === cat)
-      .filter((a) => !s || `${a.nome} ${a.categoria}`.toLowerCase().includes(s))
+      .filter((a) => { const t = normalizza(`${a.nome} ${a.categoria} ${a.codiceCrea ?? ""}`); return parole.every((p) => t.includes(p)); })
       .sort((a, b) => a.nome.localeCompare(b.nome));
-  }, [alimenti, q, cat]);
+  }, [alimenti, q, cat, nascosti, soloModificati]);
+  const quantiNascosti = alimenti.filter((a) => a.nascosto).length;
+  const quantiModificati = alimenti.filter((a) => a.modificato).length;
+  const alimentoAperto = alimenti.find((a) => a.id === aperto) ?? null;
 
-  const salva = (a: Alimento) => {
-    const nuovoAlimento = !alimenti.some((x) => x.id === a.id);
-    setAlimenti((l) => (nuovoAlimento ? [...l, a] : l.map((x) => (x.id === a.id ? a : x))));
-    setEdit(null);
-    toast(nuovoAlimento ? "Alimento aggiunto" : "Alimento modificato");
-  };
+  const aggiorna = (id: string, f: (a: Alimento) => Alimento) => setAlimenti((l) => l.map((x) => (x.id === id ? f(x) : x)));
 
   return (
     <div className="page">
       <div className="page-head">
-        <div><h1>Alimenti</h1><p>{alimenti.length} alimenti · valori per 100 g</p></div>
-        <button className="btn primary" onClick={() => setEdit("nuovo")}><Icon.plus /> Nuovo alimento</button>
+        <div><h1>Alimenti</h1><p>{lista.length} di {alimenti.length} alimenti · valori per 100 g di parte edibile</p></div>
+        <button className="btn primary" onClick={() => setNuovo(true)}><Icon.plus /> Nuovo alimento</button>
       </div>
 
-      <div className="row" style={{ marginBottom: 14 }}>
-        <input className="input" style={{ maxWidth: 360 }} placeholder="Cerca un alimento…" value={q} onChange={(e) => setQ(e.target.value)} />
-        <select className="select" style={{ width: 200 }} value={cat} onChange={(e) => setCat(e.target.value)}>
+      <div className="row" style={{ marginBottom: 14, flexWrap: "wrap" }}>
+        <input className="input" style={{ maxWidth: 360 }} placeholder="Cerca per nome, categoria o codice CREA…" value={q}
+          onChange={(e) => setQ(e.target.value)} onKeyDown={(e) => { if (e.key === "Escape") setQ(""); }} />
+        <select className="select" style={{ width: 260 }} value={cat} onChange={(e) => setCat(e.target.value)}>
           <option value="">Tutte le categorie</option>
           {categorie.map((c) => <option key={c}>{c}</option>)}
         </select>
+        <label className="row small" style={{ gap: 6 }}><input type="checkbox" checked={soloModificati} onChange={(e) => setSoloModificati(e.target.checked)} /> Solo modificati ({quantiModificati})</label>
+        <label className="row small" style={{ gap: 6 }}><input type="checkbox" checked={nascosti} onChange={(e) => setNascosti(e.target.checked)} /> Mostra nascosti ({quantiNascosti})</label>
       </div>
 
       <div className="card">
-        <table className="table">
+        <table className="table tabella-fissa">
           <thead>
             <tr>
-              <th>Alimento</th><th>Categoria</th>
+              <th>Alimento</th>
               <th style={{ textAlign: "right" }}>kcal</th>
               <th style={{ textAlign: "right" }}>Proteine</th>
               <th style={{ textAlign: "right" }}>Carboidrati</th>
               <th style={{ textAlign: "right" }}>Grassi</th>
               <th>Nelle diete</th>
-              <th />
             </tr>
           </thead>
           <tbody>
             {lista.map((a) => {
               const n = dieteConAlimento(a.id);
               return (
-                <tr key={a.id} className="click" onClick={() => setEdit(a)}>
-                  <td style={{ fontWeight: 600 }}><span className="ico" style={{ fontSize: 22 }}>{iconaDi(a)}</span>{a.nome}</td>
-                  <td className="muted">{a.categoria}</td>
-                  <td className="num" style={{ textAlign: "right" }}>{a.kcal}</td>
-                  <td className="num" style={{ textAlign: "right" }}>{a.proteine}</td>
-                  <td className="num" style={{ textAlign: "right" }}>{a.carboidrati}</td>
-                  <td className="num" style={{ textAlign: "right" }}>{a.grassi}</td>
-                  <td className="small muted">{n === 0 ? "—" : `${n} ${n === 1 ? "dieta" : "diete"}`}</td>
-                  <td style={{ textAlign: "right", whiteSpace: "nowrap" }} onClick={(e) => e.stopPropagation()}>
-                    <button className="btn sm" onClick={() => setEdit(a)}>Modifica</button>{" "}
-                    <button className="btn sm danger" onClick={() => setElimina(a)}>Elimina</button>
+                <tr key={a.id} className={"click" + (a.nascosto ? " riga-nascosta" : "")} onClick={() => setAperto(a.id)}>
+                  <td>
+                    <div style={{ fontWeight: 600 }}><span className="ico" style={{ fontSize: 22 }}>{iconaDi(a)}</span>{a.nome}
+                      {a.modificato && <span className="badge warn" style={{ marginLeft: 6 }}>modificato</span>}
+                      {a.fonte === "studio" && <span className="badge" style={{ marginLeft: 6 }}>dello studio</span>}
+                      {a.nascosto && <span className="badge" style={{ marginLeft: 6 }}>nascosto</span>}
+                    </div>
+                    <div className="small muted" style={{ marginLeft: 30 }}>{a.categoria}{a.codiceCrea ? ` · CREA ${a.codiceCrea}` : ""}</div>
                   </td>
+                  <td className="num" style={{ textAlign: "right" }}>{cifra(a.kcal)}</td>
+                  <td className="num" style={{ textAlign: "right" }}>{cifra(a.proteine)}</td>
+                  <td className="num" style={{ textAlign: "right" }}>{cifra(a.carboidrati)}</td>
+                  <td className="num" style={{ textAlign: "right" }}>{cifra(a.grassi)}</td>
+                  <td className="small muted">{n === 0 ? "—" : `${n} ${n === 1 ? "dieta" : "diete"}`}</td>
                 </tr>
               );
             })}
@@ -86,30 +106,168 @@ export function Alimenti() {
         </table>
         {lista.length === 0 && <div className="empty">Nessun alimento trovato</div>}
       </div>
-      <p className="small muted">Se modifichi i valori di un alimento già usato, le diete che lo contengono si ricalcolano. Il caricamento da file (Excel o CSV) e gli altri valori nutrizionali sono da definire.</p>
+      <p className="small muted">{FONTE_CREA}. Clic su un alimento per vedere e cambiare i valori.</p>
 
-      {edit && (
-        <FormAlimento iniziale={edit === "nuovo" ? null : edit} categorie={categorie} esistenti={alimenti} onClose={() => setEdit(null)} onSave={salva} />
+      {alimentoAperto && (
+        <SchedaAlimento a={alimentoAperto} usatoIn={dieteConAlimento(alimentoAperto.id)} onClose={() => setAperto(null)}
+          onCambia={(f) => aggiorna(alimentoAperto.id, f)}
+          onElimina={() => { setAlimenti((l) => l.filter((x) => x.id !== alimentoAperto.id)); setAperto(null); toast("Alimento eliminato"); }} />
       )}
-
-      {elimina && (() => {
-        const n = usi(elimina.id);
-        const nd = dieteConAlimento(elimina.id);
-        return n > 0 ? (
-          <Modal title="Alimento in uso" onClose={() => setElimina(null)}>
-            <p><b>{elimina.nome}</b> è presente in {nd} {nd === 1 ? "dieta" : "diete"} ({n} {n === 1 ? "riga" : "righe"}), quindi non può essere eliminato.</p>
-            <p className="small muted">Toglilo prima dalle diete che lo usano. Puoi comunque modificarne i valori.</p>
-          </Modal>
-        ) : (
-          <Modal title="Eliminare l'alimento?" onClose={() => setElimina(null)}
-            footer={<><button className="btn" onClick={() => setElimina(null)}>Annulla</button>
-              <button className="btn primary" style={{ background: "var(--danger)", borderColor: "var(--danger)" }}
-                onClick={() => { setAlimenti((l) => l.filter((x) => x.id !== elimina.id)); setElimina(null); toast("Alimento eliminato"); }}>Elimina</button></>}>
-            <p>Vuoi eliminare <b>{elimina.nome}</b> dalla lista? Non è usato in nessuna dieta.</p>
-          </Modal>
-        );
-      })()}
+      {nuovo && (
+        <FormAlimento iniziale={null} categorie={categorie} esistenti={alimenti} onClose={() => setNuovo(false)}
+          onSave={(a) => { setAlimenti((l) => [...l, a]); setNuovo(false); setAperto(a.id); toast("Alimento aggiunto"); }} />
+      )}
     </div>
+  );
+}
+
+/** Un numero che si cambia con un clic (vuoto = dato non disponibile). Invio o clic fuori confermano, Esc annulla. */
+function CampoNumero({ valore, testo, onSalva }: { valore?: number; testo: string; onSalva: (v: number | undefined) => void }) {
+  const [attivo, setAttivo] = useState(false);
+  if (!attivo) return <span className="cambiabile num" title="Clic per cambiare il valore" onClick={() => setAttivo(true)}>{testo}</span>;
+  const chiudi = (t: string) => {
+    setAttivo(false);
+    const s = t.trim();
+    if (s === "") { if (valore !== undefined) onSalva(undefined); return; }
+    if (!ok(s)) return;
+    if (num(s) !== valore) onSalva(num(s));
+  };
+  return (
+    <input className="input cambiabile-input num" style={{ width: 90, minWidth: 0 }} autoFocus inputMode="decimal"
+      defaultValue={valore === undefined ? "" : String(valore).replace(".", ",")}
+      onBlur={(e) => chiudi(e.currentTarget.value)}
+      onKeyDown={(e) => {
+        if (e.key === "Enter") { e.preventDefault(); chiudi(e.currentTarget.value); }
+        if (e.key === "Escape") { e.preventDefault(); setAttivo(false); }
+      }} />
+  );
+}
+
+function SchedaAlimento({ a, usatoIn, onClose, onCambia, onElimina }: {
+  a: Alimento; usatoIn: number; onClose: () => void; onCambia: (f: (a: Alimento) => Alimento) => void; onElimina: () => void;
+}) {
+  const { toast } = useStore();
+  const [dettagli, setDettagli] = useState(false);
+  const [conferma, setConferma] = useState<"ripristina" | "elimina" | null>(null);
+  const [icone, setIcone] = useState(false);
+  const [fonte, setFonte] = useState<{ alimento: AlimentoConFonte; riferimenti: string[] } | null>(null);
+  const crea = a.fonte === "crea" && !!a.codiceCrea;
+
+  // Metodo e referenza di ogni valore: si leggono dal file originale quando si aprono i dettagli
+  useEffect(() => {
+    if (!dettagli || !crea || !inTauri || fonte) return;
+    originale(a.codiceCrea!).then(setFonte, () => {});
+  }, [dettagli, crea, a.codiceCrea, fonte]);
+
+  const cambiaMacro = (campo: "kcal" | "proteine" | "carboidrati" | "grassi", v: number | undefined) =>
+    onCambia((x) => (x.valori?.some((y) => y.chiave === CHIAVE_MACRO[campo])
+      ? cambiaValore(x, CHIAVE_MACRO[campo], v)
+      : { ...x, [campo]: v ?? 0, modificato: x.fonte === "crea" ? true : x.modificato }));
+  const ripristinaOra = async () => {
+    try {
+      const o = await originale(a.codiceCrea!);
+      onCambia((x) => ripristina(x, senzaFonte(o.alimento)));
+      toast(`«${a.nome}»: dati originali CREA ripristinati`);
+    } catch (e) { toast(`Ripristino non riuscito: ${e}`); }
+    setConferma(null);
+  };
+  const tooltip = (x: ValoreNutriente) => {
+    const o = fonte?.alimento.valori?.find((y) => y.chiave === x.chiave);
+    return [x.origine && `Dato ${ORIGINE[x.origine] ?? x.origine}`, o?.metodo, o?.ref !== undefined && fonte?.riferimenti[o.ref]].filter(Boolean).join(" — ");
+  };
+  const porzione = a.porzione;
+
+  return createPortal(
+    <Modal title={a.nome} onClose={onClose} largo
+      footer={<>
+        {crea && a.modificato && <button className="btn" onClick={() => setConferma("ripristina")}>Ripristina ai dati originali</button>}
+        <button className="btn" onClick={() => { onCambia((x) => ({ ...x, nascosto: !x.nascosto })); toast(a.nascosto ? "Alimento di nuovo visibile" : "Alimento nascosto: non compare più nella lista e nella ricerca delle diete"); }}>
+          {a.nascosto ? "Mostra di nuovo" : "Nascondi"}
+        </button>
+        {!crea && <button className="btn danger" disabled={usatoIn > 0} title={usatoIn > 0 ? "È usato in una dieta: toglilo prima da lì" : undefined} onClick={() => setConferma("elimina")}>Elimina</button>}
+        <button className="btn primary" onClick={onClose}>Chiudi</button>
+      </>}>
+      <div className="scheda-alimento">
+        <div className="row" style={{ gap: 10, flexWrap: "wrap", marginBottom: 8 }}>
+          <button className="btn sm" title="Cambia icona" onClick={() => setIcone((v) => !v)}><span style={{ fontSize: 20 }}>{iconaDi(a)}</span></button>
+          <span className="muted">{a.categoria}</span>
+          {crea && <span className="badge">CREA {a.codiceCrea}</span>}
+          {a.fonte === "studio" && <span className="badge">aggiunto dallo studio</span>}
+          {a.modificato && <span className="badge warn">modificato a mano</span>}
+          {a.nascosto && <span className="badge">nascosto</span>}
+        </div>
+        {icone && (
+          <div className="icon-pick" style={{ marginBottom: 10 }}>
+            {ELENCO_ICONE.map((e) => (
+              <button type="button" key={e} className={a.icona === e ? "on" : ""} onClick={() => onCambia((x) => ({ ...x, icona: x.icona === e ? undefined : e }))}>{e}</button>
+            ))}
+          </div>
+        )}
+        {(a.nomeInglese || porzione) && (
+          <p className="small muted" style={{ marginTop: 0 }}>
+            {a.nomeInglese && <>{a.nomeInglese} · </>}
+            {a.parteEdibile !== undefined && <>parte edibile {a.parteEdibile}% · </>}
+            {porzione ? <>porzione {porzione} g</> : null}
+          </p>
+        )}
+
+        <table className="table valori-alimento">
+          <thead><tr><th>Valori principali</th><th style={{ textAlign: "right" }}>per 100 g</th>{porzione ? <th style={{ textAlign: "right" }}>per porzione ({porzione} g)</th> : null}</tr></thead>
+          <tbody>
+            {MACRO_VISTA.map(([campo, nome, unita]) => (
+              <tr key={campo}>
+                <td>{nome} ({unita})</td>
+                <td style={{ textAlign: "right" }}><CampoNumero valore={a[campo]} testo={cifra(a[campo])} onSalva={(v) => cambiaMacro(campo, v)} /></td>
+                {porzione ? <td className="num muted" style={{ textAlign: "right" }}>{cifra((a[campo] * porzione) / 100)}</td> : null}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+
+        {a.valori && a.valori.length > 0 && (
+          <button className="btn sm" style={{ margin: "12px 0" }} onClick={() => setDettagli((v) => !v)}>
+            {dettagli ? "▴ Nascondi i dettagli" : `▾ Dettagli (${a.valori.length} valori: minerali, vitamine, acidi grassi, aminoacidi…)`}
+          </button>
+        )}
+        {dettagli && a.valori && GRUPPI.map(([g, titolo]) => {
+          const righe = a.valori!.filter((x) => x.gruppo === g);
+          if (!righe.length) return null;
+          const perPorzione = porzione && (g === "macro" || g === "minerali" || g === "vitamine" || g === "altri");
+          return (
+            <table key={g} className="table valori-alimento" style={{ marginBottom: 10 }}>
+              <thead><tr><th>{titolo}</th><th style={{ textAlign: "right" }}>per 100 g</th>{perPorzione ? <th style={{ textAlign: "right" }}>per porzione</th> : null}<th style={{ width: 120 }}>Origine</th></tr></thead>
+              <tbody>
+                {righe.map((x) => (
+                  <tr key={x.chiave}>
+                    <td>{x.nome}</td>
+                    <td style={{ textAlign: "right" }}>
+                      {x.t && x.v === undefined && x.t !== "tr"
+                        ? <span>{x.t}</span>
+                        : <CampoNumero valore={x.v} testo={mostra(x)} onSalva={(v) => onCambia((y) => cambiaValore(y, x.chiave, v))} />}
+                    </td>
+                    {perPorzione ? <td className="num muted" style={{ textAlign: "right" }}>{x.v !== undefined ? cifra((x.v * porzione!) / 100) : ""}</td> : null}
+                    <td className="small muted" title={tooltip(x)}>{x.origine ? `${x.origine} · ${ORIGINE[x.origine] ?? ""}` : ""}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          );
+        })}
+        {crea && <p className="small muted" style={{ marginBottom: 0 }}>{FONTE_CREA}. Passa il mouse sull'origine per vedere metodo e riferimento del dato.</p>}
+      </div>
+
+      {conferma === "ripristina" && createPortal(
+        <Modal title="Ripristinare i dati originali?" onClose={() => setConferma(null)}
+          footer={<><button className="btn" onClick={() => setConferma(null)}>Annulla</button><button className="btn primary" onClick={() => void ripristinaOra()}>Ripristina</button></>}>
+          <p style={{ margin: 0 }}>Tutti i valori di <b>{a.nome}</b> tornano quelli delle tabelle CREA. Le modifiche fatte a mano si perdono (resta «Annulla» subito dopo).</p>
+        </Modal>, document.body)}
+      {conferma === "elimina" && createPortal(
+        <Modal title="Eliminare l'alimento?" onClose={() => setConferma(null)}
+          footer={<><button className="btn" onClick={() => setConferma(null)}>Annulla</button><button className="btn primary" style={{ background: "var(--danger)", borderColor: "var(--danger)" }} onClick={onElimina}>Elimina</button></>}>
+          <p style={{ margin: 0 }}>Vuoi eliminare <b>{a.nome}</b>? Non è usato in nessuna dieta.</p>
+        </Modal>, document.body)}
+    </Modal>,
+    document.body,
   );
 }
 
@@ -128,7 +286,7 @@ function FormAlimento({ iniziale, categorie, esistenti, onClose, onSave }: {
   const stima = ok(f.proteine) && ok(f.carboidrati) && ok(f.grassi) ? Math.round(num(f.proteine) * 4 + num(f.carboidrati) * 4 + num(f.grassi) * 9) : null;
 
   const salva = () => onSave({
-    id: iniziale?.id ?? nuovoId("a"), nome: f.nome.trim(), categoria: f.categoria.trim(), icona: f.icona || undefined,
+    id: iniziale?.id ?? nuovoId("studio"), nome: f.nome.trim(), categoria: f.categoria.trim(), icona: f.icona || undefined, fonte: "studio",
     kcal: num(f.kcal), proteine: num(f.proteine), carboidrati: num(f.carboidrati), grassi: num(f.grassi),
   });
 

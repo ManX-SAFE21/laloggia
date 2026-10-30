@@ -5,6 +5,7 @@ import { ComeCifrare, DA_AVVISARE, DESCRIZIONE, useStatoDisco } from "../discoCi
 import { VERSIONE_INFORMATIVA } from "../data";
 import { cambiaPin, LUNGHEZZA_PIN, TENTATIVI_PIN } from "../pin";
 import { RiquadroBackup } from "../components/Backup";
+import { FONTE_CREA } from "../alimenti";
 
 
 export function Impostazioni() {
@@ -51,6 +52,7 @@ export function Impostazioni() {
               <dt>Versione programma</dt><dd>{__APP_VERSION__}</dd>
             </dl>
             <p className="small muted" style={{ marginBottom: 0 }}>Intestazione usata nelle stampe delle diete. Fatturazione: da definire.</p>
+            <p className="small muted" style={{ marginBottom: 0 }}>{FONTE_CREA} (riga stampata in fondo ai piani e alle diete).</p>
           </div>
           <div className="card card-pad">
             <h2 style={{ marginBottom: 12 }}>Clienti</h2>

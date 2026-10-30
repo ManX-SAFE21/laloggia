@@ -1,0 +1,7192 @@
+[
+ {
+  "id": "crea-000110",
+  "nome": "Riso, integrale",
+  "categoria": "Cereali e derivati",
+  "fonte": "crea",
+  "codiceCrea": "000110",
+  "kcal": 341.0,
+  "proteine": 7.5,
+  "carboidrati": 77.4,
+  "grassi": 1.9,
+  "nomeInglese": "Rice, whole, raw",
+  "parteEdibile": 100.0,
+  "porzione": 80.0,
+  "porzioneTesto": "80 g",
+  "valori": [
+   {
+    "gruppo": "macro",
+    "chiave": "acqua",
+    "nome": "Acqua (g)",
+    "unita": "g",
+    "v": 12.0,
+    "porzione": 9.6,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "energia_kcal",
+    "nome": "Energia (kcal)",
+    "unita": "kcal",
+    "v": 341.0,
+    "porzione": 273.0,
+    "origine": "C"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "energia_kj",
+    "nome": "Energia (kJ)",
+    "unita": "kJ",
+    "v": 1427.0,
+    "porzione": 1141.0,
+    "origine": "C"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "proteine",
+    "nome": "Proteine (g)",
+    "unita": "g (N x 6,25)",
+    "v": 7.5,
+    "porzione": 6.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "lipidi",
+    "nome": "Lipidi (g)",
+    "unita": "g",
+    "v": 1.9,
+    "porzione": 1.5,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "colesterolo",
+    "nome": "Colesterolo (mg)",
+    "unita": "mg",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "S"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "carboidrati_disponibili",
+    "nome": "Carboidrati disponibili (g)",
+    "unita": "g",
+    "v": 77.4,
+    "porzione": 61.9,
+    "origine": "C"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "amido",
+    "nome": "Amido (g)",
+    "unita": "g",
+    "v": 69.2,
+    "porzione": 55.4,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "zuccheri_solubili",
+    "nome": "Zuccheri solubili (g)",
+    "unita": "g",
+    "v": 1.2,
+    "porzione": 1.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "alcool",
+    "nome": "Alcool (g)",
+    "unita": "g",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "S"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "fibra_totale",
+    "nome": "Fibra totale (g)",
+    "unita": "g",
+    "v": 1.9,
+    "porzione": 1.5,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "fibra_solubile",
+    "nome": "Fibra solubile (g)",
+    "unita": "g",
+    "v": 0.12,
+    "porzione": 0.1,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "fibra_insolubile",
+    "nome": "Fibra insolubile (g)",
+    "unita": "g",
+    "v": 1.8,
+    "porzione": 1.44,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "sodio",
+    "nome": "Sodio (mg)",
+    "unita": "mg",
+    "v": 9.0,
+    "porzione": 7.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "potassio",
+    "nome": "Potassio (mg)",
+    "unita": "mg",
+    "v": 214.0,
+    "porzione": 171.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "calcio",
+    "nome": "Calcio (mg)",
+    "unita": "mg",
+    "v": 32.0,
+    "porzione": 26.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "fosforo",
+    "nome": "Fosforo (mg)",
+    "unita": "mg",
+    "v": 221.0,
+    "porzione": 177.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "ferro",
+    "nome": "Ferro (mg)",
+    "unita": "mg",
+    "v": 1.6,
+    "porzione": 1.3,
+    "origine": "A"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "tiamina",
+    "nome": "Tiamina (mg)",
+    "unita": "mg",
+    "v": 0.48,
+    "porzione": 0.38,
+    "origine": "A"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "riboflavina",
+    "nome": "Riboflavina (mg)",
+    "unita": "mg",
+    "v": 0.05,
+    "porzione": 0.04,
+    "origine": "A"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "niacina",
+    "nome": "Niacina (mg)",
+    "unita": "mg",
+    "v": 4.7,
+    "porzione": 3.76,
+    "origine": "A"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "vitamina_c",
+    "nome": "Vitamina C (mg)",
+    "unita": "mg",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "S"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "vitamina_a_retinolo_equivalente",
+    "nome": "Vitamina A retinolo equivalente (μg)",
+    "unita": "μg",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "S"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "vitamina_e",
+    "nome": "Vitamina E (mg)",
+    "unita": "mg",
+    "v": 0.7,
+    "porzione": 0.56,
+    "origine": "A"
+   },
+   {
+    "gruppo": "altri",
+    "chiave": "acido_fitico",
+    "nome": "Acido fitico (g)",
+    "unita": "g",
+    "v": 0.52,
+    "porzione": 0.42,
+    "origine": "A"
+   }
+  ]
+ },
+ {
+  "id": "crea-000550",
+  "nome": "Pane di tipo integrale",
+  "categoria": "Cereali e derivati",
+  "fonte": "crea",
+  "codiceCrea": "000550",
+  "kcal": 224.0,
+  "proteine": 8.5,
+  "carboidrati": 44.1,
+  "grassi": 1.3,
+  "nomeInglese": "Wholemeal bread",
+  "parteEdibile": 100.0,
+  "porzione": 50.0,
+  "porzioneTesto": "50 g",
+  "valori": [
+   {
+    "gruppo": "macro",
+    "chiave": "acqua",
+    "nome": "Acqua (g)",
+    "unita": "g",
+    "v": 38.6,
+    "porzione": 19.3,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "energia_kcal",
+    "nome": "Energia (kcal)",
+    "unita": "kcal",
+    "v": 224.0,
+    "porzione": 113.0,
+    "origine": "C"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "energia_kj",
+    "nome": "Energia (kJ)",
+    "unita": "kJ",
+    "v": 938.0,
+    "porzione": 473.0,
+    "origine": "C"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "proteine",
+    "nome": "Proteine (g)",
+    "unita": "g (N x 6,25)",
+    "v": 8.5,
+    "porzione": 4.3,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "lipidi",
+    "nome": "Lipidi (g)",
+    "unita": "g",
+    "v": 1.3,
+    "porzione": 0.7,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "colesterolo",
+    "nome": "Colesterolo (mg)",
+    "unita": "mg",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "S"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "carboidrati_disponibili",
+    "nome": "Carboidrati disponibili (g)",
+    "unita": "g",
+    "v": 44.1,
+    "porzione": 22.1,
+    "origine": "C"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "amido",
+    "nome": "Amido (g)",
+    "unita": "g",
+    "v": 38.2,
+    "porzione": 19.1,
+    "origine": "S"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "zuccheri_solubili",
+    "nome": "Zuccheri solubili (g)",
+    "unita": "g",
+    "v": 2.0,
+    "porzione": 1.0,
+    "origine": "S"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "alcool",
+    "nome": "Alcool (g)",
+    "unita": "g",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "S"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "fibra_totale",
+    "nome": "Fibra totale (g)",
+    "unita": "g",
+    "v": 6.5,
+    "porzione": 3.3,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "fibra_solubile",
+    "nome": "Fibra solubile (g)",
+    "unita": "g",
+    "v": 1.15,
+    "porzione": 0.58,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "fibra_insolubile",
+    "nome": "Fibra insolubile (g)",
+    "unita": "g",
+    "v": 5.36,
+    "porzione": 2.68,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "sodio",
+    "nome": "Sodio (mg)",
+    "unita": "mg",
+    "v": 511.0,
+    "porzione": 256.0,
+    "origine": "S"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "potassio",
+    "nome": "Potassio (mg)",
+    "unita": "mg",
+    "v": 198.0,
+    "porzione": 99.0,
+    "origine": "S"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "calcio",
+    "nome": "Calcio (mg)",
+    "unita": "mg",
+    "v": 25.0,
+    "porzione": 13.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "fosforo",
+    "nome": "Fosforo (mg)",
+    "unita": "mg",
+    "v": 180.0,
+    "porzione": 90.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "ferro",
+    "nome": "Ferro (mg)",
+    "unita": "mg",
+    "v": 2.5,
+    "porzione": 1.3,
+    "origine": "A"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "tiamina",
+    "nome": "Tiamina (mg)",
+    "unita": "mg",
+    "v": 0.1,
+    "porzione": 0.05,
+    "origine": "A"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "riboflavina",
+    "nome": "Riboflavina (mg)",
+    "unita": "mg",
+    "v": 0.12,
+    "porzione": 0.06,
+    "origine": "A"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "vitamina_c",
+    "nome": "Vitamina C (mg)",
+    "unita": "mg",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "S"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "vitamina_a_retinolo_equivalente",
+    "nome": "Vitamina A retinolo equivalente (μg)",
+    "unita": "μg",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "S"
+   },
+   {
+    "gruppo": "altri",
+    "chiave": "acido_fitico",
+    "nome": "Acido fitico (g)",
+    "unita": "g",
+    "v": 0.6,
+    "porzione": 0.3,
+    "origine": "A"
+   }
+  ]
+ },
+ {
+  "id": "crea-000800",
+  "nome": "Pasta di semola",
+  "categoria": "Cereali e derivati",
+  "fonte": "crea",
+  "codiceCrea": "000800",
+  "kcal": 341.0,
+  "proteine": 13.5,
+  "carboidrati": 72.7,
+  "grassi": 1.2,
+  "nomeInglese": "Pasta, durum wheat flour, raw",
+  "parteEdibile": 100.0,
+  "porzione": 80.0,
+  "porzioneTesto": "80 g",
+  "valori": [
+   {
+    "gruppo": "macro",
+    "chiave": "acqua",
+    "nome": "Acqua (g)",
+    "unita": "g",
+    "v": 10.8,
+    "porzione": 8.6,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "energia_kcal",
+    "nome": "Energia (kcal)",
+    "unita": "kcal",
+    "v": 341.0,
+    "porzione": 273.0,
+    "origine": "C"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "energia_kj",
+    "nome": "Energia (kJ)",
+    "unita": "kJ",
+    "v": 1426.0,
+    "porzione": 1143.0,
+    "origine": "C"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "proteine",
+    "nome": "Proteine (g)",
+    "unita": "g (N x 6,25)",
+    "v": 13.5,
+    "porzione": 10.8,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "lipidi",
+    "nome": "Lipidi (g)",
+    "unita": "g",
+    "v": 1.2,
+    "porzione": 1.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "colesterolo",
+    "nome": "Colesterolo (mg)",
+    "unita": "mg",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "S"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "carboidrati_disponibili",
+    "nome": "Carboidrati disponibili (g)",
+    "unita": "g",
+    "v": 72.7,
+    "porzione": 58.2,
+    "origine": "C"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "amido",
+    "nome": "Amido (g)",
+    "unita": "g",
+    "v": 64.1,
+    "porzione": 51.3,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "zuccheri_solubili",
+    "nome": "Zuccheri solubili (g)",
+    "unita": "g",
+    "v": 2.2,
+    "porzione": 1.8,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "alcool",
+    "nome": "Alcool (g)",
+    "unita": "g",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "S"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "fibra_totale",
+    "nome": "Fibra totale (g)",
+    "unita": "g",
+    "v": 1.7,
+    "porzione": 1.4,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "fibra_solubile",
+    "nome": "Fibra solubile (g)",
+    "unita": "g",
+    "v": 0.72,
+    "porzione": 0.58,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "fibra_insolubile",
+    "nome": "Fibra insolubile (g)",
+    "unita": "g",
+    "v": 0.98,
+    "porzione": 0.78,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "sodio",
+    "nome": "Sodio (mg)",
+    "unita": "mg",
+    "v": 4.0,
+    "porzione": 3.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "potassio",
+    "nome": "Potassio (mg)",
+    "unita": "mg",
+    "v": 192.0,
+    "porzione": 154.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "calcio",
+    "nome": "Calcio (mg)",
+    "unita": "mg",
+    "v": 22.0,
+    "porzione": 18.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "magnesio",
+    "nome": "Magnesio (mg)",
+    "unita": "mg",
+    "v": 51.0,
+    "porzione": 41.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "fosforo",
+    "nome": "Fosforo (mg)",
+    "unita": "mg",
+    "v": 189.0,
+    "porzione": 151.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "ferro",
+    "nome": "Ferro (mg)",
+    "unita": "mg",
+    "v": 1.4,
+    "porzione": 1.1,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "rame",
+    "nome": "Rame (mg)",
+    "unita": "mg",
+    "v": 0.32,
+    "porzione": 0.26,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "zinco",
+    "nome": "Zinco (mg)",
+    "unita": "mg",
+    "v": 1.15,
+    "porzione": 0.92,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "selenio",
+    "nome": "Selenio (μg)",
+    "unita": "μg",
+    "v": 2.7,
+    "porzione": 2.2,
+    "origine": "B"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "tiamina",
+    "nome": "Tiamina (mg)",
+    "unita": "mg",
+    "v": 0.1,
+    "porzione": 0.08,
+    "origine": "A"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "riboflavina",
+    "nome": "Riboflavina (mg)",
+    "unita": "mg",
+    "v": 0.2,
+    "porzione": 0.16,
+    "origine": "A"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "niacina",
+    "nome": "Niacina (mg)",
+    "unita": "mg",
+    "v": 2.5,
+    "porzione": 2.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "vitamina_c",
+    "nome": "Vitamina C (mg)",
+    "unita": "mg",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "S"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "vitamina_a_retinolo_equivalente",
+    "nome": "Vitamina A retinolo equivalente (μg)",
+    "unita": "μg",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "S"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "vitamina_e",
+    "nome": "Vitamina E (mg)",
+    "unita": "mg",
+    "t": "tr",
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "acidi_grassi_saturi",
+    "nome": "Acidi grassi Saturi (%)",
+    "unita": "%",
+    "v": 20.68,
+    "origine": "C"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c4_0_c10_0",
+    "nome": "C4:0-C10:0 (%)",
+    "unita": "%",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c12_0_acido_laurico",
+    "nome": "C12:0 acido laurico (%)",
+    "unita": "%",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c14_0_acido_miristico",
+    "nome": "C14:0 acido miristico (%)",
+    "unita": "%",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c16_0_acido_palmitico",
+    "nome": "C16:0 acido palmitico (%)",
+    "unita": "%",
+    "v": 18.8,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c18_0_acido_stearico",
+    "nome": "C18:0 acido stearico (%)",
+    "unita": "%",
+    "v": 0.94,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c20_0_acido_arachidico",
+    "nome": "C20:0 acido arachidico (%)",
+    "unita": "%",
+    "v": 0.94,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c22_0_acido_beenico",
+    "nome": "C22:0 acido beenico (%)",
+    "unita": "%",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "acidi_grassi_monoinsaturi",
+    "nome": "Acidi grassi Monoinsaturi (%)",
+    "unita": "%",
+    "v": 15.04,
+    "origine": "C"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c14_1_acido_miristoleico",
+    "nome": "C14:1 acido miristoleico (%)",
+    "unita": "%",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c16_1_acido_palmitoleico",
+    "nome": "C16:1 acido palmitoleico (%)",
+    "unita": "%",
+    "t": "tr",
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c18_1_acido_oleico",
+    "nome": "C18:1 acido oleico (%)",
+    "unita": "%",
+    "v": 15.04,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c20_1_acido_eicosenoico",
+    "nome": "C20:1 acido eicosenoico (%)",
+    "unita": "%",
+    "t": "tr",
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c22_1_acido_erucico",
+    "nome": "C22:1 acido erucico (%)",
+    "unita": "%",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "acidi_grassi_polinsaturi",
+    "nome": "Acidi grassi Polinsaturi (%)",
+    "unita": "%",
+    "v": 64.85,
+    "origine": "C"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c18_2_acido_linoleico",
+    "nome": "C18:2 acido linoleico (%)",
+    "unita": "%",
+    "v": 61.09,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c18_3_acido_linolenico",
+    "nome": "C18:3 acido linolenico (%)",
+    "unita": "%",
+    "v": 4.7,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c20_4_acido_arachidonico",
+    "nome": "C20:4 acido arachidonico (%)",
+    "unita": "%",
+    "t": "tr",
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c20_5_acido_eicosapentenoico_epa",
+    "nome": "C20:5 acido eicosapentenoico EPA (%)",
+    "unita": "%",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c22_6_acido_docosaesenoico_dha",
+    "nome": "C22:6 acido docosaesenoico DHA (%)",
+    "unita": "%",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "polinsatuti_saturi",
+    "nome": "Polinsatuti/Saturi",
+    "unita": "",
+    "v": 3.14,
+    "origine": "C"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "lisina",
+    "nome": "Lisina",
+    "unita": "",
+    "v": 2.01,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "istidina",
+    "nome": "Istidina",
+    "unita": "",
+    "v": 2.07,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "arginina",
+    "nome": "Arginina",
+    "unita": "",
+    "v": 3.62,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "acido_aspartico",
+    "nome": "Acido aspartico",
+    "unita": "",
+    "v": 4.67,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "treonina",
+    "nome": "Treonina",
+    "unita": "",
+    "v": 2.88,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "serina",
+    "nome": "Serina",
+    "unita": "",
+    "v": 5.21,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "acido_glutammico",
+    "nome": "Acido glutammico",
+    "unita": "",
+    "v": 32.22,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "prolina",
+    "nome": "Prolina",
+    "unita": "",
+    "v": 10.91,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "glicina",
+    "nome": "Glicina",
+    "unita": "",
+    "v": 3.25,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "alanina",
+    "nome": "Alanina",
+    "unita": "",
+    "v": 3.29,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "cistina",
+    "nome": "Cistina",
+    "unita": "",
+    "v": 2.34,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "valina",
+    "nome": "Valina",
+    "unita": "",
+    "v": 4.99,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "metionina",
+    "nome": "Metionina",
+    "unita": "",
+    "v": 1.68,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "isoleucina",
+    "nome": "Isoleucina",
+    "unita": "",
+    "v": 4.17,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "leucina",
+    "nome": "Leucina",
+    "unita": "",
+    "v": 7.65,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "tirosina",
+    "nome": "Tirosina",
+    "unita": "",
+    "v": 2.84,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "fenilalanina",
+    "nome": "Fenilalanina",
+    "unita": "",
+    "v": 4.97,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "triptofano",
+    "nome": "Triptofano",
+    "unita": "",
+    "v": 0.96,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "indice_chimico",
+    "nome": "Indice Chimico",
+    "unita": "",
+    "v": 45.0,
+    "origine": "C"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "aminoacido_limitante",
+    "nome": "Aminoacido limitante",
+    "unita": "",
+    "t": "Lisina",
+    "origine": "C"
+   },
+   {
+    "gruppo": "altri",
+    "chiave": "acido_fitico",
+    "nome": "Acido fitico (g)",
+    "unita": "g",
+    "v": 0.25,
+    "porzione": 0.2,
+    "origine": "A"
+   }
+  ]
+ },
+ {
+  "id": "crea-003030",
+  "nome": "Fiocchi d'avena",
+  "categoria": "Cereali e derivati",
+  "fonte": "crea",
+  "codiceCrea": "003030",
+  "kcal": 367.0,
+  "proteine": 8.0,
+  "carboidrati": 66.8,
+  "grassi": 7.5,
+  "nomeInglese": "Oat bran flakes",
+  "parteEdibile": 100.0,
+  "porzione": 30.0,
+  "porzioneTesto": "30 g",
+  "valori": [
+   {
+    "gruppo": "macro",
+    "chiave": "acqua",
+    "nome": "Acqua (g)",
+    "unita": "g",
+    "v": 10.3,
+    "porzione": 3.1,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "energia_kcal",
+    "nome": "Energia (kcal)",
+    "unita": "kcal",
+    "v": 367.0,
+    "porzione": 110.0,
+    "origine": "C"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "energia_kj",
+    "nome": "Energia (kJ)",
+    "unita": "kJ",
+    "v": 1534.0,
+    "porzione": 461.0,
+    "origine": "C"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "proteine",
+    "nome": "Proteine (g)",
+    "unita": "g (N x 6,25)",
+    "v": 8.0,
+    "porzione": 2.4,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "lipidi",
+    "nome": "Lipidi (g)",
+    "unita": "g",
+    "v": 7.5,
+    "porzione": 2.3,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "colesterolo",
+    "nome": "Colesterolo (mg)",
+    "unita": "mg",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "S"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "carboidrati_disponibili",
+    "nome": "Carboidrati disponibili (g)",
+    "unita": "g",
+    "v": 66.8,
+    "porzione": 20.0,
+    "origine": "C"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "amido",
+    "nome": "Amido (g)",
+    "unita": "g",
+    "v": 60.2,
+    "porzione": 18.1,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "zuccheri_solubili",
+    "nome": "Zuccheri solubili (g)",
+    "unita": "g",
+    "v": 0.6,
+    "porzione": 0.2,
+    "origine": "S"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "alcool",
+    "nome": "Alcool (g)",
+    "unita": "g",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "S"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "fibra_totale",
+    "nome": "Fibra totale (g)",
+    "unita": "g",
+    "v": 8.3,
+    "porzione": 2.5,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "fibra_solubile",
+    "nome": "Fibra solubile (g)",
+    "unita": "g",
+    "v": 3.3,
+    "porzione": 0.99,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "fibra_insolubile",
+    "nome": "Fibra insolubile (g)",
+    "unita": "g",
+    "v": 4.99,
+    "porzione": 1.5,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "calcio",
+    "nome": "Calcio (mg)",
+    "unita": "mg",
+    "v": 54.0,
+    "porzione": 16.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "fosforo",
+    "nome": "Fosforo (mg)",
+    "unita": "mg",
+    "v": 365.0,
+    "porzione": 110.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "ferro",
+    "nome": "Ferro (mg)",
+    "unita": "mg",
+    "v": 5.2,
+    "porzione": 1.6,
+    "origine": "A"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "tiamina",
+    "nome": "Tiamina (mg)",
+    "unita": "mg",
+    "v": 0.55,
+    "porzione": 0.17,
+    "origine": "A"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "riboflavina",
+    "nome": "Riboflavina (mg)",
+    "unita": "mg",
+    "v": 0.14,
+    "porzione": 0.04,
+    "origine": "A"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "niacina",
+    "nome": "Niacina (mg)",
+    "unita": "mg",
+    "v": 1.0,
+    "porzione": 0.3,
+    "origine": "A"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "vitamina_c",
+    "nome": "Vitamina C (mg)",
+    "unita": "mg",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "S"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "vitamina_a_retinolo_equivalente",
+    "nome": "Vitamina A retinolo equivalente (μg)",
+    "unita": "μg",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "S"
+   }
+  ]
+ },
+ {
+  "id": "crea-004500",
+  "nome": "Lenticchie, secche",
+  "categoria": "Legumi",
+  "fonte": "crea",
+  "codiceCrea": "004500",
+  "kcal": 319.0,
+  "proteine": 22.7,
+  "carboidrati": 51.1,
+  "grassi": 1.0,
+  "nomeInglese": "Lentils, dried, raw",
+  "parteEdibile": 100.0,
+  "porzione": 50.0,
+  "porzioneTesto": "50 g",
+  "valori": [
+   {
+    "gruppo": "macro",
+    "chiave": "acqua",
+    "nome": "Acqua (g)",
+    "unita": "g",
+    "v": 11.2,
+    "porzione": 5.6,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "energia_kcal",
+    "nome": "Energia (kcal)",
+    "unita": "kcal",
+    "v": 319.0,
+    "porzione": 160.0,
+    "origine": "C"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "energia_kj",
+    "nome": "Energia (kJ)",
+    "unita": "kJ",
+    "v": 1335.0,
+    "porzione": 669.0,
+    "origine": "C"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "proteine",
+    "nome": "Proteine (g)",
+    "unita": "g (N x 6,25)",
+    "v": 22.7,
+    "porzione": 11.4,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "lipidi",
+    "nome": "Lipidi (g)",
+    "unita": "g",
+    "v": 1.0,
+    "porzione": 0.5,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "colesterolo",
+    "nome": "Colesterolo (mg)",
+    "unita": "mg",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "S"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "carboidrati_disponibili",
+    "nome": "Carboidrati disponibili (g)",
+    "unita": "g",
+    "v": 51.1,
+    "porzione": 25.6,
+    "origine": "C"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "amido",
+    "nome": "Amido (g)",
+    "unita": "g",
+    "v": 44.8,
+    "porzione": 22.4,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "zuccheri_solubili",
+    "nome": "Zuccheri solubili (g)",
+    "unita": "g",
+    "v": 1.8,
+    "porzione": 0.9,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "alcool",
+    "nome": "Alcool (g)",
+    "unita": "g",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "S"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "fibra_totale",
+    "nome": "Fibra totale (g)",
+    "unita": "g",
+    "v": 13.8,
+    "porzione": 6.9,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "fibra_solubile",
+    "nome": "Fibra solubile (g)",
+    "unita": "g",
+    "v": 0.92,
+    "porzione": 0.46,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "fibra_insolubile",
+    "nome": "Fibra insolubile (g)",
+    "unita": "g",
+    "v": 12.91,
+    "porzione": 6.46,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "sodio",
+    "nome": "Sodio (mg)",
+    "unita": "mg",
+    "v": 8.0,
+    "porzione": 4.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "potassio",
+    "nome": "Potassio (mg)",
+    "unita": "mg",
+    "v": 980.0,
+    "porzione": 490.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "calcio",
+    "nome": "Calcio (mg)",
+    "unita": "mg",
+    "v": 57.0,
+    "porzione": 29.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "magnesio",
+    "nome": "Magnesio (mg)",
+    "unita": "mg",
+    "v": 83.0,
+    "porzione": 42.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "fosforo",
+    "nome": "Fosforo (mg)",
+    "unita": "mg",
+    "v": 376.0,
+    "porzione": 188.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "ferro",
+    "nome": "Ferro (mg)",
+    "unita": "mg",
+    "v": 8.0,
+    "porzione": 4.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "rame",
+    "nome": "Rame (mg)",
+    "unita": "mg",
+    "v": 1.0,
+    "porzione": 0.5,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "zinco",
+    "nome": "Zinco (mg)",
+    "unita": "mg",
+    "v": 2.9,
+    "porzione": 1.45,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "selenio",
+    "nome": "Selenio (μg)",
+    "unita": "μg",
+    "v": 10.5,
+    "porzione": 5.3,
+    "origine": "A"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "tiamina",
+    "nome": "Tiamina (mg)",
+    "unita": "mg",
+    "v": 0.47,
+    "porzione": 0.24,
+    "origine": "A"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "riboflavina",
+    "nome": "Riboflavina (mg)",
+    "unita": "mg",
+    "v": 0.2,
+    "porzione": 0.1,
+    "origine": "A"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "niacina",
+    "nome": "Niacina (mg)",
+    "unita": "mg",
+    "v": 2.0,
+    "porzione": 1.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "vitamina_c",
+    "nome": "Vitamina C (mg)",
+    "unita": "mg",
+    "t": "tr",
+    "origine": "A"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "vitamina_a_retinolo_equivalente",
+    "nome": "Vitamina A retinolo equivalente (μg)",
+    "unita": "μg",
+    "v": 10.0,
+    "porzione": 5.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "acidi_grassi_saturi",
+    "nome": "Acidi grassi Saturi (%)",
+    "unita": "%",
+    "v": 17.95,
+    "origine": "C"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c4_0_c10_0",
+    "nome": "C4:0-C10:0 (%)",
+    "unita": "%",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c12_0_acido_laurico",
+    "nome": "C12:0 acido laurico (%)",
+    "unita": "%",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c14_0_acido_miristico",
+    "nome": "C14:0 acido miristico (%)",
+    "unita": "%",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c16_0_acido_palmitico",
+    "nome": "C16:0 acido palmitico (%)",
+    "unita": "%",
+    "v": 15.38,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c18_0_acido_stearico",
+    "nome": "C18:0 acido stearico (%)",
+    "unita": "%",
+    "v": 1.28,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c20_0_acido_arachidico",
+    "nome": "C20:0 acido arachidico (%)",
+    "unita": "%",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c22_0_acido_beenico",
+    "nome": "C22:0 acido beenico (%)",
+    "unita": "%",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "acidi_grassi_monoinsaturi",
+    "nome": "Acidi grassi Monoinsaturi (%)",
+    "unita": "%",
+    "v": 21.79,
+    "origine": "C"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c14_1_acido_miristoleico",
+    "nome": "C14:1 acido miristoleico (%)",
+    "unita": "%",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c16_1_acido_palmitoleico",
+    "nome": "C16:1 acido palmitoleico (%)",
+    "unita": "%",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c18_1_acido_oleico",
+    "nome": "C18:1 acido oleico (%)",
+    "unita": "%",
+    "v": 21.79,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c20_1_acido_eicosenoico",
+    "nome": "C20:1 acido eicosenoico (%)",
+    "unita": "%",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c22_1_acido_erucico",
+    "nome": "C22:1 acido erucico (%)",
+    "unita": "%",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "acidi_grassi_polinsaturi",
+    "nome": "Acidi grassi Polinsaturi (%)",
+    "unita": "%",
+    "v": 60.26,
+    "origine": "C"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c18_2_acido_linoleico",
+    "nome": "C18:2 acido linoleico (%)",
+    "unita": "%",
+    "v": 46.15,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c18_3_acido_linolenico",
+    "nome": "C18:3 acido linolenico (%)",
+    "unita": "%",
+    "v": 12.82,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c20_4_acido_arachidonico",
+    "nome": "C20:4 acido arachidonico (%)",
+    "unita": "%",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c20_5_acido_eicosapentenoico_epa",
+    "nome": "C20:5 acido eicosapentenoico EPA (%)",
+    "unita": "%",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c22_6_acido_docosaesenoico_dha",
+    "nome": "C22:6 acido docosaesenoico DHA (%)",
+    "unita": "%",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "polinsatuti_saturi",
+    "nome": "Polinsatuti/Saturi",
+    "unita": "",
+    "v": 2.6,
+    "origine": "C"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "lisina",
+    "nome": "Lisina",
+    "unita": "",
+    "v": 7.1,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "istidina",
+    "nome": "Istidina",
+    "unita": "",
+    "v": 2.47,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "arginina",
+    "nome": "Arginina",
+    "unita": "",
+    "v": 7.69,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "acido_aspartico",
+    "nome": "Acido aspartico",
+    "unita": "",
+    "v": 11.78,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "treonina",
+    "nome": "Treonina",
+    "unita": "",
+    "v": 3.94,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "serina",
+    "nome": "Serina",
+    "unita": "",
+    "v": 5.55,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "acido_glutammico",
+    "nome": "Acido glutammico",
+    "unita": "",
+    "v": 17.11,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "prolina",
+    "nome": "Prolina",
+    "unita": "",
+    "v": 4.14,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "glicina",
+    "nome": "Glicina",
+    "unita": "",
+    "v": 4.16,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "alanina",
+    "nome": "Alanina",
+    "unita": "",
+    "v": 4.36,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "cistina",
+    "nome": "Cistina",
+    "unita": "",
+    "v": 0.95,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "valina",
+    "nome": "Valina",
+    "unita": "",
+    "v": 5.2,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "metionina",
+    "nome": "Metionina",
+    "unita": "",
+    "v": 0.85,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "isoleucina",
+    "nome": "Isoleucina",
+    "unita": "",
+    "v": 4.59,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "leucina",
+    "nome": "Leucina",
+    "unita": "",
+    "v": 7.97,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "tirosina",
+    "nome": "Tirosina",
+    "unita": "",
+    "v": 3.09,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "fenilalanina",
+    "nome": "Fenilalanina",
+    "unita": "",
+    "v": 5.29,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "triptofano",
+    "nome": "Triptofano",
+    "unita": "",
+    "v": 0.89,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "indice_chimico",
+    "nome": "Indice Chimico",
+    "unita": "",
+    "v": 82.0,
+    "origine": "C"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "aminoacido_limitante",
+    "nome": "Aminoacido limitante",
+    "unita": "",
+    "t": "Solforati",
+    "origine": "C"
+   },
+   {
+    "gruppo": "altri",
+    "chiave": "acido_fitico",
+    "nome": "Acido fitico (g)",
+    "unita": "g",
+    "v": 0.42,
+    "porzione": 0.21,
+    "origine": "A"
+   }
+  ]
+ },
+ {
+  "id": "crea-005110",
+  "nome": "Broccolo a testa, crudo",
+  "categoria": "Verdure e ortaggi",
+  "fonte": "crea",
+  "codiceCrea": "005110",
+  "kcal": 33.0,
+  "proteine": 3.0,
+  "carboidrati": 3.1,
+  "grassi": 0.4,
+  "nomeInglese": "Broccoli, head, fresh, raw",
+  "parteEdibile": 51.0,
+  "porzione": 200.0,
+  "porzioneTesto": "200 g",
+  "valori": [
+   {
+    "gruppo": "macro",
+    "chiave": "acqua",
+    "nome": "Acqua (g)",
+    "unita": "g",
+    "v": 92.0,
+    "porzione": 184.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "energia_kcal",
+    "nome": "Energia (kcal)",
+    "unita": "kcal",
+    "v": 33.0,
+    "porzione": 67.0,
+    "origine": "C"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "energia_kj",
+    "nome": "Energia (kJ)",
+    "unita": "kJ",
+    "v": 140.0,
+    "porzione": 280.0,
+    "origine": "C"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "proteine",
+    "nome": "Proteine (g)",
+    "unita": "g (N x 6,25)",
+    "v": 3.0,
+    "porzione": 6.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "lipidi",
+    "nome": "Lipidi (g)",
+    "unita": "g",
+    "v": 0.4,
+    "porzione": 0.8,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "colesterolo",
+    "nome": "Colesterolo (mg)",
+    "unita": "mg",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "S"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "carboidrati_disponibili",
+    "nome": "Carboidrati disponibili (g)",
+    "unita": "g",
+    "v": 3.1,
+    "porzione": 6.2,
+    "origine": "C"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "amido",
+    "nome": "Amido (g)",
+    "unita": "g",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "S"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "zuccheri_solubili",
+    "nome": "Zuccheri solubili (g)",
+    "unita": "g",
+    "v": 3.1,
+    "porzione": 6.2,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "alcool",
+    "nome": "Alcool (g)",
+    "unita": "g",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "S"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "fibra_totale",
+    "nome": "Fibra totale (g)",
+    "unita": "g",
+    "v": 3.1,
+    "porzione": 6.2,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "sodio",
+    "nome": "Sodio (mg)",
+    "unita": "mg",
+    "v": 12.0,
+    "porzione": 24.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "potassio",
+    "nome": "Potassio (mg)",
+    "unita": "mg",
+    "v": 340.0,
+    "porzione": 680.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "calcio",
+    "nome": "Calcio (mg)",
+    "unita": "mg",
+    "v": 28.0,
+    "porzione": 56.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "fosforo",
+    "nome": "Fosforo (mg)",
+    "unita": "mg",
+    "v": 66.0,
+    "porzione": 132.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "ferro",
+    "nome": "Ferro (mg)",
+    "unita": "mg",
+    "v": 0.8,
+    "porzione": 1.6,
+    "origine": "A"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "tiamina",
+    "nome": "Tiamina (mg)",
+    "unita": "mg",
+    "v": 0.04,
+    "porzione": 0.08,
+    "origine": "A"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "riboflavina",
+    "nome": "Riboflavina (mg)",
+    "unita": "mg",
+    "v": 0.12,
+    "porzione": 0.24,
+    "origine": "A"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "niacina",
+    "nome": "Niacina (mg)",
+    "unita": "mg",
+    "v": 1.8,
+    "porzione": 3.6,
+    "origine": "A"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "vitamina_c",
+    "nome": "Vitamina C (mg)",
+    "unita": "mg",
+    "v": 54.0,
+    "porzione": 108.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "folati",
+    "nome": "Folati (μg)",
+    "unita": "μg",
+    "v": 125.0,
+    "porzione": 250.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "vitamina_a_retinolo_equivalente",
+    "nome": "Vitamina A retinolo equivalente (μg)",
+    "unita": "μg",
+    "v": 2.0,
+    "porzione": 4.0,
+    "origine": "A"
+   }
+  ]
+ },
+ {
+  "id": "crea-005410",
+  "nome": "Lattuga, fresca",
+  "categoria": "Verdure e ortaggi",
+  "fonte": "crea",
+  "codiceCrea": "005410",
+  "kcal": 22.0,
+  "proteine": 1.8,
+  "carboidrati": 2.2,
+  "grassi": 0.4,
+  "nomeInglese": "Lettuce, fresh",
+  "parteEdibile": 80.0,
+  "porzione": 80.0,
+  "porzioneTesto": "80 g",
+  "valori": [
+   {
+    "gruppo": "macro",
+    "chiave": "acqua",
+    "nome": "Acqua (g)",
+    "unita": "g",
+    "v": 94.3,
+    "porzione": 75.4,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "energia_kcal",
+    "nome": "Energia (kcal)",
+    "unita": "kcal",
+    "v": 22.0,
+    "porzione": 17.0,
+    "origine": "C"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "energia_kj",
+    "nome": "Energia (kJ)",
+    "unita": "kJ",
+    "v": 92.0,
+    "porzione": 73.0,
+    "origine": "C"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "proteine",
+    "nome": "Proteine (g)",
+    "unita": "g (N x 6,25)",
+    "v": 1.8,
+    "porzione": 1.4,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "lipidi",
+    "nome": "Lipidi (g)",
+    "unita": "g",
+    "v": 0.4,
+    "porzione": 0.3,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "colesterolo",
+    "nome": "Colesterolo (mg)",
+    "unita": "mg",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "S"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "carboidrati_disponibili",
+    "nome": "Carboidrati disponibili (g)",
+    "unita": "g",
+    "v": 2.2,
+    "porzione": 1.8,
+    "origine": "C"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "amido",
+    "nome": "Amido (g)",
+    "unita": "g",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "S"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "zuccheri_solubili",
+    "nome": "Zuccheri solubili (g)",
+    "unita": "g",
+    "v": 2.2,
+    "porzione": 1.8,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "alcool",
+    "nome": "Alcool (g)",
+    "unita": "g",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "S"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "fibra_totale",
+    "nome": "Fibra totale (g)",
+    "unita": "g",
+    "v": 1.5,
+    "porzione": 1.2,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "fibra_solubile",
+    "nome": "Fibra solubile (g)",
+    "unita": "g",
+    "v": 0.13,
+    "porzione": 0.1,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "fibra_insolubile",
+    "nome": "Fibra insolubile (g)",
+    "unita": "g",
+    "v": 1.33,
+    "porzione": 1.06,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "sodio",
+    "nome": "Sodio (mg)",
+    "unita": "mg",
+    "v": 9.0,
+    "porzione": 7.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "potassio",
+    "nome": "Potassio (mg)",
+    "unita": "mg",
+    "v": 240.0,
+    "porzione": 192.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "calcio",
+    "nome": "Calcio (mg)",
+    "unita": "mg",
+    "v": 45.0,
+    "porzione": 36.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "fosforo",
+    "nome": "Fosforo (mg)",
+    "unita": "mg",
+    "v": 31.0,
+    "porzione": 25.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "ferro",
+    "nome": "Ferro (mg)",
+    "unita": "mg",
+    "v": 0.8,
+    "porzione": 0.6,
+    "origine": "A"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "tiamina",
+    "nome": "Tiamina (mg)",
+    "unita": "mg",
+    "v": 0.05,
+    "porzione": 0.04,
+    "origine": "A"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "riboflavina",
+    "nome": "Riboflavina (mg)",
+    "unita": "mg",
+    "v": 0.18,
+    "porzione": 0.14,
+    "origine": "A"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "niacina",
+    "nome": "Niacina (mg)",
+    "unita": "mg",
+    "v": 0.7,
+    "porzione": 0.56,
+    "origine": "A"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "vitamina_c",
+    "nome": "Vitamina C (mg)",
+    "unita": "mg",
+    "v": 6.0,
+    "porzione": 5.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "vitamina_a_retinolo_equivalente",
+    "nome": "Vitamina A retinolo equivalente (μg)",
+    "unita": "μg",
+    "v": 229.0,
+    "porzione": 183.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "carotene_alfa",
+    "nome": "Carotene alfa (μg)",
+    "unita": "μg",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "carotene_beta",
+    "nome": "Carotene beta (μg)",
+    "unita": "μg",
+    "v": 208.0,
+    "porzione": 166.4,
+    "origine": "A"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "criptoxantina",
+    "nome": "Criptoxantina (μg)",
+    "unita": "μg",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "lisina",
+    "nome": "Lisina",
+    "unita": "",
+    "v": 3.83,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "istidina",
+    "nome": "Istidina",
+    "unita": "",
+    "v": 1.61,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "arginina",
+    "nome": "Arginina",
+    "unita": "",
+    "v": 4.56,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "acido_aspartico",
+    "nome": "Acido aspartico",
+    "unita": "",
+    "v": 11.61,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "treonina",
+    "nome": "Treonina",
+    "unita": "",
+    "v": 4.17,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "serina",
+    "nome": "Serina",
+    "unita": "",
+    "v": 3.33,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "acido_glutammico",
+    "nome": "Acido glutammico",
+    "unita": "",
+    "v": 10.33,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "prolina",
+    "nome": "Prolina",
+    "unita": "",
+    "v": 5.22,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "glicina",
+    "nome": "Glicina",
+    "unita": "",
+    "v": 4.17,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "alanina",
+    "nome": "Alanina",
+    "unita": "",
+    "v": 4.33,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "valina",
+    "nome": "Valina",
+    "unita": "",
+    "v": 5.44,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "metionina",
+    "nome": "Metionina",
+    "unita": "",
+    "v": 1.83,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "isoleucina",
+    "nome": "Isoleucina",
+    "unita": "",
+    "v": 3.83,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "leucina",
+    "nome": "Leucina",
+    "unita": "",
+    "v": 6.39,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "tirosina",
+    "nome": "Tirosina",
+    "unita": "",
+    "v": 2.67,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "fenilalanina",
+    "nome": "Fenilalanina",
+    "unita": "",
+    "v": 5.17,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "triptofano",
+    "nome": "Triptofano",
+    "unita": "",
+    "v": 0.89,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "indice_chimico",
+    "nome": "Indice Chimico",
+    "unita": "",
+    "v": 85.0,
+    "origine": "C"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "aminoacido_limitante",
+    "nome": "Aminoacido limitante",
+    "unita": "",
+    "t": "Lisina",
+    "origine": "C"
+   }
+  ]
+ },
+ {
+  "id": "crea-005730",
+  "nome": "Zucchine, crude",
+  "categoria": "Verdure e ortaggi",
+  "fonte": "crea",
+  "codiceCrea": "005730",
+  "kcal": 16.0,
+  "proteine": 1.5,
+  "carboidrati": 1.7,
+  "grassi": 0.1,
+  "nomeInglese": "Zucchini Squash, raw",
+  "parteEdibile": 88.0,
+  "porzione": 200.0,
+  "porzioneTesto": "200 g",
+  "valori": [
+   {
+    "gruppo": "macro",
+    "chiave": "acqua",
+    "nome": "Acqua (g)",
+    "unita": "g",
+    "v": 93.6,
+    "porzione": 187.2,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "energia_kcal",
+    "nome": "Energia (kcal)",
+    "unita": "kcal",
+    "v": 16.0,
+    "porzione": 31.0,
+    "origine": "C"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "energia_kj",
+    "nome": "Energia (kJ)",
+    "unita": "kJ",
+    "v": 66.0,
+    "porzione": 131.0,
+    "origine": "C"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "proteine",
+    "nome": "Proteine (g)",
+    "unita": "g (N x 6,25)",
+    "v": 1.5,
+    "porzione": 3.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "lipidi",
+    "nome": "Lipidi (g)",
+    "unita": "g",
+    "v": 0.1,
+    "porzione": 0.2,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "colesterolo",
+    "nome": "Colesterolo (mg)",
+    "unita": "mg",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "ZL"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "carboidrati_disponibili",
+    "nome": "Carboidrati disponibili (g)",
+    "unita": "g",
+    "v": 1.7,
+    "porzione": 3.4,
+    "origine": "C"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "amido",
+    "nome": "Amido (g)",
+    "unita": "g",
+    "v": 0.1,
+    "porzione": 0.2,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "zuccheri_solubili",
+    "nome": "Zuccheri solubili (g)",
+    "unita": "g",
+    "v": 1.8,
+    "porzione": 3.6,
+    "origine": "C"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "alcool",
+    "nome": "Alcool (g)",
+    "unita": "g",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "ZL"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "fibra_totale",
+    "nome": "Fibra totale (g)",
+    "unita": "g",
+    "v": 1.2,
+    "porzione": 2.4,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "sodio",
+    "nome": "Sodio (mg)",
+    "unita": "mg",
+    "v": 1.0,
+    "porzione": 2.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "potassio",
+    "nome": "Potassio (mg)",
+    "unita": "mg",
+    "v": 290.0,
+    "porzione": 580.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "calcio",
+    "nome": "Calcio (mg)",
+    "unita": "mg",
+    "v": 18.0,
+    "porzione": 36.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "magnesio",
+    "nome": "Magnesio (mg)",
+    "unita": "mg",
+    "v": 22.0,
+    "porzione": 44.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "fosforo",
+    "nome": "Fosforo (mg)",
+    "unita": "mg",
+    "v": 55.0,
+    "porzione": 110.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "ferro",
+    "nome": "Ferro (mg)",
+    "unita": "mg",
+    "v": 0.5,
+    "porzione": 1.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "rame",
+    "nome": "Rame (mg)",
+    "unita": "mg",
+    "v": 0.47,
+    "porzione": 0.94,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "zinco",
+    "nome": "Zinco (mg)",
+    "unita": "mg",
+    "v": 0.28,
+    "porzione": 0.56,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "manganese",
+    "nome": "Manganese (mg)",
+    "unita": "mg",
+    "v": 0.22,
+    "porzione": 0.44,
+    "origine": "A"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "tiamina",
+    "nome": "Tiamina (mg)",
+    "unita": "mg",
+    "v": 0.08,
+    "porzione": 0.16,
+    "origine": "A"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "riboflavina",
+    "nome": "Riboflavina (mg)",
+    "unita": "mg",
+    "v": 0.12,
+    "porzione": 0.24,
+    "origine": "A"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "niacina",
+    "nome": "Niacina (mg)",
+    "unita": "mg",
+    "v": 0.7,
+    "porzione": 1.4,
+    "origine": "A"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "vitamina_b12",
+    "nome": "Vitamina B12 (μg)",
+    "unita": "μg",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "ZL"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "vitamina_c",
+    "nome": "Vitamina C (mg)",
+    "unita": "mg",
+    "v": 11.0,
+    "porzione": 22.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "vitamina_a_retinolo_equivalente",
+    "nome": "Vitamina A retinolo equivalente (μg)",
+    "unita": "μg",
+    "v": 6.0,
+    "porzione": 12.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "lisina",
+    "nome": "Lisina",
+    "unita": "",
+    "v": 6.38,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "istidina",
+    "nome": "Istidina",
+    "unita": "",
+    "v": 2.23,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "arginina",
+    "nome": "Arginina",
+    "unita": "",
+    "v": 7.31,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "acido_aspartico",
+    "nome": "Acido aspartico",
+    "unita": "",
+    "v": 10.15,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "treonina",
+    "nome": "Treonina",
+    "unita": "",
+    "v": 5.08,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "serina",
+    "nome": "Serina",
+    "unita": "",
+    "v": 4.54,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "acido_glutammico",
+    "nome": "Acido glutammico",
+    "unita": "",
+    "v": 12.23,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "prolina",
+    "nome": "Prolina",
+    "unita": "",
+    "v": 4.54,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "glicina",
+    "nome": "Glicina",
+    "unita": "",
+    "v": 5.92,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "alanina",
+    "nome": "Alanina",
+    "unita": "",
+    "v": 6.38,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "cistina",
+    "nome": "Cistina",
+    "unita": "",
+    "v": 0.92,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "valina",
+    "nome": "Valina",
+    "unita": "",
+    "v": 6.23,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "metionina",
+    "nome": "Metionina",
+    "unita": "",
+    "v": 2.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "isoleucina",
+    "nome": "Isoleucina",
+    "unita": "",
+    "v": 5.46,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "leucina",
+    "nome": "Leucina",
+    "unita": "",
+    "v": 10.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "tirosina",
+    "nome": "Tirosina",
+    "unita": "",
+    "v": 4.92,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "fenilalanina",
+    "nome": "Fenilalanina",
+    "unita": "",
+    "v": 6.23,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "triptofano",
+    "nome": "Triptofano",
+    "unita": "",
+    "v": 1.31,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "indice_chimico",
+    "nome": "Indice Chimico",
+    "unita": "",
+    "v": 133.0,
+    "origine": "C"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "aminoacido_limitante",
+    "nome": "Aminoacido limitante",
+    "unita": "",
+    "t": "Solforati",
+    "origine": "C"
+   }
+  ]
+ },
+ {
+  "id": "crea-006610",
+  "nome": "Pomodori, maturi, freschi",
+  "categoria": "Verdure e ortaggi",
+  "fonte": "crea",
+  "codiceCrea": "006610",
+  "kcal": 23.0,
+  "proteine": 1.0,
+  "carboidrati": 3.5,
+  "grassi": 0.2,
+  "nomeInglese": "Tomatoes, ripened, fresh",
+  "parteEdibile": 100.0,
+  "porzione": 200.0,
+  "porzioneTesto": "200 g",
+  "valori": [
+   {
+    "gruppo": "macro",
+    "chiave": "acqua",
+    "nome": "Acqua (g)",
+    "unita": "g",
+    "v": 94.0,
+    "porzione": 188.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "energia_kcal",
+    "nome": "Energia (kcal)",
+    "unita": "kcal",
+    "v": 23.0,
+    "porzione": 46.0,
+    "origine": "C"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "energia_kj",
+    "nome": "Energia (kJ)",
+    "unita": "kJ",
+    "v": 96.0,
+    "porzione": 192.0,
+    "origine": "C"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "proteine",
+    "nome": "Proteine (g)",
+    "unita": "g (N x 6,25)",
+    "v": 1.0,
+    "porzione": 2.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "lipidi",
+    "nome": "Lipidi (g)",
+    "unita": "g",
+    "v": 0.2,
+    "porzione": 0.4,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "colesterolo",
+    "nome": "Colesterolo (mg)",
+    "unita": "mg",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "S"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "carboidrati_disponibili",
+    "nome": "Carboidrati disponibili (g)",
+    "unita": "g",
+    "v": 3.5,
+    "porzione": 7.0,
+    "origine": "C"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "amido",
+    "nome": "Amido (g)",
+    "unita": "g",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "S"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "zuccheri_solubili",
+    "nome": "Zuccheri solubili (g)",
+    "unita": "g",
+    "v": 3.5,
+    "porzione": 7.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "alcool",
+    "nome": "Alcool (g)",
+    "unita": "g",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "S"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "fibra_totale",
+    "nome": "Fibra totale (g)",
+    "unita": "g",
+    "v": 2.0,
+    "porzione": 4.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "fibra_solubile",
+    "nome": "Fibra solubile (g)",
+    "unita": "g",
+    "v": 0.37,
+    "porzione": 0.74,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "fibra_insolubile",
+    "nome": "Fibra insolubile (g)",
+    "unita": "g",
+    "v": 1.67,
+    "porzione": 3.34,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "sodio",
+    "nome": "Sodio (mg)",
+    "unita": "mg",
+    "v": 6.0,
+    "porzione": 12.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "potassio",
+    "nome": "Potassio (mg)",
+    "unita": "mg",
+    "v": 297.0,
+    "porzione": 594.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "calcio",
+    "nome": "Calcio (mg)",
+    "unita": "mg",
+    "v": 9.0,
+    "porzione": 18.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "magnesio",
+    "nome": "Magnesio (mg)",
+    "unita": "mg",
+    "v": 10.0,
+    "porzione": 20.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "fosforo",
+    "nome": "Fosforo (mg)",
+    "unita": "mg",
+    "v": 25.0,
+    "porzione": 50.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "ferro",
+    "nome": "Ferro (mg)",
+    "unita": "mg",
+    "v": 0.3,
+    "porzione": 0.6,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "rame",
+    "nome": "Rame (mg)",
+    "unita": "mg",
+    "v": 0.01,
+    "porzione": 0.02,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "zinco",
+    "nome": "Zinco (mg)",
+    "unita": "mg",
+    "v": 0.11,
+    "porzione": 0.22,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "selenio",
+    "nome": "Selenio (μg)",
+    "unita": "μg",
+    "v": 2.3,
+    "porzione": 4.6,
+    "origine": "B"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "tiamina",
+    "nome": "Tiamina (mg)",
+    "unita": "mg",
+    "v": 0.02,
+    "porzione": 0.04,
+    "origine": "A"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "niacina",
+    "nome": "Niacina (mg)",
+    "unita": "mg",
+    "v": 0.8,
+    "porzione": 1.6,
+    "origine": "A"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "vitamina_c",
+    "nome": "Vitamina C (mg)",
+    "unita": "mg",
+    "v": 25.0,
+    "porzione": 50.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "vitamina_a_retinolo_equivalente",
+    "nome": "Vitamina A retinolo equivalente (μg)",
+    "unita": "μg",
+    "v": 610.0,
+    "porzione": 1220.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "lisina",
+    "nome": "Lisina",
+    "unita": "",
+    "v": 3.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "istidina",
+    "nome": "Istidina",
+    "unita": "",
+    "v": 1.7,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "arginina",
+    "nome": "Arginina",
+    "unita": "",
+    "v": 2.4,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "acido_aspartico",
+    "nome": "Acido aspartico",
+    "unita": "",
+    "v": 12.9,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "treonina",
+    "nome": "Treonina",
+    "unita": "",
+    "v": 2.5,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "serina",
+    "nome": "Serina",
+    "unita": "",
+    "v": 2.8,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "acido_glutammico",
+    "nome": "Acido glutammico",
+    "unita": "",
+    "v": 45.7,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "prolina",
+    "nome": "Prolina",
+    "unita": "",
+    "v": 1.8,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "glicina",
+    "nome": "Glicina",
+    "unita": "",
+    "v": 2.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "alanina",
+    "nome": "Alanina",
+    "unita": "",
+    "v": 2.7,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "cistina",
+    "nome": "Cistina",
+    "unita": "",
+    "v": 0.7,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "valina",
+    "nome": "Valina",
+    "unita": "",
+    "v": 2.4,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "metionina",
+    "nome": "Metionina",
+    "unita": "",
+    "v": 0.7,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "isoleucina",
+    "nome": "Isoleucina",
+    "unita": "",
+    "v": 2.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "leucina",
+    "nome": "Leucina",
+    "unita": "",
+    "v": 3.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "tirosina",
+    "nome": "Tirosina",
+    "unita": "",
+    "v": 1.4,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "fenilalanina",
+    "nome": "Fenilalanina",
+    "unita": "",
+    "v": 2.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "triptofano",
+    "nome": "Triptofano",
+    "unita": "",
+    "v": 0.9,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "indice_chimico",
+    "nome": "Indice Chimico",
+    "unita": "",
+    "v": 51.0,
+    "origine": "C"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "aminoacido_limitante",
+    "nome": "Aminoacido limitante",
+    "unita": "",
+    "t": "Leucina",
+    "origine": "C"
+   },
+   {
+    "gruppo": "altri",
+    "chiave": "acido_fitico",
+    "nome": "Acido fitico (g)",
+    "unita": "g",
+    "v": 0.01,
+    "porzione": 0.02,
+    "origine": "A"
+   }
+  ]
+ },
+ {
+  "id": "crea-007120",
+  "nome": "Mele, fresche, con buccia",
+  "categoria": "Frutta",
+  "fonte": "crea",
+  "codiceCrea": "007120",
+  "kcal": 44.0,
+  "proteine": 0.2,
+  "carboidrati": 10.0,
+  "grassi": 0,
+  "nomeInglese": "Apples, fresh, with peel",
+  "parteEdibile": 85.0,
+  "porzione": 150.0,
+  "porzioneTesto": "150 g",
+  "valori": [
+   {
+    "gruppo": "macro",
+    "chiave": "acqua",
+    "nome": "Acqua (g)",
+    "unita": "g",
+    "v": 85.2,
+    "porzione": 127.8,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "energia_kcal",
+    "nome": "Energia (kcal)",
+    "unita": "kcal",
+    "v": 44.0,
+    "porzione": 65.0,
+    "origine": "C"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "energia_kj",
+    "nome": "Energia (kJ)",
+    "unita": "kJ",
+    "v": 182.0,
+    "porzione": 273.0,
+    "origine": "C"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "proteine",
+    "nome": "Proteine (g)",
+    "unita": "g (N x 6,25)",
+    "v": 0.2,
+    "porzione": 0.3,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "lipidi",
+    "nome": "Lipidi (g)",
+    "unita": "g",
+    "t": "tr",
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "colesterolo",
+    "nome": "Colesterolo (mg)",
+    "unita": "mg",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "S"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "carboidrati_disponibili",
+    "nome": "Carboidrati disponibili (g)",
+    "unita": "g",
+    "v": 10.0,
+    "porzione": 15.0,
+    "origine": "C"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "amido",
+    "nome": "Amido (g)",
+    "unita": "g",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "zuccheri_solubili",
+    "nome": "Zuccheri solubili (g)",
+    "unita": "g",
+    "v": 10.0,
+    "porzione": 15.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "alcool",
+    "nome": "Alcool (g)",
+    "unita": "g",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "S"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "fibra_totale",
+    "nome": "Fibra totale (g)",
+    "unita": "g",
+    "v": 2.6,
+    "porzione": 3.9,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "fibra_solubile",
+    "nome": "Fibra solubile (g)",
+    "unita": "g",
+    "v": 0.73,
+    "porzione": 1.1,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "fibra_insolubile",
+    "nome": "Fibra insolubile (g)",
+    "unita": "g",
+    "v": 1.84,
+    "porzione": 2.76,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "sodio",
+    "nome": "Sodio (mg)",
+    "unita": "mg",
+    "v": 2.0,
+    "porzione": 3.0,
+    "origine": "S"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "potassio",
+    "nome": "Potassio (mg)",
+    "unita": "mg",
+    "v": 76.0,
+    "porzione": 114.0,
+    "origine": "S"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "calcio",
+    "nome": "Calcio (mg)",
+    "unita": "mg",
+    "v": 2.0,
+    "porzione": 3.0,
+    "origine": "S"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "fosforo",
+    "nome": "Fosforo (mg)",
+    "unita": "mg",
+    "v": 6.0,
+    "porzione": 9.0,
+    "origine": "S"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "ferro",
+    "nome": "Ferro (mg)",
+    "unita": "mg",
+    "v": 0.1,
+    "porzione": 0.2,
+    "origine": "S"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "tiamina",
+    "nome": "Tiamina (mg)",
+    "unita": "mg",
+    "v": 0.21,
+    "porzione": 0.32,
+    "origine": "S"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "riboflavina",
+    "nome": "Riboflavina (mg)",
+    "unita": "mg",
+    "v": 0.02,
+    "porzione": 0.03,
+    "origine": "S"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "niacina",
+    "nome": "Niacina (mg)",
+    "unita": "mg",
+    "v": 0.01,
+    "porzione": 0.02,
+    "origine": "S"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "vitamina_c",
+    "nome": "Vitamina C (mg)",
+    "unita": "mg",
+    "v": 3.0,
+    "porzione": 5.0,
+    "origine": "S"
+   }
+  ]
+ },
+ {
+  "id": "crea-007760",
+  "nome": "Mirtilli, freschi",
+  "categoria": "Frutta",
+  "fonte": "crea",
+  "codiceCrea": "007760",
+  "kcal": 49.0,
+  "proteine": 0.9,
+  "carboidrati": 10.1,
+  "grassi": 0.2,
+  "nomeInglese": "Blueberry, fresh",
+  "parteEdibile": 100.0,
+  "porzione": 150.0,
+  "porzioneTesto": "150 g",
+  "valori": [
+   {
+    "gruppo": "macro",
+    "chiave": "acqua",
+    "nome": "Acqua (g)",
+    "unita": "g",
+    "v": 85.0,
+    "porzione": 127.5,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "energia_kcal",
+    "nome": "Energia (kcal)",
+    "unita": "kcal",
+    "v": 49.0,
+    "porzione": 75.0,
+    "origine": "C"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "energia_kj",
+    "nome": "Energia (kJ)",
+    "unita": "kJ",
+    "v": 207.0,
+    "porzione": 313.0,
+    "origine": "C"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "proteine",
+    "nome": "Proteine (g)",
+    "unita": "g (N x 6,25)",
+    "v": 0.9,
+    "porzione": 1.4,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "lipidi",
+    "nome": "Lipidi (g)",
+    "unita": "g",
+    "v": 0.2,
+    "porzione": 0.3,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "colesterolo",
+    "nome": "Colesterolo (mg)",
+    "unita": "mg",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "S"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "carboidrati_disponibili",
+    "nome": "Carboidrati disponibili (g)",
+    "unita": "g",
+    "v": 10.1,
+    "porzione": 15.2,
+    "origine": "C"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "amido",
+    "nome": "Amido (g)",
+    "unita": "g",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "zuccheri_solubili",
+    "nome": "Zuccheri solubili (g)",
+    "unita": "g",
+    "v": 10.1,
+    "porzione": 15.2,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "alcool",
+    "nome": "Alcool (g)",
+    "unita": "g",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "S"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "fibra_totale",
+    "nome": "Fibra totale (g)",
+    "unita": "g",
+    "v": 3.1,
+    "porzione": 4.7,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "sodio",
+    "nome": "Sodio (mg)",
+    "unita": "mg",
+    "v": 2.0,
+    "porzione": 3.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "potassio",
+    "nome": "Potassio (mg)",
+    "unita": "mg",
+    "v": 160.0,
+    "porzione": 240.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "calcio",
+    "nome": "Calcio (mg)",
+    "unita": "mg",
+    "v": 41.0,
+    "porzione": 62.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "fosforo",
+    "nome": "Fosforo (mg)",
+    "unita": "mg",
+    "v": 31.0,
+    "porzione": 47.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "ferro",
+    "nome": "Ferro (mg)",
+    "unita": "mg",
+    "v": 0.7,
+    "porzione": 1.1,
+    "origine": "A"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "tiamina",
+    "nome": "Tiamina (mg)",
+    "unita": "mg",
+    "v": 0.02,
+    "porzione": 0.03,
+    "origine": "A"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "riboflavina",
+    "nome": "Riboflavina (mg)",
+    "unita": "mg",
+    "v": 0.05,
+    "porzione": 0.08,
+    "origine": "A"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "niacina",
+    "nome": "Niacina (mg)",
+    "unita": "mg",
+    "v": 0.5,
+    "porzione": 0.75,
+    "origine": "A"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "vitamina_c",
+    "nome": "Vitamina C (mg)",
+    "unita": "mg",
+    "v": 15.0,
+    "porzione": 23.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "vitamina_a_retinolo_equivalente",
+    "nome": "Vitamina A retinolo equivalente (μg)",
+    "unita": "μg",
+    "v": 13.0,
+    "porzione": 20.0,
+    "origine": "A"
+   }
+  ]
+ },
+ {
+  "id": "crea-008540",
+  "nome": "Mandorle dolci, secche",
+  "categoria": "Frutta secca a guscio e semi oleaginosi",
+  "fonte": "crea",
+  "codiceCrea": "008540",
+  "kcal": 628.0,
+  "proteine": 22.0,
+  "carboidrati": 4.6,
+  "grassi": 55.3,
+  "nomeInglese": "Almonds, sweet, dried",
+  "parteEdibile": 24.0,
+  "porzione": 30.0,
+  "porzioneTesto": "30 g",
+  "valori": [
+   {
+    "gruppo": "macro",
+    "chiave": "acqua",
+    "nome": "Acqua (g)",
+    "unita": "g",
+    "v": 5.1,
+    "porzione": 1.5,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "energia_kcal",
+    "nome": "Energia (kcal)",
+    "unita": "kcal",
+    "v": 628.0,
+    "porzione": 189.0,
+    "origine": "C"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "energia_kj",
+    "nome": "Energia (kJ)",
+    "unita": "kJ",
+    "v": 2629.0,
+    "porzione": 789.0,
+    "origine": "C"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "proteine",
+    "nome": "Proteine (g)",
+    "unita": "g (N x 6,25)",
+    "v": 22.0,
+    "porzione": 6.6,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "lipidi",
+    "nome": "Lipidi (g)",
+    "unita": "g",
+    "v": 55.3,
+    "porzione": 16.6,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "colesterolo",
+    "nome": "Colesterolo (mg)",
+    "unita": "mg",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "S"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "carboidrati_disponibili",
+    "nome": "Carboidrati disponibili (g)",
+    "unita": "g",
+    "v": 4.6,
+    "porzione": 1.4,
+    "origine": "C"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "amido",
+    "nome": "Amido (g)",
+    "unita": "g",
+    "v": 0.8,
+    "porzione": 0.2,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "zuccheri_solubili",
+    "nome": "Zuccheri solubili (g)",
+    "unita": "g",
+    "v": 3.7,
+    "porzione": 1.1,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "alcool",
+    "nome": "Alcool (g)",
+    "unita": "g",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "S"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "fibra_totale",
+    "nome": "Fibra totale (g)",
+    "unita": "g",
+    "v": 12.7,
+    "porzione": 3.8,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "fibra_solubile",
+    "nome": "Fibra solubile (g)",
+    "unita": "g",
+    "v": 0.63,
+    "porzione": 0.19,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "fibra_insolubile",
+    "nome": "Fibra insolubile (g)",
+    "unita": "g",
+    "v": 12.04,
+    "porzione": 3.61,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "sodio",
+    "nome": "Sodio (mg)",
+    "unita": "mg",
+    "v": 14.0,
+    "porzione": 4.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "potassio",
+    "nome": "Potassio (mg)",
+    "unita": "mg",
+    "v": 780.0,
+    "porzione": 234.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "calcio",
+    "nome": "Calcio (mg)",
+    "unita": "mg",
+    "v": 240.0,
+    "porzione": 72.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "magnesio",
+    "nome": "Magnesio (mg)",
+    "unita": "mg",
+    "v": 264.0,
+    "porzione": 79.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "fosforo",
+    "nome": "Fosforo (mg)",
+    "unita": "mg",
+    "v": 550.0,
+    "porzione": 165.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "ferro",
+    "nome": "Ferro (mg)",
+    "unita": "mg",
+    "v": 3.0,
+    "porzione": 0.9,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "rame",
+    "nome": "Rame (mg)",
+    "unita": "mg",
+    "v": 0.92,
+    "porzione": 0.28,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "zinco",
+    "nome": "Zinco (mg)",
+    "unita": "mg",
+    "v": 2.5,
+    "porzione": 0.75,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "selenio",
+    "nome": "Selenio (μg)",
+    "unita": "μg",
+    "v": 1.5,
+    "porzione": 0.5,
+    "origine": "A"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "tiamina",
+    "nome": "Tiamina (mg)",
+    "unita": "mg",
+    "v": 0.23,
+    "porzione": 0.07,
+    "origine": "A"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "riboflavina",
+    "nome": "Riboflavina (mg)",
+    "unita": "mg",
+    "v": 0.4,
+    "porzione": 0.12,
+    "origine": "A"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "niacina",
+    "nome": "Niacina (mg)",
+    "unita": "mg",
+    "v": 3.0,
+    "porzione": 0.9,
+    "origine": "A"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "vitamina_c",
+    "nome": "Vitamina C (mg)",
+    "unita": "mg",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "vitamina_a_retinolo_equivalente",
+    "nome": "Vitamina A retinolo equivalente (μg)",
+    "unita": "μg",
+    "v": 1.0,
+    "porzione": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "vitamina_e",
+    "nome": "Vitamina E (mg)",
+    "unita": "mg",
+    "v": 26.0,
+    "porzione": 7.8,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "acidi_grassi_saturi",
+    "nome": "Acidi grassi Saturi (%)",
+    "unita": "%",
+    "v": 8.38,
+    "origine": "C"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c4_0_c10_0",
+    "nome": "C4:0-C10:0 (%)",
+    "unita": "%",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c12_0_acido_laurico",
+    "nome": "C12:0 acido laurico (%)",
+    "unita": "%",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c14_0_acido_miristico",
+    "nome": "C14:0 acido miristico (%)",
+    "unita": "%",
+    "v": 0.09,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c16_0_acido_palmitico",
+    "nome": "C16:0 acido palmitico (%)",
+    "unita": "%",
+    "v": 6.36,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c18_0_acido_stearico",
+    "nome": "C18:0 acido stearico (%)",
+    "unita": "%",
+    "v": 1.72,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c20_0_acido_arachidico",
+    "nome": "C20:0 acido arachidico (%)",
+    "unita": "%",
+    "v": 0.2,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c22_0_acido_beenico",
+    "nome": "C22:0 acido beenico (%)",
+    "unita": "%",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "acidi_grassi_monoinsaturi",
+    "nome": "Acidi grassi Monoinsaturi (%)",
+    "unita": "%",
+    "v": 72.04,
+    "origine": "C"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c14_1_acido_miristoleico",
+    "nome": "C14:1 acido miristoleico (%)",
+    "unita": "%",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c16_1_acido_palmitoleico",
+    "nome": "C16:1 acido palmitoleico (%)",
+    "unita": "%",
+    "v": 0.69,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c18_1_acido_oleico",
+    "nome": "C18:1 acido oleico (%)",
+    "unita": "%",
+    "v": 71.35,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c20_1_acido_eicosenoico",
+    "nome": "C20:1 acido eicosenoico (%)",
+    "unita": "%",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c22_1_acido_erucico",
+    "nome": "C22:1 acido erucico (%)",
+    "unita": "%",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "acidi_grassi_polinsaturi",
+    "nome": "Acidi grassi Polinsaturi (%)",
+    "unita": "%",
+    "v": 19.82,
+    "origine": "C"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c18_2_acido_linoleico",
+    "nome": "C18:2 acido linoleico (%)",
+    "unita": "%",
+    "v": 19.25,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c18_3_acido_linolenico",
+    "nome": "C18:3 acido linolenico (%)",
+    "unita": "%",
+    "v": 0.55,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c20_4_acido_arachidonico",
+    "nome": "C20:4 acido arachidonico (%)",
+    "unita": "%",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c20_5_acido_eicosapentenoico_epa",
+    "nome": "C20:5 acido eicosapentenoico EPA (%)",
+    "unita": "%",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c22_6_acido_docosaesenoico_dha",
+    "nome": "C22:6 acido docosaesenoico DHA (%)",
+    "unita": "%",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "polinsatuti_saturi",
+    "nome": "Polinsatuti/Saturi",
+    "unita": "",
+    "v": 2.36,
+    "origine": "C"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "lisina",
+    "nome": "Lisina",
+    "unita": "",
+    "v": 2.2,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "istidina",
+    "nome": "Istidina",
+    "unita": "",
+    "v": 2.94,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "arginina",
+    "nome": "Arginina",
+    "unita": "",
+    "v": 9.87,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "acido_aspartico",
+    "nome": "Acido aspartico",
+    "unita": "",
+    "v": 11.15,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "treonina",
+    "nome": "Treonina",
+    "unita": "",
+    "v": 2.57,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "serina",
+    "nome": "Serina",
+    "unita": "",
+    "v": 4.76,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "acido_glutammico",
+    "nome": "Acido glutammico",
+    "unita": "",
+    "v": 24.44,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "prolina",
+    "nome": "Prolina",
+    "unita": "",
+    "v": 4.81,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "glicina",
+    "nome": "Glicina",
+    "unita": "",
+    "v": 5.74,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "alanina",
+    "nome": "Alanina",
+    "unita": "",
+    "v": 4.15,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "cistina",
+    "nome": "Cistina",
+    "unita": "",
+    "v": 1.32,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "valina",
+    "nome": "Valina",
+    "unita": "",
+    "v": 4.73,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "metionina",
+    "nome": "Metionina",
+    "unita": "",
+    "v": 0.88,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "isoleucina",
+    "nome": "Isoleucina",
+    "unita": "",
+    "v": 3.83,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "leucina",
+    "nome": "Leucina",
+    "unita": "",
+    "v": 6.59,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "tirosina",
+    "nome": "Tirosina",
+    "unita": "",
+    "v": 2.81,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "fenilalanina",
+    "nome": "Fenilalanina",
+    "unita": "",
+    "v": 4.83,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "triptofano",
+    "nome": "Triptofano",
+    "unita": "",
+    "v": 1.79,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "indice_chimico",
+    "nome": "Indice Chimico",
+    "unita": "",
+    "v": 49.0,
+    "origine": "C"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "aminoacido_limitante",
+    "nome": "Aminoacido limitante",
+    "unita": "",
+    "t": "Lisina",
+    "origine": "C"
+   },
+   {
+    "gruppo": "altri",
+    "chiave": "acido_fitico",
+    "nome": "Acido fitico (g)",
+    "unita": "g",
+    "v": 1.28,
+    "porzione": 0.38,
+    "origine": "A"
+   }
+  ]
+ },
+ {
+  "id": "crea-009210",
+  "nome": "Olio di oliva extra vergine",
+  "categoria": "Oli e grassi",
+  "fonte": "crea",
+  "codiceCrea": "009210",
+  "kcal": 899.0,
+  "proteine": 0.0,
+  "carboidrati": 0.0,
+  "grassi": 99.9,
+  "nomeInglese": "Olive Oil, extra-virgin",
+  "parteEdibile": 100.0,
+  "porzione": 10.0,
+  "porzioneTesto": "10 g",
+  "valori": [
+   {
+    "gruppo": "macro",
+    "chiave": "acqua",
+    "nome": "Acqua (g)",
+    "unita": "g",
+    "t": "tr",
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "energia_kcal",
+    "nome": "Energia (kcal)",
+    "unita": "kcal",
+    "v": 899.0,
+    "porzione": 90.0,
+    "origine": "C"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "energia_kj",
+    "nome": "Energia (kJ)",
+    "unita": "kJ",
+    "v": 3762.0,
+    "porzione": 377.0,
+    "origine": "C"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "proteine",
+    "nome": "Proteine (g)",
+    "unita": "g (N x 6,25)",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "S"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "lipidi",
+    "nome": "Lipidi (g)",
+    "unita": "g",
+    "v": 99.9,
+    "porzione": 10.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "colesterolo",
+    "nome": "Colesterolo (mg)",
+    "unita": "mg",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "S"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "carboidrati_disponibili",
+    "nome": "Carboidrati disponibili (g)",
+    "unita": "g",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "S"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "amido",
+    "nome": "Amido (g)",
+    "unita": "g",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "S"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "zuccheri_solubili",
+    "nome": "Zuccheri solubili (g)",
+    "unita": "g",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "S"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "alcool",
+    "nome": "Alcool (g)",
+    "unita": "g",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "S"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "fibra_totale",
+    "nome": "Fibra totale (g)",
+    "unita": "g",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "S"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "sodio",
+    "nome": "Sodio (mg)",
+    "unita": "mg",
+    "t": "tr",
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "potassio",
+    "nome": "Potassio (mg)",
+    "unita": "mg",
+    "t": "tr",
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "calcio",
+    "nome": "Calcio (mg)",
+    "unita": "mg",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "B"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "fosforo",
+    "nome": "Fosforo (mg)",
+    "unita": "mg",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "ferro",
+    "nome": "Ferro (mg)",
+    "unita": "mg",
+    "v": 0.2,
+    "porzione": 0.0,
+    "origine": "B"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "rame",
+    "nome": "Rame (mg)",
+    "unita": "mg",
+    "t": "tr",
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "zinco",
+    "nome": "Zinco (mg)",
+    "unita": "mg",
+    "t": "tr",
+    "origine": "B"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "selenio",
+    "nome": "Selenio (μg)",
+    "unita": "μg",
+    "t": "tr",
+    "origine": "B"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "tiamina",
+    "nome": "Tiamina (mg)",
+    "unita": "mg",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "S"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "riboflavina",
+    "nome": "Riboflavina (mg)",
+    "unita": "mg",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "S"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "niacina",
+    "nome": "Niacina (mg)",
+    "unita": "mg",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "S"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "vitamina_c",
+    "nome": "Vitamina C (mg)",
+    "unita": "mg",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "S"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "folati",
+    "nome": "Folati (μg)",
+    "unita": "μg",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "vitamina_a_retinolo_equivalente",
+    "nome": "Vitamina A retinolo equivalente (μg)",
+    "unita": "μg",
+    "v": 36.0,
+    "porzione": 4.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "vitamina_e",
+    "nome": "Vitamina E (mg)",
+    "unita": "mg",
+    "v": 22.4,
+    "porzione": 2.24,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "acidi_grassi_saturi",
+    "nome": "Acidi grassi Saturi (%)",
+    "unita": "%",
+    "v": 15.32,
+    "origine": "C"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c4_0_c10_0",
+    "nome": "C4:0-C10:0 (%)",
+    "unita": "%",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c12_0_acido_laurico",
+    "nome": "C12:0 acido laurico (%)",
+    "unita": "%",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c14_0_acido_miristico",
+    "nome": "C14:0 acido miristico (%)",
+    "unita": "%",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c16_0_acido_palmitico",
+    "nome": "C16:0 acido palmitico (%)",
+    "unita": "%",
+    "v": 11.27,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c18_0_acido_stearico",
+    "nome": "C18:0 acido stearico (%)",
+    "unita": "%",
+    "v": 3.24,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c20_0_acido_arachidico",
+    "nome": "C20:0 acido arachidico (%)",
+    "unita": "%",
+    "v": 0.81,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c22_0_acido_beenico",
+    "nome": "C22:0 acido beenico (%)",
+    "unita": "%",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "acidi_grassi_monoinsaturi",
+    "nome": "Acidi grassi Monoinsaturi (%)",
+    "unita": "%",
+    "v": 77.27,
+    "origine": "C"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c14_1_acido_miristoleico",
+    "nome": "C14:1 acido miristoleico (%)",
+    "unita": "%",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c16_1_acido_palmitoleico",
+    "nome": "C16:1 acido palmitoleico (%)",
+    "unita": "%",
+    "v": 0.84,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c18_1_acido_oleico",
+    "nome": "C18:1 acido oleico (%)",
+    "unita": "%",
+    "v": 76.13,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c20_1_acido_eicosenoico",
+    "nome": "C20:1 acido eicosenoico (%)",
+    "unita": "%",
+    "v": 0.31,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c22_1_acido_erucico",
+    "nome": "C22:1 acido erucico (%)",
+    "unita": "%",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "acidi_grassi_polinsaturi",
+    "nome": "Acidi grassi Polinsaturi (%)",
+    "unita": "%",
+    "v": 7.97,
+    "origine": "C"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c18_2_acido_linoleico",
+    "nome": "C18:2 acido linoleico (%)",
+    "unita": "%",
+    "v": 7.19,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c18_3_acido_linolenico",
+    "nome": "C18:3 acido linolenico (%)",
+    "unita": "%",
+    "v": 0.77,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c20_4_acido_arachidonico",
+    "nome": "C20:4 acido arachidonico (%)",
+    "unita": "%",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c20_5_acido_eicosapentenoico_epa",
+    "nome": "C20:5 acido eicosapentenoico EPA (%)",
+    "unita": "%",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c22_6_acido_docosaesenoico_dha",
+    "nome": "C22:6 acido docosaesenoico DHA (%)",
+    "unita": "%",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "polinsatuti_saturi",
+    "nome": "Polinsatuti/Saturi",
+    "unita": "",
+    "v": 0.52,
+    "origine": "C"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "istidina",
+    "nome": "Istidina",
+    "unita": "",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "arginina",
+    "nome": "Arginina",
+    "unita": "",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "acido_aspartico",
+    "nome": "Acido aspartico",
+    "unita": "",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "treonina",
+    "nome": "Treonina",
+    "unita": "",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "serina",
+    "nome": "Serina",
+    "unita": "",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "acido_glutammico",
+    "nome": "Acido glutammico",
+    "unita": "",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "prolina",
+    "nome": "Prolina",
+    "unita": "",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "glicina",
+    "nome": "Glicina",
+    "unita": "",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "alanina",
+    "nome": "Alanina",
+    "unita": "",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "cistina",
+    "nome": "Cistina",
+    "unita": "",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "valina",
+    "nome": "Valina",
+    "unita": "",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "metionina",
+    "nome": "Metionina",
+    "unita": "",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "isoleucina",
+    "nome": "Isoleucina",
+    "unita": "",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "leucina",
+    "nome": "Leucina",
+    "unita": "",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "tirosina",
+    "nome": "Tirosina",
+    "unita": "",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "fenilalanina",
+    "nome": "Fenilalanina",
+    "unita": "",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "triptofano",
+    "nome": "Triptofano",
+    "unita": "",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "altri",
+    "chiave": "acido_fitico",
+    "nome": "Acido fitico (g)",
+    "unita": "g",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "S"
+   }
+  ]
+ },
+ {
+  "id": "crea-106500",
+  "nome": "Pollo, petto, crudo",
+  "categoria": "Carni fresche",
+  "fonte": "crea",
+  "codiceCrea": "106500",
+  "kcal": 100.0,
+  "proteine": 23.3,
+  "carboidrati": 0.0,
+  "grassi": 0.8,
+  "nomeInglese": "Chicken, breast, raw",
+  "parteEdibile": 98.0,
+  "porzione": 100.0,
+  "porzioneTesto": "100 g",
+  "valori": [
+   {
+    "gruppo": "macro",
+    "chiave": "acqua",
+    "nome": "Acqua (g)",
+    "unita": "g",
+    "v": 74.9,
+    "porzione": 74.9,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "energia_kcal",
+    "nome": "Energia (kcal)",
+    "unita": "kcal",
+    "v": 100.0,
+    "porzione": 100.0,
+    "origine": "C"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "energia_kj",
+    "nome": "Energia (kJ)",
+    "unita": "kJ",
+    "v": 420.0,
+    "porzione": 420.0,
+    "origine": "C"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "proteine",
+    "nome": "Proteine (g)",
+    "unita": "g (N x 6,25)",
+    "v": 23.3,
+    "porzione": 23.3,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "lipidi",
+    "nome": "Lipidi (g)",
+    "unita": "g",
+    "v": 0.8,
+    "porzione": 0.8,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "colesterolo",
+    "nome": "Colesterolo (mg)",
+    "unita": "mg",
+    "v": 60.0,
+    "porzione": 60.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "carboidrati_disponibili",
+    "nome": "Carboidrati disponibili (g)",
+    "unita": "g",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "S"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "amido",
+    "nome": "Amido (g)",
+    "unita": "g",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "S"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "zuccheri_solubili",
+    "nome": "Zuccheri solubili (g)",
+    "unita": "g",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "S"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "alcool",
+    "nome": "Alcool (g)",
+    "unita": "g",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "ZL"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "fibra_totale",
+    "nome": "Fibra totale (g)",
+    "unita": "g",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "ZL"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "sodio",
+    "nome": "Sodio (mg)",
+    "unita": "mg",
+    "v": 33.0,
+    "porzione": 33.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "potassio",
+    "nome": "Potassio (mg)",
+    "unita": "mg",
+    "v": 370.0,
+    "porzione": 370.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "calcio",
+    "nome": "Calcio (mg)",
+    "unita": "mg",
+    "v": 4.0,
+    "porzione": 4.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "magnesio",
+    "nome": "Magnesio (mg)",
+    "unita": "mg",
+    "v": 32.0,
+    "porzione": 32.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "fosforo",
+    "nome": "Fosforo (mg)",
+    "unita": "mg",
+    "v": 210.0,
+    "porzione": 210.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "ferro",
+    "nome": "Ferro (mg)",
+    "unita": "mg",
+    "v": 0.4,
+    "porzione": 0.4,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "rame",
+    "nome": "Rame (mg)",
+    "unita": "mg",
+    "v": 0.05,
+    "porzione": 0.05,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "zinco",
+    "nome": "Zinco (mg)",
+    "unita": "mg",
+    "v": 0.7,
+    "porzione": 0.7,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "selenio",
+    "nome": "Selenio (μg)",
+    "unita": "μg",
+    "v": 10.0,
+    "porzione": 10.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "tiamina",
+    "nome": "Tiamina (mg)",
+    "unita": "mg",
+    "v": 0.1,
+    "porzione": 0.1,
+    "origine": "A"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "riboflavina",
+    "nome": "Riboflavina (mg)",
+    "unita": "mg",
+    "v": 0.2,
+    "porzione": 0.2,
+    "origine": "A"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "niacina",
+    "nome": "Niacina (mg)",
+    "unita": "mg",
+    "v": 8.3,
+    "porzione": 8.3,
+    "origine": "A"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "vitamina_c",
+    "nome": "Vitamina C (mg)",
+    "unita": "mg",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "S"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "vitamina_a_retinolo_equivalente",
+    "nome": "Vitamina A retinolo equivalente (μg)",
+    "unita": "μg",
+    "t": "tr",
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "acidi_grassi_saturi",
+    "nome": "Acidi grassi Saturi (%)",
+    "unita": "%",
+    "v": 37.2,
+    "origine": "C"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c4_0_c10_0",
+    "nome": "C4:0-C10:0 (%)",
+    "unita": "%",
+    "v": 0.0,
+    "origine": "S"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c12_0_acido_laurico",
+    "nome": "C12:0 acido laurico (%)",
+    "unita": "%",
+    "v": 0.0,
+    "origine": "S"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c14_0_acido_miristico",
+    "nome": "C14:0 acido miristico (%)",
+    "unita": "%",
+    "v": 1.49,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c16_0_acido_palmitico",
+    "nome": "C16:0 acido palmitico (%)",
+    "unita": "%",
+    "v": 20.83,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c18_0_acido_stearico",
+    "nome": "C18:0 acido stearico (%)",
+    "unita": "%",
+    "v": 14.88,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c20_0_acido_arachidico",
+    "nome": "C20:0 acido arachidico (%)",
+    "unita": "%",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c22_0_acido_beenico",
+    "nome": "C22:0 acido beenico (%)",
+    "unita": "%",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "acidi_grassi_monoinsaturi",
+    "nome": "Acidi grassi Monoinsaturi (%)",
+    "unita": "%",
+    "v": 28.27,
+    "origine": "C"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c14_1_acido_miristoleico",
+    "nome": "C14:1 acido miristoleico (%)",
+    "unita": "%",
+    "v": 1.49,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c16_1_acido_palmitoleico",
+    "nome": "C16:1 acido palmitoleico (%)",
+    "unita": "%",
+    "v": 1.49,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c18_1_acido_oleico",
+    "nome": "C18:1 acido oleico (%)",
+    "unita": "%",
+    "v": 23.81,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c20_1_acido_eicosenoico",
+    "nome": "C20:1 acido eicosenoico (%)",
+    "unita": "%",
+    "v": 0.0,
+    "origine": "S"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c22_1_acido_erucico",
+    "nome": "C22:1 acido erucico (%)",
+    "unita": "%",
+    "v": 0.0,
+    "origine": "S"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "acidi_grassi_polinsaturi",
+    "nome": "Acidi grassi Polinsaturi (%)",
+    "unita": "%",
+    "v": 34.23,
+    "origine": "C"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c18_2_acido_linoleico",
+    "nome": "C18:2 acido linoleico (%)",
+    "unita": "%",
+    "v": 16.37,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c18_3_acido_linolenico",
+    "nome": "C18:3 acido linolenico (%)",
+    "unita": "%",
+    "v": 0.0,
+    "origine": "S"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c20_4_acido_arachidonico",
+    "nome": "C20:4 acido arachidonico (%)",
+    "unita": "%",
+    "v": 8.93,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c20_5_acido_eicosapentenoico_epa",
+    "nome": "C20:5 acido eicosapentenoico EPA (%)",
+    "unita": "%",
+    "v": 0.0,
+    "origine": "S"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c22_6_acido_docosaesenoico_dha",
+    "nome": "C22:6 acido docosaesenoico DHA (%)",
+    "unita": "%",
+    "v": 0.0,
+    "origine": "S"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "polinsatuti_saturi",
+    "nome": "Polinsatuti/Saturi",
+    "unita": "",
+    "v": 0.8,
+    "origine": "C"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "lisina",
+    "nome": "Lisina",
+    "unita": "",
+    "v": 9.64,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "istidina",
+    "nome": "Istidina",
+    "unita": "",
+    "v": 4.02,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "arginina",
+    "nome": "Arginina",
+    "unita": "",
+    "v": 6.98,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "acido_aspartico",
+    "nome": "Acido aspartico",
+    "unita": "",
+    "v": 9.72,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "treonina",
+    "nome": "Treonina",
+    "unita": "",
+    "v": 4.98,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "serina",
+    "nome": "Serina",
+    "unita": "",
+    "v": 4.34,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "acido_glutammico",
+    "nome": "Acido glutammico",
+    "unita": "",
+    "v": 14.22,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "prolina",
+    "nome": "Prolina",
+    "unita": "",
+    "v": 3.69,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "glicina",
+    "nome": "Glicina",
+    "unita": "",
+    "v": 4.4,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "alanina",
+    "nome": "Alanina",
+    "unita": "",
+    "v": 6.08,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "cistina",
+    "nome": "Cistina",
+    "unita": "",
+    "v": 1.32,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "valina",
+    "nome": "Valina",
+    "unita": "",
+    "v": 5.94,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "metionina",
+    "nome": "Metionina",
+    "unita": "",
+    "v": 2.86,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "isoleucina",
+    "nome": "Isoleucina",
+    "unita": "",
+    "v": 4.95,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "leucina",
+    "nome": "Leucina",
+    "unita": "",
+    "v": 8.39,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "tirosina",
+    "nome": "Tirosina",
+    "unita": "",
+    "v": 3.44,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "fenilalanina",
+    "nome": "Fenilalanina",
+    "unita": "",
+    "v": 4.18,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "triptofano",
+    "nome": "Triptofano",
+    "unita": "",
+    "v": 1.17,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "indice_chimico",
+    "nome": "Indice Chimico",
+    "unita": "",
+    "v": 142.0,
+    "origine": "C"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "aminoacido_limitante",
+    "nome": "Aminoacido limitante",
+    "unita": "",
+    "t": "Leucina",
+    "origine": "C"
+   },
+   {
+    "gruppo": "altri",
+    "chiave": "acido_fitico",
+    "nome": "Acido fitico (g)",
+    "unita": "g",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "S"
+   }
+  ]
+ },
+ {
+  "id": "crea-121410",
+  "nome": "Merluzzo o nasello",
+  "categoria": "Prodotti della pesca",
+  "fonte": "crea",
+  "codiceCrea": "121410",
+  "kcal": 71.0,
+  "proteine": 17.0,
+  "carboidrati": 0.0,
+  "grassi": 0.3,
+  "nomeInglese": "Cod, raw",
+  "parteEdibile": 76.0,
+  "porzione": 150.0,
+  "porzioneTesto": "150 g",
+  "valori": [
+   {
+    "gruppo": "macro",
+    "chiave": "acqua",
+    "nome": "Acqua (g)",
+    "unita": "g",
+    "v": 81.5,
+    "porzione": 122.3,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "energia_kcal",
+    "nome": "Energia (kcal)",
+    "unita": "kcal",
+    "v": 71.0,
+    "porzione": 106.0,
+    "origine": "C"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "energia_kj",
+    "nome": "Energia (kJ)",
+    "unita": "kJ",
+    "v": 296.0,
+    "porzione": 446.0,
+    "origine": "C"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "proteine",
+    "nome": "Proteine (g)",
+    "unita": "g (N x 6,25)",
+    "v": 17.0,
+    "porzione": 25.5,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "lipidi",
+    "nome": "Lipidi (g)",
+    "unita": "g",
+    "v": 0.3,
+    "porzione": 0.5,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "colesterolo",
+    "nome": "Colesterolo (mg)",
+    "unita": "mg",
+    "v": 50.0,
+    "porzione": 75.0,
+    "origine": "B"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "carboidrati_disponibili",
+    "nome": "Carboidrati disponibili (g)",
+    "unita": "g",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "S"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "amido",
+    "nome": "Amido (g)",
+    "unita": "g",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "S"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "zuccheri_solubili",
+    "nome": "Zuccheri solubili (g)",
+    "unita": "g",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "S"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "alcool",
+    "nome": "Alcool (g)",
+    "unita": "g",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "ZL"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "fibra_totale",
+    "nome": "Fibra totale (g)",
+    "unita": "g",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "ZL"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "sodio",
+    "nome": "Sodio (mg)",
+    "unita": "mg",
+    "v": 77.0,
+    "porzione": 116.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "potassio",
+    "nome": "Potassio (mg)",
+    "unita": "mg",
+    "v": 320.0,
+    "porzione": 480.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "calcio",
+    "nome": "Calcio (mg)",
+    "unita": "mg",
+    "v": 25.0,
+    "porzione": 38.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "magnesio",
+    "nome": "Magnesio (mg)",
+    "unita": "mg",
+    "v": 20.0,
+    "porzione": 30.0,
+    "origine": "B"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "fosforo",
+    "nome": "Fosforo (mg)",
+    "unita": "mg",
+    "v": 194.0,
+    "porzione": 291.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "ferro",
+    "nome": "Ferro (mg)",
+    "unita": "mg",
+    "v": 0.7,
+    "porzione": 1.1,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "rame",
+    "nome": "Rame (mg)",
+    "unita": "mg",
+    "v": 0.3,
+    "porzione": 0.45,
+    "origine": "B"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "zinco",
+    "nome": "Zinco (mg)",
+    "unita": "mg",
+    "v": 2.0,
+    "porzione": 3.0,
+    "origine": "B"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "selenio",
+    "nome": "Selenio (μg)",
+    "unita": "μg",
+    "v": 16.5,
+    "porzione": 24.8,
+    "origine": "B"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "tiamina",
+    "nome": "Tiamina (mg)",
+    "unita": "mg",
+    "v": 0.05,
+    "porzione": 0.08,
+    "origine": "A"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "riboflavina",
+    "nome": "Riboflavina (mg)",
+    "unita": "mg",
+    "v": 0.08,
+    "porzione": 0.12,
+    "origine": "A"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "niacina",
+    "nome": "Niacina (mg)",
+    "unita": "mg",
+    "v": 2.2,
+    "porzione": 3.3,
+    "origine": "A"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "vitamina_c",
+    "nome": "Vitamina C (mg)",
+    "unita": "mg",
+    "t": "tr",
+    "origine": "A"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "vitamina_a_retinolo_equivalente",
+    "nome": "Vitamina A retinolo equivalente (μg)",
+    "unita": "μg",
+    "t": "tr",
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "acidi_grassi_saturi",
+    "nome": "Acidi grassi Saturi (%)",
+    "unita": "%",
+    "v": 24.1,
+    "origine": "C"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c4_0_c10_0",
+    "nome": "C4:0-C10:0 (%)",
+    "unita": "%",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c12_0_acido_laurico",
+    "nome": "C12:0 acido laurico (%)",
+    "unita": "%",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c14_0_acido_miristico",
+    "nome": "C14:0 acido miristico (%)",
+    "unita": "%",
+    "v": 4.02,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c16_0_acido_palmitico",
+    "nome": "C16:0 acido palmitico (%)",
+    "unita": "%",
+    "v": 20.08,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c18_0_acido_stearico",
+    "nome": "C18:0 acido stearico (%)",
+    "unita": "%",
+    "v": 4.02,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c20_0_acido_arachidico",
+    "nome": "C20:0 acido arachidico (%)",
+    "unita": "%",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c22_0_acido_beenico",
+    "nome": "C22:0 acido beenico (%)",
+    "unita": "%",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "acidi_grassi_monoinsaturi",
+    "nome": "Acidi grassi Monoinsaturi (%)",
+    "unita": "%",
+    "v": 28.11,
+    "origine": "C"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c14_1_acido_miristoleico",
+    "nome": "C14:1 acido miristoleico (%)",
+    "unita": "%",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c16_1_acido_palmitoleico",
+    "nome": "C16:1 acido palmitoleico (%)",
+    "unita": "%",
+    "v": 20.08,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c18_1_acido_oleico",
+    "nome": "C18:1 acido oleico (%)",
+    "unita": "%",
+    "v": 8.03,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c20_1_acido_eicosenoico",
+    "nome": "C20:1 acido eicosenoico (%)",
+    "unita": "%",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c22_1_acido_erucico",
+    "nome": "C22:1 acido erucico (%)",
+    "unita": "%",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "acidi_grassi_polinsaturi",
+    "nome": "Acidi grassi Polinsaturi (%)",
+    "unita": "%",
+    "v": 48.19,
+    "origine": "C"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c18_2_acido_linoleico",
+    "nome": "C18:2 acido linoleico (%)",
+    "unita": "%",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c18_3_acido_linolenico",
+    "nome": "C18:3 acido linolenico (%)",
+    "unita": "%",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c20_4_acido_arachidonico",
+    "nome": "C20:4 acido arachidonico (%)",
+    "unita": "%",
+    "v": 4.02,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c20_5_acido_eicosapentenoico_epa",
+    "nome": "C20:5 acido eicosapentenoico EPA (%)",
+    "unita": "%",
+    "v": 12.05,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c22_6_acido_docosaesenoico_dha",
+    "nome": "C22:6 acido docosaesenoico DHA (%)",
+    "unita": "%",
+    "v": 32.13,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "polinsatuti_saturi",
+    "nome": "Polinsatuti/Saturi",
+    "unita": "",
+    "v": 2.0,
+    "origine": "C"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "lisina",
+    "nome": "Lisina",
+    "unita": "",
+    "v": 10.2,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "istidina",
+    "nome": "Istidina",
+    "unita": "",
+    "v": 2.94,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "arginina",
+    "nome": "Arginina",
+    "unita": "",
+    "v": 6.59,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "acido_aspartico",
+    "nome": "Acido aspartico",
+    "unita": "",
+    "v": 10.69,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "treonina",
+    "nome": "Treonina",
+    "unita": "",
+    "v": 5.17,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "serina",
+    "nome": "Serina",
+    "unita": "",
+    "v": 4.99,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "acido_glutammico",
+    "nome": "Acido glutammico",
+    "unita": "",
+    "v": 15.81,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "prolina",
+    "nome": "Prolina",
+    "unita": "",
+    "v": 3.92,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "glicina",
+    "nome": "Glicina",
+    "unita": "",
+    "v": 4.67,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "alanina",
+    "nome": "Alanina",
+    "unita": "",
+    "v": 6.67,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "cistina",
+    "nome": "Cistina",
+    "unita": "",
+    "v": 1.17,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "valina",
+    "nome": "Valina",
+    "unita": "",
+    "v": 5.23,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "metionina",
+    "nome": "Metionina",
+    "unita": "",
+    "v": 3.38,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "isoleucina",
+    "nome": "Isoleucina",
+    "unita": "",
+    "v": 4.69,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "leucina",
+    "nome": "Leucina",
+    "unita": "",
+    "v": 8.53,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "tirosina",
+    "nome": "Tirosina",
+    "unita": "",
+    "v": 3.92,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "fenilalanina",
+    "nome": "Fenilalanina",
+    "unita": "",
+    "v": 5.06,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "triptofano",
+    "nome": "Triptofano",
+    "unita": "",
+    "v": 1.12,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "indice_chimico",
+    "nome": "Indice Chimico",
+    "unita": "",
+    "v": 134.0,
+    "origine": "C"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "aminoacido_limitante",
+    "nome": "Aminoacido limitante",
+    "unita": "",
+    "t": "Valina",
+    "origine": "C"
+   },
+   {
+    "gruppo": "altri",
+    "chiave": "acido_fitico",
+    "nome": "Acido fitico (g)",
+    "unita": "g",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "S"
+   }
+  ]
+ },
+ {
+  "id": "crea-122400",
+  "nome": "Salmone",
+  "categoria": "Prodotti della pesca",
+  "fonte": "crea",
+  "codiceCrea": "122400",
+  "kcal": 185.0,
+  "proteine": 18.4,
+  "carboidrati": 1.0,
+  "grassi": 12.0,
+  "nomeInglese": "Salmon, raw",
+  "parteEdibile": 65.0,
+  "porzione": 150.0,
+  "porzioneTesto": "150 g",
+  "valori": [
+   {
+    "gruppo": "macro",
+    "chiave": "acqua",
+    "nome": "Acqua (g)",
+    "unita": "g",
+    "v": 68.0,
+    "porzione": 102.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "energia_kcal",
+    "nome": "Energia (kcal)",
+    "unita": "kcal",
+    "v": 185.0,
+    "porzione": 278.0,
+    "origine": "C"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "energia_kj",
+    "nome": "Energia (kJ)",
+    "unita": "kJ",
+    "v": 776.0,
+    "porzione": 1163.0,
+    "origine": "C"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "proteine",
+    "nome": "Proteine (g)",
+    "unita": "g (N x 6,25)",
+    "v": 18.4,
+    "porzione": 27.6,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "lipidi",
+    "nome": "Lipidi (g)",
+    "unita": "g",
+    "v": 12.0,
+    "porzione": 18.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "colesterolo",
+    "nome": "Colesterolo (mg)",
+    "unita": "mg",
+    "v": 35.0,
+    "porzione": 53.0,
+    "origine": "B"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "carboidrati_disponibili",
+    "nome": "Carboidrati disponibili (g)",
+    "unita": "g",
+    "v": 1.0,
+    "porzione": 1.5,
+    "origine": "C"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "amido",
+    "nome": "Amido (g)",
+    "unita": "g",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "S"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "zuccheri_solubili",
+    "nome": "Zuccheri solubili (g)",
+    "unita": "g",
+    "v": 1.0,
+    "porzione": 1.5,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "alcool",
+    "nome": "Alcool (g)",
+    "unita": "g",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "ZL"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "fibra_totale",
+    "nome": "Fibra totale (g)",
+    "unita": "g",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "ZL"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "sodio",
+    "nome": "Sodio (mg)",
+    "unita": "mg",
+    "v": 98.0,
+    "porzione": 147.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "potassio",
+    "nome": "Potassio (mg)",
+    "unita": "mg",
+    "v": 310.0,
+    "porzione": 465.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "calcio",
+    "nome": "Calcio (mg)",
+    "unita": "mg",
+    "v": 27.0,
+    "porzione": 41.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "fosforo",
+    "nome": "Fosforo (mg)",
+    "unita": "mg",
+    "v": 280.0,
+    "porzione": 420.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "ferro",
+    "nome": "Ferro (mg)",
+    "unita": "mg",
+    "v": 0.7,
+    "porzione": 1.1,
+    "origine": "A"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "tiamina",
+    "nome": "Tiamina (mg)",
+    "unita": "mg",
+    "v": 0.2,
+    "porzione": 0.3,
+    "origine": "A"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "riboflavina",
+    "nome": "Riboflavina (mg)",
+    "unita": "mg",
+    "v": 0.15,
+    "porzione": 0.23,
+    "origine": "A"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "niacina",
+    "nome": "Niacina (mg)",
+    "unita": "mg",
+    "v": 7.0,
+    "porzione": 10.5,
+    "origine": "A"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "vitamina_c",
+    "nome": "Vitamina C (mg)",
+    "unita": "mg",
+    "t": "tr",
+    "origine": "A"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "vitamina_a_retinolo_equivalente",
+    "nome": "Vitamina A retinolo equivalente (μg)",
+    "unita": "μg",
+    "v": 13.0,
+    "porzione": 20.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "acidi_grassi_saturi",
+    "nome": "Acidi grassi Saturi (%)",
+    "unita": "%",
+    "v": 28.13,
+    "origine": "C"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c4_0_c10_0",
+    "nome": "C4:0-C10:0 (%)",
+    "unita": "%",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c12_0_acido_laurico",
+    "nome": "C12:0 acido laurico (%)",
+    "unita": "%",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c14_0_acido_miristico",
+    "nome": "C14:0 acido miristico (%)",
+    "unita": "%",
+    "v": 4.92,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c16_0_acido_palmitico",
+    "nome": "C16:0 acido palmitico (%)",
+    "unita": "%",
+    "v": 19.22,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c18_0_acido_stearico",
+    "nome": "C18:0 acido stearico (%)",
+    "unita": "%",
+    "v": 3.98,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c20_0_acido_arachidico",
+    "nome": "C20:0 acido arachidico (%)",
+    "unita": "%",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c22_0_acido_beenico",
+    "nome": "C22:0 acido beenico (%)",
+    "unita": "%",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "acidi_grassi_monoinsaturi",
+    "nome": "Acidi grassi Monoinsaturi (%)",
+    "unita": "%",
+    "v": 43.56,
+    "origine": "C"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c14_1_acido_miristoleico",
+    "nome": "C14:1 acido miristoleico (%)",
+    "unita": "%",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c16_1_acido_palmitoleico",
+    "nome": "C16:1 acido palmitoleico (%)",
+    "unita": "%",
+    "v": 6.16,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c18_1_acido_oleico",
+    "nome": "C18:1 acido oleico (%)",
+    "unita": "%",
+    "v": 23.3,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c20_1_acido_eicosenoico",
+    "nome": "C20:1 acido eicosenoico (%)",
+    "unita": "%",
+    "v": 8.62,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c22_1_acido_erucico",
+    "nome": "C22:1 acido erucico (%)",
+    "unita": "%",
+    "v": 5.49,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "acidi_grassi_polinsaturi",
+    "nome": "Acidi grassi Polinsaturi (%)",
+    "unita": "%",
+    "v": 28.88,
+    "origine": "C"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c18_2_acido_linoleico",
+    "nome": "C18:2 acido linoleico (%)",
+    "unita": "%",
+    "v": 1.42,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c18_3_acido_linolenico",
+    "nome": "C18:3 acido linolenico (%)",
+    "unita": "%",
+    "v": 0.85,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c20_4_acido_arachidonico",
+    "nome": "C20:4 acido arachidonico (%)",
+    "unita": "%",
+    "v": 0.47,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c20_5_acido_eicosapentenoico_epa",
+    "nome": "C20:5 acido eicosapentenoico EPA (%)",
+    "unita": "%",
+    "v": 8.43,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c22_6_acido_docosaesenoico_dha",
+    "nome": "C22:6 acido docosaesenoico DHA (%)",
+    "unita": "%",
+    "v": 11.27,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "polinsatuti_saturi",
+    "nome": "Polinsatuti/Saturi",
+    "unita": "",
+    "v": 1.03,
+    "origine": "C"
+   },
+   {
+    "gruppo": "altri",
+    "chiave": "acido_fitico",
+    "nome": "Acido fitico (g)",
+    "unita": "g",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "S"
+   }
+  ]
+ },
+ {
+  "id": "crea-150030",
+  "nome": "Yogurt greco, 0% lipidi",
+  "categoria": "Latte e yogurt",
+  "fonte": "crea",
+  "codiceCrea": "150030",
+  "kcal": 51.0,
+  "proteine": 9.0,
+  "carboidrati": 4.0,
+  "grassi": 0.0,
+  "nomeInglese": "Yogurt, greek, 0% fat",
+  "parteEdibile": 100.0,
+  "porzione": 125.0,
+  "porzioneTesto": "125 g",
+  "valori": [
+   {
+    "gruppo": "macro",
+    "chiave": "acqua",
+    "nome": "Acqua (g)",
+    "unita": "g",
+    "v": 86.0,
+    "porzione": 107.5,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "energia_kcal",
+    "nome": "Energia (kcal)",
+    "unita": "kcal",
+    "v": 51.0,
+    "porzione": 64.0,
+    "origine": "C"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "energia_kj",
+    "nome": "Energia (kJ)",
+    "unita": "kJ",
+    "v": 213.0,
+    "porzione": 268.0,
+    "origine": "C"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "proteine",
+    "nome": "Proteine (g)",
+    "unita": "g (N x 6,25)",
+    "v": 9.0,
+    "porzione": 11.3,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "lipidi",
+    "nome": "Lipidi (g)",
+    "unita": "g",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "colesterolo",
+    "nome": "Colesterolo (mg)",
+    "unita": "mg",
+    "v": 1.0,
+    "porzione": 1.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "carboidrati_disponibili",
+    "nome": "Carboidrati disponibili (g)",
+    "unita": "g",
+    "v": 4.0,
+    "porzione": 5.0,
+    "origine": "C"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "amido",
+    "nome": "Amido (g)",
+    "unita": "g",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "S"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "zuccheri_solubili",
+    "nome": "Zuccheri solubili (g)",
+    "unita": "g",
+    "v": 4.0,
+    "porzione": 5.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "alcool",
+    "nome": "Alcool (g)",
+    "unita": "g",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "ZL"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "fibra_totale",
+    "nome": "Fibra totale (g)",
+    "unita": "g",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "ZL"
+   }
+  ]
+ },
+ {
+  "id": "crea-166000",
+  "nome": "Parmigiano Reggiano DOP",
+  "categoria": "Formaggi e latticini",
+  "fonte": "crea",
+  "codiceCrea": "166000",
+  "kcal": 397.0,
+  "proteine": 32.4,
+  "carboidrati": 0,
+  "grassi": 29.7,
+  "nomeInglese": "Cheese, Parmigiano Reggiano, PDO, hard cheese",
+  "parteEdibile": 100.0,
+  "porzione": 50.0,
+  "porzioneTesto": "50 g",
+  "valori": [
+   {
+    "gruppo": "macro",
+    "chiave": "acqua",
+    "nome": "Acqua (g)",
+    "unita": "g",
+    "v": 31.4,
+    "porzione": 15.7,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "energia_kcal",
+    "nome": "Energia (kcal)",
+    "unita": "kcal",
+    "v": 397.0,
+    "porzione": 199.0,
+    "origine": "C"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "energia_kj",
+    "nome": "Energia (kJ)",
+    "unita": "kJ",
+    "v": 1661.0,
+    "porzione": 832.0,
+    "origine": "C"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "proteine",
+    "nome": "Proteine (g)",
+    "unita": "g (N x 6,25)",
+    "v": 32.4,
+    "porzione": 16.2,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "lipidi",
+    "nome": "Lipidi (g)",
+    "unita": "g",
+    "v": 29.7,
+    "porzione": 14.9,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "colesterolo",
+    "nome": "Colesterolo (mg)",
+    "unita": "mg",
+    "v": 83.0,
+    "porzione": 42.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "carboidrati_disponibili",
+    "nome": "Carboidrati disponibili (g)",
+    "unita": "g",
+    "t": "tr",
+    "origine": "C"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "amido",
+    "nome": "Amido (g)",
+    "unita": "g",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "S"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "zuccheri_solubili",
+    "nome": "Zuccheri solubili (g)",
+    "unita": "g",
+    "t": "tr",
+    "origine": "A"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "alcool",
+    "nome": "Alcool (g)",
+    "unita": "g",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "S"
+   },
+   {
+    "gruppo": "macro",
+    "chiave": "fibra_totale",
+    "nome": "Fibra totale (g)",
+    "unita": "g",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "S"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "sodio",
+    "nome": "Sodio (mg)",
+    "unita": "mg",
+    "v": 600.0,
+    "porzione": 300.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "potassio",
+    "nome": "Potassio (mg)",
+    "unita": "mg",
+    "v": 102.0,
+    "porzione": 51.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "calcio",
+    "nome": "Calcio (mg)",
+    "unita": "mg",
+    "v": 1159.0,
+    "porzione": 580.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "magnesio",
+    "nome": "Magnesio (mg)",
+    "unita": "mg",
+    "v": 43.0,
+    "porzione": 22.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "fosforo",
+    "nome": "Fosforo (mg)",
+    "unita": "mg",
+    "v": 691.0,
+    "porzione": 346.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "ferro",
+    "nome": "Ferro (mg)",
+    "unita": "mg",
+    "v": 0.2,
+    "porzione": 0.1,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "rame",
+    "nome": "Rame (mg)",
+    "unita": "mg",
+    "v": 0.83,
+    "porzione": 0.42,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "zinco",
+    "nome": "Zinco (mg)",
+    "unita": "mg",
+    "v": 4.0,
+    "porzione": 2.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "minerali",
+    "chiave": "selenio",
+    "nome": "Selenio (μg)",
+    "unita": "μg",
+    "v": 12.0,
+    "porzione": 6.0,
+    "origine": "B"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "tiamina",
+    "nome": "Tiamina (mg)",
+    "unita": "mg",
+    "v": 0.03,
+    "porzione": 0.02,
+    "origine": "A"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "riboflavina",
+    "nome": "Riboflavina (mg)",
+    "unita": "mg",
+    "v": 0.37,
+    "porzione": 0.19,
+    "origine": "A"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "niacina",
+    "nome": "Niacina (mg)",
+    "unita": "mg",
+    "v": 0.05,
+    "porzione": 0.03,
+    "origine": "A"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "vitamina_b6",
+    "nome": "Vitamina B6 (mg)",
+    "unita": "mg",
+    "v": 0.06,
+    "porzione": 0.03,
+    "origine": "S"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "vitamina_b12",
+    "nome": "Vitamina B12 (μg)",
+    "unita": "μg",
+    "v": 1.7,
+    "porzione": 0.85,
+    "origine": "S"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "acido_pantotenico",
+    "nome": "Acido pantotenico (mg)",
+    "unita": "mg",
+    "v": 0.32,
+    "porzione": 0.16,
+    "origine": "S"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "biotina",
+    "nome": "Biotina (mg)",
+    "unita": "mg",
+    "v": 23.0,
+    "porzione": 11.5,
+    "origine": "S"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "vitamina_c",
+    "nome": "Vitamina C (mg)",
+    "unita": "mg",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "S"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "folati",
+    "nome": "Folati (μg)",
+    "unita": "μg",
+    "v": 56.0,
+    "porzione": 28.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "vitamina_a_retinolo_equivalente",
+    "nome": "Vitamina A retinolo equivalente (μg)",
+    "unita": "μg",
+    "v": 430.0,
+    "porzione": 215.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "vitamine",
+    "chiave": "vitamina_e",
+    "nome": "Vitamina E (mg)",
+    "unita": "mg",
+    "v": 0.55,
+    "porzione": 0.28,
+    "origine": "B"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "acidi_grassi_saturi",
+    "nome": "Acidi grassi Saturi (%)",
+    "unita": "%",
+    "v": 65.98,
+    "origine": "C"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c4_0_c10_0",
+    "nome": "C4:0-C10:0 (%)",
+    "unita": "%",
+    "v": 10.6,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c12_0_acido_laurico",
+    "nome": "C12:0 acido laurico (%)",
+    "unita": "%",
+    "v": 3.7,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c14_0_acido_miristico",
+    "nome": "C14:0 acido miristico (%)",
+    "unita": "%",
+    "v": 12.1,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c16_0_acido_palmitico",
+    "nome": "C16:0 acido palmitico (%)",
+    "unita": "%",
+    "v": 28.61,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c18_0_acido_stearico",
+    "nome": "C18:0 acido stearico (%)",
+    "unita": "%",
+    "v": 10.93,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c20_0_acido_arachidico",
+    "nome": "C20:0 acido arachidico (%)",
+    "unita": "%",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c22_0_acido_beenico",
+    "nome": "C22:0 acido beenico (%)",
+    "unita": "%",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "acidi_grassi_monoinsaturi",
+    "nome": "Acidi grassi Monoinsaturi (%)",
+    "unita": "%",
+    "v": 31.35,
+    "origine": "C"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c14_1_acido_miristoleico",
+    "nome": "C14:1 acido miristoleico (%)",
+    "unita": "%",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c16_1_acido_palmitoleico",
+    "nome": "C16:1 acido palmitoleico (%)",
+    "unita": "%",
+    "v": 2.28,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c18_1_acido_oleico",
+    "nome": "C18:1 acido oleico (%)",
+    "unita": "%",
+    "v": 29.04,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c20_1_acido_eicosenoico",
+    "nome": "C20:1 acido eicosenoico (%)",
+    "unita": "%",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c22_1_acido_erucico",
+    "nome": "C22:1 acido erucico (%)",
+    "unita": "%",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "acidi_grassi_polinsaturi",
+    "nome": "Acidi grassi Polinsaturi (%)",
+    "unita": "%",
+    "v": 2.81,
+    "origine": "C"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c18_2_acido_linoleico",
+    "nome": "C18:2 acido linoleico (%)",
+    "unita": "%",
+    "v": 1.35,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c18_3_acido_linolenico",
+    "nome": "C18:3 acido linolenico (%)",
+    "unita": "%",
+    "v": 1.49,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c20_4_acido_arachidonico",
+    "nome": "C20:4 acido arachidonico (%)",
+    "unita": "%",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c20_5_acido_eicosapentenoico_epa",
+    "nome": "C20:5 acido eicosapentenoico EPA (%)",
+    "unita": "%",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "c22_6_acido_docosaesenoico_dha",
+    "nome": "C22:6 acido docosaesenoico DHA (%)",
+    "unita": "%",
+    "v": 0.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "acidiGrassi",
+    "chiave": "polinsatuti_saturi",
+    "nome": "Polinsatuti/Saturi",
+    "unita": "",
+    "v": 0.04,
+    "origine": "C"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "lisina",
+    "nome": "Lisina",
+    "unita": "",
+    "v": 7.34,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "istidina",
+    "nome": "Istidina",
+    "unita": "",
+    "v": 2.75,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "arginina",
+    "nome": "Arginina",
+    "unita": "",
+    "v": 2.42,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "acido_aspartico",
+    "nome": "Acido aspartico",
+    "unita": "",
+    "v": 6.75,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "treonina",
+    "nome": "Treonina",
+    "unita": "",
+    "v": 3.28,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "serina",
+    "nome": "Serina",
+    "unita": "",
+    "v": 5.55,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "acido_glutammico",
+    "nome": "Acido glutammico",
+    "unita": "",
+    "v": 18.0,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "prolina",
+    "nome": "Prolina",
+    "unita": "",
+    "v": 10.63,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "glicina",
+    "nome": "Glicina",
+    "unita": "",
+    "v": 2.09,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "alanina",
+    "nome": "Alanina",
+    "unita": "",
+    "v": 2.81,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "cistina",
+    "nome": "Cistina",
+    "unita": "",
+    "v": 0.6,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "valina",
+    "nome": "Valina",
+    "unita": "",
+    "v": 4.06,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "metionina",
+    "nome": "Metionina",
+    "unita": "",
+    "v": 3.07,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "isoleucina",
+    "nome": "Isoleucina",
+    "unita": "",
+    "v": 3.82,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "leucina",
+    "nome": "Leucina",
+    "unita": "",
+    "v": 8.6,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "tirosina",
+    "nome": "Tirosina",
+    "unita": "",
+    "v": 5.22,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "fenilalanina",
+    "nome": "Fenilalanina",
+    "unita": "",
+    "v": 4.81,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "triptofano",
+    "nome": "Triptofano",
+    "unita": "",
+    "v": 0.96,
+    "origine": "A"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "indice_chimico",
+    "nome": "Indice Chimico",
+    "unita": "",
+    "v": 104.0,
+    "origine": "C"
+   },
+   {
+    "gruppo": "aminoacidi",
+    "chiave": "aminoacido_limitante",
+    "nome": "Aminoacido limitante",
+    "unita": "",
+    "t": "Valina",
+    "origine": "C"
+   },
+   {
+    "gruppo": "altri",
+    "chiave": "acido_fitico",
+    "nome": "Acido fitico (g)",
+    "unita": "g",
+    "v": 0.0,
+    "porzione": 0.0,
+    "origine": "S"
+   }
+  ]
+ }
+]

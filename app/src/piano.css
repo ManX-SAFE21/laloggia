@@ -153,3 +153,6 @@
   0% { background: rgba(169, 186, 152, 0.45); box-shadow: 0 0 0 4mm rgba(169, 186, 152, 0.45); }
   100% { background: transparent; box-shadow: 0 0 0 4mm rgba(169, 186, 152, 0); }
 }
+
+/* Crediti dei valori nutrizionali (tabelle CREA) in fondo al piano */
+.pd-fonte-dati { margin-top: 6mm; font-size: 7.5pt; color: #8a8f7c; line-height: 1.3; }

@@ -10,6 +10,7 @@ import { DIMENSIONI_IMMAGINE, IMMAGINI_PIANO, srcImmagine } from "../immaginiPia
 import { Cliente, ElementoPiano, OpzionePiano, PianoAlimentare, SezionePiano } from "../types";
 import { Leaf } from "../screens/Lock";
 import { Destinazione, Posizione, inserisciImmagine, spostaAlternativa, spostaImmagine } from "../spostamenti";
+import { FONTE_CREA } from "../alimenti";
 
 /** Testo con **grassetto**. */
 export function Testo({ t }: { t: string }) {
@@ -382,6 +383,7 @@ function Contatti() {
     <section className="pd-chiusura">
       <p>Per qualsiasi dubbio sul piano scrivimi pure: rispondo appena possibile.</p>
       <Firma />
+      <div className="pd-fonte-dati">{FONTE_CREA}</div>
     </section>
   );
 }
