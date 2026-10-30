@@ -414,3 +414,13 @@ h3 { font-size: 15px; font-family: var(--font); font-weight: 600; }
 .valori-alimento td:last-child, .valori-alimento th:last-child { white-space: nowrap; }
 .scheda-alimento { max-height: 68vh; overflow-y: auto; }
 .fonte-dati { margin-top: 14px; font-size: 10px; color: #777; }
+/* Scheda alimento: barra «Chiudi i dettagli» sempre visibile mentre si scorrono i dettagli */
+.dettagli-barra { position: sticky; top: 0; z-index: 3; display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  margin: 12px 0 10px; padding: 8px 10px; background: var(--surface-2); border: 1px solid var(--line); border-radius: 8px; }
+/* Pulsanti tenui, nei colori del tema: ognuno con il suo colore, per non confonderli */
+.btn.tenue-salvia { background: var(--accent-2); border-color: #cdd6bf; color: var(--olive-dark); }
+.btn.tenue-salvia:hover { background: #dde4d1; border-color: var(--sage); }
+.btn.tenue-sabbia { background: var(--warn-bg); border-color: #ecd3a8; color: #8a5a12; }
+.btn.tenue-sabbia:hover { background: #fdeccd; border-color: #e0bd82; }
+.btn.tenue-cielo { background: #eaf0f1; border-color: #c9d7da; color: #3f5d66; }
+.btn.tenue-cielo:hover { background: #dde8ea; border-color: #a9c0c5; }

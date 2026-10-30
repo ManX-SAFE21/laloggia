@@ -14,7 +14,7 @@ export const GRUPPI: [GruppoNutriente, string][] = [
   ["altri", "Altri composti"],
 ];
 
-export const ORIGINE: Record<string, string> = { A: "analitico", B: "bibliografico", C: "calcolato", S: "stimato" };
+export const ORIGINE: Record<string, string> = { A: "analitico", B: "bibliografico", C: "calcolato", S: "stimato", ZL: "zero logico" };
 
 /** I 4 valori principali (usati dalle diete) e la chiave CREA da cui vengono. */
 export const MACRO: Record<"kcal" | "proteine" | "carboidrati" | "grassi", string> = {

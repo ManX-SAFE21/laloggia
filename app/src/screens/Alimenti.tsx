@@ -1,7 +1,7 @@
 // Alimenti: tabelle CREA (aggiornamento 2019, dati originali inclusi nel programma) + alimenti aggiunti dallo studio.
 // Vista semplice (kcal, proteine, carboidrati, grassi); «Dettagli» mostra tutti i valori. Ogni valore si cambia a
 // mano; «Ripristina ai dati originali» rimette quelli CREA. Gli alimenti CREA non si cancellano: si nascondono.
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { ELENCO_ICONE, ICONE_CATEGORIA, iconaDi, nuovoId } from "../data";
 import { inTauri, useStore } from "../store";
@@ -148,7 +148,10 @@ function SchedaAlimento({ a, usatoIn, onClose, onCambia, onElimina }: {
 }) {
   const { toast } = useStore();
   const [dettagli, setDettagli] = useState(false);
-  const [conferma, setConferma] = useState<"ripristina" | "elimina" | null>(null);
+  const [conferma, setConferma] = useState<"ripristina" | "elimina" | "nascondi" | null>(null);
+  const scheda = useRef<HTMLDivElement>(null);
+  // Chiudendo i dettagli si torna in cima alla scheda, ai valori principali
+  const chiudiDettagli = () => { setDettagli(false); scheda.current?.scrollTo({ top: 0 }); };
   const [icone, setIcone] = useState(false);
   const [fonte, setFonte] = useState<{ alimento: AlimentoConFonte; riferimenti: string[] } | null>(null);
   const crea = a.fonte === "crea" && !!a.codiceCrea;
@@ -180,14 +183,16 @@ function SchedaAlimento({ a, usatoIn, onClose, onCambia, onElimina }: {
   return createPortal(
     <Modal title={a.nome} onClose={onClose} largo
       footer={<>
-        {crea && a.modificato && <button className="btn" onClick={() => setConferma("ripristina")}>Ripristina ai dati originali</button>}
-        <button className="btn" onClick={() => { onCambia((x) => ({ ...x, nascosto: !x.nascosto })); toast(a.nascosto ? "Alimento di nuovo visibile" : "Alimento nascosto: non compare più nella lista e nella ricerca delle diete"); }}>
-          {a.nascosto ? "Mostra di nuovo" : "Nascondi"}
-        </button>
-        {!crea && <button className="btn danger" disabled={usatoIn > 0} title={usatoIn > 0 ? "È usato in una dieta: toglilo prima da lì" : undefined} onClick={() => setConferma("elimina")}>Elimina</button>}
-        <button className="btn primary" onClick={onClose}>Chiudi</button>
+        <div className="row" style={{ gap: 8, marginRight: "auto" }}>
+          {crea && a.modificato && <button className="btn tenue-cielo" onClick={() => setConferma("ripristina")}><Icon.ripristina /> Ripristina ai dati originali</button>}
+          {a.nascosto
+            ? <button className="btn tenue-sabbia" onClick={() => { onCambia((x) => ({ ...x, nascosto: false })); toast("Alimento di nuovo visibile"); }}><Icon.occhio /> Mostra di nuovo</button>
+            : <button className="btn tenue-sabbia" title="Toglie l'alimento dalla lista e dalla ricerca nelle diete" onClick={() => setConferma("nascondi")}><Icon.occhioChiuso /> Nascondi alimento…</button>}
+          {!crea && <button className="btn danger" disabled={usatoIn > 0} title={usatoIn > 0 ? "È usato in una dieta: toglilo prima da lì" : undefined} onClick={() => setConferma("elimina")}>Elimina</button>}
+        </div>
+        <button className="btn primary" onClick={onClose}><Icon.x /> Chiudi la scheda</button>
       </>}>
-      <div className="scheda-alimento">
+      <div className="scheda-alimento" ref={scheda}>
         <div className="row" style={{ gap: 10, flexWrap: "wrap", marginBottom: 8 }}>
           <button className="btn sm" title="Cambia icona" onClick={() => setIcone((v) => !v)}><span style={{ fontSize: 20 }}>{iconaDi(a)}</span></button>
           <span className="muted">{a.categoria}</span>
@@ -224,10 +229,16 @@ function SchedaAlimento({ a, usatoIn, onClose, onCambia, onElimina }: {
           </tbody>
         </table>
 
-        {a.valori && a.valori.length > 0 && (
-          <button className="btn sm" style={{ margin: "12px 0" }} onClick={() => setDettagli((v) => !v)}>
-            {dettagli ? "▴ Nascondi i dettagli" : `▾ Dettagli (${a.valori.length} valori: minerali, vitamine, acidi grassi, aminoacidi…)`}
+        {a.valori && a.valori.length > 0 && !dettagli && (
+          <button className="btn sm tenue-salvia" style={{ margin: "12px 0" }} onClick={() => setDettagli(true)}>
+            <Icon.giu /> Mostra i dettagli ({a.valori.length} valori: minerali, vitamine, acidi grassi, aminoacidi…)
           </button>
+        )}
+        {dettagli && (
+          <div className="dettagli-barra">
+            <span className="small muted">Dettagli: {a.valori?.length} valori</span>
+            <button className="btn sm tenue-salvia" onClick={chiudiDettagli}><Icon.su /> Chiudi i dettagli</button>
+          </div>
         )}
         {dettagli && a.valori && GRUPPI.map(([g, titolo]) => {
           const righe = a.valori!.filter((x) => x.gruppo === g);
@@ -253,6 +264,7 @@ function SchedaAlimento({ a, usatoIn, onClose, onCambia, onElimina }: {
             </table>
           );
         })}
+        {dettagli && <button className="btn sm tenue-salvia" style={{ margin: "4px 0 12px" }} onClick={chiudiDettagli}><Icon.su /> Chiudi i dettagli</button>}
         {crea && <p className="small muted" style={{ marginBottom: 0 }}>{FONTE_CREA}. Passa il mouse sull'origine per vedere metodo e riferimento del dato.</p>}
       </div>
 
@@ -260,6 +272,13 @@ function SchedaAlimento({ a, usatoIn, onClose, onCambia, onElimina }: {
         <Modal title="Ripristinare i dati originali?" onClose={() => setConferma(null)}
           footer={<><button className="btn" onClick={() => setConferma(null)}>Annulla</button><button className="btn primary" onClick={() => void ripristinaOra()}>Ripristina</button></>}>
           <p style={{ margin: 0 }}>Tutti i valori di <b>{a.nome}</b> tornano quelli delle tabelle CREA. Le modifiche fatte a mano si perdono (resta «Annulla» subito dopo).</p>
+        </Modal>, document.body)}
+      {conferma === "nascondi" && createPortal(
+        <Modal title="Nascondere l'alimento?" onClose={() => setConferma(null)}
+          footer={<><button className="btn primary" onClick={() => setConferma(null)}>No, lascialo visibile</button>
+            <button className="btn" onClick={() => { onCambia((x) => ({ ...x, nascosto: true })); setConferma(null); toast("Alimento nascosto: lo ritrovi con «Mostra nascosti»"); }}>Sì, nascondi</button></>}>
+          <p style={{ marginTop: 0 }}><b>{a.nome}</b> non comparirà più nella lista degli alimenti e nella ricerca delle diete.</p>
+          <p className="small muted" style={{ marginBottom: 0 }}>Non si perde niente: si rimette visibile con «Mostra nascosti» nella pagina Alimenti. Le diete che lo usano già restano come sono.</p>
         </Modal>, document.body)}
       {conferma === "elimina" && createPortal(
         <Modal title="Eliminare l'alimento?" onClose={() => setConferma(null)}

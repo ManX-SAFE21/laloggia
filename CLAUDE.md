@@ -11,6 +11,16 @@ La nutrizionista è l'unica utente. Il software non è pensato per essere vendut
 
 - Per ogni dubbio, anche piccolo, **non inventare: chiedi** a Manuxxx prima di agire.
 - Prima di eseguire un piano analizzato, **chiedi sempre conferma**.
+- **PRIMA DI MODIFICARE IL CODICE, FAI UN'ANTEPRIMA** (regola di Manuxxx dal 2026-10-30, per sempre):
+  per una modifica che si vede (schermate, pulsanti, colori, stampe) mostra prima un'immagine o una pagina di
+  prova di come verrà; per una modifica che non si vede (archivio, backup, calcoli) descrivi prima cosa cambia
+  e con quale effetto. Si tocca il codice solo dopo il suo OK sull'anteprima.
+- **Stile dei pulsanti (regola di Manuxxx dal 2026-10-30, per tutto il programma):** ogni pulsante ha un'**icona**
+  che ne spiega il significato (stesso stile a linee di `Icon` in `src/components/ui.tsx`) e le azioni diverse hanno
+  **colori tenui diversi**, nei toni del tema: `tenue-salvia` (aprire/chiudere, mostrare), `tenue-sabbia`
+  (nascondere, azioni da pensarci), `tenue-cielo` (ripristinare), verde pieno `primary` per l'azione principale
+  (es. «Chiudi la scheda»), rosso solo per eliminare. Le azioni che si confondono stanno lontane tra loro
+  (es. azioni sull'elemento a sinistra, «Chiudi» a destra). Modello: la scheda alimento (`src/screens/Alimenti.tsx`).
 - Comunica in italiano. I termini tecnici in inglese vanno bene.
 
 ## Situazione attuale
